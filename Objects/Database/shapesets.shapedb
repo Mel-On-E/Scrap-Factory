@@ -4,6 +4,7 @@
       "$CONTENT_DATA/Objects/Database/ShapeSets/droppers.shapeset",
       "$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset",
       "$CONTENT_DATA/Objects/Database/ShapeSets/upgraders.shapeset",
-      "$CONTENT_DATA/Objects/Database/ShapeSets/belts.shapeset"
+      "$CONTENT_DATA/Objects/Database/ShapeSets/belts.shapeset",
+      "$CONTENT_DATA/Objects/Database/ShapeSets/generators.shapeset"
    ]
 }

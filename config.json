@@ -1,5 +1,5 @@
 {
-   "baseGameContent": "Survival",
+   "baseGameContent": "Creative",
    "gameScript" : {
       "class" : "SurvivalGame",
       "file" : "$CONTENT_DATA/Scripts/SurvivalGame.lua"

@@ -33,12 +33,15 @@ SurvivalGame.enableRestrictions = true
 SurvivalGame.enableFuelConsumption = false
 SurvivalGame.enableAmmoConsumption = false
 SurvivalGame.enableUpgrade = true
-SurvivalGame.defaultInventorySize = 2048
+SurvivalGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 local IntroFadeDuration = 1.1
 local IntroEndFadeDuration = 1.1
 local IntroFadeTimeout = 5.0
+
+SURVIVAL_DEV_SPAWN_POINT = sm.vec3.new(0,0,20)
+START_AREA_SPAWN_POINT = sm.vec3.new(0,0,20)
 
 function SurvivalGame.server_onCreate( self )
 	print( "SurvivalGame.server_onCreate" )
@@ -855,23 +858,10 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 		local inventory = player:getInventory()
 
 		sm.container.beginTransaction()
-
-		if g_survivalDev then
-			--Hotbar
-			sm.container.setItem( inventory, 0, tool_sledgehammer, 1 )
-			sm.container.setItem( inventory, 1, tool_spudgun, 1 )
-			sm.container.setItem( inventory, 7, obj_plantables_potato, 50 )
-			sm.container.setItem( inventory, 8, tool_lift, 1 )
-			sm.container.setItem( inventory, 9, tool_connect, 1 )
-
-			--Actual inventory
-			sm.container.setItem( inventory, 10, tool_paint, 1 )
-			sm.container.setItem( inventory, 11, tool_weld, 1 )
-		else
-			sm.container.setItem( inventory, 0, tool_sledgehammer, 1 )
-			sm.container.setItem( inventory, 1, tool_lift, 1 )
-		end
-
+		sm.container.setItem( inventory, 0, tool_sledgehammer, 1 )
+		sm.container.setItem( inventory, 1, tool_lift, 1 )
+		sm.container.setItem( inventory, 2, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1 )
+		sm.container.setItem( inventory, 3, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1 )
 		sm.container.endTransaction()
 
 		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
@@ -1184,3 +1174,15 @@ function SurvivalGame:client_onFixedUpdate()
 	end
 end
 
+
+--cursed stuff to disable chunk unloading
+function SurvivalGame.sv_loadTerrain( self, data )
+	for x = data.minX, data.maxX do
+		for y = data.minY, data.maxY do
+			data.world:loadCell( x, y, nil, "sv_empty" )
+		end
+	end
+end
+  
+function SurvivalGame.sv_empty( self )
+end

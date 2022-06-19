@@ -15,7 +15,11 @@ function Shop.client_onCreate( self )
 
 	if self.tool:isLocal() then
 		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Shop.layout")
-		self.cl.guiInterface:addGridItemsFromFile( "TradeGrid", "$SURVIVAL_DATA/CraftingRecipes/hideout.json" )
+		
+		local data = sm.json.open("$SURVIVAL_DATA/CraftingRecipes/hideout.json")
+		for k, item in ipairs(data) do
+			self.cl.gui:addGridItem( "TradeGrid", item )
+		end
 		self.cl.gui:setOnCloseCallback( "cl_onGuiClosed" )
 		self.cl.seatedEquiped = false
 	end

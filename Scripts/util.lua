@@ -24,7 +24,7 @@ function format_money(money)
     elseif length > 3 then
         suffix = "k"
     else
-        return string.format("$%.2f", money)
+        return string.format("#00ff00$%.2f", money)
     end
 
     local leadingDigits = string.sub(moneyStr, 1, length%3)
@@ -34,5 +34,5 @@ function format_money(money)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return "$" .. leadingDigits .. separator .. followingDigits .. suffix
+    return "#00ff00$" .. leadingDigits .. separator .. followingDigits .. suffix
 end

@@ -7,20 +7,20 @@ dofile( "$SURVIVAL_DATA/Scripts/game/managers/PackingStationManager.lua" )
 
 Overworld = class( BaseWorld )
 
-Overworld.terrainScript = "$GAME_DATA/Scripts/terrain/terrain_flat.lua"
+Overworld.terrainScript = "$GAME_DATA/Scripts/terrain/terrain_creative.lua"
 Overworld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
 Overworld.enableSurface = true
 Overworld.enableAssets = true
-Overworld.enableClutter = true
-Overworld.enableNodes = true
+Overworld.enableClutter = false
+Overworld.enableNodes = false
 Overworld.enableCreations = true
-Overworld.enableHarvestables = true
-Overworld.enableKinematics = true
+Overworld.enableHarvestables = false
+Overworld.enableKinematics = false
 Overworld.renderMode = "outdoor"
-Overworld.cellMinX = -64
-Overworld.cellMaxX = 63
-Overworld.cellMinY = -48
-Overworld.cellMaxY = 47
+Overworld.cellMinX = -15
+Overworld.cellMaxX = 14
+Overworld.cellMinY = -15
+Overworld.cellMaxY = 14
 
 
 
@@ -40,6 +40,15 @@ function Overworld.server_onCreate( self )
 	if self.foreignConnections == nil then
 		self.foreignConnections = {}
 	end
+
+	local data = {
+		minX = self.cellMinX or 0,
+		maxX = self.cellMaxX or 0,
+		minY = self.cellMinY or 0,
+		maxY = self.cellMaxY or 0,
+		world = self.world
+	  }
+	  sm.event.sendToGame( "sv_loadTerrain", data )
 
 end
 
@@ -363,24 +372,18 @@ function Overworld.sv_reloadSpawnersOnCell( self, x, y )
 end
 
 function Overworld.sv_spawnNewCharacter( self, params )
-	local spawnPosition = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
-	local yaw = 0
-	local pitch = 0
-
-	local nodes = sm.cell.getNodesByTag( params.x, params.y, "PLAYER_SPAWN" )
-	if #nodes > 0 then
-		local spawnerIndex = ( ( params.player.id - 1 ) % #nodes ) + 1
-		local spawnNode = nodes[spawnerIndex]
-		spawnPosition = spawnNode.position + sm.vec3.new( 0, 0, 1 ) * 0.7
-
-		local spawnDirection = spawnNode.rotation * sm.vec3.new( 0, 0, 1 )
-		--pitch = math.asin( spawnDirection.z )
-		yaw = math.atan2( spawnDirection.y, spawnDirection.x ) - math.pi/2
+	local spawnRayBegin = sm.vec3.new( params.x, params.y, 1024 )
+	local spawnRayEnd = sm.vec3.new( params.x, params.y, -1024 )
+	local valid, result = sm.physics.spherecast( spawnRayBegin, spawnRayEnd, 0.3 )
+	local pos
+	if valid then
+		pos = result.pointWorld + sm.vec3.new( 0, 0, 0.4 )
+	else
+		pos = sm.vec3.new( params.x, params.y, 100 )
 	end
 
-	local character = sm.character.createCharacter( params.player, self.world, spawnPosition, yaw, pitch )
+	local character = sm.character.createCharacter( params.player, self.world, pos )
 	params.player:setCharacter( character )
-
 end
 
 function Overworld.sv_e_onChatCommand( self, params )
