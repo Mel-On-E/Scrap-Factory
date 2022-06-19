@@ -14,12 +14,10 @@ function Shop.client_onCreate( self )
 	self.cl = {}
 
 	if self.tool:isLocal() then
-		self.cl.gui = sm.gui.createLogbookGui()
+		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Shop.layout")
+		self.cl.guiInterface:addGridItemsFromFile( "TradeGrid", "$SURVIVAL_DATA/CraftingRecipes/hideout.json" )
 		self.cl.gui:setOnCloseCallback( "cl_onGuiClosed" )
-		self.cl.gui:setGridButtonCallback( "BeaconButtonActive", "cl_onBeaconActiveClicked" )
-		self.cl.gui:setGridButtonCallback( "LogItemActivate", "cl_onLogItemClicked" )
 		self.cl.seatedEquiped = false
- 	    self.cl.gui:setButtonCallback( "WaypointButton", "cl_onWaypointClicked" )
 	end
 
 	self:client_onRefresh()
@@ -30,11 +28,6 @@ function Shop.client_onRefresh( self )
 end
 
 function Shop.client_onUpdate( self, dt )
-
-	if self.cl.seatedEquiped or self.cl.equipped and self.tool:isLocal() then
-		self:cl_updateLogGui()
-	end
-
 	-- First person animation
 	local isCrouching = self.tool:isCrouching()
 
@@ -111,9 +104,6 @@ function Shop.client_onEquip( self )
 
 	if self.tool:isLocal() then
 		self.tool:setFpRenderables( currentRenderablesFp )
-
-		self:cl_updateBeaconGui()
-		self:cl_updateLogGui( true )
 		self.cl.gui:open()
 	end
 
@@ -123,13 +113,10 @@ function Shop.client_onEquip( self )
 	if self.tool:isLocal() then
 		swapFpAnimation( self.fpAnimations, "unequip", "equip", 0.2 )
 	end
-
 end
 
 function Shop.client_equipWhileSeated( self )
 	if not self.cl.seatedEquiped then
-		self:cl_updateBeaconGui()
-		self:cl_updateLogGui( true )
 		self.cl.gui:open()
 		self.cl.seatedEquiped = true
 	end

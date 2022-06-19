@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" align="Default" name="BackPanel" position_real="0 0 0.589063 0.772222">
+        <Property key="NeedKey" value="false" />
+        <Widget type="Widget" skin="BackgroundHideout" position_real="0 0 0.568966 1">
+            <Property key="NeedKey" value="false" />
+            <Widget type="ScrollBar" skin="InventoryVSlider" name="Slider" position_real="0.927739 0.294964 0.041958 0.658273">
+                <Property key="Range" value="100" />
+                <Property key="RangePosition" value="1" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0 0.0431655 1 0.0413669">
+                <Property key="Caption" value="#{HIDEOUT_TITLE}" />
+                <Property key="FontName" value="SM_HeaderLarge_Wide" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="BananaCount" position_real="0.198135 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="BerryCount" position_real="0.275058 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="BroccoliCount" position_real="0.354312 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="OrangeCount" position_real="0.431235 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="PineappleCount" position_real="0.508159 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="BeetCount" position_real="0.587413 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="TomatoCount" position_real="0.664336 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="CarrotCount" position_real="0.741259 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" name="FarmerCount" position_real="0.864802 0.215827 0.0769231 0.0197842">
+                <Property key="Caption" value="9999" />
+                <Property key="FontName" value="SM_NumberSmall" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="ItemBox" skin="InventoryItemBox2" name="TradeGrid" position_real="0.0559441 0.291367 0.862471 0.665468">
+                <Property key="NeedKey" value="false" />
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="BackgroundCraftbotTooltip" name="SideMainPanel" position_real="0.586207 0 0.265252 1">
+            <Widget type="Canvas" skin="Canvas" name="Preview" position_real="0 0 1 0.251799" />
+            <Widget type="EditBox" skin="EditBoxEmpty" name="Title" position_real="0.065 0.228417 0.865 0.0683453">
+                <Property key="Caption" value="This is a very long title on two rows" />
+                <Property key="FontName" value="SM_ItemTitle" />
+                <Property key="WordWrap" value="true" />
+                <Property key="ReadOnly" value="true" />
+                <Property key="Static" value="true" />
+                <Property key="TextAlign" value="Left Bottom" />
+            </Widget>
+            <Widget type="EditBox" skin="EditBoxEmpty" name="Description" position_real="0.065 0.370504 0.815 0.257194">
+                <Property key="Static" value="true" />
+                <Property key="ReadOnly" value="true" />
+                <Property key="WordWrap" value="true" />
+                <Property key="TextShadowColour" value="0 0 0" />
+                <Property key="FontName" value="SM_TextTiny" />
+                <Property key="TextColour" value="0.564706 0.572549 0.572549" />
+                <Property key="NeedKey" value="false" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.06 0.330935 0.835 0.0251799">
+                <Property key="FontName" value="SM_LabelTiny" />
+                <Property key="Caption" value="#{DESCRIPTION_CAPS}" />
+                <Property key="TextAlign" value="Left VCenter" />
+            </Widget>
+            <Widget type="Widget" skin="WhiteSkin" name="Line" position_real="0.065 0.359712 0.865 0.00179856">
+                <Property key="Colour" value="1 1 1" />
+                <Property key="Alpha" value="0.2" />
+            </Widget>
+            <Widget type="Widget" skin="WhiteSkin" name="Line" position_real="0.065 0.663669 0.865 0.00179856">
+                <Property key="Colour" value="1 1 1" />
+                <Property key="Alpha" value="0.2" />
+            </Widget>
+            <Widget type="Button" skin="StyledButtonLarge" name="Trade" position_real="0.05 0.888489 0.89 0.0827338">
+                <Property key="Caption" value="#{HIDEOUT_TRADE}" />
+                <Property key="FontName" value="SM_Button" />
+                <Property key="TextAlign" value="Center" />
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.065 0.629496 0.54 0.0233813">
+                <Property key="Caption" value="#{HIDEOUT_TRADING}" />
+                <Property key="FontName" value="SM_HeaderTiny" />
+            </Widget>
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.065 0.694245 0.865 0.172662">
+                <Property key="ImageTexture" value="gui_background_hideout_trade.png" />
+                <Widget type="ImageBox" skin="ImageBox" name="ReceiveIcon" position_real="0.242775 0.583333 0.17341 0.3125" />
+                <Widget type="TextBox" skin="TextBox" name="ReceiveQuantity" position_real="0.439306 0.583333 0.381503 0.3125">
+                    <Property key="Caption" value="X 100" />
+                    <Property key="TextAlign" value="Left VCenter" />
+                    <Property key="FontName" value="SM_NumberMini" />
+                </Widget>
+                <Widget type="ItemBox" skin="InventoryItemBox2" name="MaterialGrid" position_real="0.219653 0 0.774566 0.458333">
+                    <Property key="NeedKey" value="false" />
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position_real="0.0346821 0.0520833 0.184971 0.354167">
+                    <Property key="Caption" value="#{HIDEOUT_TRADE}" />
+                    <Property key="FontName" value="SM_LabelMini" />
+                    <Property key="TextColour" value="0.5 0.5 0.5" />
+                    <Property key="TextAlign" value="Left VCenter" />
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position_real="0.0346821 0.59375 0.184971 0.3125">
+                    <Property key="Caption" value="#{HIDEOUT_RECEIVE}" />
+                    <Property key="FontName" value="SM_LabelMini" />
+                    <Property key="TextAlign" value="Left VCenter" />
+                    <Property key="TextColour" value="0.5 0.5 0.5" />
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings />
+</MyGUI>

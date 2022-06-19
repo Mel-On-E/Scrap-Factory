@@ -96,12 +96,6 @@ function SurvivalPlayer.client_onCreate( self )
 			g_survivalHud:open()
 		end
 
-
-	 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false, {isHud = true,isInteractive=false,needsCursor=false})
-		g_factoryHud:open()
-		g_factoryHud:setText("DialogTextBox","$123.34M")
-
-
 		self.cl.hungryEffect = sm.effect.createEffect( "Mechanic - StatusHungry" )
 		self.cl.thirstyEffect = sm.effect.createEffect( "Mechanic - StatusThirsty" )
 		self.cl.underwaterEffect = sm.effect.createEffect( "Mechanic - StatusUnderwater" )

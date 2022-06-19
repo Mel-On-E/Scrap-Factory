@@ -1,0 +1,125 @@
+{
+   "partList" : [
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "00ff00",
+         "flammable" : false,
+         "name" : "obj_upgrader_basic",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 5
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "mesh" : "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_packingtable.mesh",
+                  "subMeshList" : [
+                     {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/obj_warehouse_packingtable_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_nor.tga"
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         "restitution" : 0.0,
+         "rotationSet" : "PropYNegYZ",
+         "scripted" : {
+            "classname" : "BeltUpgrader",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "direction" : {
+                  "at" : -0.250,
+                  "right" : -1,
+                  "up" : 0
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "speed" : 1,
+               "upgrade" : {
+                  "add" : 1,
+                  "box" : {
+                     "x" : 0.250,
+                     "y" : 1.50,
+                     "z" : 1.50
+                  },
+                  "cap" : 100,
+                  "limit" : 10,
+                  "multiplier" : 1,
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.8750,
+                     "z" : 0
+                  }
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua"
+         },
+         "stackSize" : 999,
+         "uuid" : "69b869f1-03dc-4ea2-9391-fd24903945d1"
+      },
+      {
+         "color" : "696969",
+         "cylinder" : {
+            "axis" : "Y",
+            "depth" : 1,
+            "diameter" : 1,
+            "margin" : 0.040
+         },
+         "flammable" : true,
+         "name" : "obj_upgrader_toilet",
+         "physicsMaterial" : "Default",
+         "ratings" : {
+            "buoyancy" : 2,
+            "density" : 1,
+            "durability" : 1,
+            "friction" : 3
+         },
+         "renderable" : "$GAME_DATA/Objects/Renderable/decor/obj_decor_toiletroll.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Upgrader",
+            "data" : {
+               "upgrade" : {
+                  "add" : 1,
+                  "box" : {
+                     "x" : 0.750,
+                     "y" : 0.250,
+                     "z" : 0.1250
+                  },
+                  "cap" : 100,
+                  "limit" : 3,
+                  "multiplier" : 1.10,
+                  "offset" : {
+                     "x" : 0.3750,
+                     "y" : 0,
+                     "z" : 0
+                  }
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua"
+         },
+         "stackSize" : 999,
+         "sticky" : "-Y+Y",
+         "uuid" : "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3"
+      }
+   ]
+}

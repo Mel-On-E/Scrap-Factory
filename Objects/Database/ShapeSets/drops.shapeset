@@ -28,7 +28,7 @@
 					}
 				]
 			},
-			"color": "696969",
+			"color": "ff00ff",
 			"box": {
 				"x": 1,
 				"y": 1,
@@ -38,7 +38,7 @@
 				"filename": "$CONTENT_DATA/Scripts/Drop.lua",
 				"classname": "Drop",
 				"data": {
-                    "Value": 1
+                    "value": 1
                 }
 			},
 			"rotationSet": "StaticYmZmXm",

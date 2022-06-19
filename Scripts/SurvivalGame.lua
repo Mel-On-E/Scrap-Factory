@@ -1,3 +1,5 @@
+dofile("$CONTENT_DATA/Scripts/util.lua") --Factory
+
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua" )
 
 
@@ -31,6 +33,7 @@ SurvivalGame.enableRestrictions = true
 SurvivalGame.enableFuelConsumption = false
 SurvivalGame.enableAmmoConsumption = false
 SurvivalGame.enableUpgrade = true
+SurvivalGame.defaultInventorySize = 2048
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 local IntroFadeDuration = 1.1
@@ -47,6 +50,11 @@ function SurvivalGame.server_onCreate( self )
 		self.sv.saved.data = self.data
 		printf( "Seed: %.0f", self.sv.saved.data.seed )
 		self.sv.saved.overworld = sm.world.createWorld( "$CONTENT_DATA/Scripts/Overworld.lua", "Overworld", { dev = self.sv.saved.data.dev }, self.sv.saved.data.seed )
+		
+		--FACTORY
+		self.sv.saved.factory = {}
+		self.sv.saved.factory.money = 0
+		
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
@@ -177,6 +185,11 @@ function SurvivalGame.client_onCreate( self )
 	-- Survival HUD
 	g_survivalHud = sm.gui.createSurvivalHudGui()
 	assert(g_survivalHud)
+
+	--FACTORY HUD
+	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false, {isHud = true,isInteractive=false,needsCursor=false})
+	g_factoryHud:open()
+	self.cl.money = 0
 end
 
 function SurvivalGame.bindChatCommands( self )
@@ -256,6 +269,7 @@ end
 function SurvivalGame.client_onClientDataUpdate( self, clientData, channel )
 	if channel == 2 then
 		self.cl.time = clientData.time
+		self.cl.money = clientData.money
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
 		self:bindChatCommands()
@@ -303,7 +317,6 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 	if self.sv.syncTimer:done() then
 		self.sv.syncTimer:start( SyncInterval )
 		sm.storage.save( STORAGE_CHANNEL_TIME, self.sv.time )
-		self:sv_updateClientData()
 	end
 
 	g_elevatorManager:sv_onFixedUpdate()
@@ -317,10 +330,16 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 	if g_eventManager then
 		g_eventManager:sv_onFixedUpdate()
 	end
+
+	--factory
+	if sm.game.getCurrentTick() % 40 == 0 then
+		self.storage:save( self.sv.saved )
+		self:sv_updateClientData()
+	end
 end
 
 function SurvivalGame.sv_updateClientData( self )
-	self.network:setClientData( { time = self.sv.time }, 2 )
+	self.network:setClientData( { time = self.sv.time, money = self.sv.saved.factory.money }, 2 )
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -1153,37 +1172,15 @@ function SurvivalGame.sv_e_unloadBeacon( self, params )
 end
 
 
+--FACTORY
+function SurvivalGame:sv_e_addMoney(money)
+	self.sv.saved.factory.money = self.sv.saved.factory.money + money
+end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function SurvivalGame:client_onFixedUpdate()
+	if g_factoryHud then
+		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
+		g_factoryHud:setText("DialogTextBox",format_money(money))
+	end
+end
 
