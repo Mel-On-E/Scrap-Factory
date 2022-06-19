@@ -1,0 +1,18 @@
+{
+    "lodList" : [
+        {
+            "mesh" : "$SURVIVAL_DATA/Objects/Mesh/survivalobject/obj_survivalobjects_pumpbutton_off.fbx",
+            "pose0" : "$SURVIVAL_DATA/Objects/Mesh/survivalobject/obj_survivalobjects_pumpbutton_on.fbx",
+            "subMeshMap" : {
+                "pumpbutton" : {
+                "material" : "PoseAnimDifAsgNor",
+                "textureList" : [
+                    "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_dif.tga",
+                    "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_asg.tga",
+                    "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_nor.tga"
+                ]
+                }
+            }
+        }
+    ]
+}

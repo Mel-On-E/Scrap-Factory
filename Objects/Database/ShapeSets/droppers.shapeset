@@ -1,0 +1,32 @@
+{
+	"partList": [
+        {
+			"uuid": "692a5ebd-0793-49ba-b1ef-681a8fdceba7",
+			"name": "obj_dropper_scrap_wood",
+			"renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+			"color": "696969",
+			"box": {
+				"x": 4,
+				"y": 6,
+				"z": 4
+			},
+			"scripted": {
+				"filename": "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua",
+				"classname": "ClickDropper",
+				"data": {
+                    "drop": "87873e83-8270-4796-9401-6baba45ccef2",
+                    "offset": { "x": -0.125, "y": 0.75, "z": 0.5}
+                }
+			},
+			"rotationSet": "PropY",
+			"physicsMaterial": "Wood",
+			"ratings": {
+				"density": 5,
+				"durability": 10,
+				"friction": 5,
+				"buoyancy": 5
+			},
+			"flammable": false
+		}
+    ]
+}
