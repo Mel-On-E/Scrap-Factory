@@ -32,9 +32,10 @@ function ClickDropper:client_onFixedUpdate(character, state)
     end
     self.cl.prevState = state
 
-    self.look = false
     if not self.look and sm.localPlayer.getPlayer().character:getLockingInteractable() == self.interactable then return end
     sm.localPlayer.getPlayer().character:setLockingInteractable(nil)
+
+    self.look = false
 end
 
 function ClickDropper:client_onInteract(character, state)

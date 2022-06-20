@@ -36,3 +36,12 @@ function format_money(money)
     end
     return "#00dd00$" .. leadingDigits .. separator .. followingDigits .. suffix
 end
+
+function consume_power(power)
+    if g_power > power then
+        g_power = g_power - power
+        return true
+    else
+        return false
+    end
+end

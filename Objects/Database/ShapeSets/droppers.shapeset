@@ -26,7 +26,8 @@
                   "x" : -0.1250,
                   "y" : 0.750,
                   "z" : 0.50
-               }
+               },
+               "power": 1
             },
             "filename" : "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
          },

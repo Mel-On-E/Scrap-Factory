@@ -8,20 +8,23 @@ function Furnace:server_onCreate()
     self.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody)
     self.trigger:bindOnEnter("sv_onEnter")
+    self.trigger:bindOnStay("sv_onEnter")
 end
 
 function Furnace:sv_onEnter(trigger, results)
     for _, result in ipairs(results) do
-        if not sm.exists(result) then return end
-        for k, shape in ipairs(result:getShapes()) do
+        if not sm.exists(result) then goto continue end
+        for k, shape in pairs(result:getShapes()) do
             local interactable = shape:getInteractable()
-            if not interactable then return end
+            if not interactable then goto continue end
             local data = interactable:getPublicData()
-            if not data and not data.value then return end
+            if not data or not data.value then goto continue end
+            if not consume_power(self.data.power) then goto continue end
             shape:destroyPart(0)
             self.network:sendToClients("cl_stonks", { pos = shape:getWorldPosition(), value = data.value })
             sm.event.sendToGame("sv_e_addMoney", data.value)
         end
+        ::continue::
     end
 end
 

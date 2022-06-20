@@ -63,7 +63,8 @@
 				"filename": "$CONTENT_DATA/Scripts/Generators/Generator.lua",
 				"classname": "Generator",
 				"data": {
-                    "power": 10
+                    "power": 10,
+                    "powerLimit": 10
                 }
 			},
             "color" : "00ff00",

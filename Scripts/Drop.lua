@@ -10,7 +10,7 @@ function Drop:server_onCreate()
 end
 
 function Drop:server_onFixedUpdate()
-    if self.shape:getVelocity():length() < 0.0001 then
+    if self.shape:getVelocity():length() < 0.01 then
         self.timeout = self.timeout + 1
     else
         self.timeout = 0

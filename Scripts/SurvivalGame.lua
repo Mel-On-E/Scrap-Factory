@@ -57,13 +57,16 @@ function SurvivalGame.server_onCreate( self )
 		--FACTORY
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
+		self.sv.saved.factory.power = 0
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
+	g_power = self.sv.saved.factory.power
+
 
 	--FACTORY
 	self.sv.factory = {}
-	self.sv.factory.power = 0
+	self.sv.factory.powerLimit = 0
 
 	print( self.sv.saved.data )
 	if self.sv.saved.data and self.sv.saved.data.dev then
@@ -196,6 +199,7 @@ function SurvivalGame.client_onCreate( self )
 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false, {isHud = true,isInteractive=false,needsCursor=false})
 	g_factoryHud:open()
 	self.cl.money = 0
+	self.cl.powerLimit = 0
 	self.cl.power = 0
 end
 
@@ -277,6 +281,7 @@ function SurvivalGame.client_onClientDataUpdate( self, clientData, channel )
 	if channel == 2 then
 		self.cl.time = clientData.time
 		self.cl.money = clientData.money
+		self.cl.powerLimit = clientData.powerLimit
 		self.cl.power = clientData.power
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
@@ -341,18 +346,22 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
+		if self.sv.factory.powerLimit > 0 then
+			g_power = math.min(self.sv.factory.powerLimit, g_power)
+		end
+		self.sv.saved.factory.power = g_power
 		self.storage:save( self.sv.saved )
 		self:sv_updateClientData()
 	end
 
-	if sm.game.getCurrentTick() % 40*30 == 0 then
+	if sm.game.getCurrentTick() % (40*30) == 0 then
 		local pos = sm.vec3.new(math.random(-(15*64), 15*64), math.random(-(15*64), 15*64), 100)
 		sm.creation.importFromFile( self.sv.saved.overworld, "$CONTENT_DATA/LocalBlueprints/crate.blueprint", pos )
 	end
 end
 
 function SurvivalGame.sv_updateClientData( self )
-	self.network:setClientData( { time = self.sv.time, money = self.sv.saved.factory.money, power = self.sv.factory.power }, 2 )
+	self.network:setClientData( { time = self.sv.time, money = self.sv.saved.factory.money, powerLimit = self.sv.factory.powerLimit, power = g_power }, 2 )
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -870,9 +879,10 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 		sm.container.beginTransaction()
 		sm.container.setItem( inventory, 0, sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b"), 1 ) --sledgehammer
 		sm.container.setItem( inventory, 1, sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b"), 1 ) --lift
-		sm.container.setItem( inventory, 2, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1 ) --dropper
-		sm.container.setItem( inventory, 3, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1 ) --furnace
-		sm.container.setItem( inventory, 4, sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c"), 1 ) --generator
+		sm.container.setItem( inventory, 2, sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf"), 1 ) --connect tool
+		sm.container.setItem( inventory, 3, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1 ) --dropper
+		sm.container.setItem( inventory, 4, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1 ) --furnace
+		sm.container.setItem( inventory, 5, sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c"), 1 ) --generator
 		sm.container.endTransaction()
 
 		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
@@ -1172,16 +1182,24 @@ function SurvivalGame:sv_e_addMoney(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
 end
 
+function SurvivalGame:sv_e_addPowerLimit(powerLimit)
+	self.sv.factory.powerLimit = self.sv.factory.powerLimit + powerLimit
+	if powerLimit < 0 then
+		g_power = math.min(g_power, self.sv.factory.powerLimit)
+	end
+end
+
 function SurvivalGame:sv_e_addPower(power)
-	self.sv.factory.power = self.sv.factory.power + power
+	g_power = math.min(self.sv.factory.powerLimit, g_power + power)
 end
 
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
 		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
 		g_factoryHud:setText("DialogTextBox",format_money(money))
-		local power = sm.isHost and self.sv.factory.power or self.cl.power
-		g_factoryHud:setText("Power", "#00dddd" .. tostring(power))
+		local powerLimit = sm.isHost and self.sv.factory.powerLimit or self.cl.powerLimit
+		local power = sm.isHost and g_power or self.cl.power
+		g_factoryHud:setText("Power", "#dddd00" .. tostring(power) .. "/" .. tostring(powerLimit))
 	end
 end
 
