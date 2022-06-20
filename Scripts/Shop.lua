@@ -16,6 +16,8 @@ function Shop.client_onCreate(self)
 
 	if self.tool:isLocal() then
 		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
+		self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
+		self.cl.seatedEquiped = false
 		self.cl.pages = math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32) == 0 and 1 or
 			math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32)
 		print("-------------------------")
