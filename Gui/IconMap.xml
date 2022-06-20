@@ -17,11 +17,17 @@
             <Index name="69b869f1-03dc-4ea2-9391-fd24903945d1">
                 <Frame point="288 0"/>
             </Index>
-            <Index name="69b857f1-07dc-4ea2-9391-fd24903945d1">
+            <Index name="e2a6970b-2bb9-4b3b-b9f2-994b534b79f3">
                 <Frame point="384 0"/>
             </Index>
-            <Index name="a6113860-f4d4-42df-b8f9-129efdbaf777">
+            <Index name="69b857f1-07dc-4ea2-9391-fd24903945d1">
                 <Frame point="0 96"/>
+            </Index>
+            <Index name="daf6f4c4-5402-4fa3-93f4-3180243c8a3c">
+                <Frame point="96 96"/>
+            </Index>
+            <Index name="a6113860-f4d4-42df-b8f9-129efdbaf777">
+                <Frame point="192 96"/>
             </Index>
         </Group>
     </Resource>
