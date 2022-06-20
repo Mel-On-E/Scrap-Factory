@@ -17,8 +17,8 @@ function ClickDropper:server_onFixedUpdate()
 end
 
 function ClickDropper:sv_activate()
-    self.interactable:setActive(not self.interactable.active)
-    self.network:sendToClients("client_playSound", "Button " .. (self.interactable.active and "off" or "on"))
+    self.interactable:setActive(not self.interactable:isActive())
+    self.network:sendToClients("client_playSound", "Button " .. (self.interactable:isActive() and "off" or "on"))
 end
 
 function ClickDropper:client_onCreate()
@@ -35,7 +35,6 @@ function ClickDropper:client_onFixedUpdate(character, state)
     self.look = false
     if not self.look and sm.localPlayer.getPlayer().character:getLockingInteractable() == self.interactable then return end
     sm.localPlayer.getPlayer().character:setLockingInteractable(nil)
-    self.network:sendToServer("sv_activate")
 end
 
 function ClickDropper:client_onInteract(character, state)
