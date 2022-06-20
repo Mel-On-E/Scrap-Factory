@@ -879,6 +879,7 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 	else
 		local inventory = player:getInventory()
 
+		local tool_sledgehammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
 		local sledgehammerCount = sm.container.totalQuantity( inventory, tool_sledgehammer )
 		if sledgehammerCount == 0 then
 			sm.container.beginTransaction()
@@ -890,14 +891,7 @@ function SurvivalGame.server_onPlayerJoined( self, player, newPlayer )
 			sm.container.endTransaction()
 		end
 
-		local tool_lift_creative = sm.uuid.new( "5cc12f03-275e-4c8e-b013-79fc0f913e1b" )
-		local creativeLiftCount = sm.container.totalQuantity( inventory, tool_lift_creative )
-		if creativeLiftCount > 0 then
-			sm.container.beginTransaction()
-			sm.container.spend( inventory, tool_lift_creative, creativeLiftCount )
-			sm.container.endTransaction()
-		end
-
+		local tool_lift = sm.uuid.new( "5cc12f03-275e-4c8e-b013-79fc0f913e1b" )
 		local liftCount = sm.container.totalQuantity( inventory, tool_lift )
 		if liftCount == 0 then
 			sm.container.beginTransaction()
