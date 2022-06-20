@@ -1,5 +1,4 @@
 dofile "$GAME_DATA/Scripts/game/AnimationUtil.lua"
-
 local renderables = { "$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook.rend" }
 local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_tp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
@@ -17,6 +16,11 @@ function Shop.client_onCreate(self)
 
 	if self.tool:isLocal() then
 		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
+		self.cl.pages = math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32) == 0 and 1 or
+			math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32)
+		print("-------------------------")
+		print(self.cl.pages)
+		self.cl.page = 1
 	end
 
 	self:client_onRefresh()
