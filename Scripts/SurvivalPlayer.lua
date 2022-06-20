@@ -682,7 +682,7 @@ function SurvivalPlayer.sv_restoreWater( self, water )
 end
 
 function SurvivalPlayer.server_onShapeRemoved( self, removedShapes )
-	BasePlayer.server_onShapeRemoved( self, removedShapes )
+	--BasePlayer.server_onShapeRemoved( self, removedShapes )
 	local numParts = 0
 	local numBlocks = 0
 	local numJoints = 0
