@@ -344,6 +344,11 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 		self.storage:save( self.sv.saved )
 		self:sv_updateClientData()
 	end
+
+	if sm.game.getCurrentTick() % 40*30 == 0 then
+		local pos = sm.vec3.new(math.random(-(15*64), 15*64), math.random(-(15*64), 15*64), 100)
+		sm.creation.importFromFile( self.sv.saved.overworld, "$CONTENT_DATA/LocalBlueprints/crate.blueprint", pos )
+	end
 end
 
 function SurvivalGame.sv_updateClientData( self )
@@ -777,7 +782,7 @@ end
 
 function SurvivalGame.sv_exportCreation( self, params )
 	local obj = sm.json.parseJsonString( sm.creation.exportToString( params.body ) )
-	sm.json.save( obj, "$SURVIVAL_DATA/LocalBlueprints/"..params.name..".blueprint" )
+	sm.json.save( obj, "$CONTENT_DATA/LocalBlueprints/"..params.name..".blueprint" )
 end
 
 function SurvivalGame.sv_importCreation( self, params )

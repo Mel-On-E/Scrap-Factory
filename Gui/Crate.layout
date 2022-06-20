@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundInteractableWide" position_real="0 0 0.2 0.35" name="BackPanel">
+        <Widget type="TextBox" skin="TextBox" position_real="0 0.075 1 0.106087" align="HStretch Top">
+            <Property key="Caption" value="#ffff00L O O T   C R A T E"/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="FontName" value="SM_HeaderLarge_Medium"/>
+            <Property key="TextShadow" value="true"/>
+        </Widget>
+        <Widget type="Widget" skin="BackgroundPopup" position_real="0 0.256087 1 0.743913" align="HStretch Bottom">
+            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.055 0.100251 0.89 0.6" align="Left Bottom">
+                <Widget type="TextBox" skin="TextBox" position_real="0.0333333 0.76 0.933333 0.141066" align="HStretch Top" name="Name">
+                    <Property key="Caption" value="Loot"/>
+                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="TextShadow" value="true"/>
+                </Widget>
+
+                <Widget type="Widget" skin="GenericButton" position_real="0.35 0.1 0.3 0.6076832802538631">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.05 0.05 0.9 0.9" name="Icon">
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="ImageTexture" value="$CONTENT_b6aae82e-ce35-49ef-b01f-ce916c29f0b6/Gui/Layouts/Images/Paper.png" />
+                    </Widget>
+                </Widget>
+
+            </Widget> 
+
+            <Widget type="Button" skin="UpgradeButton" name="Open" position_real="0.25 0.725 0.5 0.25">
+                <Property key="FontName" value="Default" />
+                <Widget type="TextBox" skin="TextBox" position_real="0.111111 0.169 0.777778 0.6">
+                    <Property key="Caption" value="OPEN" />
+                    <Property key="TextAlign" value="Center" />
+                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="NeedMouse" value="false" />
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+</MyGUI>

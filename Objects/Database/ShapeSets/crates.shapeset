@@ -1,0 +1,54 @@
+{
+   "partList" : [
+      {
+         "box" : {
+            "x" : 4,
+            "y" : 4,
+            "z" : 4
+         },
+         "color" : "00ff00",
+         "flammable" : false,
+         "name" : "obj_lootcrate",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 5
+         },
+         "renderable": {
+				"lodList": [
+					{
+						"subMeshMap": {
+							"Lootbox": {  
+								"material": "DifAsgNor",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_dif.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+								]
+							},
+							"lightcone_mat": {  
+								"material": "LightCone",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga", 
+									"",
+									""
+								]
+							}
+						},
+						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx"
+					}
+				]
+			},
+         "restitution" : 0.5,
+         "rotationSet" : "PropYNegYZ",
+         "scripted" : {
+            "classname" : "LootCrate",
+            "filename" : "$CONTENT_DATA/Scripts/LootCrate.lua"
+         },
+         "stackSize" : 999,
+         "uuid" : "69b869f1-03dc-4ea3-9291-fd6490f945dd"
+      }
+   ]
+}
