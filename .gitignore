@@ -16,7 +16,7 @@ luac.out
 *.os
 *.ko
 *.elf
-
+d
 # Precompiled Headers
 *.gch
 *.pch
@@ -36,7 +36,6 @@ luac.out
 *.dylib
 
 # Executables
-*.exe
 *.out
 *.app
 *.i*86
