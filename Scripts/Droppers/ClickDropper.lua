@@ -10,7 +10,7 @@ end
 
 function ClickDropper:server_onFixedUpdate()
     local state = self.interactable:isActive()
-    if state ~= self.sv.prevState and state then
+    if self.sv.prevState ~= nil and state ~= self.sv.prevState and state then
         self:sv_drop()
     end
     self.sv.prevState = state
