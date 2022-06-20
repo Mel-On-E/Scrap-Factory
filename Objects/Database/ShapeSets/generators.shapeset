@@ -59,6 +59,13 @@
                "durability" : 2,
                "friction" : 5
             },
+            "scripted": {
+				"filename": "$CONTENT_DATA/Scripts/Generators/Generator.lua",
+				"classname": "Generator",
+				"data": {
+                    "power": 10
+                }
+			},
             "color" : "00ff00",
             "flammable" : true
         }

@@ -57,10 +57,13 @@ function SurvivalGame.server_onCreate( self )
 		--FACTORY
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
-		
 		self.storage:save( self.sv.saved )
 	end
 	self.data = nil
+
+	--FACTORY
+	self.sv.factory = {}
+	self.sv.factory.power = 0
 
 	print( self.sv.saved.data )
 	if self.sv.saved.data and self.sv.saved.data.dev then
@@ -193,6 +196,7 @@ function SurvivalGame.client_onCreate( self )
 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false, {isHud = true,isInteractive=false,needsCursor=false})
 	g_factoryHud:open()
 	self.cl.money = 0
+	self.cl.power = 0
 end
 
 function SurvivalGame.bindChatCommands( self )
@@ -273,6 +277,7 @@ function SurvivalGame.client_onClientDataUpdate( self, clientData, channel )
 	if channel == 2 then
 		self.cl.time = clientData.time
 		self.cl.money = clientData.money
+		self.cl.power = clientData.power
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
 		self:bindChatCommands()
@@ -342,7 +347,7 @@ function SurvivalGame.server_onFixedUpdate( self, timeStep )
 end
 
 function SurvivalGame.sv_updateClientData( self )
-	self.network:setClientData( { time = self.sv.time, money = self.sv.saved.factory.money }, 2 )
+	self.network:setClientData( { time = self.sv.time, money = self.sv.saved.factory.money, power = self.sv.factory.power }, 2 )
 end
 
 function SurvivalGame.client_onUpdate( self, dt )
@@ -1167,10 +1172,16 @@ function SurvivalGame:sv_e_addMoney(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
 end
 
+function SurvivalGame:sv_e_addPower(power)
+	self.sv.factory.power = self.sv.factory.power + power
+end
+
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
 		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
 		g_factoryHud:setText("DialogTextBox",format_money(money))
+		local power = sm.isHost and self.sv.factory.power or self.cl.power
+		g_factoryHud:setText("Power", "#00dddd" .. tostring(power))
 	end
 end
 
