@@ -55,6 +55,14 @@ obj_belt1_straight = sm.uuid.new("69b857f1-07dc-4ea2-9391-fd24903945d1")
 obj_generator_windmill = sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c")
 
 ----------------------------------------
+-- storage.shapeset
+----------------------------------------
+
+-- partList
+
+obj_storage_battery = sm.uuid.new("91037f2c-5230-464b-8873-ad13355539af")
+
+----------------------------------------
 -- crates.shapeset
 ----------------------------------------
 

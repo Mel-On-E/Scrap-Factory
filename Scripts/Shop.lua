@@ -13,7 +13,6 @@ Shop = class()
 
 function Shop:client_onCreate()
 	self.cl = {}
-
 	if self.tool:isLocal() then
 		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
 		self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
@@ -22,7 +21,9 @@ function Shop:client_onCreate()
 		self.cl.pages = math.floor(#json / 32) == 0 and 1 or
 			math.floor(#json / 32)
 		self.cl.page = 1
+		self.cl.item = 1
 		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
+		self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 		self.cl.itemPages = { {} }
 		local page = 1
 		for i, v in pairs(json) do
@@ -64,12 +65,23 @@ end
 function Shop:changeItem(itemName)
 	---@type GuiInterface
 	self.cl.gui = self.cl.gui
+	self.cl.item = tonumber(string.sub(string.reverse(itemName), 1, #string.reverse(itemName) - 5))
 	for i = 1, 32 do
 		self.cl.gui:setButtonState("Item_" .. tostring(i), false)
 	end
 	self.cl.gui:setButtonState(itemName, true)
-	local item = tonumber(string.sub(string.reverse(itemName), 1, #string.reverse(itemName) - 5))
-	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.itemPages[self.cl.page][item].uuid))
+	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.itemPages[self.cl.page][self.cl.item].uuid))
+end
+
+function Shop:cl_buyItem()
+	self.network:sendToServer("sv_buyItem",
+		{ price = self.cl.itemPages[self.cl.page][self.cl.item].price,
+			uuid = self.cl.itemPages[self.cl.page][self.cl.item].uuid })
+end
+
+function Shop:sv_buyItem(params, player)
+	params.player = player
+	sm.event.sendToGame("sv_e_buyItem", params)
 end
 
 function Shop.client_onRefresh(self)
