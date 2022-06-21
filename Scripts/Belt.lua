@@ -1,3 +1,5 @@
+dofile("$CONTENT_DATA/Scripts/util.lua")
+
 Belt = class( nil )
 
 function Belt:server_onCreate()
