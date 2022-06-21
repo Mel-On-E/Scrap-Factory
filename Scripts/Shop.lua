@@ -4,28 +4,72 @@ local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
 local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
-
+dofile("$CONTENT_DATA/Scripts/util.lua")
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
-
+---@class Shop : ToolClass
 Shop = class()
 
-function Shop.client_onCreate(self)
+function Shop:client_onCreate()
 	self.cl = {}
 
 	if self.tool:isLocal() then
 		self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
 		self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 		self.cl.seatedEquiped = false
-		self.cl.pages = math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32) == 0 and 1 or
-			math.floor(#sm.json.open("$CONTENT_DATA/shop.json") / 32)
-		print("-------------------------")
-		print(self.cl.pages)
+		local json = sm.json.open("$CONTENT_DATA/shop.json")
+		self.cl.pages = math.floor(#json / 32) == 0 and 1 or
+			math.floor(#json / 32)
 		self.cl.page = 1
+		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
+		self.cl.itemPages = { {} }
+		local page = 1
+		for i, v in pairs(json) do
+			table.insert(self.cl.itemPages[page], v)
+			if i % 32 == 0 then
+				page = page + 1
+			end
+		end
+		for i = 1, 32 do
+			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
+		end
+		self:gen_page(1)
 	end
 
 	self:client_onRefresh()
+end
+
+function Shop:gen_page(num)
+	---@type GuiInterface
+	self.cl.gui = self.cl.gui
+	local pageLen = #self.cl.itemPages[num]
+	for i = 1, 32 do
+		self.cl.gui:setVisible("Item_" .. tostring(i), true)
+		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), true)
+	end
+	for i, v in pairs(self.cl.itemPages[num]) do
+		self.cl.gui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
+		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money(v.price))
+	end
+	if pageLen > 32 then return end
+	for i = pageLen + 1, 32 do
+		self.cl.gui:setVisible("Item_" .. tostring(i), false)
+		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), false)
+	end
+
+end
+
+---@param itemName string
+function Shop:changeItem(itemName)
+	---@type GuiInterface
+	self.cl.gui = self.cl.gui
+	for i = 1, 32 do
+		self.cl.gui:setButtonState("Item_" .. tostring(i), false)
+	end
+	self.cl.gui:setButtonState(itemName, true)
+	local item = tonumber(string.sub(string.reverse(itemName), 1, #string.reverse(itemName) - 5))
+	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.itemPages[self.cl.page][item].uuid))
 end
 
 function Shop.client_onRefresh(self)

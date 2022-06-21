@@ -1,3 +1,5 @@
+---@diagnostic disable: lowercase-global
+---@param money number
 function format_money(money)
     moneyStr = tostring(math.floor(money))
     local length = #moneyStr
@@ -27,8 +29,8 @@ function format_money(money)
         return string.format("#00dd00$%.2f", money)
     end
 
-    local leadingDigits = string.sub(moneyStr, 1, length%3)
-    local followingDigits = string.sub(moneyStr, length%3 + 1, 3)
+    local leadingDigits = string.sub(moneyStr, 1, length % 3)
+    local followingDigits = string.sub(moneyStr, length % 3 + 1, 3)
 
     local separator = "."
     if #leadingDigits == 0 then
