@@ -61,7 +61,7 @@
             },
             "scripted": {
 				"filename": "$CONTENT_DATA/Scripts/Generators/Generator.lua",
-				"classname": "Generator",
+				"classname": "Windmill",
 				"data": {
                     "power": 10,
                     "powerLimit": 10
