@@ -1,6 +1,14 @@
 dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
-Furnace = class(nil)
+
+Furnace = class(Power)
+Furnace.maxParentCount = 1
+Furnace.maxChildCount = 0
+Furnace.connectionInput = sm.interactable.connectionType.logic
+Furnace.connectionOutput = sm.interactable.connectionType.none
+Furnace.colorNormal = sm.color.new( 0x8000ddff )
+Furnace.colorHighlight = sm.color.new( 0x8000ffff )
 
 function Furnace:server_onCreate()
     local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
@@ -9,9 +17,12 @@ function Furnace:server_onCreate()
         sm.areaTrigger.filter.dynamicBody)
     self.trigger:bindOnEnter("sv_onEnter")
     self.trigger:bindOnStay("sv_onEnter")
+
+    Power.server_onCreate(self)
 end
 
 function Furnace:sv_onEnter(trigger, results)
+    if not self.active then return end
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
         for k, shape in pairs(result:getShapes()) do
@@ -19,7 +30,6 @@ function Furnace:sv_onEnter(trigger, results)
             if not interactable then goto continue end
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
-            if not consume_power(self.data.power) then goto continue end
             shape:destroyPart(0)
             self.network:sendToClients("cl_stonks", { pos = shape:getWorldPosition(), value = data.value })
             sm.event.sendToGame("sv_e_addMoney", data.value)

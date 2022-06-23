@@ -1,4 +1,5 @@
 dofile("$CONTENT_DATA/Scripts/Belt.lua")
+dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
 Upgrader = class(nil)
 Upgrader.maxParentCount = 1
@@ -20,41 +21,11 @@ function Upgrader:server_onCreate()
     self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody)
     self.upgradeTrigger:bindOnEnter("sv_onEnter")
-    self.prevActive = true
-    self.powerUpdate = 1
+    Power.server_onCreate(self)
 end
 
 function Upgrader:server_onFixedUpdate()
-    self.powerUpdate = self.powerUpdate -1
-
-    if self.powerUpdate == 0 then
-        self.powerUpdate = 40
-        if not consume_power(self.data.power) then
-            self.prevActive = false
-        end
-    end
-
-    local parent = self.interactable:getSingleParent()
-    if not parent then 
-        self.active = true
-    else
-        self.active = parent:isActive()
-    end
-
-    if self.prevActive ~= self.active then
-        if self.active then
-            if consume_power(self.data.power) then
-                self.powerUpdate = 40
-            else
-                self.active = false
-            end
-        else     
-            self.powerUpdate = -1
-        end
-        self.network:sendToClients("cl_toggleEffect", self.active)
-    end
-
-    self.prevActive = self.active
+    Power.server_onFixedUpdate(self, "cl_toggleEffect")
 end
 
 function Upgrader:client_onCreate()
@@ -69,6 +40,7 @@ function Upgrader:client_onCreate()
 end
 
 function Upgrader:sv_onEnter(trigger, results)
+    if not self.active then return end
     for _, result in ipairs(results) do
         if not sm.exists(result) then return end
         for k, shape in ipairs(result:getShapes()) do
@@ -105,6 +77,5 @@ function BeltUpgrader:server_onCreate()
 end
 
 function BeltUpgrader:sv_onStay(trigger, results)
-    if not self.active then return end
     Belt.sv_onStay(self, trigger, results)
 end

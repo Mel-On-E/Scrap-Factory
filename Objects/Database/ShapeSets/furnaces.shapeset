@@ -65,7 +65,7 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power": 1
+               "power": 3
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
