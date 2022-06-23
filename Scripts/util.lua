@@ -40,10 +40,11 @@ function format_money(money)
 end
 
 function consume_power(power)
-    if g_power > power then
+    if g_power >= power then
         g_power = g_power - power
         return true
     else
+        g_power = 0
         return false
     end
 end
