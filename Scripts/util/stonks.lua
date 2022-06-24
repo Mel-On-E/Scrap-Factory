@@ -5,7 +5,6 @@ function Stonks:client_onCreate()
     self.cl.stonks = {}
 end
 
-
 function Stonks:cl_stonks(params)
     local gui = sm.gui.createNameTagGui()
     gui:setWorldPosition(params.pos)
@@ -32,4 +31,19 @@ function Stonks:client_onUpdate(dt)
         stonks.pos = stonks.pos + sm.vec3.new(0, 0, 0.1) * dt
         stonks.gui:setWorldPosition(stonks.pos)
     end
+end
+
+Energy = class(Stonks)
+
+function Energy:cl_stonks(params)
+    local effect = params.effect or "Loot - Pickup"
+    local gui = sm.gui.createNameTagGui()
+    gui:setWorldPosition(params.pos)
+    gui:open()
+    gui:setMaxRenderDistance(100)
+    gui:setText("Text", format_energy(params.value))
+
+    sm.effect.playEffect(effect, params.pos - sm.vec3.new(0, 0, 0.25))
+
+    self.cl.stonks[#self.cl.stonks + 1] = { gui = gui, endTick = sm.game.getCurrentTick() + 80, pos = params.pos }
 end
