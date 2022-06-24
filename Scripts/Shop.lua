@@ -30,6 +30,7 @@ function Shop:client_onCreate()
 		self.cl.gui:setButtonCallback("Buy_x100", "changeQuantity")
 		self.cl.gui:setButtonCallback("Buy_x999", "changeQuantity")
 		self.cl.itemPages = { {} }
+		self.cl.filteredPages = { {} }
 		local page = 1
 		local i = 1
 		for k, v in pairs(json) do
@@ -81,8 +82,10 @@ end
 ---@param wigetName string
 function Shop:changeQuantity(wigetName)
 	self.cl.gui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
+	self.cl.gui:setText("Buy_x" .. tostring(self.cl.quantity), "#ffffffx" .. self.cl.quantity)
 	self.cl.quantity = tonumber(string.reverse(string.sub(string.reverse(wigetName), 1, #wigetName - 5)))
 	self.cl.gui:setButtonState(wigetName, true)
+	self.cl.gui:setText(wigetName, "#4f4f4fx" .. self.cl.quantity)
 end
 
 function Shop:cl_buyItem()
