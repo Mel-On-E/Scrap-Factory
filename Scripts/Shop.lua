@@ -22,15 +22,18 @@ function Shop:client_onCreate()
 			math.floor(#json / 32)
 		self.cl.page = 1
 		self.cl.item = 1
+		self.cl.quantity = 1
 		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
 		self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 		self.cl.itemPages = { {} }
 		local page = 1
-		for i, v in pairs(json) do
-			table.insert(self.cl.itemPages[page], v)
+		local i = 1
+		for k, v in pairs(json) do
+			table.insert(self.cl.itemPages[page], { uuid = k, price = v.price, category = v.category })
 			if i % 32 == 0 then
 				page = page + 1
 			end
+			i = i + 1
 		end
 		for i = 1, 32 do
 			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
