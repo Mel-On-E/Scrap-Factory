@@ -5,32 +5,26 @@ function format_money(money, color)
         color = "#00dd00"
     end
 
+    local suffixes = {}
+    local funnyLetters = {"k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
+    for k, letter in ipairs(funnyLetters) do
+        suffixes[k*3] = letter
+    end
+
     moneyStr = tostring(math.floor(money))
     local length = #moneyStr
-
     local suffix = ""
-    if length > 30 then
-        suffix = "No"
-    elseif length > 27 then
-        suffix = "Oc"
-    elseif length > 24 then
-        suffix = "Sp"
-    elseif length > 21 then
-        suffix = "Sx"
-    elseif length > 18 then
-        suffix = "Qn"
-    elseif length > 15 then
-        suffix = "Qd"
-    elseif length > 12 then
-        suffix = "T"
-    elseif length > 9 then
-        suffix = "B"
-    elseif length > 6 then
-        suffix = "M"
-    elseif length > 3 then
-        suffix = "k"
-    else
+
+    if length < 3 then
         return string.format(color .. "$%.2f", money)
+    end
+
+    for len, suf in pairs(suffixes) do
+        if length > len then
+            suffix = suf
+        else
+            break
+        end
     end
 
     local leadingDigits = string.sub(moneyStr, 1, length % 3)
@@ -41,6 +35,43 @@ function format_money(money, color)
         separator = ""
     end
     return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
+end
+
+function format_energy( power, color)
+    if not color then
+        color = "#dddd00"
+    end
+
+    local suffixes = {}
+    local funnyLetters = {"k", "M", "G", "T", "P", "E", "Z", "Y"}
+    for k, letter in ipairs(funnyLetters) do
+        suffixes[k*3] = letter
+    end
+
+    powerStr = tostring(math.floor(power))
+    local length = #powerStr
+    local suffix = ""
+
+    if length < 3 then
+        return string.format(color .. power .. "W")
+    end
+
+    for len, suf in pairs(suffixes) do
+        if length > len then
+            suffix = suf
+        else
+            break
+        end
+    end
+
+    local leadingDigits = string.sub(powerStr, 1, length % 3)
+    local followingDigits = string.sub(powerStr, length % 3 + 1, 3)
+
+    local separator = "."
+    if #leadingDigits == 0 then
+        separator = ""
+    end
+    return color .. leadingDigits .. separator .. followingDigits .. suffix .. "W"
 end
 
 function consume_power(power)
