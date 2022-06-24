@@ -18,7 +18,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.12448132780082988 0.65625 0.12033195020746888 0.34375" name="DropperTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.12448132780082988 0.65625 0.12033195020746888 0.34375" name="DroppersTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906">
                     <Property key="Caption" value="Droppers"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
@@ -34,7 +34,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.24481327800829875 0.65625 0.12033195020746888 0.34375" name="UpgradeTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.24481327800829875 0.65625 0.12033195020746888 0.34375" name="UpgradesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906">
                     <Property key="Caption" value="Upgrades"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
@@ -50,7 +50,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.36514522821576761 0.65625 0.12033195020746888 0.34375" name="FurnaceTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.36514522821576761 0.65625 0.12033195020746888 0.34375" name="FurnacesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.7931034482758621 0.90909090909090906">
                     <Property key="Caption" value="Furnaces"/>
                     <Property key="TextAlign" value="Center"/>
@@ -91,7 +91,7 @@
                     <Property key="TextAlign" value="Center"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.48547717842323651 0.65625 0.12033195020746888 0.34375" name="GeneratorTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.48547717842323651 0.65625 0.12033195020746888 0.34375" name="GeneratorsTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.17241379310344829 -0.090909090909090912 0.75862068965517238 1">
                     <Property key="Caption" value="Generators"/>
                     <Property key="TextAlign" value="Center"/>
@@ -179,7 +179,6 @@
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.22253129346314326 0.1037344398340249 0.027816411682892908" name="ItemPrice_6">
                 <Property key="Caption" value="${ItemPrice_6}"/>
-                <Property key="FontHeight" value="15"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
             <Widget type="Button" skin="GenderButton" position_real="0.75933609958506221 0.055632823365785816 0.1078838174273859 0.15994436717663421" name="Item_7">
@@ -192,7 +191,6 @@
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.22253129346314326 0.1037344398340249 0.027816411682892908" name="ItemPrice_7">
                 <Property key="Caption" value="${ItemPrice_7}"/>
-                <Property key="FontHeight" value="15"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
             <Widget type="Button" skin="GenderButton" position_real="0.88381742738589208 0.055632823365785816 0.1078838174273859 0.15994436717663421" name="Item_8">
@@ -205,7 +203,6 @@
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.22253129346314326 0.1037344398340249 0.027816411682892908" name="ItemPrice_8">
                 <Property key="Caption" value="${ItemPrice_8}"/>
-                <Property key="FontHeight" value="15"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
             <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.26425591098748263 0.1078838174273859 0.15994436717663421" name="Item_9">
