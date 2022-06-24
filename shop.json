@@ -1,12 +1,7 @@
 {
-	"7e3df19b-2450-44ae-ad46-d2f6b5148cbf": { //obj_furnace_basic
-		"price": 2137,
-		"category": "Furnace"
-	},
-
-	"87873e83-8270-4796-9401-6baba45ccef2": { //obj_drop_scrap_wood
+	//obj_furnace_basic
+	"7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
 		"price": 2137,
 		"category": "Furnace"
 	}
 }
-

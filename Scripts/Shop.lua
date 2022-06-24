@@ -29,6 +29,15 @@ function Shop:client_onCreate()
 		self.cl.gui:setButtonCallback("Buy_x10", "changeQuantity")
 		self.cl.gui:setButtonCallback("Buy_x100", "changeQuantity")
 		self.cl.gui:setButtonCallback("Buy_x999", "changeQuantity")
+		self.cl.gui:setButtonCallback("AllTab", "changeCategory")
+		self.cl.gui:setButtonCallback("DropperTab", "changeCategory")
+		self.cl.gui:setButtonCallback("UpgradeTab", "changeCategory")
+		self.cl.gui:setButtonCallback("FurnaceTab", "changeCategory")
+		self.cl.gui:setButtonCallback("GeneratorTab", "changeCategory")
+		self.cl.gui:setButtonCallback("UtilitiesTab", "changeCategory")
+		self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
+		self.cl.gui:setButtonCallback("NextPage", "changePage")
+		self.cl.gui:setButtonCallback("LastPage", "changePage")
 		self.cl.itemPages = { {} }
 		self.cl.filteredPages = { {} }
 		local page = 1
@@ -43,7 +52,9 @@ function Shop:client_onCreate()
 		for i = 1, 32 do
 			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 		end
-		self:gen_page(1)
+		self:gui_filter("All")
+		self:gen_page(self.cl.page)
+		self:changeItem("Item_" .. self.cl.item)
 	end
 
 	self:client_onRefresh()
@@ -52,21 +63,41 @@ end
 function Shop:gen_page(num)
 	---@type GuiInterface
 	self.cl.gui = self.cl.gui
-	local pageLen = #self.cl.itemPages[num]
+	local pageLen = #self.cl.filteredPages[num]
 	for i = 1, 32 do
 		self.cl.gui:setVisible("Item_" .. tostring(i), true)
 		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), true)
 	end
-	for i, v in pairs(self.cl.itemPages[num]) do
+	for i, v in pairs(self.cl.filteredPages[num]) do
 		self.cl.gui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
 		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money(v.price))
 	end
-	if pageLen > 32 then return end
+	if pageLen == 32 then return end
 	for i = pageLen + 1, 32 do
 		self.cl.gui:setVisible("Item_" .. tostring(i), false)
 		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), false)
 	end
 
+end
+
+---@param category string
+function Shop:gui_filter(category)
+	self.cl.filteredPages = { {} }
+	if category == "All" then
+		self.cl.filteredPages = self.cl.itemPages
+		return
+	end
+	local page = 1
+	for i, v in pairs(self.cl.itemPages) do
+		for i, v in pairs(v) do
+			if v.category == category then
+				table.insert(self.cl.filteredPages[page], v)
+			end
+		end
+		if i % 32 then
+			page = page + 1
+		end
+	end
 end
 
 ---@param itemName string
@@ -76,7 +107,24 @@ function Shop:changeItem(itemName)
 	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
 	self.cl.item = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
 	self.cl.gui:setButtonState(itemName, true)
-	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.itemPages[self.cl.page][self.cl.item].uuid))
+	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid))
+end
+
+function Shop:changePage(wigetName)
+	if wigetName == "NextPage" then
+		if self.cl.page == self.cl.pages then
+			return
+		end
+		self.cl.page = self.cl.page + 1
+	elseif wigetName == "LastPage" then
+		if self.cl.page == 1 then
+			return
+		end
+		self.cl.page = self.cl.page - 1
+	end
+	self.cl.item = 1
+	self:gen_page(self.cl.page)
+	self:changeItem("Item_" .. self.cl.item)
 end
 
 ---@param wigetName string
@@ -90,8 +138,17 @@ end
 
 function Shop:cl_buyItem()
 	self.network:sendToServer("sv_buyItem",
-		{ price = self.cl.itemPages[self.cl.page][self.cl.item].price,
-			uuid = self.cl.itemPages[self.cl.page][self.cl.item].uuid, quantity = self.cl.quantity })
+		{ price = self.cl.filteredPages[self.cl.page][self.cl.item].price,
+			uuid = self.cl.filteredPages[self.cl.page][self.cl.item].uuid, quantity = self.cl.quantity })
+end
+
+function Shop:changeCategory(categoryName)
+	local category = string.sub(categoryName, 1, -4)
+	self:gui_filter(category)
+	self.cl.page = 1
+	self.cl.item = 1
+	self:gen_page(self.cl.page)
+	self:changeItem("Item_" .. self.cl.item)
 end
 
 function Shop:sv_buyItem(params, player)
