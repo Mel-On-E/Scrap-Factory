@@ -49,6 +49,14 @@ function Shop:client_onCreate()
 			end
 			i = i + 1
 		end
+		for i, _ in pairs(self.cl.itemPages) do
+			table.sort(self.cl.itemPages[i], function(a, b)
+				if a.price == b.price then
+					return true
+				end
+				return a.price > b.price
+			end)
+		end
 		for i = 1, 32 do
 			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 		end
