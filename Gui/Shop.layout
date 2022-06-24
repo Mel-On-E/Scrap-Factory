@@ -10,7 +10,7 @@
             </Widget>
             <Widget type="Button" skin="CraftbotTab" position_real="0.0041493775933609959 0.65625 0.12033195020746888 0.3125" name="AllTab">
                 <Property key="FontHeight" value="2"/>
-                <Widget type="TextBox" skin="TextBox" position="25 0 105 50">
+                <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.72413793103448276 1">
                     <Property key="Caption" value="All"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
                     <Property key="TextAlign" value="Center"/>
