@@ -23,6 +23,7 @@ function Shop:client_onCreate()
 		self.cl.page = 1
 		self.cl.item = 1
 		self.cl.quantity = 1
+		self.cl.gui:setButtonState("Buy_x1", true)
 		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
 		self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 		self.cl.gui:setButtonCallback("Buy_x1", "changeQuantity")
@@ -38,6 +39,7 @@ function Shop:client_onCreate()
 		self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
 		self.cl.gui:setButtonCallback("NextPage", "changePage")
 		self.cl.gui:setButtonCallback("LastPage", "changePage")
+		self:changeQuantity("Buy_x1")
 		self.cl.itemPages = { {} }
 		self.cl.filteredPages = { {} }
 		local page = 1
@@ -49,11 +51,8 @@ function Shop:client_onCreate()
 			end
 			i = i + 1
 		end
-		for i, _ in pairs(self.cl.filteredPages) do
-			table.sort(self.cl.filteredPages[i], function(a, b)
-				if a.price == b.price then
-					return a.price == b.price
-				end
+		for i, _ in pairs(self.cl.itemPages) do
+			table.sort(self.cl.itemPages[i], function(a, b)
 				return a.price < b.price
 			end)
 		end
@@ -108,9 +107,6 @@ function Shop:gui_filter(category)
 	end
 	for i, _ in pairs(self.cl.filteredPages) do
 		table.sort(self.cl.filteredPages[i], function(a, b)
-			if a.price == b.price then
-				return a.price == b.price
-			end
 			return a.price < b.price
 		end)
 	end
@@ -165,9 +161,8 @@ function Shop:changeCategory(categoryName)
 	local category = string.sub(categoryName, 1, -4)
 	self:gui_filter(category)
 	self.cl.page = 1
-	self.cl.item = 1
+	self:changeItem("Item_1")
 	self:gen_page(self.cl.page)
-	self:changeItem("Item_" .. self.cl.item)
 end
 
 function Shop:sv_buyItem(params, player)
