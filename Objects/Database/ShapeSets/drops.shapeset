@@ -1,56 +1,49 @@
 {
-	"partList": [
-        {
-			"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
-			"name": "obj_drop_scrap_wood",
-			"renderable": {
-				"lodList": [
-					{
-						"subMeshList": [
-							{
-								"textureList": [
-									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
-									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
-									"",
-									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_beams_ao.tga"
-								],
-								"material": "DifAsgAo"
-							}
-						],
-						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_beam.fbx",
-						"includes": [
-							"POSITION",
-							"UV0",
-							"UV1",
-							"NORMAL",
-							"TANGENTS"
-						]
-					}
-				]
-			},
-			"color": "ff00ff",
-			"box": {
-				"x": 1,
-				"y": 1,
-				"z": 1
-			},
-			"scripted": {
-				"filename": "$CONTENT_DATA/Scripts/Drop.lua",
-				"classname": "Drop",
-				"data": {
-                    "value": 1
-                }
-			},
-			"rotationSet": "StaticYmZmXm",
-			"physicsMaterial": "Wood",
-			"ratings": {
-				"density": 4,
-				"durability": 4,
-				"friction": 3,
-				"buoyancy": 1
-			},
-			"flammable": false,
-			"showInInventory": false
-		}
-    ]
+   "partList" : [
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "cd9d71",
+         "flammable" : true,
+         "name" : "obj_drop_scrap_wood",
+         "physicsMaterial" : "Wood",
+         "ratings" : {
+            "buoyancy" : 1,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 3
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "includes" : [ "POSITION", "UV0", "UV1", "NORMAL", "TANGENTS" ],
+                  "mesh" : "$GAME_DATA/Mesh/cube.mesh",
+                  "subMeshList" : [
+                     {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_nor.tga"
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         "rotationSet" : "StaticYmZmXm",
+         "scripted" : {
+            "classname" : "Drop",
+            "data" : {
+               "value" : 1
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Drop.lua"
+         },
+         "showInInventory" : false,
+         "uuid" : "87873e83-8270-4796-9401-6baba45ccef2"
+      }
+   ]
 }
