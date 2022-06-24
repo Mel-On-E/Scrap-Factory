@@ -22,15 +22,22 @@ function Shop:client_onCreate()
 			math.floor(#json / 32)
 		self.cl.page = 1
 		self.cl.item = 1
+		self.cl.quantity = 1
 		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
 		self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
+		self.cl.gui:setButtonCallback("Buy_x1", "changeQuantity")
+		self.cl.gui:setButtonCallback("Buy_x10", "changeQuantity")
+		self.cl.gui:setButtonCallback("Buy_x100", "changeQuantity")
+		self.cl.gui:setButtonCallback("Buy_x999", "changeQuantity")
 		self.cl.itemPages = { {} }
 		local page = 1
-		for i, v in pairs(json) do
-			table.insert(self.cl.itemPages[page], v)
+		local i = 1
+		for k, v in pairs(json) do
+			table.insert(self.cl.itemPages[page], { uuid = k, price = v.price, category = v.category })
 			if i % 32 == 0 then
 				page = page + 1
 			end
+			i = i + 1
 		end
 		for i = 1, 32 do
 			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
@@ -65,18 +72,23 @@ end
 function Shop:changeItem(itemName)
 	---@type GuiInterface
 	self.cl.gui = self.cl.gui
-	self.cl.item = tonumber(string.sub(string.reverse(itemName), 1, #string.reverse(itemName) - 5))
-	for i = 1, 32 do
-		self.cl.gui:setButtonState("Item_" .. tostring(i), false)
-	end
+	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
+	self.cl.item = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
 	self.cl.gui:setButtonState(itemName, true)
 	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.itemPages[self.cl.page][self.cl.item].uuid))
+end
+
+---@param wigetName string
+function Shop:changeQuantity(wigetName)
+	self.cl.gui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
+	self.cl.quantity = tonumber(string.reverse(string.sub(string.reverse(wigetName), 1, #wigetName - 5)))
+	self.cl.gui:setButtonState(wigetName, true)
 end
 
 function Shop:cl_buyItem()
 	self.network:sendToServer("sv_buyItem",
 		{ price = self.cl.itemPages[self.cl.page][self.cl.item].price,
-			uuid = self.cl.itemPages[self.cl.page][self.cl.item].uuid })
+			uuid = self.cl.itemPages[self.cl.page][self.cl.item].uuid, quantity = self.cl.quantity })
 end
 
 function Shop:sv_buyItem(params, player)
