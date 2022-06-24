@@ -517,7 +517,7 @@
                 <Property key="TextAlign" value="Center"/>
             </Widget>
             <Widget type="Widget" skin="ItemColorLine" position_real="0 0.37757437070938216 1 0.0057208237986270021"/>
-            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.47482837528604122 0.90000000000000002 0.30892448512585813">
+            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.47482837528604122 0.90000000000000002 0.30892448512585813" name="ItemDesc">
                 <Property key="Caption" value="[DEFAUasdasdasdasdLT]"/>
                 <Property key="FontName" value="SM_TextTiny"/>
                 <Property key="TextShadowColour" value="0 0 0"/>

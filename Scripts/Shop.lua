@@ -102,12 +102,15 @@ end
 
 ---@param itemName string
 function Shop:changeItem(itemName)
+	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid)
 	---@type GuiInterface
 	self.cl.gui = self.cl.gui
 	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
 	self.cl.item = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
 	self.cl.gui:setButtonState(itemName, true)
-	self.cl.gui:setMeshPreview("Preview", sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid))
+	self.cl.gui:setMeshPreview("Preview", uuid)
+	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
+	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
 end
 
 function Shop:changePage(wigetName)
