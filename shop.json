@@ -20,7 +20,7 @@
 
 	//obj_upgrader_basic
 	"69b869f1-03dc-4ea2-9391-fd24903945d1": {
-		"price": 200,
+		"price": 100,
 		"category": "Upgrades"
 	},
 	//obj_upgrader_toilet

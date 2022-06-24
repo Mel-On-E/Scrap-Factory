@@ -43,7 +43,7 @@ function Burner:sv_onEnter(trigger, results)
 end
 
 function Burner:client_onCreate()
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    --[[local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
     self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
@@ -51,7 +51,7 @@ function Burner:client_onCreate()
 	self.effect:setParameter("color", sm.color.new(1,1,1))
     self.effect:setScale(size)
     self.effect:setOffsetPosition(offset)
-	self.effect:start()
+	self.effect:start()]]
 
     Stonks.client_onCreate(self)
 end

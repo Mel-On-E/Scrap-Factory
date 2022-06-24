@@ -5,6 +5,7 @@ function Drop:server_onCreate()
     body:setErasable(false)
     body:setPaintable(false)
     body:setBuildable(false)
+    body:setLiftable(false)
     self.interactable:setPublicData( {value = self.data.value, upgrades = {}})
     self.timeout = 0
 end
@@ -16,7 +17,7 @@ function Drop:server_onFixedUpdate()
         self.timeout = 0
     end
 
-    if self.timeout > 40*10 then
+    if self.timeout > 40*5 then
         self.shape:destroyShape(0)
     end
 end
