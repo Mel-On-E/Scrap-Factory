@@ -53,6 +53,8 @@ obj_belt1_straight = sm.uuid.new("69b857f1-07dc-4ea2-9391-fd24903945d1")
 -- partList
 
 obj_generator_windmill = sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c")
+obj_generator_solar = sm.uuid.new("efc10452-8461-44c5-8c21-a06d5aaea16c")
+obj_generator_campfire = sm.uuid.new("efc1f452-8431-44c5-8c21-a06d53aed16c")
 
 ----------------------------------------
 -- storage.shapeset
@@ -103,6 +105,7 @@ obj_lootcrate = sm.uuid.new("69b869f1-03dc-4ea3-9291-fd6490f945dd")
 -- toolList
 
 tool_shop = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
+tool_sell = sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0")
 tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
 tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
 
