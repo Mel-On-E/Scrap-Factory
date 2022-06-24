@@ -1,11 +1,94 @@
 {
+	//DROPPERS
+
+	//obj_dropper_scrap_wood
+	"692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
+		"price": 20,
+		"category": "Droppers"
+	},
+	//obj_dropper_scrap_wood_auto
+	"632a52bd-0791-49ba-b1ef-c81adfdceba7": {
+		"price": 200,
+		"category": "Droppers"
+	},
+	
+
+
+
+	
+	//Upgraders
+
+	//obj_upgrader_basic
+	"69b869f1-03dc-4ea2-9391-fd24903945d1": {
+		"price": 200,
+		"category": "Upgrades"
+	},
+	//obj_upgrader_toilet
+	"e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
+		"price": 500,
+		"category": "Upgrades"
+	},
+
+
+
+
+
+	//FURNACES
+
 	//obj_furnace_basic
 	"7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
-		"price": 2137,
-		"category": "Furnace"
+		"price": 100,
+		"category": "Furnaces"
 	},
+
+
+
+
+
+	//GENERATORS
+
+	//obj_generator_windmill
+	"daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
+		"price": 150,
+		"category": "Generators"
+	},
+	//obj_generator_solar
+	"efc10452-8461-44c5-8c21-a06d5aaea16c": {
+		"price": 200,
+		"category": "Generators"
+	},
+	//obj_storage_battery
+	"91037f2c-5230-464b-8873-ad13355539af": {
+		"price": 100,
+		"category": "Generators"
+	},
+	//obj_generator_campfire
+	"efc1f452-8431-44c5-8c21-a06d53aed16c": {
+		"price": 500,
+		"category": "Generators"
+	},
+
+
+
+
+
+	//UTILITIES
+
+	//obj_belt1_straight
 	"69b857f1-07dc-4ea2-9391-fd24903945d1": {
-		"price": 27,
-		"category": "Furnace"
+		"price": 10,
+		"category": "Utilities"
+	},
+
+
+
+
+
+	//DECOR
+
+	//obj_decor_babyduck
+	"80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": {
+		"price": 69,
+		"category": "Decor"
 	}
 }

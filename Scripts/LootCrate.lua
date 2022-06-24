@@ -10,6 +10,7 @@ function LootCrate:server_onCreate()
     body:setPaintable(false)
     body:setBuildable(false)
     self.timeout = 0
+    self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
 end
 
 function LootCrate:server_onFixedUpdate()
@@ -48,7 +49,7 @@ function LootCrate:client_onFixedUpdate()
     if self.opened and self.openTick then
         local tick = sm.game.getCurrentTick()
         if tick % 5 == 0 then
-            self.loot = get_random_item()
+            self.loot = self:get_random_item()
             self.gui:setIconImage( "Icon", self.loot )
             self.gui:setText( "Name", sm.shape.getShapeTitle(self.loot) )
             sm.effect.playEffect("Horn - Honk", sm.localPlayer.getPlayer():getCharacter():getWorldPosition(), sm.vec3.zero(), sm.quat.identity(), sm.vec3.one(), {pitch = 1 - (self.openTick - tick)/self.unboxTime})
@@ -91,14 +92,16 @@ end
 
 dofile("$SURVIVAL_DATA/Scripts/game/survival_items.lua")
 
-function get_random_item()
-    local loot = {
-        obj_interactive_fridge,
-        blk_wood1,
-        obj_decor_babyduck,
-        obj_consumable_sunshake,
-        obj_consumable_component
-    }
+function LootCrate:get_random_item()
+    local loot = {}
+    local money = g_money + 10
+
+    for uuid, item in pairs(self.itemList) do
+        if item.price >= money/10 and item.price <= money*10 then
+            loot[#loot + 1] = sm.uuid.new(uuid)
+        end
+    end
+
     return loot[math.random(1, #loot)]
 end
 
