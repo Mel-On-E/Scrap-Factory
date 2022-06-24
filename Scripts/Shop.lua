@@ -49,10 +49,10 @@ function Shop:client_onCreate()
 			end
 			i = i + 1
 		end
-		for i, _ in pairs(self.cl.itemPages) do
-			table.sort(self.cl.itemPages[i], function(a, b)
+		for i, _ in pairs(self.cl.filteredPages) do
+			table.sort(self.cl.filteredPages[i], function(a, b)
 				if a.price == b.price then
-					return true
+					return a.price == b.price
 				end
 				return a.price < b.price
 			end)
@@ -106,15 +106,23 @@ function Shop:gui_filter(category)
 			page = page + 1
 		end
 	end
+	for i, _ in pairs(self.cl.filteredPages) do
+		table.sort(self.cl.filteredPages[i], function(a, b)
+			if a.price == b.price then
+				return a.price == b.price
+			end
+			return a.price < b.price
+		end)
+	end
 end
 
 ---@param itemName string
 function Shop:changeItem(itemName)
-	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid)
 	---@type GuiInterface
 	self.cl.gui = self.cl.gui
 	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
 	self.cl.item = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
+	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid)
 	self.cl.gui:setButtonState(itemName, true)
 	self.cl.gui:setMeshPreview("Preview", uuid)
 	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
