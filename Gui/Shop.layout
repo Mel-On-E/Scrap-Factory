@@ -496,8 +496,8 @@
                 <Property key="Caption" value="${ItemPrice_32}"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
-            <Widget type="Button" skin="DressbotArrowLeft" position_real="0.42323651452282157 0.9179415855354659 0.041493775933609957 0.069541029207232263"/>
-            <Widget type="Button" skin="DressbotArrowRight" position_real="0.61825726141078841 0.92489568845618919 0.041493775933609957 0.069541029207232263"/>
+            <Widget type="Button" skin="DressbotArrowLeft" position_real="0.42323651452282157 0.9179415855354659 0.041493775933609957 0.069541029207232263" name="LastPage"/>
+            <Widget type="Button" skin="DressbotArrowRight" position_real="0.61825726141078841 0.92489568845618919 0.041493775933609957 0.069541029207232263" name="NextPage"/>
             <Widget type="TextBox" skin="TextBox" position_real="0.46473029045643155 0.9179415855354659 0.15269709543568466 0.075104311543810851" name="PageNum">
                 <Property key="Caption" value="1/1"/>
                 <Property key="TextAlign" value="Center"/>
