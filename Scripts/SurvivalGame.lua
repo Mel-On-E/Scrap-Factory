@@ -63,6 +63,7 @@ function SurvivalGame.server_onCreate(self)
 	end
 	self.data = nil
 	g_power = self.sv.saved.factory.power
+	g_money = self.sv.saved.factory.money
 
 
 	--FACTORY
@@ -365,6 +366,7 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 			g_power = math.min(self.sv.factory.powerLimit, g_power)
 		end
 		self.sv.saved.factory.power = g_power
+		g_money = self.sv.saved.factory.money
 		self.storage:save(self.sv.saved)
 		self:sv_updateClientData()
 	end
