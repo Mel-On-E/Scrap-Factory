@@ -1132,12 +1132,12 @@ function SurvivalGame:sv_e_addMoney(money)
 end
 
 function SurvivalGame:sv_e_buyItem(params)
-	if params.price > self.sv.saved.factory.money then
+	if params.price > self.sv.saved.factory.money * params.quantity then
 		self.network:sendToClient(params.player, "cl_displayAlert", "Not enough money!")
 		return
 	end
 	self.sv.saved.factory.money = self.sv.saved.factory.money - params.price
-	self:sv_giveItem({ player = params.player, item = sm.uuid.new(params.uuid), quantity = 1 })
+	self:sv_giveItem({ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 end
 
 ---@param message string
