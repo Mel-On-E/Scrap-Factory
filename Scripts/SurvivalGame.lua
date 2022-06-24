@@ -1162,7 +1162,7 @@ function SurvivalGame:client_onFixedUpdate()
 		local powerLimit = sm.isHost and self.sv.factory.powerLimit or self.cl.powerLimit
 		local power = sm.isHost and g_power or self.cl.power
 		g_factoryHud:setText("Power", "#dddd00" .. tostring(power) .. "/" .. tostring(powerLimit))
-		if power == 0 then
+		if power == 0 and powerLimit > 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 		end
