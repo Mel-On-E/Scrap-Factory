@@ -852,9 +852,10 @@ function SurvivalGame.server_onPlayerJoined(self, player, newPlayer)
 		sm.container.setItem(inventory, 0, sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b"), 1) --sledgehammer
 		sm.container.setItem(inventory, 1, sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b"), 1) --lift
 		sm.container.setItem(inventory, 2, sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf"), 1) --connect tool
-		sm.container.setItem(inventory, 3, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1) --dropper
-		sm.container.setItem(inventory, 4, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1) --furnace
-		sm.container.setItem(inventory, 5, sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c"), 1) --generator
+		sm.container.setItem(inventory, 3, sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0"), 1) --sell tool
+		sm.container.setItem(inventory, 4, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1) --dropper
+		sm.container.setItem(inventory, 5, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1) --furnace
+		sm.container.setItem(inventory, 6, sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c"), 1) --generator
 		sm.container.endTransaction()
 
 		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT

@@ -13,6 +13,17 @@
 			"showInInventory": false
 		},
 		{
+			"name": "tool_sell",
+			"uuid": "8f190ce2-3a59-423e-8483-a7aa67bd5bc0",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
+			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
+			"script": {
+				"file": "$CONTENT_DATA/Scripts/Sell.lua",
+				"class": "Sell",
+				"data": ""
+			}
+		},
+		{
 			"name": "tool_lift",
 			"uuid": "5cc12f03-275e-4c8e-b013-79fc0f913e1b",
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_lift_preview.rend",

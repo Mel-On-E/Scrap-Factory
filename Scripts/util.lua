@@ -1,6 +1,10 @@
 ---@diagnostic disable: lowercase-global
 ---@param money number
-function format_money(money)
+function format_money(money, color)
+    if not color then
+        color = "#00dd00"
+    end
+
     moneyStr = tostring(math.floor(money))
     local length = #moneyStr
 
@@ -26,7 +30,7 @@ function format_money(money)
     elseif length > 3 then
         suffix = "k"
     else
-        return string.format("#00dd00$%.2f", money)
+        return string.format(color .. "$%.2f", money)
     end
 
     local leadingDigits = string.sub(moneyStr, 1, length % 3)
@@ -36,7 +40,7 @@ function format_money(money)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return "#00dd00$" .. leadingDigits .. separator .. followingDigits .. suffix
+    return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
 end
 
 function consume_power(power)
