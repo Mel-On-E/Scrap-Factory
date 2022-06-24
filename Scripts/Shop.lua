@@ -54,7 +54,7 @@ function Shop:client_onCreate()
 				if a.price == b.price then
 					return true
 				end
-				return a.price > b.price
+				return a.price < b.price
 			end)
 		end
 		for i = 1, 32 do

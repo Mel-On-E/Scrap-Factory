@@ -195,6 +195,7 @@ function SurvivalGame.client_onCreate(self)
 
 	-- Survival HUD
 	g_survivalHud = sm.gui.createSurvivalHudGui()
+	g_survivalHud:setImage("LogbookImageBox", "$CONTENT_DATA/Gui/shop.png")
 	assert(g_survivalHud)
 
 	--FACTORY HUD
@@ -1164,7 +1165,7 @@ function SurvivalGame:client_onFixedUpdate()
 		g_factoryHud:setText("DialogTextBox", format_money(money))
 		local powerLimit = sm.isHost and self.sv.factory.powerLimit or self.cl.powerLimit
 		local power = sm.isHost and g_power or self.cl.power
-		local percentage = powerLimit > 0 and math.ceil((power/powerLimit)*100) or 0
+		local percentage = powerLimit > 0 and math.ceil((power / powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy(power) .. " (" .. tostring(percentage) .. "%)")
 		if power == 0 and powerLimit > 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
