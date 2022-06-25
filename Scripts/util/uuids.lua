@@ -20,6 +20,7 @@ obj_furnace_basic = sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf")
 -- partList
 
 obj_dropper_scrap_wood = sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7")
+obj_dropper_scrap_wood_auto = sm.uuid.new("632a52bd-0791-49ba-b1ef-c81adfdceba7")
 
 ----------------------------------------
 -- drops.shapeset
