@@ -376,6 +376,40 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 		local pos = sm.vec3.new(math.random(-(15 * 64), 15 * 64), math.random(-(15 * 64), 15 * 64), 100)
 		sm.creation.importFromFile(self.sv.saved.overworld, "$CONTENT_DATA/LocalBlueprints/crate.blueprint", pos)
 	end
+
+
+	--TODO add acid rain later
+	if yo_moma then
+		local players = sm.player.getAllPlayers()
+		if players then
+			local player = players[1]
+			--check if character exists?
+			if type(player) == "Player" and sm.exists(player) then
+				if not self.dumb then
+					self.dumb = true
+					return
+				end
+				for i=1, 10, 1 do
+					local pos = sm.vec3.new(math.random(-(15 * 64), 15 * 64), math.random(-(15 * 64), 15 * 64), 100)
+					sm.projectile.customProjectileAttack( nil, sm.uuid.new("c49c1b02-b2c3-45f8-a69d-c6df61b3a1a5"), 69, pos, sm.vec3.new(0,0,-1), player)
+				end
+			end
+		end
+	end
+
+	--TODO make raids work nicely later
+	--also figuree out why the hell no bots spawn
+	if false and sm.game.getCurrentTick() % 400 == 0 then
+		local player = sm.player.getAllPlayers()[1]
+		if player:getCharacter() then
+			local params = {}
+			params[1] = "/raid2"
+			params[2] = 1
+			params[3] = 1
+			params[4] = 69/60
+			sm.event.sendToWorld(player.character:getWorld(), "sv_e_onChatCommand", params)
+		end
+	end
 end
 
 function SurvivalGame.sv_updateClientData(self)

@@ -17,6 +17,7 @@ Overworld.enableCreations = true
 Overworld.enableHarvestables = false
 Overworld.enableKinematics = false
 Overworld.renderMode = "outdoor"
+--Overworld.renderMode = "warehouse" TODO make dis work
 Overworld.cellMinX = -15
 Overworld.cellMaxX = 14
 Overworld.cellMinY = -15
@@ -50,6 +51,8 @@ function Overworld.server_onCreate( self )
 	  }
 	  sm.event.sendToGame( "sv_loadTerrain", data )
 
+	--factory
+	self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
 end
 
 function Overworld.client_onCreate( self )
@@ -394,6 +397,21 @@ function Overworld.sv_e_onChatCommand( self, params )
 		local position = params.player.character.worldPosition - sm.vec3.new( 0, 0, params.player.character:getHeight() / 2 )
 		g_unitManager:sv_beginRaidCountdown( self, position, params[2], params[3] or 1, ( params[4] or ( 10 / 60 ) ) * 60 * 40 )
 
+	elseif params[1] == "/raid2" then
+		local shapes = {}
+		for _, body in ipairs(sm.body.getAllBodies()) do
+			for __, shape in ipairs(body:getShapes()) do
+				if self.itemList[tostring(shape.uuid)] then
+					shapes[#shapes+1] = shape
+				end
+			end
+		end
+		if shapes then
+			local shape = shapes[math.random(1, #shapes)]
+			print( "Starting raid level", params[2], "in, wave", params[3] or 1, " in", params[4] or ( 10 / 60 ), "hours" )
+			g_unitManager:sv_beginRaidCountdown( self, shape.worldPosition, params[2], params[3] or 1, ( params[4] or ( 10 / 60 ) ) * 60 * 40 )
+		end
+
 	elseif params[1] == "/stopraid" then
 		print( "Cancelling all raid" )
 		g_unitManager:sv_cancelRaidCountdown( self )
@@ -528,6 +546,10 @@ function Overworld.server_onProjectile( self, hitPos, hitTime, hitVelocity, _, a
 		self.prevPotatoNode = nil
 	end
 
+	if projectileUuid == sm.uuid.new("c49c1b02-b2c3-45f8-a69d-c6df61b3a1a5") then
+		sm.physics.explode( hitPos, 7, 2.0, 6.0, 25.0, "RedTapeBot - ExplosivesHit" )
+	end
+
 end
 
 function Overworld.sv_ambush( self, params )
@@ -610,9 +632,11 @@ function Overworld.sv_e_spawnRaiders( self, params )
 	local maxDistance = 80 -- 128 is maximum guaranteed terrain distance
 
 	local incomingUnits = {}
-	for k,v in pairs( raiders ) do
-		for i=1, v do
-			table.insert( incomingUnits, k )
+	if raiders then
+		for k,v in pairs( raiders ) do
+			for i=1, v do
+				table.insert( incomingUnits, k )
+			end
 		end
 	end
 

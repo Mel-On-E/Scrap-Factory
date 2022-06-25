@@ -1,3 +1,26 @@
 {
-    "projectiles": []
+   "projectiles" : [
+      {
+         "attachedEffect" : "ChemicalProjectile - Attached",
+         "audiomass" : 250.0,
+         "destruction" : {
+            "destructionLevels" : [
+               {
+                  "chance" : 1.0,
+                  "qualityLevel" : 1
+               }
+            ]
+         },
+         "effect" : "",
+         "enableGravity" : true,
+         "enableImpactEffect" : false,
+         "friction" : 0.2000000029802322,
+         "mass" : 3.0,
+         "mesh": "$GAME_DATA/Projectiles/Renderables/projectile_chemical.rend",
+         "name" : "Projectile name",
+         "radius" : 0.250,
+         "spin" : 7.0,
+         "uuid" : "c49c1b02-b2c3-45f8-a69d-c6df61b3a1a5"
+      }
+   ]
 }
