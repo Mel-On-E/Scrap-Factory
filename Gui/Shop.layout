@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position_real="0.125 0.041666666666666664 0.79166666666666663 0.81111111111111112" name="CreateGamePanel">
-        <Widget type="Widget" skin="BackgroundDarkRoundedUpperRight" position_real="0 0 0.79276315789473684 0.18264840182648401">
-            <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.59375">
+    <Widget type="Widget" skin="PanelEmpty" position="240 70 1520 876" name="CreateGamePanel">
+        <Widget type="Widget" skin="BackgroundDarkRoundedUpperRight" position_real="0 0.011415525114155251 0.79276315789473684 0.16552511415525115">
+            <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.65517241379310343">
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="Caption" value="SHOP"/>
                 <Property key="FontHeight" value="48"/>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.0041493775933609959 0.65625 0.12033195020746888 0.3125" name="AllTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.0041493775933609959 0.65517241379310343 0.12033195020746888 0.34482758620689657" name="AllTab">
                 <Property key="FontHeight" value="2"/>
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.72413793103448276 1">
                     <Property key="Caption" value="All"/>
@@ -18,7 +18,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.12448132780082988 0.65625 0.12033195020746888 0.34375" name="DroppersTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.12448132780082988 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="DroppersTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906">
                     <Property key="Caption" value="Droppers"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
@@ -34,7 +34,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.24481327800829875 0.65625 0.12033195020746888 0.34375" name="UpgradesTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.24481327800829875 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="UpgradesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906">
                     <Property key="Caption" value="Upgrades"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
@@ -50,7 +50,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.36514522821576761 0.65625 0.12033195020746888 0.34375" name="FurnacesTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.36514522821576761 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="FurnacesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.7931034482758621 0.90909090909090906">
                     <Property key="Caption" value="Furnaces"/>
                     <Property key="TextAlign" value="Center"/>
@@ -66,7 +66,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.60580912863070535 0.65625 0.12033195020746888 0.34375" name="UtilitiesTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.60580912863070535 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="UtilitiesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.10344827586206896 -0.090909090909090912 0.82758620689655171 1">
                     <Property key="Caption" value="Utilities"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
@@ -82,7 +82,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.72614107883817425 0.65625 0.12033195020746888 0.34375" name="DecorTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.72614107883817425 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="DecorTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
@@ -91,7 +91,7 @@
                     <Property key="TextAlign" value="Center"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.48547717842323651 0.65625 0.12033195020746888 0.34375" name="GeneratorsTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.48547717842323651 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="GeneratorsTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.17241379310344829 -0.090909090909090912 0.75862068965517238 1">
                     <Property key="Caption" value="Generators"/>
                     <Property key="TextAlign" value="Center"/>

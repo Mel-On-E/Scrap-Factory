@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" name="BackPanel" position_real="0 0 1 1">
-        <Property key="NeedKey" value="false" /> 
-        <Property key="NeedMouse" value="false" /> 
-        <Widget type="Widget" skin="PanelEmpty" position_real="0.35 0.075 0.3 0.1">
-            <Widget type="EditBox" skin="GenericButton" name="Pullution" position_real="0.05 0.145833 0.3 0.5">
-                <Property key="FontName" value="SM_ItemTitle" />
-                <Property key="NeedKey" value="false" />
-                <Property key="NeedMouse" value="false" />
-                <Property key="TextColour" value="1 1 1" />
-                <Property key="TextAlign" value="Center" />
-                <Property key="WordWrap" value="true" />
-                <Property key="Caption" value="#ff00ff69.42k" />
-            </Widget> 
-            <Widget type="EditBox" skin="GenericButton" name="DialogTextBox" position_real="0.35 0.145833 0.3 0.5">
-                <Property key="FontName" value="SM_ItemTitle" />
-                <Property key="NeedKey" value="false" />
-                <Property key="NeedMouse" value="false" />
-                <Property key="TextColour" value="1 1 1" />
-                <Property key="TextAlign" value="Center" />
-                <Property key="WordWrap" value="true" />
-                <Property key="Caption" value="" />
-            </Widget> 
-            <Widget type="EditBox" skin="GenericButton" name="Power" position_real="0.65 0.145833 0.3 0.5">
-                <Property key="FontName" value="SM_ItemTitle" />
-                <Property key="NeedKey" value="false" />
-                <Property key="NeedMouse" value="false" />
-                <Property key="TextColour" value="1 1 1" />
-                <Property key="TextAlign" value="Center" />
-                <Property key="WordWrap" value="true" />
-                <Property key="Caption" value="#ffff0042.00M (69%)" />
-            </Widget> 
+    <Widget type="Widget" skin="PanelEmpty" position_real="0 0 1 1" name="BackPanel">
+        <Property key="NeedKey" value="false"/>
+        <Property key="NeedMouse" value="false"/>
+        <Widget type="Widget" skin="PanelEmpty" position_real="0.3515625 0.055555555555555552 0.29999999999999999 0.10555555555555556">
+            <Widget type="EditBox" skin="GenericButton" position_real="0.048611111111111112 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="Pullution">
+                <Property key="FontName" value="SM_ItemTitle"/>
+                <Property key="NeedKey" value="false"/>
+                <Property key="NeedMouse" value="false"/>
+                <Property key="TextColour" value="1 1 1"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="WordWrap" value="true"/>
+                <Property key="Caption" value="#ff00ff69.42k"/>
+            </Widget>
+            <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="DialogTextBox">
+                <Property key="FontName" value="SM_ItemTitle"/>
+                <Property key="NeedKey" value="false"/>
+                <Property key="NeedMouse" value="false"/>
+                <Property key="TextColour" value="1 1 1"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="WordWrap" value="true"/>
+                <Property key="Caption" value=""/>
+            </Widget>
+            <Widget type="EditBox" skin="GenericButton" position_real="0.64930555555555558 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="Power">
+                <Property key="FontName" value="SM_ItemTitle"/>
+                <Property key="NeedKey" value="false"/>
+                <Property key="NeedMouse" value="false"/>
+                <Property key="TextColour" value="1 1 1"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="WordWrap" value="true"/>
+                <Property key="Caption" value="#ffff0042.00M (69%)"/>
+            </Widget>
         </Widget>
     </Widget>
-    <CodeGeneratorSettings />
+    <CodeGeneratorSettings/>
 </MyGUI>
