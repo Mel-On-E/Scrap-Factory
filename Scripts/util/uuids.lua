@@ -127,3 +127,4 @@ tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
 
 -- projectiles
 
+Projectile_name = sm.uuid.new("c49c1b02-b2c3-45f8-a69d-c6df61b3a1a5")
