@@ -6,7 +6,7 @@
             "y" : 6,
             "z" : 4
          },
-         "color" : "696969",
+         "color" : "df7f01",
          "flammable" : false,
          "name" : "obj_dropper_scrap_wood",
          "physicsMaterial" : "Wood",
@@ -40,7 +40,7 @@
             "y" : 6,
             "z" : 4
          },
-         "color" : "696969",
+         "color" : "df7f01",
          "flammable" : false,
          "name" : "obj_dropper_scrap_wood_auto",
          "physicsMaterial" : "Wood",
