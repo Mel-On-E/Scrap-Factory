@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position="240 70 1520 876" name="CreateGamePanel">
+    <Widget type="Widget" skin="PanelEmpty" position_real="0.125 0.064814814814814811 0.79166666666666663 0.81111111111111112" name="CreateGamePanel">
         <Widget type="Widget" skin="BackgroundDarkRoundedUpperRight" position_real="0 0.011415525114155251 0.79276315789473684 0.16552511415525115">
             <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.65517241379310343">
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
