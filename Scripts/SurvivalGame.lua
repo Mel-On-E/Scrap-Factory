@@ -59,11 +59,19 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
 		self.sv.saved.factory.power = 0
+
+		local tiers = sm.json.open("$CONTENT_DATA/tiers.json")
+		self.sv.saved.factory.research = { tier = 1 }
+
+		for uuid, quantity in pairs(tiers[self.sv.saved.factory.research.tier].goals) do
+			self.sv.saved.factory.research[uuid] = {goal = quantity, quantity = 0}
+		end
 		self.storage:save(self.sv.saved)
 	end
 	self.data = nil
 	g_power = self.sv.saved.factory.power
 	g_money = self.sv.saved.factory.money
+	g_research = self.sv.saved.factory.research
 
 
 	--FACTORY
@@ -366,8 +374,10 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 		if self.sv.factory.powerLimit > 0 then
 			g_power = math.min(self.sv.factory.powerLimit, g_power)
 		end
+		self.sv.saved.factory.research = g_research
 		self.sv.saved.factory.power = g_power
 		g_money = self.sv.saved.factory.money
+
 		self.storage:save(self.sv.saved)
 		self:sv_updateClientData()
 	end

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundInteractableWide" position_real="0 0 0.2 0.35" name="BackPanel">
+        <Widget type="Button" skin="DressbotArrowRight" position_real="0.766667 0.05 0.2 0.188088" align="Right Bottom" name="NextTier"/>
+        <Widget type="Button" skin="DressbotArrowLeft" position_real="0.0333333 0.05 0.2 0.188088" align="Left Bottom" name="PrevTier"/>
+        <Widget type="TextBox" skin="TextBox" position_real="0.233333 0.05 0.533333 0.188088" align="HStretch Bottom" name="TierName">
+            <Property key="Caption" value="Tier 69"/>
+            <Property key="FontName" value="SM_ItemTitle"/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="TextShadow" value="true"/>
+        </Widget>
+
+
+        <Widget type="Widget" skin="BackgroundPopup" position_real="0 0.256087 1 0.743913" align="HStretch Bottom">
+            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.055 0.100251 0.89 0.6" align="Left Bottom">
+                <Widget type="TextBox" skin="TextBox" position_real="0.0333333 0.76 0.933333 0.141066" align="HStretch Top" name="Progress1">
+                    <Property key="Caption" value="$69/420 (69%)"/>
+                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="TextShadow" value="true"/>
+                </Widget>
+
+                <Widget type="Widget" skin="GenericButton" position_real="0.35 0.1 0.3 0.6076832802538631">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.05 0.05 0.9 0.9" name="Icon1">
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="ImageTexture" value="$CONTENT_b6aae82e-ce35-49ef-b01f-ce916c29f0b6/Gui/Layouts/Images/Rick Astley.png" />
+                    </Widget>
+                </Widget>
+
+            </Widget> 
+        </Widget>
+    </Widget>
+</MyGUI>

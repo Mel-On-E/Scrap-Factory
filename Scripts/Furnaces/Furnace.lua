@@ -34,6 +34,10 @@ function Furnace:sv_onEnter(trigger, results)
             shape:destroyPart(0)
             self.network:sendToClients("cl_stonks", { pos = shape:getWorldPosition(), value = data.value })
             sm.event.sendToGame("sv_e_addMoney", data.value)
+            
+            if g_research[tostring(shape.uuid)] then
+                g_research[tostring(shape.uuid)].quantity = g_research[tostring(shape.uuid)].quantity  + data.value
+            end
         end
         ::continue::
     end
