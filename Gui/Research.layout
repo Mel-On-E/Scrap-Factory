@@ -1,34 +1,70 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="BackgroundInteractableWide" position_real="0 0 0.2 0.35" name="BackPanel">
-        <Widget type="Button" skin="DressbotArrowRight" position_real="0.766667 0.05 0.2 0.188088" align="Right Bottom" name="NextTier"/>
-        <Widget type="Button" skin="DressbotArrowLeft" position_real="0.0333333 0.05 0.2 0.188088" align="Left Bottom" name="PrevTier"/>
-        <Widget type="TextBox" skin="TextBox" position_real="0.233333 0.05 0.533333 0.188088" align="HStretch Bottom" name="TierName">
+    <Widget type="Widget" skin="BackgroundInteractableWide" position_real="0 0 0.51875000000000004 0.62962962962962965" name="BackPanel">
+        <Widget type="Button" skin="DressbotArrowRight" position_real="0.91365461847389562 0.014705882352941176 0.076305220883534142 0.10441176470588236" align="Right Bottom" name="NextTier"/>
+        <Widget type="Button" skin="DressbotArrowLeft" position_real="0.020080321285140562 0.014705882352941176 0.076305220883534142 0.10441176470588236" align="Left Bottom" name="PrevTier"/>
+        <Widget type="TextBox" skin="TextBox" position_real="0.095381526104417677 0.014705882352941176 0.81927710843373491 0.10441176470588236" align="HStretch Bottom" name="TierName">
             <Property key="Caption" value="Tier 69"/>
             <Property key="FontName" value="SM_ItemTitle"/>
             <Property key="TextAlign" value="Center"/>
             <Property key="TextShadow" value="true"/>
         </Widget>
-
-
-        <Widget type="Widget" skin="BackgroundPopup" position_real="0 0.256087 1 0.743913" align="HStretch Bottom">
-            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.055 0.100251 0.89 0.6" align="Left Bottom">
-                <Widget type="TextBox" skin="TextBox" position_real="0.0333333 0.76 0.933333 0.141066" align="HStretch Top" name="Progress1">
+        <Widget type="Widget" skin="BackgroundPopup" position_real="0.010040160642570281 0.13235294117647059 0.98493975903614461 0.625" align="HStretch Bottom">
+            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.18858307849133538 0.14117647058823529 0.60142711518858305 0.67294117647058826" align="Left Bottom">
+                <Widget type="TextBox" skin="TextBox" position_real="0.23728813559322035 0.34965034965034963 0.2711864406779661 0.17482517482517482" align="HStretch Top" name="Progress1">
                     <Property key="Caption" value="$69/420 (69%)"/>
-                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="FontName" value="SM_GameName"/>
                     <Property key="TextAlign" value="Center"/>
                     <Property key="TextShadow" value="true"/>
                 </Widget>
-
-                <Widget type="Widget" skin="GenericButton" position_real="0.35 0.1 0.3 0.6076832802538631">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.05 0.05 0.9 0.9" name="Icon1">
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
-                        <Property key="ImageTexture" value="$CONTENT_b6aae82e-ce35-49ef-b01f-ce916c29f0b6/Gui/Layouts/Images/Rick Astley.png" />
+                <Widget type="Widget" skin="GenericButton" position_real="0.55084745762711862 0.26223776223776224 0.17288135593220338 0.35664335664335667">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.049019607843137254 0.049019607843137254 0.89215686274509809 0.89215686274509809" name="Icon1">
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
+                        <Property key="ImageTexture" value="$CONTENT_b6aae82e-ce35-49ef-b01f-ce916c29f0b6/Gui/Layouts/Images/Rick Astley.png"/>
                     </Widget>
                 </Widget>
-
-            </Widget> 
+            </Widget>
         </Widget>
+        <Widget type="Widget" skin="ItemColorLine" position_real="0 0.75588235294117645 1 0.020588235294117647"/>
+        <Widget type="Button" skin="GenderButton" position_real="0.14056224899598393 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_1">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_1">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="GenderButton" position_real="0.26606425702811243 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_2">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_2">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="GenderButton" position_real="0.39156626506024095 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_3">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_3">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="GenderButton" position_real="0.51706827309236947 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_4">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_4">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="GenderButton" position_real="0.64257028112449799 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_5">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_5">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="GenderButton" position_real="0.76807228915662651 0.80882352941176472 0.10040160642570281 0.14705882352941177" name="BtnBottom_6">
+            <Widget type="ImageBox" skin="ImageBox" position_real="0.10000000000000001 0.10000000000000001 0.80000000000000004 0.80000000000000004" name="IconBottom_6">
+                <Property key="NeedMouse" value="false"/>
+                <Property key="NeedKey" value="false"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="DressbotArrowRight" position_real="0.86847389558232935 0.83088235294117652 0.076305220883534142 0.11176470588235295"/>
+        <Widget type="Button" skin="DressbotArrowLeft" position_real="0.065261044176706834 0.83088235294117652 0.076305220883534142 0.11176470588235295"/>
     </Widget>
+    <CodeGeneratorSettings/>
 </MyGUI>
