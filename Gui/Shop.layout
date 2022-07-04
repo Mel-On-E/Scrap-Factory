@@ -107,6 +107,18 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
+            <Widget type="Button" skin="ActiveButton" position_real="0.016597510373443983 0.068965517241379309 0.11950207468879669 0.44137931034482758" name="research">
+                <Property key="Caption" value="Research"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_ButtonSmallBold"/>
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
+            <Widget type="Button" skin="ActiveButton" position_real="0.85892116182572609 0.068965517241379309 0.12033195020746888 0.44827586206896552" name="prestige">
+                <Property key="Caption" value="Prestige"/>
+                <Property key="FontName" value="SM_ButtonSmallBold"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="TextColour" value="1 1 1"/>
+            </Widget>
         </Widget>
         <Widget type="Widget" skin="BackgroundLightRoundedLowerLeft" position_real="0 0.1769406392694064 0.79276315789473684 0.82077625570776258">
             <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.055632823365785816 0.1078838174273859 0.15994436717663421" name="Item_1">
