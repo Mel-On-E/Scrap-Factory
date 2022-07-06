@@ -8,7 +8,28 @@ dofile("$CONTENT_DATA/Scripts/util.lua")
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
+
+---@class page
+---@field uuid string
+---@field price number
+---@field category string
+
+---@class client;
+---@field gui GuiInterface
+---@field filteredPages page[][]
+---@field itemPages page[][]
+---amount of pages
+---@field pageNum number
+---current page
+---@field curPage number
+---current item
+---@field curItem number
+---current quantity
+---@field quantity number
+
+
 ---@class Shop : ToolClass
+---@field cl client
 Shop = class()
 
 function Shop:client_onCreate()
@@ -18,13 +39,13 @@ function Shop:client_onCreate()
 		self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 		self.cl.seatedEquiped = false
 		local json = sm.json.open("$CONTENT_DATA/shop.json")
-		self.cl.pages = math.floor(#json / 32) == 0 and 1 or
+		self.cl.pageNum = math.floor(#json / 32) == 0 and 1 or
 			math.floor(#json / 32)
-		self.cl.page = 1
-		self.cl.item = 1
+		self.cl.curPage = 1
+		self.cl.curItem = 1
 		self.cl.quantity = 1
 		self.cl.gui:setButtonState("Buy_x1", true)
-		self.cl.gui:setText("PageNum", tostring(self.cl.page) .. "/" .. tostring(self.cl.pages))
+		self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
 		self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 		self.cl.gui:setButtonCallback("Buy_x1", "changeQuantity")
 		self.cl.gui:setButtonCallback("Buy_x10", "changeQuantity")
@@ -39,37 +60,36 @@ function Shop:client_onCreate()
 		self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
 		self.cl.gui:setButtonCallback("NextPage", "changePage")
 		self.cl.gui:setButtonCallback("LastPage", "changePage")
+		self.cl.gui:setButtonCallback("research", "openReserch")
 		self:changeQuantity("Buy_x1")
 		self.cl.itemPages = { {} }
 		self.cl.filteredPages = { {} }
-		local page = 1
-		local i = 1
+		local pages = {}
 		for k, v in pairs(json) do
-			table.insert(self.cl.itemPages[page], { uuid = k, price = v.price, category = v.category })
+			table.insert(pages, { uuid = k, price = v.price, category = v.category })
+		end
+		table.sort(pages, function(a, b)
+			return a.price < b.price
+		end)
+		local page = 1;
+		for i, v in pairs(pages) do
+			table.insert(self.cl.itemPages[page], v)
 			if i % 32 == 0 then
 				page = page + 1
 			end
-			i = i + 1
-		end
-		for i, _ in pairs(self.cl.itemPages) do
-			table.sort(self.cl.itemPages[i], function(a, b)
-				return a.price < b.price
-			end)
 		end
 		for i = 1, 32 do
 			self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 		end
 		self:gui_filter("All")
-		self:gen_page(self.cl.page)
-		self:changeItem("Item_" .. self.cl.item)
+		self:gen_page(self.cl.curPage)
+		self:changeItem("Item_" .. self.cl.curItem)
 	end
 
 	self:client_onRefresh()
 end
 
 function Shop:gen_page(num)
-	---@type GuiInterface
-	self.cl.gui = self.cl.gui
 	local pageLen = #self.cl.filteredPages[num]
 	for i = 1, 32 do
 		self.cl.gui:setVisible("Item_" .. tostring(i), true)
@@ -105,20 +125,14 @@ function Shop:gui_filter(category)
 			page = page + 1
 		end
 	end
-	for i, _ in pairs(self.cl.filteredPages) do
-		table.sort(self.cl.filteredPages[i], function(a, b)
-			return a.price < b.price
-		end)
-	end
 end
 
 ---@param itemName string
 function Shop:changeItem(itemName)
-	---@type GuiInterface
-	self.cl.gui = self.cl.gui
-	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
-	self.cl.item = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
-	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.page][self.cl.item].uuid)
+	self.cl.gui:setButtonState("Item_" .. self.cl.curItem, false)
+	---@diagnostic disable-next-line: assign-type-mismatch
+	self.cl.curItem = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
+	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid)
 	self.cl.gui:setButtonState(itemName, true)
 	self.cl.gui:setMeshPreview("Preview", uuid)
 	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
@@ -127,25 +141,26 @@ end
 
 function Shop:changePage(wigetName)
 	if wigetName == "NextPage" then
-		if self.cl.page == self.cl.pages then
+		if self.cl.curPage == self.cl.pageNum then
 			return
 		end
-		self.cl.page = self.cl.page + 1
+		self.cl.curPage = self.cl.curPage + 1
 	elseif wigetName == "LastPage" then
-		if self.cl.page == 1 then
+		if self.cl.curPage == 1 then
 			return
 		end
-		self.cl.page = self.cl.page - 1
+		self.cl.curPage = self.cl.curPage - 1
 	end
-	self.cl.item = 1
-	self:gen_page(self.cl.page)
-	self:changeItem("Item_" .. self.cl.item)
+	self.cl.curItem = 1
+	self:gen_page(self.cl.curPage)
+	self:changeItem("Item_1")
 end
 
 ---@param wigetName string
 function Shop:changeQuantity(wigetName)
 	self.cl.gui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
 	self.cl.gui:setText("Buy_x" .. tostring(self.cl.quantity), "#ffffffx" .. self.cl.quantity)
+	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.quantity = tonumber(string.reverse(string.sub(string.reverse(wigetName), 1, #wigetName - 5)))
 	self.cl.gui:setButtonState(wigetName, true)
 	self.cl.gui:setText(wigetName, "#4f4f4fx" .. self.cl.quantity)
@@ -153,16 +168,16 @@ end
 
 function Shop:cl_buyItem()
 	self.network:sendToServer("sv_buyItem",
-		{ price = self.cl.filteredPages[self.cl.page][self.cl.item].price,
-			uuid = self.cl.filteredPages[self.cl.page][self.cl.item].uuid, quantity = self.cl.quantity })
+		{ price = self.cl.filteredPages[self.cl.curPage][self.cl.curItem].price,
+			uuid = self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid, quantity = self.cl.quantity })
 end
 
 function Shop:changeCategory(categoryName)
 	local category = string.sub(categoryName, 1, -4)
 	self:gui_filter(category)
-	self.cl.page = 1
+	self.cl.curPage = 1
 	self:changeItem("Item_1")
-	self:gen_page(self.cl.page)
+	self:gen_page(self.cl.curPage)
 end
 
 function Shop:sv_buyItem(params, player)
@@ -343,3 +358,7 @@ function Shop.cl_onGuiClosed(self)
 	sm.tool.forceTool(nil)
 	self.cl.seatedEquiped = false
 end
+
+-- function Shop:openReserch()
+-- 	self.cl.gui:close()
+-- end
