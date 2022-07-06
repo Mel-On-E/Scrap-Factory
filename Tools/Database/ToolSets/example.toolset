@@ -6,8 +6,8 @@
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_connecttool_preview.rend",
 			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
 			"script": {
-				"file": "$CONTENT_DATA/Scripts/Hub.lua",
-				"class": "Hub",
+				"file": "$CONTENT_DATA/Scripts/Shop.lua",
+				"class": "Shop",
 				"data": ""
 			},
 			"showInInventory": false
