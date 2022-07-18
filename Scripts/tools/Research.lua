@@ -8,10 +8,11 @@ dofile("$CONTENT_DATA/Scripts/util.lua")
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
----@class Hub : ToolClass
-Hub = class()
+---@class Research : ToolClass
+Research = class()
 
-function Hub:client_onCreate()
+function Research:client_onCreate()
+	g_researchTool = self.tool
 	self.cl = {}
 	if self.tool:isLocal() then
 		self.tiers = sm.json.open("$CONTENT_DATA/tiers.json")
@@ -24,57 +25,53 @@ function Hub:client_onCreate()
 		self:update_gui()
 
 		self.gui:setOnCloseCallback("cl_onGuiClosed")
-		
+
 		self.cl.seatedEquiped = false
 	end
 	self:client_onRefresh()
 end
 
-function Hub:client_onFixedUpdate()
+function Research:client_onFixedUpdate()
 	self:update_gui()
 end
 
-function Hub:update_gui()
+function Research:update_gui()
 	self.gui:setText("TierName", "Tier " .. tostring(self.cl.tier))
 	local i = 1
 	for uuid, quantity in pairs(self.tiers[self.cl.tier].goals) do
 		if g_research.tier == self.cl.tier then
-			local precentage = math.floor((g_research[uuid].quantity/g_research[uuid].goal) * 100)
-			self.gui:setText("Progress" .. tostring(i), "$" .. tostring(g_research[uuid].quantity) .. "/" .. tostring(g_research[uuid].goal) .. " (" .. tostring(precentage) .. "%)")
+			local precentage = math.floor((g_research[uuid].quantity / g_research[uuid].goal) * 100)
+			self.gui:setText("Progress" .. tostring(i),
+				"$" ..
+				tostring(g_research[uuid].quantity) .. "/" .. tostring(g_research[uuid].goal) .. " (" .. tostring(precentage) .. "%)")
 		else
 			self.gui:setText("Progress" .. tostring(i), "$0/" .. tostring(quantity) .. " (0%)")
 		end
 
 		self.gui:setIconImage("Icon" .. tostring(i), sm.uuid.new(uuid))
-		
+
 
 		i = i + 1
 	end
 end
 
-function Hub:cl_tier_next()
+function Research:cl_tier_next()
 	self.cl.tier = math.min(self.cl.tier + 1, #self.tiers)
 	self:update_gui()
 end
 
-function Hub:cl_tier_prev()
-	self.cl.tier = math.max(self.cl.tier -1, 1)
+function Research:cl_tier_prev()
+	self.cl.tier = math.max(self.cl.tier - 1, 1)
 	self:update_gui()
 end
 
-
-
-
-
-
-
 --WARNING: Dumb animation stuff I don't want to deal with below
 
-function Hub.client_onRefresh(self)
+function Research.client_onRefresh(self)
 	self:cl_loadAnimations()
 end
 
-function Hub.client_onUpdate(self, dt)
+function Research.client_onUpdate(self, dt)
 	-- First person animation
 	local isCrouching = self.tool:isCrouching()
 
@@ -135,7 +132,11 @@ function Hub.client_onUpdate(self, dt)
 
 end
 
-function Hub.client_onEquip(self)
+function Research:cl_e_equip()
+	self:client_onEquip()
+end
+
+function Research.client_onEquip(self)
 	self.cl.wantsEquip = true
 	self.cl.seatedEquiped = false
 
@@ -162,14 +163,14 @@ function Hub.client_onEquip(self)
 	end
 end
 
-function Hub.client_equipWhileSeated(self)
+function Research.client_equipWhileSeated(self)
 	if not self.cl.seatedEquiped then
 		self.gui:open()
 		self.cl.seatedEquiped = true
 	end
 end
 
-function Hub.client_onUnequip(self)
+function Research.client_onUnequip(self)
 	self.cl.wantsEquip = false
 	self.cl.seatedEquiped = false
 	if sm.exists(self.tool) then
@@ -181,7 +182,7 @@ function Hub.client_onUnequip(self)
 	end
 end
 
-function Hub.cl_loadAnimations(self)
+function Research.cl_loadAnimations(self)
 	-- TP
 	self.tpAnimations = createTpAnimations(
 		self.tool,
@@ -239,7 +240,7 @@ function Hub.cl_loadAnimations(self)
 
 end
 
-function Hub.cl_onGuiClosed(self)
+function Research.cl_onGuiClosed(self)
 	sm.tool.forceTool(nil)
 	self.cl.seatedEquiped = false
 end

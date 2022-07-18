@@ -105,7 +105,9 @@ obj_lootcrate = sm.uuid.new("69b869f1-03dc-4ea3-9291-fd6490f945dd")
 
 -- toolList
 
+tool_hub = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
 tool_shop = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
+tool_research = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
 tool_sell = sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0")
 tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
 tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
@@ -127,4 +129,3 @@ tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
 
 -- projectiles
 
-Projectile_name = sm.uuid.new("c49c1b02-b2c3-45f8-a69d-c6df61b3a1a5")

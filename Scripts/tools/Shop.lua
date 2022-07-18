@@ -359,6 +359,7 @@ function Shop.cl_onGuiClosed(self)
 	self.cl.seatedEquiped = false
 end
 
--- function Shop:openReserch()
--- 	self.cl.gui:close()
--- end
+function Shop:openReserch()
+	self.cl.gui:close()
+	sm.tool.forceTool(g_researchTool)
+end
