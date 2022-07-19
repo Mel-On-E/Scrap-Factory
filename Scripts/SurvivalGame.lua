@@ -1,5 +1,7 @@
-dofile("$CONTENT_DATA/Scripts/util.lua") --Factory
-
+--Factory
+dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("Scripts/util/uuids.lua")
+--Factory end
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 
 
@@ -64,7 +66,7 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved.factory.research = { tier = 1 }
 
 		for uuid, quantity in pairs(tiers[self.sv.saved.factory.research.tier].goals) do
-			self.sv.saved.factory.research[uuid] = {goal = quantity, quantity = 0}
+			self.sv.saved.factory.research[uuid] = { goal = quantity, quantity = 0 }
 		end
 		self.storage:save(self.sv.saved)
 	end
@@ -508,23 +510,6 @@ function SurvivalGame.cl_onChatCommand(self, params)
 		self.network:sendToServer("sv_setTimeProgress", false)
 	elseif params[1] == "/die" then
 		self.network:sendToServer("sv_killPlayer", { player = sm.localPlayer.getPlayer() })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	elseif params[1] == "/spawn" then
 		local rayCastValid, rayCastResult = sm.localPlayer.getRaycast(100)
 		if rayCastValid then
@@ -535,8 +520,8 @@ function SurvivalGame.cl_onChatCommand(self, params)
 				yaw = 0.0,
 				amount = 1
 			}
-			if unitSpawnNames[ params[2] ] then
-				spawnParams.uuid = unitSpawnNames[ params[2] ]
+			if unitSpawnNames[params[2]] then
+				spawnParams.uuid = unitSpawnNames[params[2]]
 			else
 				spawnParams.uuid = sm.uuid.new(params[2])
 			end
@@ -545,30 +530,6 @@ function SurvivalGame.cl_onChatCommand(self, params)
 			end
 			self.network:sendToServer("sv_spawnUnit", spawnParams)
 		end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	elseif params[1] == "/harvestable" then
 		local character = sm.localPlayer.getPlayer().character
 		if character then
@@ -862,13 +823,13 @@ function SurvivalGame.server_onPlayerJoined(self, player, newPlayer)
 		local inventory = player:getInventory()
 
 		sm.container.beginTransaction()
-		sm.container.setItem(inventory, 0, sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b"), 1) --sledgehammer
-		sm.container.setItem(inventory, 1, sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b"), 1) --lift
+		sm.container.setItem(inventory, 0, tool_hammer, 1)
+		sm.container.setItem(inventory, 1, tool_lift, 1)
 		sm.container.setItem(inventory, 2, sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf"), 1) --connect tool
-		sm.container.setItem(inventory, 3, sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0"), 1) --sell tool
-		sm.container.setItem(inventory, 4, sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7"), 1) --dropper
-		sm.container.setItem(inventory, 5, sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf"), 1) --furnace
-		sm.container.setItem(inventory, 6, sm.uuid.new("daf6f4c4-5402-4fa3-93f4-3180243c8a3c"), 1) --generator
+		sm.container.setItem(inventory, 3, tool_sell, 1)
+		sm.container.setItem(inventory, 4, obj_dropper_scrap_wood, 1)
+		sm.container.setItem(inventory, 5, obj_furnace_basic, 1)
+		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
 		sm.container.endTransaction()
 
 		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
