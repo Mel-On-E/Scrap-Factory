@@ -1,5 +1,7 @@
 Drop = class( nil )
 
+local oreCount = 0
+
 function Drop:server_onCreate()
     local body = self.shape:getBody()
     body:setErasable(false)
@@ -22,12 +24,14 @@ function Drop:server_onFixedUpdate()
     end
 end
 
---[[
 function Drop:client_onCreate()
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-	self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-	self.effect:setParameter("color", sm.color.new(1,0,0))
-    self.effect:setScale(sm.vec3.one()*0.25)
-	self.effect:start()
+    oreCount = oreCount + 1
+    print(oreCount)
+    if oreCount >= 100 then
+        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
+    end
 end
-]]
+
+function Drop:client_onDestroy()
+    oreCount = oreCount - 1
+end

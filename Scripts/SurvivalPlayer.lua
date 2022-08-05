@@ -1,3 +1,5 @@
+---@class SurvivalPlayer : PlayerClass
+
 dofile( "$GAME_DATA/Scripts/game/BasePlayer.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/survival_camera.lua" )
@@ -779,9 +781,64 @@ end
 
 
 --FACTORY
+
+function SurvivalPlayer:cl_e_drop_dropped()
+	if not self.cl.tutorialsWatched["oreDestroy"] then
+		if not self.cl.tutorialGui then
+			self.cl.tutorialGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true, { isHud = true, isInteractive = false, needsCursor = false } )
+			self.cl.tutorialGui:setText( "TextTitle", "How to clear ores" )
+			self.cl.tutorialGui:setText( "TextMessage", "Press \"" .. sm.gui.getKeyBinding( "Reload" ) .. "\" to delete all ores")
+			local dismissText = string.format( sm.gui.translateLocalizationTags( "#{TUTORIAL_DISMISS}" ), sm.gui.getKeyBinding( "Use" ) )
+			self.cl.tutorialGui:setText( "TextDismiss", dismissText )
+			self.cl.tutorialGui:setImage( "ImageTutorial", "$CONTENT_DATA/Gui/Images/tutorial_destroy_ore.png")
+			self.cl.tutorialGui:setOnCloseCallback( "cl_onCloseTutorialOreDestroyGui" )
+			self.cl.tutorialGui:open()
+		end
+	end
+end
+
+function SurvivalPlayer.cl_onCloseTutorialOreDestroyGui( self )
+	self.cl.tutorialsWatched["oreDestroy"] = true
+	self.network:sendToServer( "sv_e_watchedTutorial", { tutorialKey = "oreDestroy" } )
+	self.cl.tutorialGui = nil
+end
+
+function SurvivalPlayer:sv_destroyOre()
+	for _, body in ipairs(sm.body.getAllBodies()) do
+		for _, shape in ipairs(body:getShapes()) do
+			local interactable = shape.interactable
+			if interactable then
+				local data = interactable:getPublicData()
+				if data and data.value then
+					sm.effect.playEffect("PropaneTank - ExplosionSmall", shape.worldPosition)
+					shape:destroyShape()
+				end
+			end
+		end
+	end
+end
+
 function SurvivalPlayer:cl_e_audio(effect)
 	if sm.localPlayer.getPlayer():getCharacter() and (not self.lastPlay or sm.game.getCurrentTick() > self.lastPlay + 40) then
 		sm.audio.play(effect)
 		self.lastPlay = sm.game.getCurrentTick()
 	end
+end
+
+function SurvivalPlayer:client_onReload()
+	print("destroy ores?")
+	self.cl.confirmClearGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout" )
+	self.cl.confirmClearGui:setButtonCallback( "Yes", "cl_onClearConfirmButtonClick" )
+	self.cl.confirmClearGui:setButtonCallback( "No", "cl_onClearConfirmButtonClick" )
+	self.cl.confirmClearGui:setText( "Title", "Clear All Ores?" )
+	self.cl.confirmClearGui:setText( "Message", "You sure, bro?" )
+	self.cl.confirmClearGui:open()
+end
+
+function SurvivalPlayer:cl_onClearConfirmButtonClick(name)
+	if name == "Yes" then
+		self.network:sendToServer("sv_destroyOre")
+	end
+	self.cl.confirmClearGui:close()
+	self.cl.confirmClearGui:destroy()
 end
