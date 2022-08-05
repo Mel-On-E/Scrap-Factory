@@ -16,31 +16,9 @@ SurvivalPlayer = class( BasePlayer )
 
 
 local StatsTickRate = 40
-
-local PerSecond = StatsTickRate / 40
 local PerMinute = StatsTickRate / ( 40 * 60 )
 
-local FoodRecoveryThreshold = 5 -- Recover hp when food is above this value
-local FastFoodRecoveryThreshold = 50 -- Recover hp fast when food is above this value
 local HpRecovery = 50 * PerMinute
-local FastHpRecovery = 75 * PerMinute
-local FoodCostPerHpRecovery = 0.2
-local FastFoodCostPerHpRecovery = 0.2
-
-local FoodCostPerStamina = 0.02
-local WaterCostPerStamina = 0.1
-local SprintStaminaCost = 0.7 / 40 -- Per tick while sprinting
-local CarryStaminaCost = 1.4 / 40 -- Per tick while carrying
-
-local FoodLostPerSecond = 100 / 3.5 / 24 / 60
-local WaterLostPerSecond = 100 / 2.5 / 24 / 60
-
-local BreathLostPerTick = ( 100 / 60 ) / 40
-
-local FatigueDamageHp = 1 * PerSecond
-local FatigueDamageWater = 2 * PerSecond
-local DrownDamage = 5
-local DrownDamageCooldown = 40
 
 local RespawnTimeout = 60 * 40
 
@@ -58,10 +36,7 @@ function SurvivalPlayer.server_onCreate( self )
 	self.sv.saved = self.storage:load()
 	self.sv.saved = self.sv.saved or {}
 	self.sv.saved.stats = self.sv.saved.stats or {
-		hp = 100, maxhp = 100,
-		food = 100, maxfood = 100,
-		water = 100, maxwater = 100,
-		breath = 100, maxbreath = 100
+		hp = 100, maxhp = 100
 	}
 	if self.sv.saved.isConscious == nil then self.sv.saved.isConscious = true end
 	if self.sv.saved.hasRevivalItem == nil then self.sv.saved.hasRevivalItem = false end
@@ -82,13 +57,9 @@ end
 
 function SurvivalPlayer.sv_init( self )
 	BasePlayer.sv_init( self )
-	self.sv.staminaSpend = 0
 
 	self.sv.statsTimer = Timer()
 	self.sv.statsTimer:start( StatsTickRate )
-
-	self.sv.drownTimer = Timer()
-	self.sv.drownTimer:stop()
 
 	self.sv.spawnparams = {}
 end
@@ -99,11 +70,10 @@ function SurvivalPlayer.client_onCreate( self )
 	if self.player == sm.localPlayer.getPlayer() then
 		if g_survivalHud then
 			g_survivalHud:open()
+			g_survivalHud:setVisible("FoodBar", false)
+			g_survivalHud:setVisible("WaterBar", false)
 		end
 
-		self.cl.hungryEffect = sm.effect.createEffect( "Mechanic - StatusHungry" )
-		self.cl.thirstyEffect = sm.effect.createEffect( "Mechanic - StatusThirsty" )
-		self.cl.underwaterEffect = sm.effect.createEffect( "Mechanic - StatusUnderwater" )
 		self.cl.followCutscene = 0.0
 		self.cl.tutorialsWatched = {}
 	end
@@ -136,78 +106,19 @@ function SurvivalPlayer.client_onClientDataUpdate( self, data )
 
 		if g_survivalHud then
 			g_survivalHud:setSliderData( "Health", data.stats.maxhp * 10 + 1, data.stats.hp * 10 )
-			g_survivalHud:setSliderData( "Food", data.stats.maxfood * 10 + 1, data.stats.food * 10 )
-			g_survivalHud:setSliderData( "Water", data.stats.maxwater * 10 + 1, data.stats.water * 10 )
-			g_survivalHud:setSliderData( "Breath", data.stats.maxbreath * 10 + 1, data.stats.breath * 10 )
 		end
 
 		if self.cl.hasRevivalItem ~= data.hasRevivalItem then
 			self.cl.revivalChewCount = 0
 		end
 
-		if self.player.character then
-			local charParam = self.player:isMale() and 1 or 2
-			self.cl.underwaterEffect:setParameter( "char", charParam )
-			self.cl.hungryEffect:setParameter( "char", charParam )
-			self.cl.thirstyEffect:setParameter( "char", charParam )
-
-			if data.stats.breath <= 15 and not self.cl.underwaterEffect:isPlaying() and data.isConscious then
-				self.cl.underwaterEffect:start()
-			elseif ( data.stats.breath > 15 or not data.isConscious ) and self.cl.underwaterEffect:isPlaying() then
-				self.cl.underwaterEffect:stop()
-			end
-			if data.stats.food <= 5 and not self.cl.hungryEffect:isPlaying() and data.isConscious then
-				self.cl.hungryEffect:start()
-			elseif ( data.stats.food > 5 or not data.isConscious ) and self.cl.hungryEffect:isPlaying() then
-				self.cl.hungryEffect:stop()
-			end
-			if data.stats.water <= 5 and not self.cl.thirstyEffect:isPlaying() and data.isConscious then
-				self.cl.thirstyEffect:start()
-			elseif ( data.stats.water > 5 or not data.isConscious ) and self.cl.thirstyEffect:isPlaying() then
-				self.cl.thirstyEffect:stop()
-			end
-		end
-
-		if data.stats.food <= 5 and self.cl.stats.food > 5 then
-			sm.gui.displayAlertText( "#{ALERT_HUNGER}", 5 )
-		end
-		if data.stats.water <= 5 and self.cl.stats.water > 5 then
-			sm.gui.displayAlertText( "#{ALERT_THIRST}", 5 )
-		end
-
-		if data.stats.hp < self.cl.stats.hp and data.stats.breath == 0 then
-			sm.gui.displayAlertText( "#{DAMAGE_BREATH}", 1 )
-		elseif data.stats.hp < self.cl.stats.hp and data.stats.food == 0 then
-			sm.gui.displayAlertText( "#{DAMAGE_HUNGER}", 1 )
-		elseif data.stats.hp < self.cl.stats.hp and data.stats.water == 0 then
-			sm.gui.displayAlertText( "#{DAMAGE_THIRST}", 1 )
-		end
-
 		self.cl.stats = data.stats
 		self.cl.isConscious = data.isConscious
 		self.cl.hasRevivalItem = data.hasRevivalItem
 
-		sm.localPlayer.setBlockSprinting( data.stats.food == 0 or data.stats.water == 0 )
-
 		for tutorialKey, _ in pairs( data.tutorialsWatched ) do
 			-- Merge saved tutorials and avoid resetting client tutorials
 			self.cl.tutorialsWatched[tutorialKey] = true
-		end
-		if not g_disableTutorialHints then
-			if not self.cl.tutorialsWatched["hunger"] then
-				if data.stats.water < 60 or data.stats.food < 60 then
-					if not self.cl.tutorialGui then
-						self.cl.tutorialGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true, { isHud = true, isInteractive = false, needsCursor = false } )
-						self.cl.tutorialGui:setText( "TextTitle", "#{TUTORIAL_HUNGER_AND_THIRST_TITLE}" )
-						self.cl.tutorialGui:setText( "TextMessage", "#{TUTORIAL_HUNGER_AND_THIRST_MESSAGE}" )
-						local dismissText = string.format( sm.gui.translateLocalizationTags( "#{TUTORIAL_DISMISS}" ), sm.gui.getKeyBinding( "Use" ) )
-						self.cl.tutorialGui:setText( "TextDismiss", dismissText )
-						self.cl.tutorialGui:setImage( "ImageTutorial", "gui_tutorial_image_hunger.png" )
-						self.cl.tutorialGui:setOnCloseCallback( "cl_onCloseTutorialHungerGui" )
-						self.cl.tutorialGui:open()
-					end
-				end
-			end
 		end
 	end
 end
@@ -227,12 +138,6 @@ function SurvivalPlayer.cl_e_tryPickupItemTutorial( self )
 			end
 		end
 	end
-end
-
-function SurvivalPlayer.cl_onCloseTutorialHungerGui( self )
-	self.cl.tutorialsWatched["hunger"] = true
-	self.network:sendToServer( "sv_e_watchedTutorial", { tutorialKey = "hunger" } )
-	self.cl.tutorialGui = nil
 end
 
 function SurvivalPlayer.cl_onCloseTutorialPickupItemGui( self )
@@ -263,12 +168,6 @@ function SurvivalPlayer.cl_localPlayerUpdate( self, dt )
 		else
 			sm.gui.setInteractionText( "", keyBindingText, "#{INTERACTION_RESPAWN}" )
 		end
-	end
-
-	if character then
-		self.cl.underwaterEffect:setPosition( character.worldPosition )
-		self.cl.hungryEffect:setPosition( character.worldPosition )
-		self.cl.thirstyEffect:setPosition( character.worldPosition )
 	end
 end
 
@@ -344,85 +243,15 @@ function SurvivalPlayer.server_onFixedUpdate( self, dt )
 	end
 
 	local character = self.player:getCharacter()
-	-- Update breathing
-	if character then
-		if character:isDiving() then
-			self.sv.saved.stats.breath = math.max( self.sv.saved.stats.breath - BreathLostPerTick, 0 )
-			if self.sv.saved.stats.breath == 0 then
-				self.sv.drownTimer:tick()
-				if self.sv.drownTimer:done() then
-					if self.sv.saved.isConscious then
-						print( "'SurvivalPlayer' is drowning!" )
-						self:sv_takeDamage( DrownDamage, "drown" )
-					end
-					self.sv.drownTimer:start( DrownDamageCooldown )
-				end
-			end
-		else
-			self.sv.saved.stats.breath = self.sv.saved.stats.maxbreath
-			self.sv.drownTimer:start( DrownDamageCooldown )
-		end
 
-		-- Spend stamina on sprinting
-		if character:isSprinting() then
-			self.sv.staminaSpend = self.sv.staminaSpend + SprintStaminaCost
-		end
-
-		-- Spend stamina on carrying
-		if not self.player:getCarry():isEmpty() then
-			self.sv.staminaSpend = self.sv.staminaSpend + CarryStaminaCost
-		end
-	end
-
-	-- Update stamina, food and water stats
 	if character and self.sv.saved.isConscious and not g_godMode then
 		self.sv.statsTimer:tick()
 		if self.sv.statsTimer:done() then
 			self.sv.statsTimer:start( StatsTickRate )
 
-			-- Recover health from food
-			if self.sv.saved.stats.food > FoodRecoveryThreshold then
-				local fastRecoveryFraction = 0
-
-				-- Fast recovery when food is above fast threshold
-				if self.sv.saved.stats.food > FastFoodRecoveryThreshold then
-					local recoverableHp = math.min( self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, FastHpRecovery )
-					local foodSpend = math.min( recoverableHp * FastFoodCostPerHpRecovery, math.max( self.sv.saved.stats.food - FastFoodRecoveryThreshold, 0 ) )
-					local recoveredHp = foodSpend / FastFoodCostPerHpRecovery
-
-					self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp + recoveredHp, self.sv.saved.stats.maxhp )
-					self.sv.saved.stats.food = self.sv.saved.stats.food - foodSpend
-					fastRecoveryFraction = ( recoveredHp ) / FastHpRecovery
-				end
-
-				-- Normal recovery
-				local recoverableHp = math.min( self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, HpRecovery * ( 1 - fastRecoveryFraction ) )
-				local foodSpend = math.min( recoverableHp * FoodCostPerHpRecovery, math.max( self.sv.saved.stats.food - FoodRecoveryThreshold, 0 ) )
-				local recoveredHp = foodSpend / FoodCostPerHpRecovery
-
-				self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp + recoveredHp, self.sv.saved.stats.maxhp )
-				self.sv.saved.stats.food = self.sv.saved.stats.food - foodSpend
-			end
-
-			-- Spend water and food on stamina usage
-			self.sv.saved.stats.water = math.max( self.sv.saved.stats.water - self.sv.staminaSpend * WaterCostPerStamina, 0 )
-			self.sv.saved.stats.food = math.max( self.sv.saved.stats.food - self.sv.staminaSpend * FoodCostPerStamina, 0 )
-			self.sv.staminaSpend = 0
-
-			-- Decrease food and water with time
-			self.sv.saved.stats.food = math.max( self.sv.saved.stats.food - FoodLostPerSecond, 0 )
-			self.sv.saved.stats.water = math.max( self.sv.saved.stats.water - WaterLostPerSecond, 0 )
-
-			local fatigueDamageFromHp = false
-			if self.sv.saved.stats.food <= 0 then
-				self:sv_takeDamage( FatigueDamageHp, "fatigue" )
-				fatigueDamageFromHp = true
-			end
-			if self.sv.saved.stats.water <= 0 then
-				if not fatigueDamageFromHp then
-					self:sv_takeDamage( FatigueDamageWater, "fatigue" )
-				end
-			end
+			-- Normal recovery
+			local recoverableHp = math.min( self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, HpRecovery)
+			self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp + recoverableHp, self.sv.saved.stats.maxhp )
 
 			self.storage:save( self.sv.saved )
 			self.network:setClientData( self.sv.saved )
@@ -448,11 +277,7 @@ function SurvivalPlayer.server_onInventoryChanges( self, container, changes )
 end
 
 function SurvivalPlayer.sv_e_staminaSpend( self, stamina )
-	if not g_godMode then
-		if stamina > 0 then
-			self.sv.staminaSpend = self.sv.staminaSpend + stamina
-		end
-	end
+	return
 end
 
 function SurvivalPlayer.sv_takeDamage( self, damage, source )
@@ -498,8 +323,6 @@ function SurvivalPlayer.sv_n_revive( self )
 	if not self.sv.saved.isConscious and self.sv.saved.hasRevivalItem and not self.sv.spawnparams.respawn then
 		print( "SurvivalPlayer", self.player.id, "revived" )
 		self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
-		self.sv.saved.stats.food = self.sv.saved.stats.maxfood
-		self.sv.saved.stats.water = self.sv.saved.stats.maxwater
 		self.sv.saved.isConscious = true
 		self.sv.saved.hasRevivalItem = false
 		self.storage:save( self.sv.saved )
@@ -568,12 +391,8 @@ function SurvivalPlayer.sv_e_onSpawnCharacter( self )
 		print( "SurvivalPlayer", self.player.id, "spawned" )
 		if self.sv.saved.isNewPlayer then
 			self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
-			self.sv.saved.stats.food = self.sv.saved.stats.maxfood
-			self.sv.saved.stats.water = self.sv.saved.stats.maxwater
 		else
 			self.sv.saved.stats.hp = 30
-			self.sv.saved.stats.food = 30
-			self.sv.saved.stats.water = 30
 		end
 		self.sv.saved.isConscious = true
 		self.sv.saved.hasRevivalItem = false
@@ -620,12 +439,6 @@ function SurvivalPlayer.sv_e_debug( self, params )
 	if params.hp then
 		self.sv.saved.stats.hp = params.hp
 	end
-	if params.water then
-		self.sv.saved.stats.water = params.water
-	end
-	if params.food then
-		self.sv.saved.stats.food = params.food
-	end
 	self.storage:save( self.sv.saved )
 	self.network:setClientData( self.sv.saved )
 end
@@ -633,15 +446,6 @@ end
 function SurvivalPlayer.sv_e_eat( self, edibleParams )
 	if edibleParams.hpGain then
 		self:sv_restoreHealth( edibleParams.hpGain )
-	end
-	if edibleParams.foodGain then
-		self:sv_restoreFood( edibleParams.foodGain )
-
-		self.network:sendToClient( self.player, "cl_n_onEffect", { name = "Eat - EatFinish", host = self.player.character } )
-	end
-	if edibleParams.waterGain then
-		self:sv_restoreWater( edibleParams.waterGain )
-		-- self.network:sendToClient( self.player, "cl_n_onEffect", { name = "Eat - DrinkFinish", host = self.player.character } )
 	end
 	self.storage:save( self.sv.saved )
 	self.network:setClientData( self.sv.saved )
@@ -668,24 +472,6 @@ function SurvivalPlayer.sv_restoreHealth( self, health )
 	end
 end
 
-function SurvivalPlayer.sv_restoreFood( self, food )
-	if self.sv.saved.isConscious then
-		food = food * ( 0.8 + ( self.sv.saved.stats.maxfood - self.sv.saved.stats.food ) / self.sv.saved.stats.maxfood * 0.2 )
-		self.sv.saved.stats.food = self.sv.saved.stats.food + food
-		self.sv.saved.stats.food = math.min( self.sv.saved.stats.food, self.sv.saved.stats.maxfood )
-		print( "'SurvivalPlayer' restored:", food, "food.", self.sv.saved.stats.food, "/", self.sv.saved.stats.maxfood, "FOOD" )
-	end
-end
-
-function SurvivalPlayer.sv_restoreWater( self, water )
-	if self.sv.saved.isConscious then
-		water = water * ( 0.8 + ( self.sv.saved.stats.maxwater - self.sv.saved.stats.water ) / self.sv.saved.stats.maxwater * 0.2 )
-		self.sv.saved.stats.water = self.sv.saved.stats.water + water
-		self.sv.saved.stats.water = math.min( self.sv.saved.stats.water, self.sv.saved.stats.maxwater )
-		print( "'SurvivalPlayer' restored:", water, "water.", self.sv.saved.stats.water, "/", self.sv.saved.stats.maxwater, "WATER" )
-	end
-end
-
 function SurvivalPlayer.server_onShapeRemoved( self, removedShapes )
 	--BasePlayer.server_onShapeRemoved( self, removedShapes )
 	local numParts = 0
@@ -707,9 +493,6 @@ function SurvivalPlayer.server_onShapeRemoved( self, removedShapes )
 
 		end
 	end
-
-	local staminaSpend = numParts + numJoints + math.sqrt( numBlocks )
-	--self:sv_e_staminaSpend( staminaSpend )
 end
 
 
