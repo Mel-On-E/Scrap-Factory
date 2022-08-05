@@ -395,7 +395,7 @@ end
 
 function SurvivalGame.sv_updateClientData(self)
 	self.network:setClientData({ time = self.sv.time, money = self.sv.saved.factory.money,
-		powerLimit = self.sv.factory.powerLimit, power = g_power }, 2)
+	powerLimit = self.sv.factory.powerLimit, power = g_power }, 2)
 end
 
 function SurvivalGame.client_onUpdate(self, dt)
@@ -1142,7 +1142,7 @@ function SurvivalGame:client_onFixedUpdate()
 		local power = sm.isHost and g_power or self.cl.power
 		local percentage = powerLimit > 0 and math.ceil((power / powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy(power) .. " (" .. tostring(percentage) .. "%)")
-		
+
 		if power == 0 and powerLimit > 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
@@ -1160,6 +1160,8 @@ function updateHud(self)
 	if g_factoryHud then
 		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
 		g_factoryHud:setText("DialogTextBox", format_money(money))
+
+		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4") )
 	end
 end
 

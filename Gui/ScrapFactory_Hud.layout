@@ -4,14 +4,29 @@
         <Property key="NeedKey" value="false"/>
         <Property key="NeedMouse" value="false"/>
         <Widget type="Widget" skin="PanelEmpty" position_real="0.3515625 0.055555555555555552 0.29999999999999999 0.10555555555555556">
-            <Widget type="EditBox" skin="GenericButton" position_real="0.048611111111111112 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="Pullution">
+            <Widget type="EditBox" skin="GenericButton" position_real="0.048611111111111112 0.13157894736842105 0.2986111111111111 0.47368421052631576">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
                 <Property key="TextColour" value="1 1 1"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
-                <Property key="Caption" value="#ff00ff69.42k"/>
+                <Property key="Caption" value=""/>
+
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.03125 0.05 0.28125 0.9" name="ResearchIcon">
+                    <Property key="NeedKey" value="false" />
+                    <Property key="NeedMouse" value="false" />
+                    <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png" />
+                </Widget>
+                <Widget type="EditBox" skin="TextBox" position_real="0.28125 0 0.6875 1" name="Research">
+                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="TextColour" value="1 1 1"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="WordWrap" value="true"/>
+                    <Property key="Caption" value="#00dddd0.69%"/>
+                </Widget>
             </Widget>
             <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="DialogTextBox">
                 <Property key="FontName" value="SM_ItemTitle"/>
