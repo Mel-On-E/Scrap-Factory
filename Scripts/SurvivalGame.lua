@@ -1,6 +1,6 @@
 --Factory
 dofile("$CONTENT_DATA/Scripts/util.lua")
-dofile("Scripts/util/uuids.lua")
+dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 --Factory end
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 
