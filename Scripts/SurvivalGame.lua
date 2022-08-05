@@ -1130,21 +1130,36 @@ function SurvivalGame:sv_e_addPowerLimit(powerLimit)
 end
 
 function SurvivalGame:sv_e_addPower(power)
-	g_power = math.min(self.sv.factory.powerLimit, g_power + power)
+	g_power = g_power + power
+	g_power = math.min(self.sv.factory.powerLimit, g_power)
 end
 
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
-		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
-		g_factoryHud:setText("DialogTextBox", format_money(money))
+		updateHud(self)
+
 		local powerLimit = sm.isHost and self.sv.factory.powerLimit or self.cl.powerLimit
 		local power = sm.isHost and g_power or self.cl.power
 		local percentage = powerLimit > 0 and math.ceil((power / powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy(power) .. " (" .. tostring(percentage) .. "%)")
+		
 		if power == 0 and powerLimit > 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 		end
+	end
+end
+
+function SurvivalGame:client_onUpdate()
+	if sm.isHost then
+		updateHud(self)
+	end
+end
+
+function updateHud(self)
+	if g_factoryHud then
+		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
+		g_factoryHud:setText("DialogTextBox", format_money(money))
 	end
 end
 
