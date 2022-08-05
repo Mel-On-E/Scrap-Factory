@@ -26,7 +26,6 @@ end
 
 function Drop:client_onCreate()
     oreCount = oreCount + 1
-    print(oreCount)
     if oreCount >= 100 then
         sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
     end

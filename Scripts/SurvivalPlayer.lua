@@ -8,6 +8,9 @@ dofile( "$SURVIVAL_DATA/Scripts/game/util/Timer.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/util.lua" )
 dofile( "$SURVIVAL_DATA/scripts/game/quest_util.lua" )
 
+--FACTORY
+dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
+
 
 SurvivalPlayer = class( BasePlayer )
 
@@ -781,14 +784,13 @@ end
 
 
 --FACTORY
-
 function SurvivalPlayer:cl_e_drop_dropped()
 	if not self.cl.tutorialsWatched["oreDestroy"] then
 		if not self.cl.tutorialGui then
 			self.cl.tutorialGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true, { isHud = true, isInteractive = false, needsCursor = false } )
-			self.cl.tutorialGui:setText( "TextTitle", "How to clear ores" )
-			self.cl.tutorialGui:setText( "TextMessage", "Press \"" .. sm.gui.getKeyBinding( "Reload" ) .. "\" to delete all ores")
-			local dismissText = string.format( sm.gui.translateLocalizationTags( "#{TUTORIAL_DISMISS}" ), sm.gui.getKeyBinding( "Use" ) )
+			self.cl.tutorialGui:setText( "TextTitle", language_tag("ClearOresTutorialTitle") )
+			self.cl.tutorialGui:setText( "TextMessage", language_tag("ClearOresTutorialMessage"):format(sm.gui.getKeyBinding( "Reload" )))
+			local dismissText = string.format( language_tag("DismissTutorial"):format(sm.gui.getKeyBinding( "Use" )) )
 			self.cl.tutorialGui:setText( "TextDismiss", dismissText )
 			self.cl.tutorialGui:setImage( "ImageTutorial", "$CONTENT_DATA/Gui/Images/tutorial_destroy_ore.png")
 			self.cl.tutorialGui:setOnCloseCallback( "cl_onCloseTutorialOreDestroyGui" )
@@ -830,8 +832,8 @@ function SurvivalPlayer:client_onReload()
 	self.cl.confirmClearGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout" )
 	self.cl.confirmClearGui:setButtonCallback( "Yes", "cl_onClearConfirmButtonClick" )
 	self.cl.confirmClearGui:setButtonCallback( "No", "cl_onClearConfirmButtonClick" )
-	self.cl.confirmClearGui:setText( "Title", "Clear All Ores?" )
-	self.cl.confirmClearGui:setText( "Message", "You sure, bro?" )
+	self.cl.confirmClearGui:setText( "Title", language_tag("ClearOresTitle") )
+	self.cl.confirmClearGui:setText( "Message", language_tag("ClearOresMessage") )
 	self.cl.confirmClearGui:open()
 end
 
