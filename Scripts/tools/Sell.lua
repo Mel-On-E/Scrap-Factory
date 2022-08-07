@@ -297,7 +297,8 @@ function Sell.sv_n_sell( self, params, player )
 
 		if params.quantity > 1 then
 			sm.container.beginTransaction()
-			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity)
+			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity - 1)
+			print("spend", params.quantity)
 			sm.container.endTransaction()
 		end
 		sm.event.sendToGame("sv_e_addMoney", params.value*params.quantity)
