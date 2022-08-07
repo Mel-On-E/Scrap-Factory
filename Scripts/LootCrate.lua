@@ -93,15 +93,36 @@ end
 dofile("$SURVIVAL_DATA/Scripts/game/survival_items.lua")
 
 function LootCrate:get_random_item()
-    local loot = {}
-    local money = g_money + 10
+    if not self.lootTable then
+        self.lootTable = self:get_loot_table()
+    end
+    return self.lootTable[math.random(1, #self.lootTable)]
+end
 
+function LootCrate:get_loot_table()
+    local itemPool = {}
     for uuid, item in pairs(self.itemList) do
-        if item.price >= money/10 and item.price <= money*10 then
-            loot[#loot + 1] = sm.uuid.new(uuid)
+        if item.price <= g_moneyEarned + 1000 then
+            itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
         end
     end
 
-    return loot[math.random(1, #loot)]
+    local sortedPool = {}
+    while #itemPool > 1 and #sortedPool < 10 do
+        local mostExpensiveItem 
+        local highestPrice = 0
+
+        for k, item in ipairs(itemPool) do
+            if item.price > highestPrice then
+                highestPrice = item.price
+                mostExpensiveItem = k
+            end
+        end
+
+        sortedPool[#sortedPool+1] = sm.uuid.new(itemPool[mostExpensiveItem].uuid)
+        table.remove(itemPool, mostExpensiveItem)
+    end
+
+    return sortedPool
 end
 

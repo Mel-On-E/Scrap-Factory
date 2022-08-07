@@ -60,6 +60,7 @@ function SurvivalGame.server_onCreate(self)
 		--FACTORY
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
+		self.sv.saved.factory.moneyEarned = 0
 		self.sv.saved.factory.power = 0
 
 		local tiers = sm.json.open("$CONTENT_DATA/tiers.json")
@@ -72,8 +73,11 @@ function SurvivalGame.server_onCreate(self)
 	end
 	self.data = nil
 	g_power = self.sv.saved.factory.power
-	g_money = self.sv.saved.factory.money
 	g_research = self.sv.saved.factory.research
+	g_moneyEarned = self.sv.saved.factory.moneyEarned
+	g_money = self.sv.saved.factory.money
+	
+	
 
 
 	--FACTORY
@@ -382,6 +386,7 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 		self.sv.saved.factory.research = g_research
 		self.sv.saved.factory.power = g_power
 		g_money = self.sv.saved.factory.money
+		g_moneyEarned = self.sv.saved.factory.moneyEarned
 
 		self.storage:save(self.sv.saved)
 		self:sv_updateClientData()
@@ -1108,6 +1113,7 @@ end
 --FACTORY
 function SurvivalGame:sv_e_addMoney(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
+	self.sv.saved.factory.moneyEarned = self.sv.saved.factory.moneyEarned + money
 end
 
 function SurvivalGame:sv_e_buyItem(params)
@@ -1178,7 +1184,9 @@ end
 function updateHud(self)
 	if g_factoryHud then
 		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
-		g_factoryHud:setText("DialogTextBox", format_money(money))
+		if money then
+			g_factoryHud:setText("DialogTextBox", format_money(money))
+		end
 
 		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4") )
 	end
