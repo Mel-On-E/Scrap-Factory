@@ -1,10 +1,13 @@
+---@class Sell:ToolClass
 
-dofile "$GAME_DATA/Scripts/game/AnimationUtil.lua"
-dofile "$SURVIVAL_DATA/Scripts/util.lua"
-dofile "$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua"
-dofile "$SURVIVAL_DATA/Scripts/game/survival_shapes.lua"
+dofile("$GAME_DATA/Scripts/game/AnimationUtil.lua")
+dofile("$SURVIVAL_DATA/Scripts/util.lua")
+dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
+dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
 
-dofile "$CONTENT_DATA/Scripts/util.lua"
+dofile("$CONTENT_DATA/Scripts/util.lua")
+
+dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 Sell = class()
 
@@ -33,6 +36,8 @@ end
 function Sell.cl_init( self )
 	self:cl_loadAnimations()
 	self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
+	self.cl = {}
+	self.cl.quantity = 1
 end
 
 function Sell.cl_loadAnimations( self )
@@ -216,37 +221,35 @@ function Sell.client_onEquippedUpdate( self, primaryState, secondaryState )
 			local sellValue = math.floor(shopItem.price*resellValue)
 
 			sm.gui.setCenterIcon( "Use" )
-			local keyBindingText =  sm.gui.getKeyBinding( "Create", true )
+			local keyBindingText1 = sm.gui.getKeyBinding( "Create", true )
+			local keyBindingText2 = sm.gui.getKeyBinding( "NextCreateRotation" )
 			local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 			local o2 = "</p>"
-			sm.gui.setInteractionText( "", keyBindingText, "Sell" .. o1 .. format_money(sellValue, "#4f4f4f") )
-			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
+
+			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
 			
+			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
+			sm.gui.setInteractionText( "", keyBindingText1, language_tag("Sell") .. o1 .. format_money(sellValue, "#4f4f4f") ..o2.."x"..o1..tostring(quantity)..o2.." [" .. keyBindingText2 .. "]" )
 
 			if primaryState == sm.tool.interactState.start then
 				self:onUse()
-				self.network:sendToServer( "sv_n_sell", {shape = shape, value = sellValue} )
+				self.network:sendToServer( "sv_n_sell", {shape = shape, value = sellValue, quantity = quantity} )
 			end
 		end
 	end
 
-	if secondaryState == sm.tool.interactState.start then
-		if not sm.exists(self.cl.sellGui) or not self.cl.sellGui:isActive() then
-			self.cl.sellGui = sm.gui.createContainerGui( true )
-			self.cl.sellGui:setText( "UpperName", "#00ff0069.42M" )
-			self.cl.sellGui:setVisible( "ChestIcon", true )
-			self.cl.sellGui:setVisible( "TakeAll", true )
-			self.cl.sellGui:setText( "TakeAll", "Sell All" )
-			self.cl.sellGui:setContainer( "UpperGrid", sm.localPlayer.getInventory() )
-			self.cl.sellGui:setText( "LowerName", "#{INVENTORY_TITLE}" )
-			self.cl.sellGui:setContainer( "LowerGrid", sm.localPlayer.getInventory() )
-			self.cl.sellGui:open()
-		else
-			self.cl.sellGui:close()
-		end
-	end
-
 	return false, false
+end
+
+function Sell:client_onToggle()
+	if self.cl.quantity == 10000 then
+		self.cl.quantity = 1
+	else
+		self.cl.quantity = math.min(self.cl.quantity*10, 10000)
+	end
+	sm.gui.displayAlertText(language_tag("NewMaxSellQuantity") .. "#fc8b19" .. tostring(self.cl.quantity))
+	sm.audio.play("ConnectTool - Rotate", sm.localPlayer.getPlayer():getCharacter():getWorldPosition())
+	return true
 end
 
 function Sell.onUse( self )
@@ -287,11 +290,18 @@ function Sell.cl_n_onUse( self )
 	end
 end
 
-function Sell.sv_n_sell( self, params ) 
+function Sell.sv_n_sell( self, params, player ) 
 	if params.shape and sm.exists( params.shape ) then
 		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_addMoney", params.value)
 		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = params.value, format = "money" })
+
+		if params.quantity > 1 then
+			sm.container.beginTransaction()
+			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity)
+			sm.container.endTransaction()
+		end
+		sm.event.sendToGame("sv_e_addMoney", params.value*params.quantity)
+
 		self.network:sendToClients( "cl_n_onUse" )
 		params.shape:destroyShape(0)
 	end

@@ -1,4 +1,6 @@
 {
+    "Sell": "Sell",
+    "NewMaxSellQuantity": "Maximum Sell Quantity: ",
     "SetResearchFurnace": "Set Research Furnace",
     "ResearchFurnaceSet": "Research Furnace Set",
     "ResearchFurnaceRemoved": "Research Furnace Removed",
