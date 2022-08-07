@@ -25,14 +25,15 @@ function ClickDropper:client_onCreate()
     self.cl = {}
 end
 
-function ClickDropper:client_onFixedUpdate(character, state )
+function ClickDropper:client_onFixedUpdate()
     local state = self.interactable:isActive()
     if state ~= self.cl.prevState then
         self.interactable:setPoseWeight( 0, state and 1 or 0)
     end
     self.cl.prevState = state
 
-    if not self.look and sm.localPlayer.getPlayer().character:getLockingInteractable() == self.interactable then
+    local char = sm.localPlayer.getPlayer().character
+    if character and not self.look and character:getLockingInteractable() == self.interactable then
 		sm.localPlayer.getPlayer().character:setLockingInteractable(nil)
 		self.network:sendToServer("sv_activate")
 	end
