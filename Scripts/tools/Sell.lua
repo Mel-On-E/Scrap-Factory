@@ -5,7 +5,6 @@ dofile "$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua"
 dofile "$SURVIVAL_DATA/Scripts/game/survival_shapes.lua"
 
 dofile "$CONTENT_DATA/Scripts/util.lua"
-dofile("$CONTENT_DATA/Scripts/util/stonks.lua")
 
 Sell = class()
 
@@ -33,7 +32,6 @@ end
 
 function Sell.cl_init( self )
 	self:cl_loadAnimations()
-	Stonks.client_onCreate(self)
 	self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
 end
 
@@ -98,8 +96,6 @@ function Sell.cl_loadAnimations( self )
 end
 
 function Sell.client_onUpdate( self, dt )
-	Stonks.client_onUpdate(self, dt)
-
 	-- First person animation
 	local isSprinting =  self.tool:isSprinting()
 	local isCrouching =  self.tool:isCrouching()
@@ -295,16 +291,8 @@ function Sell.sv_n_sell( self, params )
 	if params.shape and sm.exists( params.shape ) then
 		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
 		sm.event.sendToGame("sv_e_addMoney", params.value)
-		self.network:sendToClients("cl_stonks", { pos = params.shape.worldPosition, value = params.value })
+		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = params.value, format = "money" })
 		self.network:sendToClients( "cl_n_onUse" )
 		params.shape:destroyShape(0)
 	end
-end
-
-function Sell:client_onFixedUpdate()
-    Stonks.client_onFixedUpdate(self)
-end
-
-function Sell:cl_stonks(params)
-    Stonks.cl_stonks(self, params)
 end

@@ -61,6 +61,10 @@ function Overworld.client_onCreate( self )
 	self.birdAmbienceTimer = Timer()
 	self.birdAmbienceTimer:start( 40 )
 	self.birdAmbience = { near = {}, far = {} }
+
+	--FACTORY
+	self.cl = {}
+	self.cl.stonks = {}
 end
 
 function Overworld.client_onDestroy( self )
@@ -122,6 +126,14 @@ function Overworld.client_onFixedUpdate( self )
 			end
 		end
 	end
+
+	--FACTORY
+	for k, stonks in pairs(self.cl.stonks) do
+        if stonks and sm.game.getCurrentTick() > stonks.endTick then
+            stonks.gui:destroy()
+            self.cl.stonks[k] = nil
+        end
+    end
 end
 
 function Overworld.client_onUpdate( self, deltaTime )
@@ -154,6 +166,11 @@ function Overworld.client_onUpdate( self, deltaTime )
 		end
 	end
 
+	--FACTORY
+	for k, stonks in pairs(self.cl.stonks) do
+        stonks.pos = stonks.pos + sm.vec3.new(0, 0, 0.1) * deltaTime
+        stonks.gui:setWorldPosition(stonks.pos)
+    end
 end
 
 function Overworld.cl_n_unitMsg( self, msg )
@@ -712,4 +729,29 @@ function Overworld.sv_e_spawnTempUnitsOnCell( self, params )
 			end
 		end
 	end
+end
+
+
+
+--FACTORY
+function Overworld:sv_e_stonks(params)
+	if params.format == "money" then
+		params.value = format_money(params.value)
+	elseif params.format == "energy" then
+		params.value = format_energy(params.value)
+	end
+	self.network:sendToClients("cl_stonks", params)
+end
+
+function Overworld:cl_stonks(params)
+	local gui = sm.gui.createNameTagGui()
+    gui:setWorldPosition(params.pos)
+    gui:open()
+    gui:setMaxRenderDistance(100)
+    gui:setText("Text", params.value)
+
+	local effect = params.effect or "Loot - Pickup"
+    sm.effect.playEffect(effect, params.pos - sm.vec3.new(0, 0, 0.25))
+
+    self.cl.stonks[#self.cl.stonks + 1] = { gui = gui, endTick = sm.game.getCurrentTick() + 80, pos = params.pos }
 end

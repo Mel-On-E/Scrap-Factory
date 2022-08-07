@@ -1,6 +1,5 @@
 dofile("$CONTENT_DATA/Scripts/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
-dofile("$CONTENT_DATA/Scripts/util/stonks.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
@@ -35,7 +34,7 @@ function Burner:sv_onEnter(trigger, results)
             end
             power = math.floor(power) + 1
 
-            self.network:sendToClients("cl_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout" })
+            sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
             sm.event.sendToGame("sv_e_addPower", math.floor(power))
         end
         ::continue::
@@ -52,18 +51,4 @@ function Burner:client_onCreate()
     self.effect:setScale(size)
     self.effect:setOffsetPosition(offset)
 	self.effect:start()]]
-
-    Stonks.client_onCreate(self)
-end
-
-function Burner:client_onUpdate(dt)
-    Stonks.client_onUpdate(self, dt)
-end
-
-function Burner:client_onFixedUpdate()
-    Stonks.client_onFixedUpdate(self)
-end
-
-function Burner:cl_stonks(params)
-    Energy.cl_stonks(self, params)
 end

@@ -1,6 +1,8 @@
+---@class Furnace : ShapeClass
+
 dofile("$CONTENT_DATA/Scripts/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
-dofile("$CONTENT_DATA/Scripts/util/stonks.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
 Furnace = class(Power)
@@ -20,6 +22,12 @@ function Furnace:server_onCreate()
     self.trigger:bindOnStay("sv_onEnter")
 
     Power.server_onCreate(self)
+
+    self.sv = {}
+    self.sv.saved = self.storage:load()
+    if not self.sv.saved then
+        self.sv.saved = {}
+    end
 end
 
 function Furnace:sv_onEnter(trigger, results)
@@ -32,15 +40,20 @@ function Furnace:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
             shape:destroyPart(0)
-            self.network:sendToClients("cl_stonks", { pos = shape:getWorldPosition(), value = data.value })
+            sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = data.value, format = "money" })
             sm.event.sendToGame("sv_e_addMoney", data.value)
             
-            if g_research[tostring(shape.uuid)] then
+            if self.sv.saved.research and g_research[tostring(shape.uuid)] then
                 g_research[tostring(shape.uuid)].quantity = g_research[tostring(shape.uuid)].quantity  + data.value
             end
         end
         ::continue::
     end
+end
+
+function Furnace:sv_setResearch()
+    self.sv.saved.research = not self.sv.saved.research
+    self.storage:save(self.sv.saved)
 end
 
 function Furnace:client_onCreate()
@@ -55,18 +68,15 @@ function Furnace:client_onCreate()
     self.effect:setOffsetPosition(offset)
 	self.effect:start()
     ]]
-
-    Stonks.client_onCreate(self)
 end
 
-function Furnace:client_onUpdate(dt)
-    Stonks.client_onUpdate(self, dt)
+function Furnace:client_canInteract()
+	sm.gui.setInteractionText( "", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace") )
+    return true
 end
 
-function Furnace:client_onFixedUpdate()
-    Stonks.client_onFixedUpdate(self)
-end
-
-function Furnace:cl_stonks(params)
-    Stonks.cl_stonks(self, params)
+function Furnace:client_onInteract(character, state)
+    if state then
+        self.network:sendToServer("sv_setResearch")
+    end
 end

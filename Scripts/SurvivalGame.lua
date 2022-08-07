@@ -1103,6 +1103,8 @@ function SurvivalGame.sv_e_unloadBeacon(self, params)
 	end
 end
 
+
+
 --FACTORY
 function SurvivalGame:sv_e_addMoney(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
@@ -1154,6 +1156,11 @@ function SurvivalGame:client_onUpdate()
 	if sm.isHost then
 		updateHud(self)
 	end
+end
+
+--FACTORY
+function SurvivalGame:sv_e_stonks(params)
+	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)
 end
 
 function updateHud(self)
