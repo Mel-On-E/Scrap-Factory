@@ -1,4 +1,7 @@
 {
+    "SetResearchFurnace": "Set Research Furnace",
+    "ResearchFurnaceSet": "Research Furnace Set",
+    "ResearchFurnaceRemoved": "Research Furnace Removed",
     "DismissTutorial": "Press \"%s\" to dismiss",
     "ClearOresTitle": "Clear All Ores?",
     "ClearOresMessage": "You sure, bro?",

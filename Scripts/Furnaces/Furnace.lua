@@ -27,6 +27,13 @@ function Furnace:server_onCreate()
     self.sv.saved = self.storage:load()
     if not self.sv.saved then
         self.sv.saved = {}
+    else
+        if g_research_furnace then
+            self.sv.saved.research = nil
+            self.storage:save(self.sv.saved)
+        else
+            g_research_furnace = self
+        end
     end
 end
 
@@ -40,19 +47,43 @@ function Furnace:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
             shape:destroyPart(0)
-            sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = data.value, format = "money" })
-            sm.event.sendToGame("sv_e_addMoney", data.value)
-            
-            if self.sv.saved.research and g_research[tostring(shape.uuid)] then
-                g_research[tostring(shape.uuid)].quantity = g_research[tostring(shape.uuid)].quantity  + data.value
-            end
+
+            if self.sv.saved.research then
+                local value = (g_research[tostring(shape.uuid)] and data.value) or 0
+                sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = value, format = "research" })
+            else
+                sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = data.value, format = "money" })
+                sm.event.sendToGame("sv_e_addMoney", data.value)
+            end      
         end
         ::continue::
     end
 end
 
-function Furnace:sv_setResearch()
-    self.sv.saved.research = not self.sv.saved.research
+function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, player)
+    if not self.sv.saved.research then
+        sm.event.sendToGame("sv_e_showTagMessage", {tag = "ResearchFurnaceSet", player = player})
+        
+        self.sv.saved.research = true
+        self.storage:save(self.sv.saved)
+
+        if g_research_furnace then
+            sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+        end
+        g_research_furnace = self.interactable
+    else
+        sm.event.sendToGame("sv_e_showTagMessage", {tag = "ResearchFurnaceRemoved", player = player})
+
+        self.sv.saved.research = nil
+        self.storage:save(self.sv.saved)
+
+        g_research_furnace = nil
+    end
+end
+
+function Furnace:sv_removeResearch()
+    print("do soemthing pls I wanna cry")
+    self.sv.saved.research = nil
     self.storage:save(self.sv.saved)
 end
 

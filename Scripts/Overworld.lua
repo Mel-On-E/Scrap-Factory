@@ -739,6 +739,8 @@ function Overworld:sv_e_stonks(params)
 		params.value = format_money(params.value)
 	elseif params.format == "energy" then
 		params.value = format_energy(params.value)
+	elseif params.format == "research" then
+		params.value = format_money(params.value, "#00dddd")
 	end
 	self.network:sendToClients("cl_stonks", params)
 end

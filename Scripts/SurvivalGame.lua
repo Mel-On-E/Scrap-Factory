@@ -1158,7 +1158,19 @@ function SurvivalGame:client_onUpdate()
 	end
 end
 
---FACTORY
+function SurvivalGame:sv_e_showTagMessage(params)
+	if params.player then
+		self.network:sendToClient(params.player, "cl_onMessage", params.tag)
+	else
+		self.network:sendToClients("cl_onMessage", params.tag)
+	end
+end
+
+function SurvivalGame:cl_onMessage(tag)
+	sm.gui.displayAlertText(language_tag(tag))
+end
+
+
 function SurvivalGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)
 end
