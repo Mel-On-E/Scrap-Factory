@@ -55,8 +55,7 @@
          "scripted" : {
             "classname" : "Windmill",
             "data" : {
-               "power" : 10,
-               "powerLimit" : 10
+               "power" : 10
             },
             "filename" : "$CONTENT_DATA/Scripts/Generators/Windmill.lua"
          },
@@ -133,8 +132,7 @@
          "scripted" : {
             "classname" : "Solar",
             "data" : {
-               "power" : 25,
-               "powerLimit" : 25
+               "power" : 25
             },
             "filename" : "$CONTENT_DATA/Scripts/Generators/Solar.lua"
          },
@@ -173,7 +171,6 @@
                   "y" : 0.1250,
                   "z" : -0.125
                },
-               "powerLimit" : 25,
                "powerFunction": "root",
                "drops": {
                   "87873e83-8270-4796-9401-6baba45ccef2": true

@@ -61,7 +61,7 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
 		self.sv.saved.factory.moneyEarned = 0
-		self.sv.saved.factory.power = 0
+		self.sv.saved.factory.powerStored = 0
 
 		local tiers = sm.json.open("$CONTENT_DATA/tiers.json")
 		self.sv.saved.factory.research = { tier = 1 }
@@ -72,7 +72,10 @@ function SurvivalGame.server_onCreate(self)
 		self.storage:save(self.sv.saved)
 	end
 	self.data = nil
-	g_power = self.sv.saved.factory.power
+	g_power = 0
+	g_powerLimit = 0
+	g_powerStored = self.sv.saved.factory.powerStored
+
 	g_research = self.sv.saved.factory.research
 	g_moneyEarned = self.sv.saved.factory.moneyEarned
 	g_money = self.sv.saved.factory.money
@@ -165,6 +168,7 @@ function SurvivalGame.server_onCreate(self)
 
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
+	self.loaded = false
 end
 
 function SurvivalGame.server_onRefresh(self)
@@ -221,6 +225,7 @@ function SurvivalGame.client_onCreate(self)
 	g_factoryHud:open()
 	self.cl.money = 0
 	self.cl.powerLimit = 0
+	self.cl.powerStored = 0
 	self.cl.power = 0
 end
 
@@ -322,6 +327,7 @@ function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 		self.cl.time = clientData.time
 		self.cl.money = clientData.money
 		self.cl.powerLimit = clientData.powerLimit
+		self.cl.powerStored = clientData.powerStored
 		self.cl.power = clientData.power
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
@@ -380,16 +386,19 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
-		if self.sv.factory.powerLimit > 0 then
-			g_power = math.min(self.sv.factory.powerLimit, g_power)
-		end
+		if self.loaded then
+			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
+		end	
+
 		self.sv.saved.factory.research = g_research
-		self.sv.saved.factory.power = g_power
+		self.sv.saved.factory.powerStored = g_powerStored
+
 		g_money = self.sv.saved.factory.money
 		g_moneyEarned = self.sv.saved.factory.moneyEarned
 
 		self.storage:save(self.sv.saved)
 		self:sv_updateClientData()
+		g_power = 0
 	end
 
 	if sm.game.getCurrentTick() % (40 * 30) == 0 then
@@ -400,7 +409,7 @@ end
 
 function SurvivalGame.sv_updateClientData(self)
 	self.network:setClientData({ time = self.sv.time, money = self.sv.saved.factory.money,
-	powerLimit = self.sv.factory.powerLimit, power = g_power }, 2)
+	powerLimit = g_powerLimit, powerStored = g_powerStored, power = g_power }, 2)
 end
 
 function SurvivalGame.client_onUpdate(self, dt)
@@ -653,6 +662,11 @@ function SurvivalGame.client_onLoadingScreenLifted(self)
 		callbacks[#callbacks + 1] = { fn = "cl_onCinematicEvent", params = { cinematicName = "cinematic.survivalstart01" },
 			ref = self }
 		g_effectManager:cl_playNamedCinematic("cinematic.survivalstart01", callbacks)
+	end
+
+	--FACTORY
+	if sm.isHost then
+		self.loaded = true
 	end
 end
 
@@ -1130,28 +1144,15 @@ function SurvivalGame:cl_displayAlert(message)
 	sm.gui.displayAlertText(message)
 end
 
-function SurvivalGame:sv_e_addPowerLimit(powerLimit)
-	self.sv.factory.powerLimit = self.sv.factory.powerLimit + powerLimit
-	if powerLimit < 0 then
-		g_power = math.min(g_power, self.sv.factory.powerLimit)
-	end
-end
-
-function SurvivalGame:sv_e_addPower(power)
-	g_power = g_power + power
-	g_power = math.min(self.sv.factory.powerLimit, g_power)
-end
-
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
 		updateHud(self)
 
-		local powerLimit = sm.isHost and self.sv.factory.powerLimit or self.cl.powerLimit
-		local power = sm.isHost and g_power or self.cl.power
-		local percentage = powerLimit > 0 and math.ceil((power / powerLimit) * 100) or 0
+		local power = self.cl.power or 0
+		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy(power) .. " (" .. tostring(percentage) .. "%)")
 
-		if power == 0 and powerLimit > 0 then
+		if power <= 0 and self.cl.powerStored <= 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 		end

@@ -39,7 +39,6 @@
 				"filename": "$CONTENT_DATA/Scripts/Generators/Generator.lua",
 				"classname": "Generator",
 				"data": {
-                    "power": 0,
                     "powerLimit": 100
                 }
 			},

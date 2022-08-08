@@ -1,15 +1,25 @@
+dofile("$CONTENT_DATA/Scripts/util.lua")
+
 Generator = class( nil )
 
 function Generator:server_onCreate()
-    sm.event.sendToGame("sv_e_addPowerLimit", self.data.powerLimit)
+    if self.data.powerLimit then
+        change_power_storage(self.data.powerLimit)
+    end
 end
 
 function Generator:server_onDestroy()
-    sm.event.sendToGame("sv_e_addPowerLimit", -self.data.powerLimit)
+    if self.data.powerLimit then
+        change_power_storage(-self.data.powerLimit)
+    end
 end
 
 function Generator:server_onFixedUpdate()
-    if self.data.power > 0 and sm.game.getCurrentTick() % 40 == 0 then
-        sm.event.sendToGame("sv_e_addPower", self.data.power)
+    if self.data.power and sm.game.getCurrentTick() % 40 == 0 then
+        change_power(self:getPower())
     end
+end
+
+function Generator:getPower()
+    return self.data.power
 end

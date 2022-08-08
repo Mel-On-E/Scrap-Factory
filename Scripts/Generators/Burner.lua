@@ -35,7 +35,7 @@ function Burner:sv_onEnter(trigger, results)
             power = math.floor(power) + 1
 
             sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
-            sm.event.sendToGame("sv_e_addPower", math.floor(power))
+            change_power(math.floor(power))
         end
         ::continue::
     end

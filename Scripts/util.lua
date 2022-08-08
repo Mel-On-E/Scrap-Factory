@@ -74,12 +74,14 @@ function format_energy( power, color)
     return color .. leadingDigits .. separator .. followingDigits .. suffix .. "W"
 end
 
-function consume_power(power)
-    if g_power >= power then
-        g_power = g_power - power
-        return true
-    else
-        g_power = 0
-        return false
+function change_power(power)
+    g_power = g_power + power
+    return g_powerStored + g_power > 0
+end
+
+function change_power_storage(capactiy)
+    g_powerLimit = g_powerLimit + capactiy
+    if g_powerLimit < 0 then
+        sm.gui.chatMessage("#ff0000IF YOU ARE SEEING THIS PLS REPORT TO THE DEVS: POWERLIMIT < 0")
     end
 end

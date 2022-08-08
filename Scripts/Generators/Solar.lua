@@ -7,13 +7,7 @@ local sunRiseEnd = 0.24
 local sunSetStart = 0.76
 local sunSetEnd = 0.84
 
-function Solar:server_onFixedUpdate()
-    if sm.game.getCurrentTick() % 40 == 0 then
-        sm.event.sendToGame("sv_e_addPower", self:getPower(self.data.power))
-    end
-end
-
-function Solar:getPower(power)
+function Solar:getPower()
     local time = sm.storage.load(STORAGE_CHANNEL_TIME).timeOfDay
     local timeMultiplier = 0
 
@@ -25,5 +19,5 @@ function Solar:getPower(power)
         timeMultiplier = (time - sunSetStart) / (sunSetEnd - sunSetStart)
     end
     
-    return math.floor(timeMultiplier*power)
+    return math.floor(timeMultiplier*self.data.power)
 end
