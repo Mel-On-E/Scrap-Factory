@@ -43,6 +43,9 @@ function format_energy(params)
     if not params.color then
         params.color = "#dddd00"
     end
+    if not params.unit then
+        params.unit = "W"
+    end
 
     local suffixes = {}
     local funnyLetters = {"k", "M", "G", "T", "P", "E", "Z", "Y"}
@@ -55,7 +58,7 @@ function format_energy(params)
     local suffix = ""
 
     if length < 3 then
-        return string.format(params.color .. params.power .. "W")
+        return string.format(params.color .. params.power .. params.unit)
     end
 
     for len, suf in pairs(suffixes) do
@@ -73,7 +76,7 @@ function format_energy(params)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. "W"
+    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
 end
 
 function change_power(power)

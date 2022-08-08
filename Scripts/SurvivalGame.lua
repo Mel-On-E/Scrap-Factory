@@ -21,6 +21,7 @@ dofile("$SURVIVAL_DATA/Scripts/game/util/recipes.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestEntityManager.lua")
 dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
 
@@ -279,7 +280,7 @@ function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 		self.cl.time = clientData.time
 		self.cl.money = clientData.money
 		self.cl.powerLimit = clientData.powerLimit
-		g_cl_powerStored = clientData.powerLimit
+		g_cl_powerLimit = clientData.powerLimit
 		self.cl.powerStored = clientData.powerStored
 		g_cl_powerStored = clientData.powerStored
 		self.cl.power = clientData.power

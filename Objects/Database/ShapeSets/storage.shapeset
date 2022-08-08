@@ -36,8 +36,8 @@
 				"buoyancy": 7
 			},
             "scripted": {
-				"filename": "$CONTENT_DATA/Scripts/Generators/Generator.lua",
-				"classname": "Generator",
+				"filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua",
+				"classname": "Storage",
 				"data": {
                     "powerLimit": 100
                 }
