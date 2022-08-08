@@ -592,8 +592,8 @@ function SurvivalPlayer:sv_destroyOre()
 	for _, body in ipairs(sm.body.getAllBodies()) do
 		for _, shape in ipairs(body:getShapes()) do
 			local interactable = shape.interactable
-			if interactable then
-				local data = interactable:getPublicData()
+			if interactable and interactable:getType() == "scripted" then
+				local data = interactable.publicData
 				if data and data.value then
 					sm.effect.playEffect("PropaneTank - ExplosionSmall", shape.worldPosition)
 					shape:destroyShape()
