@@ -390,6 +390,11 @@ function SurvivalGame.client_onUpdate(self, dt)
 		light = DAYCYCLE_LIGHTING_VALUES[index]
 	end
 	sm.render.setOutdoorLighting(light)
+
+	--FACTORY
+	if sm.isHost then
+		updateHud(self)
+	end
 end
 
 function SurvivalGame.client_showMessage(self, msg)
@@ -1016,12 +1021,6 @@ function SurvivalGame:client_onFixedUpdate()
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 		end
-	end
-end
-
-function SurvivalGame:client_onUpdate()
-	if sm.isHost then
-		updateHud(self)
 	end
 end
 
