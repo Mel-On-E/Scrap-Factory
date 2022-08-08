@@ -67,7 +67,7 @@ function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, pl
         self.sv.saved.research = true
         self.storage:save(self.sv.saved)
 
-        if g_research_furnace then
+        if g_research_furnace and type(g_research_furnace) == "Interactable" then
             sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
         end
         g_research_furnace = self.interactable
@@ -82,7 +82,6 @@ function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, pl
 end
 
 function Furnace:sv_removeResearch()
-    print("do soemthing pls I wanna cry")
     self.sv.saved.research = nil
     self.storage:save(self.sv.saved)
 end
