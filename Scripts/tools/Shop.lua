@@ -97,7 +97,7 @@ function Shop:gen_page(num)
 	end
 	for i, v in pairs(self.cl.filteredPages[num]) do
 		self.cl.gui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
-		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money(v.price))
+		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money({money = v.price}))
 	end
 	if pageLen == 32 then return end
 	for i = pageLen + 1, 32 do

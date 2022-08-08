@@ -223,6 +223,8 @@ function SurvivalGame.client_onCreate(self)
 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false,
 		{ isHud = true, isInteractive = false, needsCursor = false })
 	g_factoryHud:open()
+	g_cl_powerStored = 0
+	g_cl_powerLimit = 0
 	self.cl.money = 0
 	self.cl.powerLimit = 0
 	self.cl.powerStored = 0
@@ -277,7 +279,9 @@ function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 		self.cl.time = clientData.time
 		self.cl.money = clientData.money
 		self.cl.powerLimit = clientData.powerLimit
+		g_cl_powerStored = clientData.powerLimit
 		self.cl.powerStored = clientData.powerStored
+		g_cl_powerStored = clientData.powerStored
 		self.cl.power = clientData.power
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
@@ -1005,7 +1009,7 @@ function SurvivalGame:client_onFixedUpdate()
 
 		local power = self.cl.power or 0
 		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
-		g_factoryHud:setText("Power", "#dddd00" .. format_energy(power) .. " (" .. tostring(percentage) .. "%)")
+		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
 
 		if power <= 0 and self.cl.powerStored <= 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
@@ -1041,7 +1045,7 @@ function updateHud(self)
 	if g_factoryHud then
 		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
 		if money then
-			g_factoryHud:setText("DialogTextBox", format_money(money))
+			g_factoryHud:setText("DialogTextBox", format_money({money = money}))
 		end
 
 		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4") )
