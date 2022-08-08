@@ -53,7 +53,7 @@ function format_energy( power, color)
     local suffix = ""
 
     if length < 3 then
-        return string.format(color .. power .. "Wh")
+        return string.format(color .. power .. "W")
     end
 
     for len, suf in pairs(suffixes) do
