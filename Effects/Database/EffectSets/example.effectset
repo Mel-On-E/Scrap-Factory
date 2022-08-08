@@ -1,1 +1,19 @@
-{}
+{
+    "Furnace - Sell":
+	{
+		"effectList":
+		[
+			{
+				"type": "particle",
+				"name": "p_lootbox_projectile_pickedup",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.25 },
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/ui/item_spawn",
+				"delay": 0.0
+			}
+		]
+	}
+}

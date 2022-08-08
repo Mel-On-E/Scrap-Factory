@@ -752,7 +752,7 @@ function Overworld:cl_stonks(params)
     gui:setMaxRenderDistance(100)
     gui:setText("Text", params.value)
 
-	local effect = params.effect or "Loot - Pickup"
+	local effect = params.effect or "Furnace - Sell"
     sm.effect.playEffect(effect, params.pos - sm.vec3.new(0, 0, 0.25))
 
     self.cl.stonks[#self.cl.stonks + 1] = { gui = gui, endTick = sm.game.getCurrentTick() + 80, pos = params.pos }
