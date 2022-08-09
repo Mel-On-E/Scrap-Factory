@@ -46,7 +46,7 @@ local IntroFadeTimeout = 5.0
 SURVIVAL_DEV_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
-function SurvivalGame.server_onCreate(self)
+function SurvivalGame.server_onCreate(self)--FACTORY --------------------- tmp MARKER -- MONEY
 	print("SurvivalGame.server_onCreate")
 	self.sv = {}
 	self.sv.saved = self.storage:load()
@@ -58,7 +58,6 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/Overworld.lua", "Overworld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 
-		--FACTORY
 		self.sv.saved.factory = {}
 		self.sv.saved.factory.money = 0
 		self.sv.saved.factory.moneyEarned = 0
