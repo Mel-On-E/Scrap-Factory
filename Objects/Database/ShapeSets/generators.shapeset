@@ -9,7 +9,7 @@
          "color" : "00ff00",
          "flammable" : true,
          "name" : "obj_generator_windmill",
-         "physicsMaterial" : "Mechanical",
+         "physicsMaterial" : "Wood",
          "ratings" : {
             "buoyancy" : 3,
             "density" : 5,
@@ -21,7 +21,7 @@
                {
                   "includes" : [ "POSITION", "NORMAL", "UV0", "UV1", "TANGENT" ],
                   "maxViewDistance" : 2500,
-                  "mesh" : "$CONTENT_DATA/Objects/animated_windmill.fbx",
+                  "mesh" : "$SURVIVAL_DATA/Terrain/Mesh/Hideout/env_hideout_windmill.fbx",
                   "subMeshMap" : {
                      "hideout_atlas" : {
                         "custom" : {
@@ -72,57 +72,62 @@
          "color" : "696969",
          "flammable" : false,
          "name" : "obj_generator_solar",
-         "physicsMaterial" : "Glass",
+         "physicsMaterial" : "Metal",
          "ratings" : {
             "buoyancy" : 3,
             "density" : 4,
             "durability" : 4,
             "friction" : 5
          },
-         "renderable" : {
-            "lodList" : [
-               {
-                  "includes" : [ "POSITION", "NORMAL", "UV0", "TANGENT" ],
-                  "maxViewDistance" : 450,
-                  "mesh" : "$CONTENT_DATA/Objects/test.fbx",
-                  "subMeshMap" : {
-                     "panels" : {
-                        "custom" : {
-                           "color" : "shinymetal2"
-                        },
-                        "material" : "DifAsgNor",
-                        "textureList" : [
-                           "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_dif.tga",
-                           "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_asg.tga",
-                           "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_nor.tga"
-                        ]
-                     },
-                     "shinymetal" : {
-                        "custom" : {
-                           "color" : "shinymetal"
-                        },
-                        "material" : "DifAsgNor",
-                        "textureList" : [
-                           "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_dif.tga",
-                           "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_asg.tga",
-                           "$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
-                        ]
-                     },
-                     "shinymetal2" : {
-                        "custom" : {
-                           "color" : "shinymetal2"
-                        },
-                        "material" : "DifAsgNor",
-                        "textureList" : [
-                           "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_dif.tga",
-                           "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_asg.tga",
-                           "$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
-                        ]
-                     }
-                  }
-               }
-            ]
-         },
+         "renderable": {
+                "lodList": [
+                    {
+                        "includes": [
+                            "POSITION",
+                            "NORMAL",
+                            "UV0",
+                            "TANGENT"
+                        ],
+                        "maxViewDistance": 450,
+                        "mesh": "$CONTENT_DATA/Objects/test.fbx",
+                        "subMeshMap": {
+                            "panels": {
+                                "custom": {
+                                    "color": "shinymetal2"
+                                },
+                                "material": "DifAsgNor",
+                                "textureList": [
+                                    "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_dif.tga",
+                                    "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_asg.tga",
+                                    "$SURVIVAL_DATA/Terrain/Textures/Building/env_building_solarpanel_nor.tga"
+                                ]
+                            },
+                            "shinymetal": {
+                                "custom": {
+                                    "color": "shinymetal"
+                                },
+                                "material": "DifAsgNor",
+                                "textureList": [
+                                    "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_dif.tga",
+                                    "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_asg.tga",
+                                    "$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
+                                ]
+                            },
+                            "shinymetal2": {
+                                "custom": {
+                                    "color": "shinymetal2"
+                                },
+                                "material": "DifAsgNor",
+                                "textureList": [
+                                    "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_dif.tga",
+                                    "$GAME_DATA/Textures/Tiled/Metal/t_tiled_building_shinymetal_asg.tga",
+                                    "$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "Solar",
@@ -151,7 +156,7 @@
             "durability" : 2,
             "friction" : 4
          },
-         "renderable" : "$SURVIVAL_DATA/Terrain/Renderable/Camping/env_camping_campfire.rend",
+         "renderable": "$SURVIVAL_DATA/Terrain/Renderable/Camping/env_camping_campfire.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "Burner",
@@ -161,8 +166,10 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
-               "drops" : {
-                  "87873e83-8270-4796-9401-6baba45ccef2" : true
+               "offset" : {
+                  "x" : -0.125,
+                  "y" : 0.1250,
+                  "z" : -0.125
                },
                "powerFunction": "root",
                "drops": {

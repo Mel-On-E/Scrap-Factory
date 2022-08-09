@@ -1,6 +1,3 @@
 {
-   "particleSystemList" : [
-      "$CONTENT_DATA/Particles/moneyParticleSystem.json",
-      "$CONTENT_DATA/Particles/researchParticleSystem.json"
-   ]
+   "particleSystemList" : []
 }
