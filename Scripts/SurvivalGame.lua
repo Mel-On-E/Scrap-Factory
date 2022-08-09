@@ -237,6 +237,8 @@ function SurvivalGame.bindChatCommands(self)
 	if addCheats then
 		sm.game.bindChatCommand("/giveMoney", { { "int", "money", true } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "int", "money", true } }, "cl_onChatCommand", "Sets moni")
+		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "Gives moni")
+		
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
 		sm.game.bindChatCommand("/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)")
 		sm.game.bindChatCommand("/encrypt", {}, "cl_onChatCommand", "Restrict interactions in all warehouses")
@@ -428,6 +430,11 @@ function SurvivalGame.cl_onChatCommand(self, params)
 		self.network:sendToServer("sv_e_addMoney", params[2])
 	elseif params[1] == "/setmoney" then
 		self.network:sendToServer("sv_setMoney", params[2])
+	elseif params[1] == "/test" then
+		
+
+
+
 	elseif params[1] == "/camera" then
 		self.network:sendToServer("sv_giveItem",
 			{ player = sm.localPlayer.getPlayer(), item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"), quantity = 1 })
