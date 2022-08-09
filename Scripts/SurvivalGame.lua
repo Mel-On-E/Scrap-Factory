@@ -169,7 +169,6 @@ function SurvivalGame.server_onCreate(self)
 
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
-	self.loaded = false
 end
 
 function SurvivalGame.server_onRefresh(self)
@@ -343,9 +342,9 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
-		if self.loaded then
+		if self.loaded and sm.game.getCurrentTick() > self.loaded + 40 then
 			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
-		end	
+		end
 
 		self.sv.saved.factory.research = g_research
 		self.sv.saved.factory.powerStored = g_powerStored
@@ -573,9 +572,7 @@ function SurvivalGame.client_onLoadingScreenLifted(self)
 	end
 
 	--FACTORY
-	if sm.isHost then
-		self.loaded = true
-	end
+	self.loaded = sm.game.getCurrentTick()
 end
 
 function SurvivalGame.sv_n_loadingScreenLifted(self, _, player)
@@ -995,9 +992,11 @@ function SurvivalGame:client_onFixedUpdate()
 		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
 
-			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
-			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 		if power < 0 and self.cl.powerStored <= 0 then
+			if self.loaded and sm.game.getCurrentTick() > self.loaded + 40 then
+				sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
+				sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
+			end
 		end
 	end
 end
