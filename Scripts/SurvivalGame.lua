@@ -995,9 +995,9 @@ function SurvivalGame:client_onFixedUpdate()
 		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
 
-		if power <= 0 and self.cl.powerStored <= 0 then
 			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
+		if power < 0 and self.cl.powerStored <= 0 then
 		end
 	end
 end
