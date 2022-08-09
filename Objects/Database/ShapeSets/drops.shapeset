@@ -13,7 +13,7 @@
          "ratings" : {
             "buoyancy" : 1,
             "density" : 4,
-            "durability" : 1,
+            "durability" : 4,
             "friction" : 3
          },
          "renderable" : {

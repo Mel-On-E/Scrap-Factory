@@ -47,6 +47,7 @@ function Furnace:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
             shape:destroyPart(0)
+
             if self.sv.saved.research then
                 local value = (g_research[tostring(shape.uuid)] and data.value) or 0
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = value, format = "research" })
