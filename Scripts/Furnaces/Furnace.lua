@@ -46,7 +46,6 @@ function Furnace:sv_onEnter(trigger, results)
             if not interactable then goto continue end
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
-            sm.particle.createParticle("money01",shape:getWorldPosition())
             shape:destroyPart(0)
             if self.sv.saved.research then
                 local value = (g_research[tostring(shape.uuid)] and data.value) or 0
