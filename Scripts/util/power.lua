@@ -3,6 +3,7 @@ Power = class (nil)
 function Power:server_onCreate()
     self.prevActive = true
     self.powerUpdate = 1
+    self.hasPower = false
 end
 
 function Power:server_onFixedUpdate(effect)
@@ -18,29 +19,17 @@ function Power:server_onFixedUpdate(effect)
     if self.powerUpdate == 0 then
         self.powerUpdate = 40
         if not change_power(-self.data.power) then
-            
-            if self.prevActive and effect and type(effect) == "string" then
-                self.network:sendToClients(effect, self.active)
-            end
-            self.prevActive = false
+            self.hasPower = false
         else
-            if self.prevActive ~= self.active then
-                if effect and type(effect) == "string" then
-                    self.network:sendToClients(effect, self.active)
-                end
-            end
-            self.prevActive = true
+            self.hasPower = true
         end
     end
 
+    self.active = self.active and self.hasPower
 
-    if self.prevActive ~= self.active then
-        if self.active then
-            if (self.powerUpdate % 40 == 0 and not self.powerUpdate == 0) and change_power(-self.data.power) then
-                self.powerUpdate = 40
-            else
-                self.active = false
-            end
+    if self.active ~= self.prevActive then
+        if effect and type(effect) == "string" then
+            self.network:sendToClients(effect, self.active)
         end
     end
 
