@@ -310,6 +310,8 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 	local newDay = self.sv.time.timeOfDay >= 1.0
 	if newDay then
 		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
+		--FACTORY
+		self:sv_factoryRaid()
 	end
 
 	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
@@ -985,6 +987,21 @@ end
 
 
 --FACTORY
+function SurvivalGame:client_onFixedUpdate()
+	if g_factoryHud then
+		updateHud(self)
+
+		local power = self.cl.power or 0
+		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
+		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
+
+		if power <= 0 and self.cl.powerStored <= 0 then
+			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
+			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
+		end
+	end
+end
+
 function SurvivalGame:sv_e_addMoney(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
 	self.sv.saved.factory.moneyEarned = self.sv.saved.factory.moneyEarned + money
@@ -1004,24 +1021,18 @@ function SurvivalGame:sv_e_buyItem(params)
 	self:sv_giveItem({ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 end
 
+function SurvivalGame:sv_factoryRaid()
+	print("CUSTOM RAID")
+	local level = 1
+	local wave = 1
+	local hours = 12
+
+	sm.event.sendToWorld(self.sv.saved.overworld, "sv_raid", {level = level, wave = wave, hours = hours})
+end
+
 ---@param message string
 function SurvivalGame:cl_displayAlert(message)
 	sm.gui.displayAlertText(message)
-end
-
-function SurvivalGame:client_onFixedUpdate()
-	if g_factoryHud then
-		updateHud(self)
-
-		local power = self.cl.power or 0
-		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
-		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
-
-		if power <= 0 and self.cl.powerStored <= 0 then
-			sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
-			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
-		end
-	end
 end
 
 function SurvivalGame:sv_e_showTagMessage(params)

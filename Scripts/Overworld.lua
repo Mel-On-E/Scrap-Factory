@@ -1,3 +1,6 @@
+dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
+--FACTORY ^
+
 dofile( "$SURVIVAL_DATA/Scripts/game/worlds/BaseWorld.lua")
 
 
@@ -756,4 +759,27 @@ function Overworld:cl_stonks(params)
     sm.effect.playEffect(effect, params.pos - sm.vec3.new(0, 0, 0.25))
 
     self.cl.stonks[#self.cl.stonks + 1] = { gui = gui, endTick = sm.game.getCurrentTick() + 80, pos = params.pos }
+end
+
+function Overworld:sv_raid(params)
+	local pos
+
+	local allBodies = sm.body.getAllBodies()
+	if #allBodies > 1 then
+		for i=0, 10 do
+			local body = allBodies[math.random(1, #allBodies)]
+			local shapes = body:getShapes()
+			local shape = shapes[math.random(1, #shapes)]
+
+			if shape.uuid ~= obj_lootcrate then
+				pos = shape.worldPosition
+				break
+			end
+		end
+	end
+
+	print(pos)
+	if pos then
+		g_unitManager:sv_beginRaidCountdown( self, pos, params.level, params.wave, params.hours*40*60 )
+	end
 end
