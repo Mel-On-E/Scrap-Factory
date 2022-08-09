@@ -301,7 +301,7 @@ function Sell.sv_n_sell( self, params, player )
 			print("spend", params.quantity)
 			sm.container.endTransaction()
 		end
-		sm.event.sendToGame("sv_e_addMoney", params.value*params.quantity)
+		sm.event.sendToGame("sv_e_addMoney", tostring(params.value*params.quantity))
 
 		self.network:sendToClients( "cl_n_onUse" )
 		params.shape:destroyShape(0)

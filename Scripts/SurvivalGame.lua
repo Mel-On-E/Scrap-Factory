@@ -279,12 +279,12 @@ end
 function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 	if channel == 2 then
 		self.cl.time = clientData.time
-		self.cl.money = clientData.money
-		self.cl.powerLimit = clientData.powerLimit
-		g_cl_powerLimit = clientData.powerLimit
-		self.cl.powerStored = clientData.powerStored
-		g_cl_powerStored = clientData.powerStored
-		self.cl.power = clientData.power
+		self.cl.money = tonumber(clientData.money)
+		self.cl.powerLimit = tonumber(clientData.powerLimit)
+		g_cl_powerLimit = self.cl.powerLimit
+		self.cl.powerStored = tonumber(clientData.powerStored)
+		g_cl_powerStored = self.cl.powerStored
+		self.cl.power = tonumber(clientData.power)
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
 		self:bindChatCommands()
@@ -366,8 +366,8 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 end
 
 function SurvivalGame.sv_updateClientData(self)
-	self.network:setClientData({ time = self.sv.time, money = self.sv.saved.factory.money,
-	powerLimit = g_powerLimit, powerStored = g_powerStored, power = g_power }, 2)
+	self.network:setClientData({ time = self.sv.time, money = tostring(self.sv.saved.factory.money),
+	powerLimit = tostring(g_powerLimit), powerStored = tostring(g_powerStored), power = tostring(g_power) }, 2)
 end
 
 function SurvivalGame.client_onUpdate(self, dt)
@@ -1009,6 +1009,7 @@ function SurvivalGame:client_onFixedUpdate()
 end
 
 function SurvivalGame:sv_e_addMoney(money)
+	money = tonumber(money)
 	self.sv.saved.factory.money = self.sv.saved.factory.money + money
 	self.sv.saved.factory.moneyEarned = self.sv.saved.factory.moneyEarned + money
 end
@@ -1019,11 +1020,12 @@ function SurvivalGame:sv_setMoney(money)
 end
 
 function SurvivalGame:sv_e_buyItem(params)
-	if params.price * params.quantity > self.sv.saved.factory.money then
+	local price = tonumber(params.price) * params.quantity
+	if price > self.sv.saved.factory.money then
 		self.network:sendToClient(params.player, "cl_displayAlert", "Not enough money!")
 		return
 	end
-	self.sv.saved.factory.money = self.sv.saved.factory.money - params.price * params.quantity
+	self.sv.saved.factory.money = self.sv.saved.factory.money - price
 	self:sv_giveItem({ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 end
 

@@ -168,7 +168,7 @@ end
 
 function Shop:cl_buyItem()
 	self.network:sendToServer("sv_buyItem",
-		{ price = self.cl.filteredPages[self.cl.curPage][self.cl.curItem].price,
+		{ price = tostring(self.cl.filteredPages[self.cl.curPage][self.cl.curItem].price),
 			uuid = self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid, quantity = self.cl.quantity })
 end
 
