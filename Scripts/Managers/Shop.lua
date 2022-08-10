@@ -64,7 +64,7 @@ function Shop:client_onCreate()
 	self.cl.shopGui:setButtonCallback("DecorTab", "changeCategory")
 	self.cl.shopGui:setButtonCallback("NextPage", "changePage")
 	self.cl.shopGui:setButtonCallback("LastPage", "changePage")
-	self.cl.shopGui:setButtonCallback("research", "openReserch")
+	--self.cl.shopGui:setButtonCallback("research", "openReserch")
 	self:changeQuantity("Buy_x1")
 	self.cl.itemPages = { {} }
 	self.cl.filteredPages = { {} }
