@@ -98,6 +98,14 @@ function SurvivalPlayer.cl_init( self )
 	self.cl.revivalChewCount = 0
 end
 
+function SurvivalGame.cl_playFurnaceParticle(pos, isResearch)
+	if isResearch then
+		sm.particle.createParticle("researchParticleSystem", pos)
+	else
+		sm.particle.createParticle("moneyParticleSystem", pos)
+	end
+end
+
 function SurvivalPlayer.client_onClientDataUpdate( self, data )
 	BasePlayer.client_onClientDataUpdate( self, data )
 	if sm.localPlayer.getPlayer() == self.player then
@@ -592,8 +600,8 @@ function SurvivalPlayer:sv_destroyOre()
 	for _, body in ipairs(sm.body.getAllBodies()) do
 		for _, shape in ipairs(body:getShapes()) do
 			local interactable = shape.interactable
-			if interactable and interactable:getType() == "scripted" then
-				local data = interactable.publicData
+			if interactable then
+				local data = interactable:getPublicData()
 				if data and data.value then
 					sm.effect.playEffect("PropaneTank - ExplosionSmall", shape.worldPosition)
 					shape:destroyShape()

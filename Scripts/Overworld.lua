@@ -1,6 +1,3 @@
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
---FACTORY ^
-
 dofile( "$SURVIVAL_DATA/Scripts/game/worlds/BaseWorld.lua")
 
 
@@ -740,11 +737,11 @@ end
 function Overworld:sv_e_stonks(params)
 	params.value = tonumber(params.value)
 	if params.format == "money" then
-		params.value = format_money({money = params.value})
+		params.value = format_money(params.value)
 	elseif params.format == "energy" then
-		params.value = format_energy({power = params.value})
+		params.value = format_energy(params.value)
 	elseif params.format == "research" then
-		params.value = format_money( {money = params.value, color = "#00dddd"})
+		params.value = format_money(params.value, "#00dddd")
 	end
 	self.network:sendToClients("cl_stonks", params)
 end
@@ -756,31 +753,8 @@ function Overworld:cl_stonks(params)
     gui:setMaxRenderDistance(100)
     gui:setText("Text", params.value)
 
-	local effect = params.effect or "Furnace - Sell"
+	local effect = params.effect or "Loot - Pickup"
     sm.effect.playEffect(effect, params.pos - sm.vec3.new(0, 0, 0.25))
 
     self.cl.stonks[#self.cl.stonks + 1] = { gui = gui, endTick = sm.game.getCurrentTick() + 80, pos = params.pos }
-end
-
-function Overworld:sv_raid(params)
-	local pos
-
-	local allBodies = sm.body.getAllBodies()
-	if #allBodies > 1 then
-		for i=0, 10 do
-			local body = allBodies[math.random(1, #allBodies)]
-			local shapes = body:getShapes()
-			local shape = shapes[math.random(1, #shapes)]
-
-			if shape.uuid ~= obj_lootcrate then
-				pos = shape.worldPosition
-				break
-			end
-		end
-	end
-
-	print(pos)
-	if pos then
-		g_unitManager:sv_beginRaidCountdown( self, pos, params.level, params.wave, params.hours*40*60 )
-	end
 end

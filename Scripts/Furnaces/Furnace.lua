@@ -56,6 +56,7 @@ function Furnace:sv_onEnter(trigger, results)
             else
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(data.value), format = "money" })
                 sm.event.sendToGame("sv_e_addMoney", tostring(data.value))
+                sm.event.sendToPlayer("cl_playFurnaceParticle", {pos = shape:getWorldPosition(), isResearch = self.sv.saved.research})
             end      
         end
         ::continue::
