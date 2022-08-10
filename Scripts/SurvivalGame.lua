@@ -240,8 +240,8 @@ function SurvivalGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
-		sm.game.bindChatCommand("/giveMoney", { { "int", "money", true } }, "cl_onChatCommand", "Gives moni")
-		sm.game.bindChatCommand("/setmoney", { { "int", "money", true } }, "cl_onChatCommand", "Sets moni")
+		sm.game.bindChatCommand("/giveMoney", { { "int", "money", false } }, "cl_onChatCommand", "Gives moni")
+		sm.game.bindChatCommand("/setmoney", { { "int", "money", false } }, "cl_onChatCommand", "Sets moni")
 		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "Gives moni")
 		
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
