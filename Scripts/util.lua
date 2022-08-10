@@ -1,8 +1,10 @@
 ---@diagnostic disable: lowercase-global
----@param money number
-function format_money(money, color)
-    if not color then
-        color = "#00dd00"
+
+--TODO fix duplication in format methods
+
+function format_money(params)
+    if not params.color then
+        params.color = "#00dd00"
     end
 
     local suffixes = {}
@@ -11,12 +13,12 @@ function format_money(money, color)
         suffixes[k*3] = letter
     end
 
-    moneyStr = tostring(math.floor(money))
+    moneyStr = tostring(math.floor(params.money))
     local length = #moneyStr
     local suffix = ""
 
     if length < 3 then
-        return string.format(color .. "$%.2f", money)
+        return string.format(params.color .. "$%.2f", params.money)
     end
 
     for len, suf in pairs(suffixes) do
@@ -68,11 +70,15 @@ function format_money(params)
     end
 
     return params.color .. "$" .. format_number(params.money, numeralPrefixes)
+    return params.color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
 end
 
-function format_energy( power, color)
-    if not color then
-        color = "#dddd00"
+function format_energy(params)
+    if not params.color then
+        params.color = "#dddd00"
+    end
+    if not params.unit then
+        params.unit = "W"
     end
 
     local suffixes = {}
@@ -81,12 +87,12 @@ function format_energy( power, color)
         suffixes[k*3] = letter
     end
 
-    powerStr = tostring(math.floor(power))
+    powerStr = tostring(math.floor(params.power))
     local length = #powerStr
     local suffix = ""
 
     if length < 3 then
-        return string.format(color .. power .. "Wh")
+        return string.format(params.color .. params.power .. params.unit)
     end
 
     for len, suf in pairs(suffixes) do
@@ -104,7 +110,7 @@ function format_energy( power, color)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return color .. leadingDigits .. separator .. followingDigits .. suffix .. "W"
+    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
 end
 
 function consume_power(power)
