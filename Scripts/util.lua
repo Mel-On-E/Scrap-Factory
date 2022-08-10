@@ -1,42 +1,37 @@
 ---@diagnostic disable: lowercase-global
 
---TODO fix duplication in format methods
+local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
+local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
+
+local function format_number(value, suffixes)
+    local scientific = string.format("%.2E", value)
+    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)E([+-]%d+)")
+    roundedNumber = tonumber(roundedNumber)
+    digits = tonumber(digits)
+
+    local orderOfMagnitude = digits % 3
+    local suffixIndex = (digits - orderOfMagnitude ) / 3 + 1
+
+    if suffixIndex < 1 then
+        return string.format("%.2f", value)
+    else 
+        local suffix = suffixes[suffixIndex]
+        if suffix then
+            local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
+            return string.format(format, negate, roundedNumber * 10^orderOfMagnitude, suffix)
+        else  -- Format if suffix does not exist (3 digits scientific).
+            scientific = scientific:lower()
+            return scientific:gsub("+", "")
+        end
+    end
+end
 
 function format_money(params)
     if not params.color then
         params.color = "#00dd00"
     end
 
-    local suffixes = {}
-    local funnyLetters = {"k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
-    for k, letter in ipairs(funnyLetters) do
-        suffixes[k*3] = letter
-    end
-
-    moneyStr = tostring(math.floor(params.money))
-    local length = #moneyStr
-    local suffix = ""
-
-    if length < 3 then
-        return string.format(params.color .. "$%.2f", params.money)
-    end
-
-    for len, suf in pairs(suffixes) do
-        if length > len then
-            suffix = suf
-        else
-            break
-        end
-    end
-
-    local leadingDigits = string.sub(moneyStr, 1, length % 3)
-    local followingDigits = string.sub(moneyStr, length % 3 + 1, 3)
-
-    local separator = "."
-    if #leadingDigits == 0 then
-        separator = ""
-    end
-    return params.color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
+    return params.color .. "$" .. format_number(params.money, numeralPrefixes)
 end
 
 function format_energy(params)
@@ -47,38 +42,12 @@ function format_energy(params)
         params.unit = "W"
     end
 
-    local suffixes = {}
-    local funnyLetters = {"k", "M", "G", "T", "P", "E", "Z", "Y"}
-    for k, letter in ipairs(funnyLetters) do
-        suffixes[k*3] = letter
-    end
-
-    powerStr = tostring(math.floor(params.power))
-    local length = #powerStr
-    local suffix = ""
-
-    if length < 3 then
-        return string.format(params.color .. params.power .. params.unit)
-    end
-
-    for len, suf in pairs(suffixes) do
-        if length > len then
-            suffix = suf
-        else
-            break
-        end
-    end
-
-    local leadingDigits = string.sub(powerStr, 1, length % 3)
-    local followingDigits = string.sub(powerStr, length % 3 + 1, 3)
-
-    local separator = "."
-    if #leadingDigits == 0 then
-        separator = ""
-    end
-    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
+    return params.color .. format_number(params.power, metricPrefixes) .. params.unit
 end
 
+
+
+--Power System
 function change_power(power)
     g_power = g_power + power
     return g_powerStored + g_power > 0
