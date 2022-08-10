@@ -71,6 +71,11 @@ function SurvivalGame.server_onCreate(self)
 			self.sv.saved.factory.research[uuid] = { goal = quantity, quantity = 0 }
 		end
 		self.storage:save(self.sv.saved)
+	else
+		self.sv.saved.factory.powerStored = tonumber(self.sv.saved.factory.powerStored)
+		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
+		self.sv.saved.factory.money = tonumber(self.sv.saved.factory.money)
+		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
 	end
 	self.data = nil
 	g_power = 0
@@ -354,7 +359,11 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 		g_money = self.sv.saved.factory.money
 		g_moneyEarned = self.sv.saved.factory.moneyEarned
 
-		self.storage:save(self.sv.saved)
+		local safeData = self.sv.saved
+		safeData.factory.powerStored = tostring(safeData.factory.powerStored)
+		safeData.factory.money = tostring(safeData.factory.money)
+		safeData.factory.moneyEarned = tonumber(safeData.factory.moneyEarned)
+		self.storage:save(safeData)
 		self:sv_updateClientData()
 		g_power = 0
 	end
