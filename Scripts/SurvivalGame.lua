@@ -353,17 +353,25 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
 		end
 
-		self.sv.saved.factory.research = g_research
-		self.sv.saved.factory.powerStored = g_powerStored
+		local safeData = self.sv.saved.factory
+		safeData.research = g_research
+		safeData.powerStored = g_powerStored
 
-		g_money = self.sv.saved.factory.money
-		g_moneyEarned = self.sv.saved.factory.moneyEarned
+		g_money = safeData.money
+		g_moneyEarned = safeData.moneyEarned
 
-		local safeData = self.sv.saved
-		safeData.factory.powerStored = tostring(safeData.factory.powerStored)
-		safeData.factory.money = tostring(safeData.factory.money)
-		safeData.factory.moneyEarned = tonumber(safeData.factory.moneyEarned)
-		self.storage:save(safeData)
+		--lots of dumb conversion stuff bc sm stuff sucks
+		local powerStored = safeData.powerStored
+		local money = safeData.money
+		local moneyEarned = safeData.moneyEarned
+		safeData.powerStored = tostring(powerStored)
+		safeData.money = tostring(money)
+		safeData.moneyEarned = tostring(moneyEarned)
+		self.storage:save(self.sv.saved)
+		safeData.powerStored = powerStored
+		safeData.money = money
+		safeData.moneyEarned = moneyEarned
+
 		self:sv_updateClientData()
 		g_power = 0
 	end
