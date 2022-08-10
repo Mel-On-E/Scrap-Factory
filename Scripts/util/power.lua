@@ -1,8 +1,6 @@
 Power = class (nil)
 
 function Power:server_onCreate()
-    self.data.power = tonumber(self.data.power)
-
     self.prevActive = true
     self.powerUpdate = 1
     self.hasPower = false

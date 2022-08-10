@@ -35,39 +35,6 @@ function format_money(money, color)
         separator = ""
     end
     return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
-
-local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
-local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
-
-local function format_number(value, suffixes)
-    local scientific = string.format("%.2E", value)
-    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)E([+-]%d+)")
-    roundedNumber = tonumber(roundedNumber)
-    digits = tonumber(digits)
-
-    local orderOfMagnitude = digits % 3
-    local suffixIndex = (digits - orderOfMagnitude ) / 3 + 1
-
-    if suffixIndex < 1 then
-        return string.format("%.2f", value)
-    else 
-        local suffix = suffixes[suffixIndex]
-        if suffix then
-            local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
-            return string.format(format, negate, roundedNumber * 10^orderOfMagnitude, suffix)
-        else  -- Format if suffix does not exist (3 digits scientific).
-            scientific = scientific:lower()
-            return scientific:gsub("+", "")
-        end
-    end
-end
-
-function format_money(params)
-    if not params.color then
-        params.color = "#00dd00"
-    end
-
-    return params.color .. "$" .. format_number(params.money, numeralPrefixes)
 end
 
 function format_energy( power, color)
@@ -114,20 +81,5 @@ function consume_power(power)
     else
         g_power = 0
         return false
-    return params.color .. format_number(params.power, metricPrefixes) .. params.unit
-end
-
-
-
---Power System
-function change_power(power)
-    g_power = g_power + power
-    return g_powerStored + g_power > 0
-end
-
-function change_power_storage(capactiy)
-    g_powerLimit = g_powerLimit + capactiy
-    if g_powerLimit < 0 then
-        sm.gui.chatMessage("#ff0000IF YOU ARE SEEING THIS PLS REPORT TO THE DEVS: POWERLIMIT < 0")
     end
 end

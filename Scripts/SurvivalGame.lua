@@ -71,11 +71,6 @@ function SurvivalGame.server_onCreate(self)
 			self.sv.saved.factory.research[uuid] = { goal = quantity, quantity = 0 }
 		end
 		self.storage:save(self.sv.saved)
-	else
-		self.sv.saved.factory.powerStored = tonumber(self.sv.saved.factory.powerStored)
-		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
-		self.sv.saved.factory.money = tonumber(self.sv.saved.factory.money)
-		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
 	end
 	self.data = nil
 	g_power = 0
@@ -240,8 +235,8 @@ function SurvivalGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
-		sm.game.bindChatCommand("/giveMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
-		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
+		sm.game.bindChatCommand("/giveMoney", { { "int", "money", true } }, "cl_onChatCommand", "Gives moni")
+		sm.game.bindChatCommand("/setmoney", { { "int", "money", true } }, "cl_onChatCommand", "Sets moni")
 		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "Gives moni")
 		
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
@@ -353,25 +348,13 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
 		end
 
-		local safeData = self.sv.saved.factory
-		safeData.research = g_research
-		safeData.powerStored = g_powerStored
+		self.sv.saved.factory.research = g_research
+		self.sv.saved.factory.powerStored = g_powerStored
 
-		g_money = safeData.money
-		g_moneyEarned = safeData.moneyEarned
+		g_money = self.sv.saved.factory.money
+		g_moneyEarned = self.sv.saved.factory.moneyEarned
 
-		--lots of dumb conversion stuff bc sm stuff sucks
-		local powerStored = safeData.powerStored
-		local money = safeData.money
-		local moneyEarned = safeData.moneyEarned
-		safeData.powerStored = tostring(powerStored)
-		safeData.money = tostring(money)
-		safeData.moneyEarned = tostring(moneyEarned)
 		self.storage:save(self.sv.saved)
-		safeData.powerStored = powerStored
-		safeData.money = money
-		safeData.moneyEarned = moneyEarned
-
 		self:sv_updateClientData()
 		g_power = 0
 	end
@@ -1030,7 +1013,6 @@ function SurvivalGame:sv_e_addMoney(money)
 end
 
 function SurvivalGame:sv_setMoney(money)
-	money = tonumber(money)
 	self.sv.saved.factory.money = money
 	self.sv.saved.factory.moneyEarned = money
 end

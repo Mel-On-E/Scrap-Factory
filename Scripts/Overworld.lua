@@ -735,7 +735,6 @@ end
 
 --FACTORY
 function Overworld:sv_e_stonks(params)
-	params.value = tonumber(params.value)
 	if params.format == "money" then
 		params.value = format_money(params.value)
 	elseif params.format == "energy" then

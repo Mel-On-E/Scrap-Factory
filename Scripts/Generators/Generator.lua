@@ -3,12 +3,7 @@ dofile("$CONTENT_DATA/Scripts/util.lua")
 Generator = class( nil )
 
 function Generator:server_onCreate()
-    if self.data.power then
-        self.data.power = tonumber(self.data.power)
-    end
-
     if self.data.powerLimit then
-        self.data.powerLimit = tonumber(self.data.powerLimit)
         change_power_storage(self.data.powerLimit)
     end
 end
