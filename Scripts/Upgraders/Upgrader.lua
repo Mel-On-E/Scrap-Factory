@@ -16,6 +16,8 @@ function get_size_and_offset(self)
 end
 
 function Upgrader:server_onCreate()
+    self.data.upgrade.add = tonumber(self.data.upgrade.add)
+
     local size, offset = get_size_and_offset(self)
 
     self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),

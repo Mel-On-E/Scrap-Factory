@@ -2,5 +2,8 @@
 	"scriptableObjectSetList": [ 
 	{
 		"scriptableObjectSet": "$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/managers.sobset"
+	},
+	{
+		"scriptableObjectSet": "$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobset"
 	}
 ]}
