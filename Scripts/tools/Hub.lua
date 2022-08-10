@@ -5,73 +5,136 @@ local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
 dofile("$CONTENT_DATA/Scripts/util.lua")
+
+dofile("$CONTENT_DATA/Scripts/managers/Shop.lua")
+dofile("$CONTENT_DATA/Scripts/managers/Research.lua")
+
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
----@class Research : ToolClass
-Research = class()
 
-function Research:client_onCreate()
-	g_researchTool = self.tool
+---@class page
+---@field uuid string
+---@field price number
+---@field category string
+
+---@class client;
+---@field gui GuiInterface
+---@field filteredPages page[][]
+---@field itemPages page[][]
+---amount of pages
+---@field pageNum number
+---current page
+---@field curPage number
+---current item
+---@field curItem number
+---current quantity
+---@field quantity number
+
+
+---@class Hub : ToolClass
+---@field cl client
+
+Hub = class()
+
+local g_ui_research
+local g_ui_shop
+
+function Hub:server_onCreate()
+	if not g_ui_research then
+		sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
+		sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
+	end
+end
+
+function Hub:client_onCreate()
 	self.cl = {}
-	if self.tool:isLocal() then
-		self.tiers = sm.json.open("$CONTENT_DATA/tiers.json")
-		self.cl.tier = 1
+	self.cl.activeInterface = nil
+	self.cl.currentInterface = "shop"
 
-		self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Research.layout")
-
-		self.gui:setButtonCallback("NextTier", "cl_tier_next")
-		self.gui:setButtonCallback("PrevTier", "cl_tier_prev")
-		self:update_gui()
-
-		self.gui:setOnCloseCallback("cl_onGuiClosed")
-
-		self.cl.seatedEquiped = false
-	end
 	self:client_onRefresh()
-end
 
-function Research:client_onFixedUpdate()
-	self:update_gui()
-end
-
-function Research:update_gui()
-	self.gui:setText("TierName", "Tier " .. tostring(self.cl.tier))
-	local i = 1
-	for uuid, quantity in pairs(self.tiers[self.cl.tier].goals) do
-		if g_research.tier == self.cl.tier then
-			local precentage = math.floor((g_research[uuid].quantity / g_research[uuid].goal) * 100)
-			self.gui:setText("Progress" .. tostring(i),
-				"$" ..
-				tostring(g_research[uuid].quantity) .. "/" .. tostring(g_research[uuid].goal) .. " (" .. tostring(precentage) .. "%)")
-		else
-			self.gui:setText("Progress" .. tostring(i), "$0/" .. tostring(quantity) .. " (0%)")
-		end
-
-		self.gui:setIconImage("Icon" .. tostring(i), sm.uuid.new(uuid))
-
-
-		i = i + 1
+	if not g_ui_research then
+		g_ui_research = Research()
+		g_ui_shop = Shop()
+		g_ui_shop:cl_setGuiCloseCallback(self.cl_onGuiClosed)
 	end
 end
 
-function Research:cl_tier_next()
-	self.cl.tier = math.min(self.cl.tier + 1, #self.tiers)
-	self:update_gui()
+function Hub:client_onFixedUpdate()
+	if self.cl.equipped then
+		if self.cl.activeInterface and not self.cl.activeInterface:cl_e_isGuiOpen() then
+			self.cl.activeInterface = nil
+			self:cl_onGuiClosed()
+		end
+	end
 end
 
-function Research:cl_tier_prev()
-	self.cl.tier = math.max(self.cl.tier - 1, 1)
-	self:update_gui()
+function Hub:cl_openGui()
+	local interface = self.cl.currentInterface
+	if interface == "shop" then
+		g_ui_shop:cl_e_open_gui()
+		self.cl.activeInterface = g_ui_shop
+	end
 end
 
---WARNING: Dumb animation stuff I don't want to deal with below
+function Hub.client_onEquip(self)
+	if self.tool:isLocal() then
+		self:cl_openGui()
+	end
 
-function Research.client_onRefresh(self)
+	self:client_onEquipAnimations()
+end
+
+function Hub.client_equipWhileSeated(self)
+	if not self.cl.seatedEquiped then
+		self:cl_openGui()
+
+		self.cl.seatedEquiped = true
+	end
+end
+
+function Hub.cl_onGuiClosed(self)
+	sm.tool.forceTool(nil)
+	self.cl.seatedEquiped = false
+end
+
+
+
+
+--ANIMATION STUFF BELOW
+function Hub:client_onEquipAnimations()
+	self.cl.wantsEquip = true
+	self.cl.seatedEquiped = false
+
+	local currentRenderablesTp = {}
+	concat(currentRenderablesTp, renderablesTp)
+	concat(currentRenderablesTp, renderables)
+
+	local currentRenderablesFp = {}
+	concat(currentRenderablesFp, renderablesFp)
+	concat(currentRenderablesFp, renderables)
+
+	self.tool:setTpRenderables(currentRenderablesTp)
+
+	if self.tool:isLocal() then
+		self.tool:setFpRenderables(currentRenderablesFp)
+	end
+
+	--TODO disable animations bc they are funny when broken haha lol xd OMG ROFL LMAO
+	self:cl_loadAnimations()
+	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
+
+	if self.tool:isLocal() then
+		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
+	end
+end
+
+function Hub.client_onRefresh(self)
 	self:cl_loadAnimations()
 end
 
-function Research.client_onUpdate(self, dt)
+function Hub.client_onUpdate(self, dt)
 	-- First person animation
 	local isCrouching = self.tool:isCrouching()
 
@@ -129,48 +192,9 @@ function Research.client_onUpdate(self, dt)
 			self.tool:updateAnimation(animation.info.name, animation.time, weight)
 		end
 	end
-
 end
 
-function Research:cl_e_equip()
-	self:client_onEquip()
-end
-
-function Research.client_onEquip(self)
-	self.cl.wantsEquip = true
-	self.cl.seatedEquiped = false
-
-	local currentRenderablesTp = {}
-	concat(currentRenderablesTp, renderablesTp)
-	concat(currentRenderablesTp, renderables)
-
-	local currentRenderablesFp = {}
-	concat(currentRenderablesFp, renderablesFp)
-	concat(currentRenderablesFp, renderables)
-
-	self.tool:setTpRenderables(currentRenderablesTp)
-
-	if self.tool:isLocal() then
-		self.tool:setFpRenderables(currentRenderablesFp)
-		self.gui:open()
-	end
-
-	self:cl_loadAnimations()
-	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
-
-	if self.tool:isLocal() then
-		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
-	end
-end
-
-function Research.client_equipWhileSeated(self)
-	if not self.cl.seatedEquiped then
-		self.gui:open()
-		self.cl.seatedEquiped = true
-	end
-end
-
-function Research.client_onUnequip(self)
+function Hub.client_onUnequip(self)
 	self.cl.wantsEquip = false
 	self.cl.seatedEquiped = false
 	if sm.exists(self.tool) then
@@ -182,7 +206,7 @@ function Research.client_onUnequip(self)
 	end
 end
 
-function Research.cl_loadAnimations(self)
+function Hub.cl_loadAnimations(self)
 	-- TP
 	self.tpAnimations = createTpAnimations(
 		self.tool,
@@ -237,10 +261,4 @@ function Research.cl_loadAnimations(self)
 
 	setTpAnimation(self.tpAnimations, "idle", 5.0)
 	self.cl.blendTime = 0.2
-
-end
-
-function Research.cl_onGuiClosed(self)
-	sm.tool.forceTool(nil)
-	self.cl.seatedEquiped = false
 end
