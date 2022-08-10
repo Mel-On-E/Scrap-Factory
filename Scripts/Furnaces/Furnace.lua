@@ -51,9 +51,11 @@ function Furnace:sv_onEnter(trigger, results)
             if self.sv.saved.research then
                 local value = (g_research[tostring(shape.uuid)] and data.value) or 0
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = value, format = "research" })
+                sm.event.sendToPlayer(sm.localPlayer,"cl_playFurnaceParticle", {pos = shape:getWorldPosition(), isResearch = self.sv.saved.research})
             else
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = data.value, format = "money" })
                 sm.event.sendToGame("sv_e_addMoney", tostring(data.value))
+                sm.event.sendToPlayer("cl_playFurnaceParticle", {pos = shape:getWorldPosition(), isResearch = self.sv.saved.research})
             end      
         end
         ::continue::

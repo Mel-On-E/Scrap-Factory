@@ -988,8 +988,6 @@ function SurvivalGame.sv_e_unloadBeacon(self, params)
 	end
 end
 
-
-
 --FACTORY
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
@@ -1055,6 +1053,13 @@ function SurvivalGame:cl_onMessage(tag)
 	sm.gui.displayAlertText(language_tag(tag))
 end
 
+function SurvivalGame.cl_playFurnaceParticle(pos, isResearch)
+	if isResearch then
+		sm.particle.createParticle("researchParticleSystem", pos)
+	else
+		sm.particle.createParticle("moneyParticleSystem", pos)
+	end
+end
 
 function SurvivalGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)

@@ -1,10 +1,8 @@
 ---@diagnostic disable: lowercase-global
-
---TODO fix duplication in format methods
-
-function format_money(params)
-    if not params.color then
-        params.color = "#00dd00"
+---@param money number
+function format_money(money, color)
+    if not color then
+        color = "#00dd00"
     end
 
     local suffixes = {}
@@ -13,12 +11,12 @@ function format_money(params)
         suffixes[k*3] = letter
     end
 
-    moneyStr = tostring(math.floor(params.money))
+    moneyStr = tostring(math.floor(money))
     local length = #moneyStr
     local suffix = ""
 
     if length < 3 then
-        return string.format(params.color .. "$%.2f", params.money)
+        return string.format(color .. "$%.2f", money)
     end
 
     for len, suf in pairs(suffixes) do
@@ -36,15 +34,12 @@ function format_money(params)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return params.color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
+    return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
 end
 
-function format_energy(params)
-    if not params.color then
-        params.color = "#dddd00"
-    end
-    if not params.unit then
-        params.unit = "W"
+function format_energy( power, color)
+    if not color then
+        color = "#dddd00"
     end
 
     local suffixes = {}
@@ -53,12 +48,12 @@ function format_energy(params)
         suffixes[k*3] = letter
     end
 
-    powerStr = tostring(math.floor(params.power))
+    powerStr = tostring(math.floor(power))
     local length = #powerStr
     local suffix = ""
 
     if length < 3 then
-        return string.format(params.color .. params.power .. params.unit)
+        return string.format(color .. power .. "Wh")
     end
 
     for len, suf in pairs(suffixes) do
@@ -76,17 +71,15 @@ function format_energy(params)
     if #leadingDigits == 0 then
         separator = ""
     end
-    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
+    return color .. leadingDigits .. separator .. followingDigits .. suffix .. "W"
 end
 
-function change_power(power)
-    g_power = g_power + power
-    return g_powerStored + g_power > 0
-end
-
-function change_power_storage(capactiy)
-    g_powerLimit = g_powerLimit + capactiy
-    if g_powerLimit < 0 then
-        sm.gui.chatMessage("#ff0000IF YOU ARE SEEING THIS PLS REPORT TO THE DEVS: POWERLIMIT < 0")
+function consume_power(power)
+    if g_power >= power then
+        g_power = g_power - power
+        return true
+    else
+        g_power = 0
+        return false
     end
 end
