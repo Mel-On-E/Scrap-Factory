@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
 Belt = class( nil )

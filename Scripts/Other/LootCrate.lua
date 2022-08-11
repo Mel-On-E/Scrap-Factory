@@ -10,7 +10,7 @@ function LootCrate:server_onCreate()
     body:setPaintable(false)
     body:setBuildable(false)
     self.timeout = 0
-    self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
+    self.itemList = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
 end
 
 function LootCrate:server_onFixedUpdate()

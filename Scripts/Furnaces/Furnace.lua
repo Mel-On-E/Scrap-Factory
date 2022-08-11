@@ -1,6 +1,6 @@
 ---@class Furnace : ShapeClass
 
-dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 

@@ -4,7 +4,7 @@ local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
 local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
-dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
@@ -42,7 +42,7 @@ function Shop:client_onCreate()
 	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
 	self.cl.shopGui:setOnCloseCallback("cl_onGuiClosed")
 
-	local json = sm.json.open("$CONTENT_DATA/shop.json")
+	local json = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
 	self.cl.pageNum = math.floor(#json / 32) == 0 and 1 or
 		math.floor(#json / 32)
 	self.cl.curPage = 1

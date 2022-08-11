@@ -5,7 +5,7 @@ dofile("$SURVIVAL_DATA/Scripts/util.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
 
-dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
@@ -35,7 +35,7 @@ end
 
 function Sell.cl_init( self )
 	self:cl_loadAnimations()
-	self.itemList = sm.json.open("$CONTENT_DATA/shop.json")
+	self.itemList = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
 	self.cl = {}
 	self.cl.quantity = 1
 end

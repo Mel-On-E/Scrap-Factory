@@ -1,4 +1,3 @@
-dofile("$CONTENT_DATA/Scripts/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")

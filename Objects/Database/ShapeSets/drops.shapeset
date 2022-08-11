@@ -40,7 +40,7 @@
             "data" : {
                "value" : 1
             },
-            "filename" : "$CONTENT_DATA/Scripts/Drop.lua"
+            "filename" : "$CONTENT_DATA/Scripts/Drops/Drop.lua"
          },
          "showInInventory" : false,
          "uuid" : "87873e83-8270-4796-9401-6baba45ccef2"

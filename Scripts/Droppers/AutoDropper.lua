@@ -1,4 +1,3 @@
-dofile("$CONTENT_DATA/Scripts/util.lua")
 dofile("$CONTENT_DATA/Scripts/Droppers/Dropper.lua")
 
 AutoDropper = class( Dropper )

@@ -1,5 +1,5 @@
 --Factory
-dofile("$CONTENT_DATA/Scripts/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 --Factory end
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
@@ -55,7 +55,7 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved = {}
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
-		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/Overworld.lua", "Overworld",
+		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/Overworld.lua", "Overworld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 
 		--FACTORY
@@ -64,7 +64,7 @@ function SurvivalGame.server_onCreate(self)
 		self.sv.saved.factory.moneyEarned = 0
 		self.sv.saved.factory.powerStored = 0
 
-		local tiers = sm.json.open("$CONTENT_DATA/tiers.json")
+		local tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
 		self.sv.saved.factory.research = { tier = 1 }
 
 		for uuid, quantity in pairs(tiers[self.sv.saved.factory.research.tier].goals) do
@@ -642,24 +642,6 @@ end
 function SurvivalGame.sv_ambush(self, params)
 	if sm.exists(self.sv.saved.overworld) then
 		sm.event.sendToWorld(self.sv.saved.overworld, "sv_ambush", params)
-	end
-end
-
-function SurvivalGame.sv_recreateWorld(self, player)
-	local character = player:getCharacter()
-	if character:getWorld() == self.sv.saved.overworld then
-		self.sv.saved.overworld:destroy()
-		self.sv.saved.overworld = sm.world.createWorld("$SURVIVAL_DATA/Scripts/game/worlds/Overworld.lua", "Overworld",
-			{ dev = g_survivalDev }, self.sv.saved.data.seed)
-		self.storage:save(self.sv.saved)
-
-		local params = { pos = character:getWorldPosition(), dir = character:getDirection() }
-		self.sv.saved.overworld:loadCell(math.floor(params.pos.x / 64), math.floor(params.pos.y / 64), player,
-			"sv_recreatePlayerCharacter", params)
-
-		self.network:sendToClients("client_showMessage", "Recreating world")
-	else
-		self.network:sendToClients("client_showMessage", "Recreate world only allowed for overworld")
 	end
 end
 

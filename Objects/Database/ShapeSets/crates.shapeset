@@ -45,7 +45,7 @@
          "rotationSet" : "PropYNegYZ",
          "scripted" : {
             "classname" : "LootCrate",
-            "filename" : "$CONTENT_DATA/Scripts/LootCrate.lua"
+            "filename" : "$CONTENT_DATA/Scripts/Other/LootCrate.lua"
          },
          "stackSize" : 999,
          "uuid" : "69b869f1-03dc-4ea3-9291-fd6490f945dd"

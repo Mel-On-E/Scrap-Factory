@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/Belt.lua")
+dofile("$CONTENT_DATA/Scripts/Other/Belt.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
 Upgrader = class(nil)
