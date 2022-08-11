@@ -4,8 +4,8 @@ local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "
 local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
 
 local function format_number(value, suffixes)
-    local scientific = string.format("%.2E", value)
-    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)E([+-]%d+)")
+    local scientific = string.format("%.2e", value)
+    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)e([+-]%d+)")
     roundedNumber = tonumber(roundedNumber)
     digits = tonumber(digits)
 
@@ -20,7 +20,6 @@ local function format_number(value, suffixes)
             local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
             return string.format(format, negate, roundedNumber * 10^orderOfMagnitude, suffix)
         else  -- Format if suffix does not exist (3 digits scientific).
-            scientific = scientific:lower()
             return scientific:gsub("+", "")
         end
     end
