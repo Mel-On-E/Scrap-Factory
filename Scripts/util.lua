@@ -37,6 +37,40 @@ function format_money(params)
         separator = ""
     end
     return params.color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
+    return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
+
+local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
+local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
+
+local function format_number(value, suffixes)
+    local scientific = string.format("%.2E", value)
+    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)E([+-]%d+)")
+    roundedNumber = tonumber(roundedNumber)
+    digits = tonumber(digits)
+
+    local orderOfMagnitude = digits % 3
+    local suffixIndex = (digits - orderOfMagnitude ) / 3 + 1
+
+    if suffixIndex < 1 then
+        return string.format("%.2f", value)
+    else 
+        local suffix = suffixes[suffixIndex]
+        if suffix then
+            local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
+            return string.format(format, negate, roundedNumber * 10^orderOfMagnitude, suffix)
+        else  -- Format if suffix does not exist (3 digits scientific).
+            scientific = scientific:lower()
+            return scientific:gsub("+", "")
+        end
+    end
+end
+
+function format_money(params)
+    if not params.color then
+        params.color = "#00dd00"
+    end
+
+    return params.color .. "$" .. format_number(params.money, numeralPrefixes)
 end
 
 function format_energy(params)
@@ -79,6 +113,19 @@ function format_energy(params)
     return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
 end
 
+function consume_power(power)
+    if g_power >= power then
+        g_power = g_power - power
+        return true
+    else
+        g_power = 0
+        return false
+    return params.color .. format_number(params.power, metricPrefixes) .. params.unit
+end
+
+
+
+--Power System
 function change_power(power)
     g_power = g_power + power
     return g_powerStored + g_power > 0
