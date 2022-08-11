@@ -8,7 +8,7 @@ function Drop:server_onCreate()
     body:setPaintable(false)
     body:setBuildable(false)
     body:setLiftable(false)
-    self.interactable:setPublicData( {value = tonumber(self.data.value), upgrades = {}})
+    self.interactable:setPublicData( {value = self.data.value, upgrades = {}})
     self.timeout = 0
 end
 

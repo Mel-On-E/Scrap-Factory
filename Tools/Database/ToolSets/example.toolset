@@ -1,13 +1,25 @@
 {
 	"toolList": [
 		{
-			"name": "tool_hub",
+			"name": "tool_shop",
 			"uuid": "a6113860-f4d4-42df-b8f9-129efdbaf777",
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_connecttool_preview.rend",
 			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
 			"script": {
-				"file": "$CONTENT_DATA/Scripts/tools/Hub.lua",
-				"class": "Hub",
+				"file": "$CONTENT_DATA/Scripts/tools/Shop.lua",
+				"class": "Shop",
+				"data": ""
+			},
+			"showInInventory": false
+		},
+		{
+			"name": "tool_research",
+			"uuid": "83cf75e8-9805-4ddf-96f0-6a5e7810d09d",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_connecttool_preview.rend",
+			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
+			"script": {
+				"file": "$CONTENT_DATA/Scripts/tools/Research.lua",
+				"class": "Research",
 				"data": ""
 			},
 			"showInInventory": false
