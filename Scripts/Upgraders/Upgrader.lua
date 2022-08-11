@@ -18,6 +18,11 @@ end
 function Upgrader:server_onCreate()
     self.data.upgrade.add = tonumber(self.data.upgrade.add)
 
+    if self.data.belt then
+        Belt.server_onCreate(self)
+        self.sv_onStay = Belt.sv_onStay
+    end
+
     local size, offset = get_size_and_offset(self)
 
     self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
@@ -51,15 +56,27 @@ function Upgrader:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then return end
             local uuid = tostring(self.shape.uuid)
-            if data.value > self.data.upgrade.cap then goto continue end
-            if data.upgrades[uuid] and data.upgrades[uuid] >= self.data.upgrade.limit then goto continue end
+            if self.data.upgrade.cap and data.value > self.data.upgrade.cap then goto continue end
+            if self.data.upgrade.limit and data.upgrades[uuid] and data.upgrades[uuid] >= self.data.upgrade.limit then goto continue end
 
-            data.value = data.value * self.data.upgrade.multiplier + self.data.upgrade.add
+            data = self:sv_onUpgrade(shape)
             data.upgrades[uuid] = data.upgrades[uuid] and data.upgrades[uuid] + 1 or 1
             interactable:setPublicData(data)
         end
         ::continue::
     end
+end
+
+function Upgrader:sv_onUpgrade(shape)
+    local data = shape.interactable:getPublicData()
+    local upgrade = self.data.upgrade
+    if upgrade.multiplier then
+        data.value = data.value * upgrade.multiplier
+    end
+    if upgrade.add then
+        data.value = data.value + upgrade.add
+    end
+    return data
 end
 
 function Upgrader:cl_toggleEffect(active)
@@ -68,16 +85,4 @@ function Upgrader:cl_toggleEffect(active)
     else
         self.effect:stop()
     end
-end
-
-
-BeltUpgrader = class(Upgrader)
-
-function BeltUpgrader:server_onCreate()
-    Belt.server_onCreate(self)
-    Upgrader.server_onCreate(self)
-end
-
-function BeltUpgrader:sv_onStay(trigger, results)
-    Belt.sv_onStay(self, trigger, results)
 end
