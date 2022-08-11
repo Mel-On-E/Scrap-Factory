@@ -57,7 +57,6 @@ function Hub:client_onCreate()
 	if not g_ui_research then
 		g_ui_research = Research()
 		g_ui_shop = Shop()
-		g_ui_shop:cl_setGuiCloseCallback(self.cl_onGuiClosed)
 	end
 end
 
