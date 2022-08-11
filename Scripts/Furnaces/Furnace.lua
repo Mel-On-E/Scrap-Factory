@@ -50,10 +50,7 @@ function Furnace:sv_onEnter(trigger, results)
 
             if self.sv.saved.research then
                 local value = (g_research[tostring(shape.uuid)] and data.value) or 0
-                sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = value, format = "research" })
-                sm.event.sendToPlayer(sm.localPlayer,"cl_playFurnaceParticle", {pos = shape:getWorldPosition(), isResearch = self.sv.saved.research})
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research" })
->>>>>>> parent of e8bde2e (Revert "Merge branch 'main' of https://github.com/Dr-Pixel-Dev/Scrap-Factory")
             else
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(data.value), format = "money" })
                 sm.event.sendToGame("sv_e_addMoney", tostring(data.value))

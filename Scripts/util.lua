@@ -1,44 +1,5 @@
 ---@diagnostic disable: lowercase-global
 
---TODO fix duplication in format methods
-
-function format_money(params)
-    if not params.color then
-        params.color = "#00dd00"
-    end
-
-    local suffixes = {}
-    local funnyLetters = {"k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
-    for k, letter in ipairs(funnyLetters) do
-        suffixes[k*3] = letter
-    end
-
-    moneyStr = tostring(math.floor(params.money))
-    local length = #moneyStr
-    local suffix = ""
-
-    if length < 3 then
-        return string.format(params.color .. "$%.2f", params.money)
-    end
-
-    for len, suf in pairs(suffixes) do
-        if length > len then
-            suffix = suf
-        else
-            break
-        end
-    end
-
-    local leadingDigits = string.sub(moneyStr, 1, length % 3)
-    local followingDigits = string.sub(moneyStr, length % 3 + 1, 3)
-
-    local separator = "."
-    if #leadingDigits == 0 then
-        separator = ""
-    end
-    return params.color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
-    return color .. "$" .. leadingDigits .. separator .. followingDigits .. suffix
-
 local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
 local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
 
@@ -81,45 +42,6 @@ function format_energy(params)
         params.unit = "W"
     end
 
-    local suffixes = {}
-    local funnyLetters = {"k", "M", "G", "T", "P", "E", "Z", "Y"}
-    for k, letter in ipairs(funnyLetters) do
-        suffixes[k*3] = letter
-    end
-
-    powerStr = tostring(math.floor(params.power))
-    local length = #powerStr
-    local suffix = ""
-
-    if length < 3 then
-        return string.format(params.color .. params.power .. params.unit)
-    end
-
-    for len, suf in pairs(suffixes) do
-        if length > len then
-            suffix = suf
-        else
-            break
-        end
-    end
-
-    local leadingDigits = string.sub(powerStr, 1, length % 3)
-    local followingDigits = string.sub(powerStr, length % 3 + 1, 3)
-
-    local separator = "."
-    if #leadingDigits == 0 then
-        separator = ""
-    end
-    return params.color .. leadingDigits .. separator .. followingDigits .. suffix .. params.unit
-end
-
-function consume_power(power)
-    if g_power >= power then
-        g_power = g_power - power
-        return true
-    else
-        g_power = 0
-        return false
     return params.color .. format_number(params.power, metricPrefixes) .. params.unit
 end
 
