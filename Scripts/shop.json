@@ -50,6 +50,16 @@
 		"price": 100,
 		"category": "Furnaces"
 	},
+	//obj_furnace_2x
+	"3039176f-dea8-453d-82be-2c73a68ad05f": {
+		"price": 10000,
+		"category": "Furnaces"
+	},
+	//obj_furnace_lunar
+	"e0587c21-2145-4ee1-beaa-d33ca3407c61": {
+		"price": 50000,
+		"category": "Furnaces"
+	},
 
 
 
