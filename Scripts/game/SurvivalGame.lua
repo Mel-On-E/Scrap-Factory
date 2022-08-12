@@ -1,11 +1,4 @@
---Factory
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
---Factory end
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
-
-
-
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/ElevatorManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua")
@@ -21,7 +14,11 @@ dofile("$SURVIVAL_DATA/Scripts/game/util/recipes.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestEntityManager.lua")
 dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
+
+dofile("$CONTENT_DATA/Scripts/util/util.lua")
+dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 
 
 
@@ -60,8 +57,6 @@ function SurvivalGame.server_onCreate(self)
 
 		--FACTORY
 		self.sv.saved.factory = {}
-		self.sv.saved.factory.money = 0
-		self.sv.saved.factory.moneyEarned = 0
 		self.sv.saved.factory.powerStored = 0
 
 		local tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
@@ -73,9 +68,6 @@ function SurvivalGame.server_onCreate(self)
 		self.storage:save(self.sv.saved)
 	else
 		self.sv.saved.factory.powerStored = tonumber(self.sv.saved.factory.powerStored)
-		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
-		self.sv.saved.factory.money = tonumber(self.sv.saved.factory.money)
-		self.sv.saved.factory.moneyEarned = tonumber(self.sv.saved.factory.moneyEarned)
 	end
 	self.data = nil
 	g_power = 0
@@ -83,10 +75,6 @@ function SurvivalGame.server_onCreate(self)
 	g_powerStored = self.sv.saved.factory.powerStored
 
 	g_research = self.sv.saved.factory.research
-	g_moneyEarned = self.sv.saved.factory.moneyEarned
-	g_money = self.sv.saved.factory.money
-	
-	
 
 
 	--FACTORY
@@ -174,6 +162,12 @@ function SurvivalGame.server_onCreate(self)
 
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
+
+	self.sv.moneyManager = sm.storage.load(69)
+	if not self.sv.moneyManager then
+		self.sv.moneyManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("e97b0595-7912-425b-8a60-ea6dbfba4b39"))
+		sm.storage.save(69, self.sv.moneyManager)
+	end
 end
 
 function SurvivalGame.server_onRefresh(self)
@@ -234,7 +228,6 @@ function SurvivalGame.client_onCreate(self)
 	g_cl_powerStored = 0
 	g_cl_powerLimit = 0
 
-	self.cl.money = 0
 	self.cl.powerLimit = 0
 	self.cl.powerStored = 0
 	self.cl.power = 0
@@ -288,7 +281,6 @@ end
 function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 	if channel == 2 then
 		self.cl.time = clientData.time
-		self.cl.money = tonumber(clientData.money)
 		self.cl.powerLimit = tonumber(clientData.powerLimit)
 		g_cl_powerLimit = self.cl.powerLimit
 		self.cl.powerStored = tonumber(clientData.powerStored)
@@ -353,7 +345,7 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
-		if self.loaded and sm.game.getCurrentTick() > self.loaded + 40 then
+		if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
 			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
 		end
 
@@ -361,20 +353,12 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 		safeData.research = g_research
 		safeData.powerStored = g_powerStored
 
-		g_money = safeData.money
-		g_moneyEarned = safeData.moneyEarned
 
 		--lots of dumb conversion stuff bc sm stuff sucks
 		local powerStored = safeData.powerStored
-		local money = safeData.money
-		local moneyEarned = safeData.moneyEarned
 		safeData.powerStored = tostring(powerStored)
-		safeData.money = tostring(money)
-		safeData.moneyEarned = tostring(moneyEarned)
 		self.storage:save(self.sv.saved)
 		safeData.powerStored = powerStored
-		safeData.money = money
-		safeData.moneyEarned = moneyEarned
 
 		self:sv_updateClientData()
 		g_power = 0
@@ -387,7 +371,7 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 end
 
 function SurvivalGame.sv_updateClientData(self)
-	self.network:setClientData({ time = self.sv.time, money = tostring(self.sv.saved.factory.money),
+	self.network:setClientData({ time = self.sv.time,
 	powerLimit = tostring(g_powerLimit), powerStored = tostring(g_powerStored), power = tostring(g_power) }, 2)
 end
 
@@ -448,7 +432,7 @@ function SurvivalGame.cl_onChatCommand(self, params)
 	}
 
 	if params[1] == "/giveMoney" then
-		self.network:sendToServer("sv_e_addMoney", params[2])
+		self.network:sendToServer("sv_addMoney", params[2])
 	elseif params[1] == "/setmoney" then
 		self.network:sendToServer("sv_setMoney", params[2])
 	elseif params[1] == "/test" then
@@ -994,6 +978,15 @@ end
 
 
 --FACTORY
+function SurvivalGame:sv_addMoney(money)
+	MoneyManager.sv_addMoney(tonumber(money))
+end
+
+function SurvivalGame:sv_setMoney(money)
+	MoneyManager.sv_setMoney(tonumber(money))
+end
+
+
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
 		updateHud(self)
@@ -1003,34 +996,12 @@ function SurvivalGame:client_onFixedUpdate()
 		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
 
 		if power < 0 and self.cl.powerStored <= 0 then
-			if self.loaded and sm.game.getCurrentTick() > self.loaded + 40 then
+			if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
 				sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
 				sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
 			end
 		end
 	end
-end
-
-function SurvivalGame:sv_e_addMoney(money)
-	money = tonumber(money)
-	self.sv.saved.factory.money = self.sv.saved.factory.money + money
-	self.sv.saved.factory.moneyEarned = self.sv.saved.factory.moneyEarned + money
-end
-
-function SurvivalGame:sv_setMoney(money)
-	money = tonumber(money)
-	self.sv.saved.factory.money = money
-	self.sv.saved.factory.moneyEarned = money
-end
-
-function SurvivalGame:sv_e_buyItem(params)
-	local price = tonumber(params.price) * params.quantity
-	if price > self.sv.saved.factory.money then
-		self.network:sendToClient(params.player, "cl_displayAlert", "Not enough money!")
-		return
-	end
-	self.sv.saved.factory.money = self.sv.saved.factory.money - price
-	self:sv_giveItem({ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 end
 
 function SurvivalGame:sv_factoryRaid()
@@ -1066,11 +1037,6 @@ end
 
 function updateHud(self)
 	if g_factoryHud then
-		local money = sm.isHost and self.sv.saved.factory.money or self.cl.money
-		if money then
-			g_factoryHud:setText("DialogTextBox", format_money({money = money}))
-		end
-
 		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4") )
 	end
 end

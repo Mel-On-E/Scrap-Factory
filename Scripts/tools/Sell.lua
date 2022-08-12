@@ -232,7 +232,7 @@ function Sell.client_onEquippedUpdate( self, primaryState, secondaryState )
 
 			if primaryState == sm.tool.interactState.start then
 				self:onUse()
-				self.network:sendToServer( "sv_n_sell", {shape = shape, value = sellValue, quantity = quantity} )
+				self.network:sendToServer( "sv_n_sell", {shape = shape, value = tostring(sellValue), quantity = quantity} )
 			end
 		end
 	end
@@ -292,7 +292,7 @@ end
 function Sell.sv_n_sell( self, params, player ) 
 	if params.shape and sm.exists( params.shape ) then
 		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = params.value, format = "money" })
+		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = tostring(params.value), format = "money" })
 
 		if params.quantity > 1 then
 			sm.container.beginTransaction()
@@ -300,7 +300,7 @@ function Sell.sv_n_sell( self, params, player )
 			print("spend", params.quantity)
 			sm.container.endTransaction()
 		end
-		sm.event.sendToGame("sv_e_addMoney", tostring(params.value*params.quantity))
+		MoneyManager.sv_addMoney(tonumber(params.value)*params.quantity)
 
 		self.network:sendToClients( "cl_n_onUse" )
 		params.shape:destroyShape(0)

@@ -5,6 +5,12 @@
 			"classname": "LanguageManager",
 			"name": "mgr_language",
 			"uuid": "c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/MoneyManager.lua",
+			"classname": "MoneyManager",
+			"name": "mgr_money",
+			"uuid": "e97b0595-7912-425b-8a60-ea6dbfba4b39"
 		}
 	]
 }

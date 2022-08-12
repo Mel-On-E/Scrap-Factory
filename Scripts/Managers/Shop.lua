@@ -183,7 +183,14 @@ end
 
 function Shop:sv_buyItem(params, player)
 	params.player = player
-	sm.event.sendToGame("sv_e_buyItem", params)
+	local price = tonumber(params.price) * params.quantity
+
+	if MoneyManager.sv_spendMoney(price) then
+		sm.event.sendToGame("sv_giveItem", { player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
+	else
+		--TODO Inform player that they poor (also use language tag)
+		sm.event.sendToPlayer(player, "sv_e_onMsg", "You are very poor")
+	end
 end
 
 function Shop:cl_onGuiClosed()

@@ -28,7 +28,7 @@
                     <Property key="Caption" value="#00dddd0.69%"/>
                 </Widget>
             </Widget>
-            <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="DialogTextBox">
+            <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="Money">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>

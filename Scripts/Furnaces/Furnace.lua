@@ -55,7 +55,7 @@ function Furnace:sv_onEnter(trigger, results)
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research" })
             else
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
-                sm.event.sendToGame("sv_e_addMoney", tostring(value))
+                MoneyManager.sv_addMoney(value)
             end
 
             shape:destroyPart(0)
