@@ -46,18 +46,30 @@ function Furnace:sv_onEnter(trigger, results)
             if not interactable then goto continue end
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
-            shape:destroyPart(0)
+
+            local value = self:sv_upgrade(shape)
+
 
             if self.sv.saved.research then
-                local value = (g_research[tostring(shape.uuid)] and data.value) or 0
+                value = (g_research[tostring(shape.uuid)] and value) or 0
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research" })
             else
-                sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(data.value), format = "money" })
-                sm.event.sendToGame("sv_e_addMoney", tostring(data.value))
-            end      
+                sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
+                sm.event.sendToGame("sv_e_addMoney", tostring(value))
+            end
+
+            shape:destroyPart(0)
         end
         ::continue::
     end
+end
+
+function Furnace:sv_upgrade(shape)
+    local value = shape.interactable.publicData.value
+    if self.data.multiplier then
+        value = value * self.data.multiplier
+    end
+    return value
 end
 
 function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, player)
