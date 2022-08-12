@@ -35,7 +35,6 @@ end
 
 function Sell.cl_init( self )
 	self:cl_loadAnimations()
-	self.itemList = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
 	self.cl = {}
 	self.cl.quantity = 1
 end
@@ -216,7 +215,7 @@ function Sell.client_onEquippedUpdate( self, primaryState, secondaryState )
 	if result.type == "body" then
 		local shape = result:getShape()
 
-		local shopItem = self.itemList[tostring(shape.uuid)]
+		local shopItem = g_shop[tostring(shape.uuid)]
 		if shopItem then
 			local sellValue = math.floor(shopItem.price*resellValue)
 

@@ -224,12 +224,16 @@ function SurvivalGame.client_onCreate(self)
 	g_survivalHud:setImage("LogbookImageBox", "$CONTENT_DATA/Gui/shop.png")
 	assert(g_survivalHud)
 
-	--FACTORY HUD
+	--FACTORY
 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false,
 		{ isHud = true, isInteractive = false, needsCursor = false })
 	g_factoryHud:open()
+
+	g_shop = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
+
 	g_cl_powerStored = 0
 	g_cl_powerLimit = 0
+
 	self.cl.money = 0
 	self.cl.powerLimit = 0
 	self.cl.powerStored = 0

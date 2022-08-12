@@ -10,7 +10,6 @@ function LootCrate:server_onCreate()
     body:setPaintable(false)
     body:setBuildable(false)
     self.timeout = 0
-    self.itemList = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
 end
 
 function LootCrate:server_onFixedUpdate()
@@ -101,7 +100,7 @@ end
 
 function LootCrate:get_loot_table()
     local itemPool = {}
-    for uuid, item in pairs(self.itemList) do
+    for uuid, item in pairs(g_shop) do
         if item.price <= g_moneyEarned + 1000 then
             itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
         end

@@ -34,17 +34,16 @@ sm.tool.preloadRenderables(renderablesFp)
 Shop = class()
 
 function Shop:client_onCreate()
-	if not g_shop then
-		g_shop = self
+	if not g_cl_shop then
+		g_cl_shop = self
 	end
 
 	self.cl = {}
 	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
 	self.cl.shopGui:setOnCloseCallback("cl_onGuiClosed")
 
-	local json = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
-	self.cl.pageNum = math.floor(#json / 32) == 0 and 1 or
-		math.floor(#json / 32)
+	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
+		math.floor(#g_shop / 32)
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.quantity = 1
@@ -69,7 +68,7 @@ function Shop:client_onCreate()
 	self.cl.itemPages = { {} }
 	self.cl.filteredPages = { {} }
 	local pages = {}
-	for k, v in pairs(json) do
+	for k, v in pairs(g_shop) do
 		table.insert(pages, { uuid = k, price = v.price, category = v.category })
 	end
 	table.sort(pages, function(a, b)
@@ -188,14 +187,14 @@ function Shop:sv_buyItem(params, player)
 end
 
 function Shop:cl_onGuiClosed()
-	g_shop.guiActive = false
+	g_cl_shop.guiActive = false
 end
 
 function Shop:cl_e_open_gui()
-	g_shop.guiActive = true
-	g_shop.cl.shopGui:open()
+	g_cl_shop.guiActive = true
+	g_cl_shop.cl.shopGui:open()
 end
 
 function Shop:cl_e_isGuiOpen()
-	return g_shop.guiActive
+	return g_cl_shop.guiActive
 end
