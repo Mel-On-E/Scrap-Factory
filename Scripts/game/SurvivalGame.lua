@@ -19,6 +19,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
 
 
 
@@ -43,6 +44,9 @@ local IntroFadeTimeout = 5.0
 SURVIVAL_DEV_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
+local STORAGE_CHANNEL_MONEYMANAGER = 69
+local STORAGE_CHANNEL_POWERMANAGER = 70
+
 function SurvivalGame.server_onCreate(self)
 	print("SurvivalGame.server_onCreate")
 	self.sv = {}
@@ -57,7 +61,6 @@ function SurvivalGame.server_onCreate(self)
 
 		--FACTORY
 		self.sv.saved.factory = {}
-		self.sv.saved.factory.powerStored = 0
 
 		local tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
 		self.sv.saved.factory.research = { tier = 1 }
@@ -66,20 +69,14 @@ function SurvivalGame.server_onCreate(self)
 			self.sv.saved.factory.research[uuid] = { goal = quantity, quantity = 0 }
 		end
 		self.storage:save(self.sv.saved)
-	else
-		self.sv.saved.factory.powerStored = tonumber(self.sv.saved.factory.powerStored)
 	end
 	self.data = nil
-	g_power = 0
-	g_powerLimit = 0
-	g_powerStored = self.sv.saved.factory.powerStored
 
 	g_research = self.sv.saved.factory.research
 
 
 	--FACTORY
 	self.sv.factory = {}
-	self.sv.factory.powerLimit = 0
 
 	print(self.sv.saved.data)
 	if self.sv.saved.data and self.sv.saved.data.dev then
@@ -163,10 +160,16 @@ function SurvivalGame.server_onCreate(self)
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 
-	self.sv.moneyManager = sm.storage.load(69)
+	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNEL_MONEYMANAGER)
 	if not self.sv.moneyManager then
 		self.sv.moneyManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("e97b0595-7912-425b-8a60-ea6dbfba4b39"))
-		sm.storage.save(69, self.sv.moneyManager)
+		sm.storage.save(STORAGE_CHANNEL_MONEYMANAGER, self.sv.moneyManager)
+	end
+
+	self.sv.powerManager = sm.storage.load(STORAGE_CHANNEL_POWERMANAGER)
+	if not self.sv.powerManager then
+		self.sv.powerManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("26ec01d5-6fc8-4088-b06b-25d30dd44309"))
+		sm.storage.save(STORAGE_CHANNEL_POWERMANAGER, self.sv.powerManager)
 	end
 end
 
@@ -224,13 +227,6 @@ function SurvivalGame.client_onCreate(self)
 	g_factoryHud:open()
 
 	g_shop = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
-
-	g_cl_powerStored = 0
-	g_cl_powerLimit = 0
-
-	self.cl.powerLimit = 0
-	self.cl.powerStored = 0
-	self.cl.power = 0
 end
 
 function SurvivalGame.bindChatCommands(self)
@@ -281,11 +277,6 @@ end
 function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 	if channel == 2 then
 		self.cl.time = clientData.time
-		self.cl.powerLimit = tonumber(clientData.powerLimit)
-		g_cl_powerLimit = self.cl.powerLimit
-		self.cl.powerStored = tonumber(clientData.powerStored)
-		g_cl_powerStored = self.cl.powerStored
-		self.cl.power = tonumber(clientData.power)
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
 		self:bindChatCommands()
@@ -345,23 +336,10 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
-		if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-			g_powerStored = math.max(math.min(g_powerLimit, g_powerStored + g_power), 0)
-		end
-
 		local safeData = self.sv.saved.factory
 		safeData.research = g_research
-		safeData.powerStored = g_powerStored
-
-
-		--lots of dumb conversion stuff bc sm stuff sucks
-		local powerStored = safeData.powerStored
-		safeData.powerStored = tostring(powerStored)
-		self.storage:save(self.sv.saved)
-		safeData.powerStored = powerStored
 
 		self:sv_updateClientData()
-		g_power = 0
 	end
 
 	if sm.game.getCurrentTick() % (40 * 30) == 0 then
@@ -371,8 +349,7 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 end
 
 function SurvivalGame.sv_updateClientData(self)
-	self.network:setClientData({ time = self.sv.time,
-	powerLimit = tostring(g_powerLimit), powerStored = tostring(g_powerStored), power = tostring(g_power) }, 2)
+	self.network:setClientData({ time = self.sv.time }, 2)
 end
 
 function SurvivalGame.client_onUpdate(self, dt)
@@ -584,7 +561,7 @@ function SurvivalGame.client_onLoadingScreenLifted(self)
 	end
 
 	--FACTORY
-	self.loaded = sm.game.getCurrentTick()
+	PowerManager.cl_setLoaded(sm.game.getCurrentTick())
 end
 
 function SurvivalGame.sv_n_loadingScreenLifted(self, _, player)
@@ -990,17 +967,6 @@ end
 function SurvivalGame:client_onFixedUpdate()
 	if g_factoryHud then
 		updateHud(self)
-
-		local power = self.cl.power or 0
-		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
-		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
-
-		if power < 0 and self.cl.powerStored <= 0 then
-			if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-				sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
-				sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
-			end
-		end
 	end
 end
 

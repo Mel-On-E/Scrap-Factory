@@ -20,7 +20,7 @@ function Power:server_onFixedUpdate(effect)
 
     if self.powerUpdate == 0 then
         self.powerUpdate = 40
-        if not change_power(-self.data.power) then
+        if not PowerManager.sv_changePower(-self.data.power) then
             self.hasPower = false
         else
             self.hasPower = true

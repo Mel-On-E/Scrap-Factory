@@ -185,7 +185,7 @@ function Shop:sv_buyItem(params, player)
 	params.player = player
 	local price = tonumber(params.price) * params.quantity
 
-	if MoneyManager.sv_spendMoney(price) then
+	if PowerManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem", { player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 	else
 		--TODO Inform player that they poor (also use language tag)

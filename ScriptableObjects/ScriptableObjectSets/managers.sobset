@@ -11,6 +11,12 @@
 			"classname": "MoneyManager",
 			"name": "mgr_money",
 			"uuid": "e97b0595-7912-425b-8a60-ea6dbfba4b39"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/PowerManager.lua",
+			"classname": "PowerManager",
+			"name": "mgr_power",
+			"uuid": "26ec01d5-6fc8-4088-b06b-25d30dd44309"
 		}
 	]
 }

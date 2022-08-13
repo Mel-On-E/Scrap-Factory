@@ -31,10 +31,10 @@ function Burner:sv_onEnter(trigger, results)
             if self.data.powerFunction == "root" then
                 power = (power ^ (1/(4/3)))
             end
-            power = math.floor(power) + 1
+            power = power + 1
 
             sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
-            change_power(math.floor(power))
+            PowerManager.sv_changePower(power)
         end
         ::continue::
     end

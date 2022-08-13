@@ -43,18 +43,3 @@ function format_energy(params)
 
     return params.color .. format_number(params.power, metricPrefixes) .. params.unit
 end
-
-
-
---Power System
-function change_power(power)
-    g_power = g_power + power
-    return g_powerStored + g_power > 0
-end
-
-function change_power_storage(capactiy)
-    g_powerLimit = g_powerLimit + capactiy
-    if g_powerLimit < 0 then
-        sm.gui.chatMessage("#ff0000IF YOU ARE SEEING THIS PLS REPORT TO THE DEVS: POWERLIMIT < 0")
-    end
-end

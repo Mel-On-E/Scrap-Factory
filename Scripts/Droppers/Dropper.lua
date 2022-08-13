@@ -10,7 +10,7 @@ function Dropper:server_onCreate()
 end
 
 function Dropper:sv_drop()
-    if change_power(-self.data.power) then
+    if PowerManager.sv_changePower(-self.data.power) then
         local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
         sm.shape.createPart(self.drop, self.shape:getWorldPosition() + offset, self.shape:getWorldRotation())
     end

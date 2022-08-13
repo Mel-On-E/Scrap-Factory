@@ -9,22 +9,23 @@ function Generator:server_onCreate()
 
     if self.data.powerLimit then
         self.data.powerLimit = tonumber(self.data.powerLimit)
-        change_power_storage(self.data.powerLimit)
+        PowerManager.sv_changePowerLimit(self.data.powerLimit)
     end
 end
 
 function Generator:server_onDestroy()
     if self.data.powerLimit then
-        change_power_storage(-self.data.powerLimit)
+        PowerManager.sv_changePowerLimit(-self.data.powerLimit)
     end
 end
 
 function Generator:server_onFixedUpdate()
     if self.data.power and sm.game.getCurrentTick() % 40 == 0 then
-        change_power(self:getPower())
+        PowerManager.sv_changePower(self:getPower())
     end
 end
 
 function Generator:getPower()
+    print(self.data.power)
     return self.data.power
 end
