@@ -36,7 +36,7 @@ function MoneyManager:server_onFixedUpdate()
 		safeData.money = money
 		safeData.moneyEarned = moneyEarned
 
-		self.network:setClientData({ money = tostring(self.saved.money)})
+		self.network:setClientData({ money = tostring(self.saved.money), moneyEarned = tostring(self.saved.moneyEarned)})
     end
 end
 
@@ -62,6 +62,7 @@ end
 function MoneyManager:client_onCreate()
     self.cl = {}
     self.cl.money = 0
+    self.cl.moneyEarned = 0
 
     if not g_moneyManager then
         g_moneyManager = self
@@ -70,6 +71,7 @@ end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
 	self.cl.money = tonumber(clientData.money)
+    self.cl.moneyEarned = tonumber(clientData.moneyEarned)
 end
 
 function MoneyManager:client_onFixedUpdate()
@@ -89,4 +91,8 @@ function MoneyManager:updateHud()
             g_factoryHud:setText("Money", format_money({money = money}))
         end
     end
+end
+
+function MoneyManager.cl_moneyEarned()
+    return g_moneyManager.cl.moneyEarned
 end
