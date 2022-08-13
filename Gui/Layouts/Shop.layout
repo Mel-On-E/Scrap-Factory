@@ -536,7 +536,7 @@
                 <Property key="WordWrap" value="true"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.4405034324942792 0.90000000000000002 0.022883295194508008" name="Description">
-                <Property key="Caption" value="Description"/>
+                <Property key="Caption" value="#{DESCRIPTION_CAPS}"/>
                 <Property key="FontName" value="SM_HeaderTiny"/>
             </Widget>
             <Widget type="Button" skin="ActiveButton" position_real="0.033333333333333333 0.82951945080091538 0.21666666666666667 0.068649885583524028" name="Buy_x1">
