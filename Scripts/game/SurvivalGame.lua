@@ -21,7 +21,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/ResearchManager.lua")
-
+dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
 
 
 
@@ -150,6 +150,8 @@ function SurvivalGame.server_onCreate(self)
 
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
+	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
+	LootCrateManager.sv_setWorld(self.sv.saved.overworld)
 
 	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNEL_MONEYMANAGER)
 	if not self.sv.moneyManager then
@@ -340,11 +342,6 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
 		self:sv_updateClientData()
-	end
-
-	if sm.game.getCurrentTick() % (40 * 30) == 0 then
-		local pos = sm.vec3.new(math.random(-(15 * 64), 15 * 64), math.random(-(15 * 64), 15 * 64), 100)
-		sm.creation.importFromFile(self.sv.saved.overworld, "$CONTENT_DATA/LocalBlueprints/crate.blueprint", pos)
 	end
 end
 

@@ -29,6 +29,12 @@
 			"classname": "DailyRewardManager",
 			"name": "mgr_daily",
 			"uuid": "d0bed7e0-7065-40a5-b246-9f7356856037"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua",
+			"classname": "LootCrateManager",
+			"name": "mgr_lootcrate",
+			"uuid": "963f193f-cce8-4ed0-a04d-530fd70b230f"
 		}
 	]
 }
