@@ -8,6 +8,10 @@
 		"quantity": 2
 	},
 	{
+		"crate": "cf48ca1b-3d7a-4b56-83e9-092e681525be",
+		"quantity": 1
+	},
+	{
 		"crate": "69b869f1-03dc-4ea3-9291-fd6490f945dd",
 		"quantity": 3
 	},
@@ -16,15 +20,11 @@
 		"quantity": 4
 	},
 	{
-		"crate": "69b869f1-03dc-4ea3-9291-fd6490f945dd",
-		"quantity": 5
+		"crate": "cf48ca1b-3d7a-4b56-83e9-092e681525be",
+		"quantity": 2
 	},
 	{
-		"crate": "69b869f1-03dc-4ea3-9291-fd6490f945dd",
-		"quantity": 6
-	},
-	{
-		"crate": "69b869f1-03dc-4ea3-9291-fd6490f945dd",
-		"quantity": 7
+		"crate": "cf48ca1b-3d7a-4b56-83e9-092e681525be",
+		"quantity": 3
 	}
 ]

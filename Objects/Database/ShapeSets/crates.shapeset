@@ -49,6 +49,56 @@
          },
          "stackSize" : 999,
          "uuid" : "69b869f1-03dc-4ea3-9291-fd6490f945dd"
+      },
+      {
+         "box" : {
+            "x" : 4,
+            "y" : 4,
+            "z" : 4
+         },
+         "color" : "0088ff",
+         "flammable" : false,
+         "name" : "obj_lootcrate_rare",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 5
+         },
+         "renderable": {
+				"lodList": [
+					{
+						"subMeshMap": {
+							"Lootbox": {  
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Crates/rare_lootcrate_dif.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+								]
+							},
+							"lightcone_mat": {  
+								"material": "LightCone",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga", 
+									"",
+									""
+								]
+							}
+						},
+						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx"
+					}
+				]
+			},
+         "restitution" : 0.5,
+         "rotationSet" : "PropYNegYZ",
+         "scripted" : {
+            "classname" : "RareLootCrate",
+            "filename" : "$CONTENT_DATA/Scripts/Other/RareLootCrate.lua"
+         },
+         "stackSize" : 999,
+         "uuid" : "cf48ca1b-3d7a-4b56-83e9-092e681525be"
       }
    ]
 }

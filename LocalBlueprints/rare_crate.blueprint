@@ -1,0 +1,41 @@
+
+{
+	"bodies" : 
+	[
+		
+		{
+			"childs" : 
+			[
+				
+				{
+					"color" : "0088FF",
+					"controller" : 
+					{
+						"id" : 436.0
+					},
+					"pos" : 
+					{
+						"x" : 9.0,
+						"y" : 1.0,
+						"z" : 2.0
+					},
+					"shapeId" : "cf48ca1b-3d7a-4b56-83e9-092e681525be",
+					"xaxis" : 1.0,
+					"zaxis" : -2.0
+				}
+			],
+			"type" : 0.0
+		}
+	],
+	"dependencies" : 
+	[
+		
+		{
+			"contentId" : "1fcebf9f-612b-4e55-9b51-9bec113f9216",
+			"name" : "Scrap Factory",
+			"shapeIds" : [ "cf48ca1b-3d7a-4b56-83e9-092e681525be" ],
+			"steamFileId" : 2823352351.0
+		}
+	],
+	"version" : 4.0
+}
