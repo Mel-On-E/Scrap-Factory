@@ -56,6 +56,8 @@ function Shop:client_onCreate()
 	self.cl.shopGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
 	self.cl.shopGui:setButtonCallback("BuyBtn", "cl_buyItem")
 	self.cl.shopGui:setText("BuyBtn", language_tag("Buy"))
+	self.cl.shopGui:setText("OutOfMoney", language_tag("OutOfMoney"))
+	self.cl.shopGui:setVisible("OutOfMoney", false)
 	self.cl.shopGui:setButtonCallback("Buy_x1", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("Buy_x10", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("Buy_x100", "changeQuantity")
@@ -201,8 +203,24 @@ function Shop:sv_buyItem(params, player)
 	if MoneyManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem", { player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 	else
-		--TODO Inform player that they poor (also use language tag)
-		sm.event.sendToPlayer(player, "sv_e_onMsg", "You are very poor")
+		self.network:sendToClient(player, "cl_notEnoughMoney")
+	end
+end
+
+function Shop:cl_notEnoughMoney()
+	if self.cl.shopGui then
+		self.cl.shopGui:setVisible("OutOfMoney", true)
+		self.cl.clearWarning = sm.game.getCurrentTick() + 40*2.5
+		--sm.audio.play("RaftShark") TODO play sound effect. Probably also on success, etc.
+	end
+end
+
+function Shop:client_onFixedUpdate()
+	if self.cl.clearWarning and self.cl.clearWarning <= sm.game.getCurrentTick() then
+		self.cl.clearWarning = nil
+		if self.cl.shopGui then
+			self.cl.shopGui:setVisible("OutOfMoney", false)
+		end
 	end
 end
 
@@ -210,11 +228,12 @@ function Shop:cl_onGuiClosed()
 	g_cl_shop.guiActive = false
 end
 
-function Shop:cl_e_open_gui()
+function Shop.cl_e_open_gui()
 	g_cl_shop.guiActive = true
+	g_cl_shop.cl.shopGui:setVisible("OutOfMoney", false)
 	g_cl_shop.cl.shopGui:open()
 end
 
-function Shop:cl_e_isGuiOpen()
+function Shop.cl_e_isGuiOpen()
 	return g_cl_shop.guiActive
 end

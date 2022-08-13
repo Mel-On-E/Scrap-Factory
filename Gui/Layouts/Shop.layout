@@ -539,6 +539,11 @@
                 <Property key="Caption" value="#{DESCRIPTION_CAPS}"/>
                 <Property key="FontName" value="SM_HeaderTiny"/>
             </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.7975 0.90000000000000002 0.022883295194508008" name="OutOfMoney">
+                <Property key="Caption" value="#ff0000Not enough money!"/>
+                <Property key="FontName" value="SM_ItemTitle"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
             <Widget type="Button" skin="ActiveButton" position_real="0.033333333333333333 0.82951945080091538 0.21666666666666667 0.068649885583524028" name="Buy_x1">
                 <Property key="Caption" value="x1"/>
                 <Property key="FontName" value="SM_ButtonSmallBold"/>

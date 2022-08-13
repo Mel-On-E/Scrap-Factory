@@ -6,6 +6,7 @@
     "PowerOutput": "Producing: ",
     "Sell": "Sell",
     "Buy": "Buy",
+    "OutOfMoney": "#ff0000Not enough money!",
     "ShopTitle": "SHOP",
     "Research": "Research",
     "Prestige": "Prestige",
