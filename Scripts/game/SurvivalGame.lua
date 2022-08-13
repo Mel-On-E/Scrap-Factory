@@ -20,6 +20,7 @@ dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/ResearchManager.lua")
 
 
 
@@ -46,6 +47,7 @@ START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
 local STORAGE_CHANNEL_MONEYMANAGER = 69
 local STORAGE_CHANNEL_POWERMANAGER = 70
+local STORAGE_CHANNEL_RESEARCHMANAGER = 71
 
 function SurvivalGame.server_onCreate(self)
 	print("SurvivalGame.server_onCreate")
@@ -58,21 +60,9 @@ function SurvivalGame.server_onCreate(self)
 		printf("Seed: %.0f", self.sv.saved.data.seed)
 		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/Overworld.lua", "Overworld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
-
-		--FACTORY
-		self.sv.saved.factory = {}
-
-		local tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
-		self.sv.saved.factory.research = { tier = 1 }
-
-		for uuid, quantity in pairs(tiers[self.sv.saved.factory.research.tier].goals) do
-			self.sv.saved.factory.research[uuid] = { goal = quantity, quantity = 0 }
-		end
 		self.storage:save(self.sv.saved)
 	end
 	self.data = nil
-
-	g_research = self.sv.saved.factory.research
 
 
 	--FACTORY
@@ -170,6 +160,12 @@ function SurvivalGame.server_onCreate(self)
 	if not self.sv.powerManager then
 		self.sv.powerManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("26ec01d5-6fc8-4088-b06b-25d30dd44309"))
 		sm.storage.save(STORAGE_CHANNEL_POWERMANAGER, self.sv.powerManager)
+	end
+
+	self.sv.researchManager = sm.storage.load(STORAGE_CHANNEL_RESEARCHMANAGER)
+	if not self.sv.researchManager then
+		self.sv.researchManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("6e7f54bb-e54d-46df-920a-bd225d0a9430"))
+		sm.storage.save(STORAGE_CHANNEL_RESEARCHMANAGER, self.sv.researchManager)
 	end
 end
 
@@ -336,9 +332,6 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 
 	--factory
 	if sm.game.getCurrentTick() % 40 == 0 then
-		local safeData = self.sv.saved.factory
-		safeData.research = g_research
-
 		self:sv_updateClientData()
 	end
 
@@ -375,11 +368,6 @@ function SurvivalGame.client_onUpdate(self, dt)
 		light = DAYCYCLE_LIGHTING_VALUES[index]
 	end
 	sm.render.setOutdoorLighting(light)
-
-	--FACTORY
-	if sm.isHost then
-		updateHud(self)
-	end
 end
 
 function SurvivalGame.client_showMessage(self, msg)
@@ -963,13 +951,6 @@ function SurvivalGame:sv_setMoney(money)
 	MoneyManager.sv_setMoney(tonumber(money))
 end
 
-
-function SurvivalGame:client_onFixedUpdate()
-	if g_factoryHud then
-		updateHud(self)
-	end
-end
-
 function SurvivalGame:sv_factoryRaid()
 	print("CUSTOM RAID")
 	local level = 1
@@ -1001,11 +982,7 @@ function SurvivalGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)
 end
 
-function updateHud(self)
-	if g_factoryHud then
-		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4") )
-	end
-end
+
 
 --cursed stuff to disable chunk unloading
 function SurvivalGame.sv_loadTerrain(self, data)

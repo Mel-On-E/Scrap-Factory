@@ -17,6 +17,12 @@
 			"classname": "PowerManager",
 			"name": "mgr_power",
 			"uuid": "26ec01d5-6fc8-4088-b06b-25d30dd44309"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/ResearchManager.lua",
+			"classname": "ResearchManager",
+			"name": "mgr_research",
+			"uuid": "6e7f54bb-e54d-46df-920a-bd225d0a9430"
 		}
 	]
 }

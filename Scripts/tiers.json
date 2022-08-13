@@ -1,25 +1,17 @@
+//TODO Generate unlocks automaticall from item data
 [
 	{
-		"goals": {
-			"87873e83-8270-4796-9401-6baba45ccef2": 69
-		},
+		"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+		"goal": 69,
 		"unlocks": [
 			"692a5ebd-0793-49ba-b1ef-681a8fdceba7",
 			"632a52bd-0791-49ba-b1ef-c81adfdceba7",
-		 	"69b869f1-03dc-4ea2-9391-fd24903945d1",
-			"e2a6970b-2bb9-4b3b-b9f2-994b534b79f3",
-			"7e3df19b-2450-44ae-ad46-d2f6b5148cbf",
-			"daf6f4c4-5402-4fa3-93f4-3180243c8a3c",
-			"efc10452-8461-44c5-8c21-a06d5aaea16c",
-			"91037f2c-5230-464b-8873-ad13355539af",
-			"efc1f452-8431-44c5-8c21-a06d53aed16c",
-			"69b857f1-07dc-4ea2-9391-fd24903945d1"
+		 	"69b869f1-03dc-4ea2-9391-fd24903945d1"
 		]
 	},
 	{
-		"goals": {
-			"80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": 69420
-		},
+		"uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f",
+		"goal": 69420,
 		"unlocks": [
 			"80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
 		]

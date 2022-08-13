@@ -51,7 +51,7 @@ function Furnace:sv_onEnter(trigger, results)
 
 
             if self.sv.saved.research then
-                value = (g_research[tostring(shape.uuid)] and value) or 0
+                value = (ResearchManager.sv_addResearch(shape) and value) or 0
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research" })
             else
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
