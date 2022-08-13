@@ -48,6 +48,7 @@ START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 local STORAGE_CHANNEL_MONEYMANAGER = 69
 local STORAGE_CHANNEL_POWERMANAGER = 70
 local STORAGE_CHANNEL_RESEARCHMANAGER = 71
+local STORAGE_CHANNEL_DAILYREWARDMANAGER = 72
 
 function SurvivalGame.server_onCreate(self)
 	print("SurvivalGame.server_onCreate")
@@ -166,6 +167,12 @@ function SurvivalGame.server_onCreate(self)
 	if not self.sv.researchManager then
 		self.sv.researchManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("6e7f54bb-e54d-46df-920a-bd225d0a9430"))
 		sm.storage.save(STORAGE_CHANNEL_RESEARCHMANAGER, self.sv.researchManager)
+	end
+
+	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNEL_DAILYREWARDMANAGER)
+	if not self.sv.dailyReawardManager then
+		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
+		sm.storage.save(STORAGE_CHANNEL_DAILYREWARDMANAGER, self.sv.dailyReawardManager)
 	end
 end
 

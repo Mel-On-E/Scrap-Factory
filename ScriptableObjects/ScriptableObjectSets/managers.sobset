@@ -23,6 +23,12 @@
 			"classname": "ResearchManager",
 			"name": "mgr_research",
 			"uuid": "6e7f54bb-e54d-46df-920a-bd225d0a9430"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/DailyRewardManager.lua",
+			"classname": "DailyRewardManager",
+			"name": "mgr_daily",
+			"uuid": "d0bed7e0-7065-40a5-b246-9f7356856037"
 		}
 	]
 }

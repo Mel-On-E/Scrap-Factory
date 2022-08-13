@@ -2,15 +2,19 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position_real="0 0 0.6953125 0.72685185185185186" align="Center" name="BackPanel">
         <Widget type="Widget" skin="LogicGateBG" position_real="0 -0.0012738853503184713 1 0.99872611464968153">
-            <Widget type="TextBox" skin="TextBox" position_real="0 0.075255102040816327 1 0.14030612244897958">
+            <Widget type="TextBox" skin="TextBox" position_real="0 0.075255102040816327 1 0.14030612244897958" name="title">
                 <Property key="Caption" value="Rewards"/>
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position_real="0 0.79081632653061229 1 0.14030612244897958" name="DayText">
-                <Property key="FontName" value="SM_HeaderLarge_Wide"/>
-                <Property key="TextAlign" value="Center"/>
-                <Property key="Caption" value="Day 2137"/>
+            <Widget type="Button" skin="UpgradeButton" position_real="0.4 0.79081632653061229 0.2 0.14030612244897958" name="Claim Reward">
+                <Property key="FontName" value="Default" />
+                <Widget type="TextBox" skin="TextBox" position_real="0 0 1 1" name = "ClaimRewardText">
+                    <Property key="Caption" value="Claim Reward" />
+                    <Property key="TextAlign" value="Center" />
+                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="NeedMouse" value="false" />
+                </Widget>
             </Widget>
             <Widget type="Widget" skin="Banner" position_real="0 0.21683673469387754 1.0037453183520599 0.61734693877551017">
                 <Widget type="Button" skin="StyledButtonDressbot" position_real="0.22388059701492538 0.1962809917355372 0.1044776119402985 0.28925619834710742" name="Reward_1">
