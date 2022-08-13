@@ -1,6 +1,7 @@
 {
     "DailyRewardTitle": "Daily Rewards",
     "ClaimDailyReward": "Claim Reward",
+    "DailyRewardDay": "Day: %s",
     "PowerCapacity": "Capacity: ",
     "Sell": "Sell",
     "NewMaxSellQuantity": "Maximum Sell Quantity: ",
