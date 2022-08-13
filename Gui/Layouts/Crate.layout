@@ -20,7 +20,7 @@
                     <Widget type="ImageBox" skin="ImageBox" position_real="0.05 0.05 0.9 0.9" name="Icon">
                         <Property key="NeedKey" value="false" />
                         <Property key="NeedMouse" value="false" />
-                        <Property key="ImageTexture" value="$CONTENT_b6aae82e-ce35-49ef-b01f-ce916c29f0b6/Gui/Layouts/Images/Paper.png" />
+                        <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png" />
                     </Widget>
                 </Widget>
 

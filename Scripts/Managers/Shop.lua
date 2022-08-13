@@ -39,7 +39,7 @@ function Shop:client_onCreate()
 	end
 
 	self.cl = {}
-	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/shop.layout")
+	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/shop.layout")
 	self.cl.shopGui:setOnCloseCallback("cl_onGuiClosed")
 
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or

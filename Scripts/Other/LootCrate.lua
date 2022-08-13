@@ -67,7 +67,7 @@ end
 
 function LootCrate:client_onInteract(character, state)
     if state then
-        self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Crate.layout")
+        self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Crate.layout")
         self.gui:open()
         self.gui:setIconImage( "Icon", self.shape:getShapeUuid() )
         self.gui:setButtonCallback("Open", "cl_openBox")

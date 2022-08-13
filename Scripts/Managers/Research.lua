@@ -18,7 +18,7 @@ function Research:cl_onCreate()
 		self.tiers = sm.json.open("$CONTENT_DATA/tiers.json")
 		self.cl.tier = 1
 
-		self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Research.layout")
+		self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Research.layout")
 
 		self.gui:setButtonCallback("NextTier", "cl_tier_next")
 		self.gui:setButtonCallback("PrevTier", "cl_tier_prev")

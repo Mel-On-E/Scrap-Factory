@@ -215,11 +215,11 @@ function SurvivalGame.client_onCreate(self)
 
 	-- Survival HUD
 	g_survivalHud = sm.gui.createSurvivalHudGui()
-	g_survivalHud:setImage("LogbookImageBox", "$CONTENT_DATA/Gui/shop.png")
+	g_survivalHud:setImage("LogbookImageBox", "$CONTENT_DATA/Gui/Images/shop.png")
 	assert(g_survivalHud)
 
 	--FACTORY
-	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/ScrapFactory_Hud.layout", false,
+	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/ScrapFactory_Hud.layout", false,
 		{ isHud = true, isInteractive = false, needsCursor = false })
 	g_factoryHud:open()
 
