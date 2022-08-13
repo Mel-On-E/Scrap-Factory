@@ -1,3 +1,5 @@
+---@class LootCrate:ShapeClass
+
 LootCrate = class( nil )
 
 local despawnTime = 600--seconds
@@ -101,7 +103,7 @@ end
 function LootCrate:get_loot_table()
     local itemPool = {}
     for uuid, item in pairs(g_shop) do
-        if item.price <= PowerManager.cl_moneyEarned() + 1000 then
+        if item.price <= MoneyManager.cl_moneyEarned() + 1000 then
             itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
         end
     end
