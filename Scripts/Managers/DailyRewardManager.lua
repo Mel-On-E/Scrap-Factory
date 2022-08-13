@@ -40,6 +40,7 @@ function DailyRewardManager:sv_spawnRewards(params, player)
         LootCrateManager.sv_spawnCrate(pos, self.rewards[self.saved.streak + 1].crate)
     end
     self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
+    self.saved.time = os.time()
     self.storage:save(self.saved)
 end
 
