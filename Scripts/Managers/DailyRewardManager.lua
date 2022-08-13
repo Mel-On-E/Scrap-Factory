@@ -27,6 +27,14 @@ function DailyRewardManager:server_onCreate()
     end
 end
 
+function DailyRewardManager:sv_spawnRewards(params, player)
+    local pos = player:getCharacter():getWorldPosition()
+    pos.x = pos.x + (math.random()-0.5)*10
+    pos.y = pos.y + (math.random()-0.5)*10
+    pos.z = pos.z + 5
+    LootCrateManager.sv_spawnCrate(pos)
+end
+
 function DailyRewardManager:cl_openGui()
     if not sm.isHost then
         return
@@ -47,4 +55,5 @@ end
 function DailyRewardManager:cl_claimReward()
     self.gui:close()
     self.claimed = true
+    self.network:sendToServer("sv_spawnRewards")
 end
