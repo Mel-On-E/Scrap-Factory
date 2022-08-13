@@ -13,6 +13,7 @@ function DailyRewardManager:server_onCreate()
     if self.saved == nil then
         self.saved = {}
         self.saved.time = os.time() - DAY
+        self.saved.streak = 0
         self.storage:save(self.saved)
     end
 
