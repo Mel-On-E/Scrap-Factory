@@ -1,85 +1,85 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" position_real="0 0 0.6953125 0.72685185185185186" align="Center" name="BackPanel">
+    <Widget type="Widget" skin="PanelEmpty" position_real="0.15208333333333332 0.1361111111111111 0.6953125 0.72685185185185186" align="Center" name="BackPanel">
         <Widget type="Widget" skin="LogicGateBG" position_real="0 -0.0012738853503184713 1 0.99872611464968153">
-            <Widget type="TextBox" skin="TextBox" position_real="0 0.075255102040816327 1 0.14030612244897958" name="title">
+            <Widget type="TextBox" skin="TextBox" position_real="0 0.075255102040816327 1 0.13903061224489796" name="title">
                 <Property key="Caption" value="Rewards"/>
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
-            <Widget type="Button" skin="UpgradeButton" position_real="0.4 0.79081632653061229 0.2 0.14030612244897958" name="Claim Reward">
-                <Property key="FontName" value="Default" />
-                <Widget type="TextBox" skin="TextBox" position_real="0 0 1 0.925" name = "ClaimRewardText">
-                    <Property key="Caption" value="Claim Reward" />
-                    <Property key="TextAlign" value="Center" />
-                    <Property key="FontName" value="SM_ItemTitle" />
-                    <Property key="NeedMouse" value="false" />
+            <Widget type="Button" skin="UpgradeButton" position_real="0.40000000000000002 0.79081632653061229 0.20000000000000001 0.13903061224489796" name="Claim Reward">
+                <Property key="FontName" value="Default"/>
+                <Widget type="TextBox" skin="TextBox" position_real="0 0 1 0.91743119266055051" name="ClaimRewardText">
+                    <Property key="Caption" value="Claim Reward"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="Banner" position_real="0 0.21683673469387754 1.0037453183520599 0.61734693877551017">
                 <Widget type="Button" skin="StyledButtonDressbot" position_real="0.22388059701492538 0.1962809917355372 0.1044776119402985 0.28925619834710742" name="Reward_1">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.21428571428571427 0.17857142857142858 0.6071428571428571 0.6071428571428571" name="RewardPic_1">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_1">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
-                    <Widget type="TextBox" skin="TextBox" name="RewardCount_1" position_real="0.518519 0.7 0.351852 0.148148">
-                        <Property key="Caption" value="69" />
-                        <Property key="TextAlign" value="Right VCenter" />
-                        <Property key="FontName" value="SM_NumberSmall" />
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
+                    <Widget type="TextBox" skin="TextBox" position_real="0.51428571428571423 0.69999999999999996 0.34999999999999998 0.14285714285714285" name="RewardCount_1">
+                        <Property key="Caption" value="69"/>
+                        <Property key="TextAlign" value="Right VCenter"/>
+                        <Property key="FontName" value="SM_NumberSmall"/>
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Button" skin="StyledButtonDressbot" position="450 95 140 140" name="Reward_2">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.21428571428571427 0.17857142857142858 0.6071428571428571 0.6071428571428571" name="RewardPic_2">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_2">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
-                    <Widget type="TextBox" skin="TextBox" name="RewardCount_2" position_real="0.518519 0.7 0.351852 0.148148">
-                        <Property key="Caption" value="69" />
-                        <Property key="TextAlign" value="Right VCenter" />
-                        <Property key="FontName" value="SM_NumberSmall" />
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
+                    <Widget type="TextBox" skin="TextBox" position_real="0.51428571428571423 0.69999999999999996 0.34999999999999998 0.14285714285714285" name="RewardCount_2">
+                        <Property key="Caption" value="69"/>
+                        <Property key="TextAlign" value="Right VCenter"/>
+                        <Property key="FontName" value="SM_NumberSmall"/>
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Button" skin="StyledButtonDressbot" position_real="0.44776119402985076 0.1962809917355372 0.1044776119402985 0.28925619834710742" name="Reward_3">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.21428571428571427 0.17857142857142858 0.6071428571428571 0.6071428571428571" name="RewardPic_3">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_3">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
-                    <Widget type="TextBox" skin="TextBox" name="RewardCount_3" position_real="0.518519 0.7 0.351852 0.148148">
-                        <Property key="Caption" value="69" />
-                        <Property key="TextAlign" value="Right VCenter" />
-                        <Property key="FontName" value="SM_NumberSmall" />
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
+                    <Widget type="TextBox" skin="TextBox" position_real="0.51428571428571423 0.69999999999999996 0.34999999999999998 0.14285714285714285" name="RewardCount_3">
+                        <Property key="Caption" value="69"/>
+                        <Property key="TextAlign" value="Right VCenter"/>
+                        <Property key="FontName" value="SM_NumberSmall"/>
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Button" skin="StyledButtonDressbot" position_real="0.55895522388059704 0.20661157024793389 0.1044776119402985 0.28925619834710742" name="Reward_4">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.21428571428571427 0.17857142857142858 0.6071428571428571 0.6071428571428571" name="RewardPic_4">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_4">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
-                    <Widget type="TextBox" skin="TextBox" name="RewardCount_4" position_real="0.518519 0.7 0.351852 0.148148">
-                        <Property key="Caption" value="69" />
-                        <Property key="TextAlign" value="Right VCenter" />
-                        <Property key="FontName" value="SM_NumberSmall" />
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
+                    <Widget type="TextBox" skin="TextBox" position_real="0.51428571428571423 0.69999999999999996 0.34999999999999998 0.14285714285714285" name="RewardCount_4">
+                        <Property key="Caption" value="69"/>
+                        <Property key="TextAlign" value="Right VCenter"/>
+                        <Property key="FontName" value="SM_NumberSmall"/>
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Button" skin="StyledButtonDressbot" position_real="0.67164179104477617 0.20661157024793389 0.1044776119402985 0.28925619834710742" name="Reward_5">
-                    <Widget type="ImageBox" skin="ImageBox" position_real="0.21428571428571427 0.17857142857142858 0.6071428571428571 0.6071428571428571" name="RewardPic_5">
+                    <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_5">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
-                    <Widget type="TextBox" skin="TextBox" name="RewardCount_5" position_real="0.518519 0.7 0.351852 0.148148">
-                        <Property key="Caption" value="69" />
-                        <Property key="TextAlign" value="Right VCenter" />
-                        <Property key="FontName" value="SM_NumberSmall" />
-                        <Property key="NeedKey" value="false" />
-                        <Property key="NeedMouse" value="false" />
+                    <Widget type="TextBox" skin="TextBox" position_real="0.51428571428571423 0.69999999999999996 0.34999999999999998 0.14285714285714285" name="RewardCount_5">
+                        <Property key="Caption" value="69"/>
+                        <Property key="TextAlign" value="Right VCenter"/>
+                        <Property key="FontName" value="SM_NumberSmall"/>
+                        <Property key="NeedKey" value="false"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Button" skin="DressbotArrowRight" position_real="0.77985074626865669 0.26859504132231404 0.055970149253731345 0.15495867768595042" name="DayUp"/>
@@ -87,27 +87,27 @@
                 <Widget type="TextBox" skin="TextBox" position_real="0.22388059701492538 0.47520661157024796 0.1044776119402985 0.051652892561983473" name="RewardText_1">
                     <Property key="Caption" value="RewardText_1"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="FontName" value="SM_ItemTitle"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position_real="0.33582089552238809 0.47520661157024796 0.1044776119402985 0.051652892561983473" name="RewardText_2">
                     <Property key="TextAlign" value="Center"/>
                     <Property key="Caption" value="RewardText_2"/>
-                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="FontName" value="SM_ItemTitle"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position_real="0.44776119402985076 0.47520661157024796 0.1044776119402985 0.051652892561983473" name="RewardText_3">
                     <Property key="Caption" value="RewardText_3"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="FontName" value="SM_ItemTitle"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position_real="0.55895522388059704 0.47520661157024796 0.1044776119402985 0.051652892561983473" name="RewardText_4">
                     <Property key="Caption" value="RewardText_4"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="FontName" value="SM_ItemTitle"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position_real="0.67164179104477617 0.47520661157024796 0.1044776119402985 0.051652892561983473" name="RewardText_5">
                     <Property key="Caption" value="RewardText_5"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="SM_ItemTitle" />
+                    <Property key="FontName" value="SM_ItemTitle"/>
                 </Widget>
             </Widget>
         </Widget>
