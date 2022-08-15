@@ -62,9 +62,21 @@ end
 
 function Hub:client_onFixedUpdate()
 	if self.cl.equipped then
-		if self.cl.activeInterface and not self.cl.activeInterface:cl_e_isGuiOpen() then
+		if self.cl.activeInterface and not self.cl.activeInterface.cl_e_isGuiOpen() then
 			self.cl.activeInterface = nil
-			self:cl_onGuiClosed()
+
+			if g_ui_shop.cl_e_isGuiOpen() then
+				self.cl.activeInterface = g_ui_shop
+				self.cl.currentInterface = "shop"
+			elseif g_ui_research.cl_e_isGuiOpen() then
+				self.cl.activeInterface = g_ui_research
+				self.cl.currentInterface = "research"
+			end
+
+			if not self.cl.activeInterface then
+				self:cl_onGuiClosed()
+				self.cl.equipped = false
+			end
 		end
 	end
 end
@@ -74,6 +86,9 @@ function Hub:cl_openGui()
 	if interface == "shop" then
 		g_ui_shop:cl_e_open_gui()
 		self.cl.activeInterface = g_ui_shop
+	elseif interface == "research" then
+		g_ui_research:cl_e_open_gui()
+		self.cl.activeInterface = g_ui_research
 	end
 end
 

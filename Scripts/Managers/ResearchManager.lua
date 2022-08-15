@@ -99,3 +99,27 @@ function ResearchManager:client_onFixedUpdate()
         g_factoryHud:setText( "Research","#00dddd" .. self.cl.progress .. "%")
 	end
 end
+
+function ResearchManager.cl_getCurrentTier()
+    if g_ResearchManager then
+        return g_ResearchManager.cl.tier
+    end
+end
+
+function ResearchManager.cl_getTierProgress(tier)
+    local progress = g_ResearchManager.sv.saved.research[tier] or 0
+    local goal = g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal
+    return progress, goal
+end
+
+function ResearchManager.cl_getTierUnlocks(tier)
+    return g_ResearchManager.tiers[tier].unlocks
+end
+
+function ResearchManager.cl_getTierUuid(tier)
+    return sm.uuid.new(g_ResearchManager.tiers[tier].uuid)
+end
+
+function ResearchManager.cl_getTierCount()
+    return #g_ResearchManager.tiers
+end

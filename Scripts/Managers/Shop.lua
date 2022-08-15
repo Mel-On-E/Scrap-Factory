@@ -9,6 +9,8 @@ sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
 
+dofile("$CONTENT_DATA/Scripts/managers/Research.lua")
+
 ---@class page
 ---@field uuid string
 ---@field price number
@@ -40,45 +42,30 @@ function Shop:client_onCreate()
 
 	self.cl = {}
 	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/shop.layout")
-	self.cl.shopGui:setOnCloseCallback("cl_onGuiClosed")
 
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.quantity = 1
-
-	self.cl.shopGui:setText("title", language_tag("ShopTitle"))
-	self.cl.shopGui:setText("research", language_tag("Research"))
-	self.cl.shopGui:setText("prestige", language_tag("Prestige"))
-
 	self.cl.shopGui:setButtonState("Buy_x1", true)
 	self.cl.shopGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
 	self.cl.shopGui:setButtonCallback("BuyBtn", "cl_buyItem")
-	self.cl.shopGui:setText("BuyBtn", language_tag("Buy"))
-	self.cl.shopGui:setText("OutOfMoney", language_tag("OutOfMoney"))
 	self.cl.shopGui:setVisible("OutOfMoney", false)
 	self.cl.shopGui:setButtonCallback("Buy_x1", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("Buy_x10", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("Buy_x100", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("Buy_x999", "changeQuantity")
 	self.cl.shopGui:setButtonCallback("AllTab", "changeCategory")
-	self.cl.shopGui:setText("AllTab", language_tag("AllTab"))
 	self.cl.shopGui:setButtonCallback("DroppersTab", "changeCategory")
-	self.cl.shopGui:setText("DroppersTab", language_tag("DroppersTab"))
 	self.cl.shopGui:setButtonCallback("UpgradesTab", "changeCategory")
-	self.cl.shopGui:setText("UpgradesTab", language_tag("UpgradesTab"))
 	self.cl.shopGui:setButtonCallback("FurnacesTab", "changeCategory")
-	self.cl.shopGui:setText("FurnacesTab", language_tag("FurnacesTab"))
 	self.cl.shopGui:setButtonCallback("GeneratorsTab", "changeCategory")
-	self.cl.shopGui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
 	self.cl.shopGui:setButtonCallback("UtilitiesTab", "changeCategory")
-	self.cl.shopGui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
 	self.cl.shopGui:setButtonCallback("DecorTab", "changeCategory")
-	self.cl.shopGui:setText("DecorTab", language_tag("DecorTab"))
 	self.cl.shopGui:setButtonCallback("NextPage", "changePage")
 	self.cl.shopGui:setButtonCallback("LastPage", "changePage")
-	--self.cl.shopGui:setButtonCallback("research", "openReserch")
+	self.cl.shopGui:setButtonCallback("research", "cl_openResearch")
 	self:changeQuantity("Buy_x1")
 	self.cl.itemPages = { {} }
 	self.cl.filteredPages = { {} }
@@ -224,16 +211,29 @@ function Shop:client_onFixedUpdate()
 	end
 end
 
-function Shop:cl_onGuiClosed()
-	g_cl_shop.guiActive = false
-end
-
 function Shop.cl_e_open_gui()
-	g_cl_shop.guiActive = true
 	g_cl_shop.cl.shopGui:setVisible("OutOfMoney", false)
+	g_cl_shop.cl.shopGui:setText("title", language_tag("ShopTitle"))
+	g_cl_shop.cl.shopGui:setText("research", language_tag("Research"))
+	g_cl_shop.cl.shopGui:setText("prestige", language_tag("Prestige"))
+	g_cl_shop.cl.shopGui:setText("BuyBtn", language_tag("Buy"))
+	g_cl_shop.cl.shopGui:setText("OutOfMoney", language_tag("OutOfMoney"))
+	g_cl_shop.cl.shopGui:setText("AllTab", language_tag("AllTab"))
+	g_cl_shop.cl.shopGui:setText("UpgradesTab", language_tag("UpgradesTab"))
+	g_cl_shop.cl.shopGui:setText("FurnacesTab", language_tag("FurnacesTab"))
+	g_cl_shop.cl.shopGui:setText("DroppersTab", language_tag("DroppersTab"))
+	g_cl_shop.cl.shopGui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
+	g_cl_shop.cl.shopGui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
+	g_cl_shop.cl.shopGui:setText("DecorTab", language_tag("DecorTab"))
+
 	g_cl_shop.cl.shopGui:open()
 end
 
 function Shop.cl_e_isGuiOpen()
-	return g_cl_shop.guiActive
+	return g_cl_shop.cl.shopGui:isActive()
+end
+
+function Shop:cl_openResearch()
+	self.cl.shopGui:close()
+	Research.cl_e_open_gui()
 end
