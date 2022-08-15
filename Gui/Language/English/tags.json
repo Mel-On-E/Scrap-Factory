@@ -1,9 +1,16 @@
 {
+    //DailyRewards
     "DailyRewardTitle": "Daily Rewards",
     "ClaimDailyReward": "Claim Reward",
     "DailyRewardDay": "Day %s",
+
+
+    //Energy System
     "PowerCapacity": "Capacity: ",
     "PowerOutput": "Producing: ",
+
+
+    //Money & Shop
     "Sell": "Sell",
     "Buy": "Buy",
     "OutOfMoney": "#ff0000Not enough money!",
@@ -18,12 +25,22 @@
     "GeneratorsTab": "Generators",
     "DecorTab": "Decor",
     "NewMaxSellQuantity": "Maximum Sell Quantity: ",
+
+
+    //Research
     "SetResearchFurnace": "Set Research Furnace",
     "ResearchFurnaceSet": "Research Furnace Set",
     "ResearchFurnaceRemoved": "Research Furnace Removed",
-    "DismissTutorial": "Press \"%s\" to dismiss",
+    "ResearchTier": "Tier ",
+
+
+    //Clear Ores
     "ClearOresTitle": "Clear All Ores?",
     "ClearOresMessage": "You sure, bro?",
     "ClearOresTutorialTitle": "How to Clear Ores",
-    "ClearOresTutorialMessage": "Press \"%s\" to delete all ores"
+    "ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
+
+
+    //General
+    "DismissTutorial": "Press \"%s\" to dismiss"
 }
