@@ -554,6 +554,7 @@ function SurvivalGame.client_onLoadingScreenLifted(self)
 
 	--FACTORY
 	PowerManager.cl_setLoaded(sm.game.getCurrentTick())
+	UnitManager.cl_setLoaded(g_unitManager, sm.game.getCurrentTick())
 end
 
 function SurvivalGame.sv_n_loadingScreenLifted(self, _, player)

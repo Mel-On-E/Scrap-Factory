@@ -634,16 +634,18 @@ end
 
 function UnitManager.sv_onWorldFixedUpdate( self, worldSelf )
 	--Inform player of incoming raids
-	for _,player in ipairs( self.newPlayers ) do
-		print( "Informing player", player.id, "about incoming raids." )
-		for _, cropAttackCell in pairs( self.sv.cropAttackCells ) do
-			if cropAttackCell.saved.attackTick then
-				print( "Sending info about raid at ("..cropAttackCell.x..","..cropAttackCell.y..") to player", player.id )
-				worldSelf.network:sendToClient( player, "cl_n_unitMsg", { fn = "cl_n_detected", tick = cropAttackCell.saved.attackTick, pos = cropAttackCell.saved.attackPos } )
+	if self.loaded then
+		for _,player in ipairs( self.newPlayers ) do
+			print( "Informing player", player.id, "about incoming raids." )
+			for _, cropAttackCell in pairs( self.sv.cropAttackCells ) do
+				if cropAttackCell.saved.attackTick then
+					print( "Sending info about raid at ("..cropAttackCell.x..","..cropAttackCell.y..") to player", player.id )
+					worldSelf.network:sendToClient( player, "cl_n_unitMsg", { fn = "cl_n_detected", tick = cropAttackCell.saved.attackTick, pos = cropAttackCell.saved.attackPos } )
+				end
 			end
 		end
+		self.newPlayers = {}
 	end
-	self.newPlayers = {}
 
 
 	if worldSelf.world == self.overworld and not self.disableRaids then
@@ -824,4 +826,9 @@ function UnitManager.cl_n_cancel( self, msg )
 		attack.gui:destroy()
 	end
 	self.cl.attacks = {}
+end
+
+function UnitManager:cl_setLoaded(tick)
+	--This only handles a few raid counters. May need to improve system if more raids are desired.
+	self.loaded = tick
 end
