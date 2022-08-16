@@ -97,7 +97,7 @@
 				"buoyancy": 4,
 				"density": 4,
 				"durability": 6,
-				"friction": 5
+				"friction": 3
 			},
 			"renderable": {
 				"lodList": [
@@ -137,7 +137,7 @@
 							"y": 0.125,
 							"z": 0
 						},
-						"speed": 0.25
+						"speed": 0.75
 					},
 					"power": 10,
 					"upgrade": {

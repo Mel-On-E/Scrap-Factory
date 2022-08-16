@@ -14,7 +14,7 @@
 				"buoyancy": 4,
 				"density": 4,
 				"durability": 6,
-				"friction": 5
+				"friction": 3
 			},
 			"renderable": {
 				"lodList": [
