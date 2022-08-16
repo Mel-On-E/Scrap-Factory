@@ -1,16 +1,3 @@
-dofile "$GAME_DATA/Scripts/game/AnimationUtil.lua"
-local renderables = { "$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook.rend" }
-local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_tp_logbook.rend",
-	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
-local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
-	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-sm.tool.preloadRenderables(renderables)
-sm.tool.preloadRenderables(renderablesTp)
-sm.tool.preloadRenderables(renderablesFp)
-
-dofile("$CONTENT_DATA/Scripts/managers/Research.lua")
-
 ---@class page
 ---@field uuid string
 ---@field price number
@@ -41,31 +28,34 @@ function Shop:client_onCreate()
 	end
 
 	self.cl = {}
-	self.cl.shopGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/shop.layout")
+	self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/shop.layout")
 
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.quantity = 1
-	self.cl.shopGui:setButtonState("Buy_x1", true)
-	self.cl.shopGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
-	self.cl.shopGui:setButtonCallback("BuyBtn", "cl_buyItem")
-	self.cl.shopGui:setVisible("OutOfMoney", false)
-	self.cl.shopGui:setButtonCallback("Buy_x1", "changeQuantity")
-	self.cl.shopGui:setButtonCallback("Buy_x10", "changeQuantity")
-	self.cl.shopGui:setButtonCallback("Buy_x100", "changeQuantity")
-	self.cl.shopGui:setButtonCallback("Buy_x999", "changeQuantity")
-	self.cl.shopGui:setButtonCallback("AllTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("DroppersTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("UpgradesTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("FurnacesTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("GeneratorsTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("UtilitiesTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("DecorTab", "changeCategory")
-	self.cl.shopGui:setButtonCallback("NextPage", "changePage")
-	self.cl.shopGui:setButtonCallback("LastPage", "changePage")
-	self.cl.shopGui:setButtonCallback("research", "cl_openResearch")
+	self.cl.gui:setButtonState("Buy_x1", true)
+	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
+	self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
+	self.cl.gui:setVisible("OutOfMoney", false)
+	self.cl.gui:setButtonCallback("Buy_x1", "changeQuantity")
+	self.cl.gui:setButtonCallback("Buy_x10", "changeQuantity")
+	self.cl.gui:setButtonCallback("Buy_x100", "changeQuantity")
+	self.cl.gui:setButtonCallback("Buy_x999", "changeQuantity")
+	self.cl.gui:setButtonCallback("AllTab", "changeCategory")
+	self.cl.gui:setButtonCallback("DroppersTab", "changeCategory")
+	self.cl.gui:setButtonCallback("UpgradesTab", "changeCategory")
+	self.cl.gui:setButtonCallback("FurnacesTab", "changeCategory")
+	self.cl.gui:setButtonCallback("GeneratorsTab", "changeCategory")
+	self.cl.gui:setButtonCallback("UtilitiesTab", "changeCategory")
+	self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
+	self.cl.gui:setButtonCallback("NextPage", "changePage")
+	self.cl.gui:setButtonCallback("LastPage", "changePage")
+	self.cl.gui:setButtonCallback("research", "cl_openResearch")
+
+	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
+
 	self:changeQuantity("Buy_x1")
 	self.cl.itemPages = { {} }
 	self.cl.filteredPages = { {} }
@@ -84,7 +74,7 @@ function Shop:client_onCreate()
 		end
 	end
 	for i = 1, 32 do
-		self.cl.shopGui:setButtonCallback("Item_" .. i, "changeItem")
+		self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 	end
 	self:gui_filter("All")
 	self:gen_page(self.cl.curPage)
@@ -95,17 +85,17 @@ function Shop:gen_page(num)
 	print("Page Gen")
 	local pageLen = #self.cl.filteredPages[num]
 	for i = 1, 32 do
-		self.cl.shopGui:setVisible("Item_" .. tostring(i), true)
-		self.cl.shopGui:setVisible("ItemPrice_" .. tostring(i), true)
+		self.cl.gui:setVisible("Item_" .. tostring(i), true)
+		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), true)
 	end
 	for i, v in pairs(self.cl.filteredPages[num]) do
-		self.cl.shopGui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
-		self.cl.shopGui:setText("ItemPrice_" .. tostring(i), format_money({money = v.price}))
+		self.cl.gui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
+		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money({money = v.price}))
 	end
 	if pageLen == 32 then return end
 	for i = pageLen + 1, 32 do
-		self.cl.shopGui:setVisible("Item_" .. tostring(i), false)
-		self.cl.shopGui:setVisible("ItemPrice_" .. tostring(i), false)
+		self.cl.gui:setVisible("Item_" .. tostring(i), false)
+		self.cl.gui:setVisible("ItemPrice_" .. tostring(i), false)
 	end
 
 end
@@ -132,14 +122,14 @@ end
 
 ---@param itemName string
 function Shop:changeItem(itemName)
-	self.cl.shopGui:setButtonState("Item_" .. self.cl.curItem, false)
+	self.cl.gui:setButtonState("Item_" .. self.cl.curItem, false)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.curItem = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
 	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid)
-	self.cl.shopGui:setButtonState(itemName, true)
-	self.cl.shopGui:setMeshPreview("Preview", uuid)
-	self.cl.shopGui:setText("ItemName", sm.shape.getShapeTitle(uuid))
-	self.cl.shopGui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
+	self.cl.gui:setButtonState(itemName, true)
+	self.cl.gui:setMeshPreview("Preview", uuid)
+	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
+	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
 end
 
 function Shop:changePage(wigetName)
@@ -161,12 +151,12 @@ end
 
 ---@param wigetName string
 function Shop:changeQuantity(wigetName)
-	self.cl.shopGui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
-	self.cl.shopGui:setText("Buy_x" .. tostring(self.cl.quantity), "#ffffffx" .. self.cl.quantity)
+	self.cl.gui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
+	self.cl.gui:setText("Buy_x" .. tostring(self.cl.quantity), "#ffffffx" .. self.cl.quantity)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.quantity = tonumber(string.reverse(string.sub(string.reverse(wigetName), 1, #wigetName - 5)))
-	self.cl.shopGui:setButtonState(wigetName, true)
-	self.cl.shopGui:setText(wigetName, "#4f4f4fx" .. self.cl.quantity)
+	self.cl.gui:setButtonState(wigetName, true)
+	self.cl.gui:setText(wigetName, "#4f4f4fx" .. self.cl.quantity)
 end
 
 function Shop:cl_buyItem()
@@ -195,8 +185,8 @@ function Shop:sv_buyItem(params, player)
 end
 
 function Shop:cl_notEnoughMoney()
-	if self.cl.shopGui then
-		self.cl.shopGui:setVisible("OutOfMoney", true)
+	if self.cl.gui then
+		self.cl.gui:setVisible("OutOfMoney", true)
 		self.cl.clearWarning = sm.game.getCurrentTick() + 40*2.5
 		--sm.audio.play("RaftShark") TODO play sound effect. Probably also on success, etc.
 	end
@@ -205,35 +195,43 @@ end
 function Shop:client_onFixedUpdate()
 	if self.cl.clearWarning and self.cl.clearWarning <= sm.game.getCurrentTick() then
 		self.cl.clearWarning = nil
-		if self.cl.shopGui then
-			self.cl.shopGui:setVisible("OutOfMoney", false)
+		if self.cl.gui then
+			self.cl.gui:setVisible("OutOfMoney", false)
 		end
 	end
 end
 
 function Shop.cl_e_open_gui()
-	g_cl_shop.cl.shopGui:setVisible("OutOfMoney", false)
-	g_cl_shop.cl.shopGui:setText("title", language_tag("ShopTitle"))
-	g_cl_shop.cl.shopGui:setText("research", language_tag("Research"))
-	g_cl_shop.cl.shopGui:setText("prestige", language_tag("Prestige"))
-	g_cl_shop.cl.shopGui:setText("BuyBtn", language_tag("Buy"))
-	g_cl_shop.cl.shopGui:setText("OutOfMoney", language_tag("OutOfMoney"))
-	g_cl_shop.cl.shopGui:setText("AllTab", language_tag("AllTab"))
-	g_cl_shop.cl.shopGui:setText("UpgradesTab", language_tag("UpgradesTab"))
-	g_cl_shop.cl.shopGui:setText("FurnacesTab", language_tag("FurnacesTab"))
-	g_cl_shop.cl.shopGui:setText("DroppersTab", language_tag("DroppersTab"))
-	g_cl_shop.cl.shopGui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
-	g_cl_shop.cl.shopGui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
-	g_cl_shop.cl.shopGui:setText("DecorTab", language_tag("DecorTab"))
+	g_cl_shop.cl.gui:setVisible("OutOfMoney", false)
+	g_cl_shop.cl.gui:setText("title", language_tag("ShopTitle"))
+	g_cl_shop.cl.gui:setText("research", language_tag("Research"))
+	g_cl_shop.cl.gui:setText("prestige", language_tag("Prestige"))
+	g_cl_shop.cl.gui:setText("BuyBtn", language_tag("Buy"))
+	g_cl_shop.cl.gui:setText("OutOfMoney", language_tag("OutOfMoney"))
+	g_cl_shop.cl.gui:setText("AllTab", language_tag("AllTab"))
+	g_cl_shop.cl.gui:setText("UpgradesTab", language_tag("UpgradesTab"))
+	g_cl_shop.cl.gui:setText("FurnacesTab", language_tag("FurnacesTab"))
+	g_cl_shop.cl.gui:setText("DroppersTab", language_tag("DroppersTab"))
+	g_cl_shop.cl.gui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
+	g_cl_shop.cl.gui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
+	g_cl_shop.cl.gui:setText("DecorTab", language_tag("DecorTab"))
 
-	g_cl_shop.cl.shopGui:open()
+	g_cl_shop.cl.gui:open()
 end
 
 function Shop.cl_e_isGuiOpen()
-	return g_cl_shop.cl.shopGui:isActive()
+	return g_cl_shop and g_cl_shop.cl.gui:isActive() or false
 end
 
 function Shop:cl_openResearch()
-	self.cl.shopGui:close()
-	Research.cl_e_open_gui()
+	self.cl.gui:close()
+	self.research = true
+end
+
+function Shop:cl_onGuiClosed()
+	if self.research then
+		Research.cl_e_open_gui()
+	end
+
+	self.research = false
 end

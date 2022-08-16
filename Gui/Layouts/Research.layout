@@ -93,7 +93,7 @@
             <Property key="TextAlign" value="Center"/>
             <Property key="FontName" value="SM_ButtonSmallBold"/>
         </Widget>
-        <Widget type="Button" skin="ActiveButton" position_real="0.035140562248995984 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="ShopBtn">
+        <Widget type="Button" skin="ActiveButton" position_real="0.035140562248995984 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="shop">
             <Property key="Caption" value="Shop"/>
             <Property key="TextColour" value="1 1 1"/>
             <Property key="TextAlign" value="Center"/>

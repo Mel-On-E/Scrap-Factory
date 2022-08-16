@@ -37,46 +37,47 @@ sm.tool.preloadRenderables(renderablesFp)
 
 Hub = class()
 
-local g_ui_research
-local g_ui_shop
+local first = true
 
 function Hub:server_onCreate()
-	if not g_ui_research then
-		sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
-		sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
-	end
+	if not first then return end
+	sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
+	sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
+	first = false
 end
 
 function Hub:client_onCreate()
 	self.cl = {}
-	self.cl.activeInterface = nil
 	self.cl.currentInterface = "shop"
 
 	self:client_onRefresh()
 
-	if not g_ui_research then
-		g_ui_research = Research()
-		g_ui_shop = Shop()
-	end
+	self.unequipTicks = 0
 end
 
 function Hub:client_onFixedUpdate()
-	if self.cl.equipped then
-		if self.cl.activeInterface and not self.cl.activeInterface.cl_e_isGuiOpen() then
-			self.cl.activeInterface = nil
+	if self.cl.currentInterface then
+		local active = true
+		if Shop.cl_e_isGuiOpen() then
+			self.cl.currentInterface = "shop"
+		elseif Research.cl_e_isGuiOpen() then
+			self.cl.currentInterface = "research"	
+		else
+			active = false
+		end
 
-			if g_ui_shop.cl_e_isGuiOpen() then
-				self.cl.activeInterface = g_ui_shop
-				self.cl.currentInterface = "shop"
-			elseif g_ui_research.cl_e_isGuiOpen() then
-				self.cl.activeInterface = g_ui_research
-				self.cl.currentInterface = "research"
-			end
+		if active then
+			self.unequipTicks = 0
+		end
 
-			if not self.cl.activeInterface then
+		if not active and self.tool:isEquipped() then
+			if self.unequipTicks > 1 then
 				self:cl_onGuiClosed()
-				self.cl.equipped = false
+			else
+				self.unequipTicks = self.unequipTicks + 1
 			end
+		elseif active and not self.tool:isEquipped() then
+			sm.tool.forceTool(self.tool)
 		end
 	end
 end
@@ -84,11 +85,9 @@ end
 function Hub:cl_openGui()
 	local interface = self.cl.currentInterface
 	if interface == "shop" then
-		g_ui_shop:cl_e_open_gui()
-		self.cl.activeInterface = g_ui_shop
+		Shop:cl_e_open_gui()
 	elseif interface == "research" then
-		g_ui_research:cl_e_open_gui()
-		self.cl.activeInterface = g_ui_research
+		Research:cl_e_open_gui()
 	end
 end
 

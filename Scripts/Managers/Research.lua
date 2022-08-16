@@ -1,13 +1,3 @@
-dofile "$GAME_DATA/Scripts/game/AnimationUtil.lua"
-local renderables = { "$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook.rend" }
-local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_tp_logbook.rend",
-	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
-local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
-	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-sm.tool.preloadRenderables(renderables)
-sm.tool.preloadRenderables(renderablesTp)
-sm.tool.preloadRenderables(renderablesFp)
 ---@class Research : ScriptableObjectClass
 Research = class()
 
@@ -24,6 +14,9 @@ function Research:client_onCreate()
 	self.cl.gui:setButtonCallback("PrevTier", "cl_tier_prev")
 	self.cl.gui:setButtonCallback("UnlocksNext", "cl_unlocks_next")
 	self.cl.gui:setButtonCallback("UnlocksPrev", "cl_unlocks_prev")
+	self.cl.gui:setButtonCallback("shop", "cl_openShop")
+
+	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 end
 
 function Research:client_onFixedUpdate()
@@ -53,7 +46,7 @@ function Research.cl_e_open_gui()
 end
 
 function Research.cl_e_isGuiOpen()
-	return g_cl_research.cl.gui:isActive()
+	return g_cl_research and g_cl_research.cl.gui:isActive() or false
 end
 
 function Research:cl_tier_next()
@@ -86,4 +79,17 @@ function Research:change_unlock_index(change)
 	local max = math.max(0, unlocks - 6)
 	self.cl.unlockIndex = math.min(self.cl.unlockIndex, max)
 	self.cl.unlockIndex = math.max(self.cl.unlockIndex, 0)
+end
+
+function Research:cl_openShop()
+	self.cl.gui:close()
+	self.shop = true
+end
+
+function Research:cl_onGuiClosed()
+	if self.shop then
+		Shop.cl_e_open_gui()
+	end
+
+	self.shop = false
 end
