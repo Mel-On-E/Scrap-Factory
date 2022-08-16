@@ -27,10 +27,16 @@ end
 
 function Research:update_gui()
 	self.cl.gui:setText("TierName", language_tag("ResearchTier") .. tostring(self.cl.tier))
+	local tierUuid = ResearchManager.cl_getTierUuid(self.cl.tier)
+	self.cl.gui:setIconImage("Icon", tierUuid)
+	self.cl.gui:setText("ResearchName", sm.shape.getShapeTitle(tierUuid))
+	self.cl.gui:setText("ResearchDesc", "#ffffff" .. language_tag("DescTier" .. tostring(self.cl.tier)))
+	
+
 	local progress, goal = ResearchManager.cl_getTierProgress(self.cl.tier)
-	self.cl.gui:setText("Progress", format_money({money = progress}) .. "/" .. format_money({money = goal}) ..
-		" (" .. string.format("%.2f", progress/goal*100) .. "%)")
-	self.cl.gui:setIconImage("Icon", ResearchManager.cl_getTierUuid(self.cl.tier))
+	self.cl.gui:setText("Progress", format_money({money = progress, color = "#00dddd"}) .. "/" .. format_money({money = goal, color = "#00dddd"}) ..
+		"\n(" .. string.format("%.2f", progress/goal*100) .. "%)")
+	
 
 	local unlocks = ResearchManager.cl_getTierUnlocks(self.cl.tier)
 	for i = 1, 6, 1 do
@@ -42,6 +48,11 @@ end
 function Research.cl_e_open_gui()
 	g_cl_research.cl.tier = ResearchManager.cl_getCurrentTier()
 	Research.update_gui(g_cl_research)
+
+	g_cl_research.cl.gui:setText("shop", language_tag("Shop"))
+	g_cl_research.cl.gui:setText("prestige", language_tag("Prestige"))
+	g_cl_research.cl.gui:setText("Unlocks", language_tag("ResearchUnlocks"))
+
 	g_cl_research.cl.gui:open()
 end
 

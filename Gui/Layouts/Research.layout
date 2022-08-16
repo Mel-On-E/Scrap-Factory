@@ -34,7 +34,7 @@
                     <Widget type="TextBox" skin="TextBox" position_real="0.34210526315789475 0.17857142857142858 0.58684210526315794 0.6428571428571429" name="ResearchName">
                         <Property key="TextAlign" value="Center"/>
                         <Property key="Caption" value="Font testing"/>
-                        <Property key="FontName" value="SM_HeaderLarge_Narrow"/>
+                        <Property key="FontName" value="SM_ItemTitle"/>
                     </Widget>
                 </Widget>
                 <Widget type="Widget" skin="BackgroundPopup" position_real="0.024390243902439025 0.46590909090909088 0.95731707317073167 0.45454545454545453">
@@ -42,7 +42,7 @@
                         <Property key="MultiLine" value="true"/>
                         <Property key="WordWrap" value="true"/>
                         <Property key="ReadOnly" value="true"/>
-                        <Property key="FontName" value="SM_HeaderLarge_Narrow"/>
+                        <Property key="FontName" value="SM_ItemTitle"/>
                         <Property key="Caption" value="Font Test"/>
                     </Widget>
                 </Widget>
@@ -87,7 +87,7 @@
         </Widget>
         <Widget type="Button" skin="DressbotArrowRight" position_real="0.89859437751004012 0.83544303797468356 0.076305220883534142 0.096202531645569619" name="UnlocksNext"/>
         <Widget type="Button" skin="DressbotArrowLeft" position_real="0.045180722891566265 0.84177215189873422 0.076305220883534142 0.096202531645569619" name="UnlocksPrev"/>
-        <Widget type="Button" skin="ActiveButton" position_real="0.81325301204819278 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="PrestigeBtn">
+        <Widget type="Button" skin="ActiveButton" position_real="0.81325301204819278 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="prestige">
             <Property key="Caption" value="Prestige"/>
             <Property key="TextColour" value="1 1 1"/>
             <Property key="TextAlign" value="Center"/>
@@ -99,7 +99,7 @@
             <Property key="TextAlign" value="Center"/>
             <Property key="FontName" value="SM_ButtonSmallBold"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.38152610441767071 0.740506329113924 0.26104417670682734 0.075949367088607597">
+        <Widget type="TextBox" skin="TextBox" position_real="0.38152610441767071 0.740506329113924 0.26104417670682734 0.075949367088607597" name="Unlocks">
             <Property key="Caption" value="Unlocks"/>
             <Property key="TextAlign" value="Center"/>
             <Property key="FontName" value="SM_HeaderLarge_Narrow"/>
