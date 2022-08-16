@@ -20,15 +20,18 @@
 ---@class Shop : ScriptableObjectClass
 ---@field cl client
 
-Shop = class()
+dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+
+Shop = class(Interface)
 
 function Shop:client_onCreate()
 	if not g_cl_shop then
 		g_cl_shop = self
 	end
 
-	self.cl = {}
-	self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/shop.layout")
+	local params = {}
+	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
+	Interface.cient_onCreate(self, params)
 
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
@@ -36,9 +39,10 @@ function Shop:client_onCreate()
 	self.cl.curItem = 1
 	self.cl.quantity = 1
 	self.cl.gui:setButtonState("Buy_x1", true)
-	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
-	self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 	self.cl.gui:setVisible("OutOfMoney", false)
+	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
+
+	self.cl.gui:setButtonCallback("BuyBtn", "cl_buyItem")
 	self.cl.gui:setButtonCallback("Buy_x1", "changeQuantity")
 	self.cl.gui:setButtonCallback("Buy_x10", "changeQuantity")
 	self.cl.gui:setButtonCallback("Buy_x100", "changeQuantity")
@@ -52,9 +56,6 @@ function Shop:client_onCreate()
 	self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
 	self.cl.gui:setButtonCallback("NextPage", "changePage")
 	self.cl.gui:setButtonCallback("LastPage", "changePage")
-	self.cl.gui:setButtonCallback("research", "cl_openResearch")
-
-	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 
 	self:changeQuantity("Buy_x1")
 	self.cl.itemPages = { {} }
@@ -204,8 +205,6 @@ end
 function Shop.cl_e_open_gui()
 	g_cl_shop.cl.gui:setVisible("OutOfMoney", false)
 	g_cl_shop.cl.gui:setText("title", language_tag("ShopTitle"))
-	g_cl_shop.cl.gui:setText("research", language_tag("Research"))
-	g_cl_shop.cl.gui:setText("prestige", language_tag("Prestige"))
 	g_cl_shop.cl.gui:setText("BuyBtn", language_tag("Buy"))
 	g_cl_shop.cl.gui:setText("OutOfMoney", language_tag("OutOfMoney"))
 	g_cl_shop.cl.gui:setText("AllTab", language_tag("AllTab"))
@@ -216,22 +215,9 @@ function Shop.cl_e_open_gui()
 	g_cl_shop.cl.gui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
 	g_cl_shop.cl.gui:setText("DecorTab", language_tag("DecorTab"))
 
-	g_cl_shop.cl.gui:open()
+	Interface.cl_e_open_gui(g_cl_shop)
 end
 
 function Shop.cl_e_isGuiOpen()
-	return g_cl_shop and g_cl_shop.cl.gui:isActive() or false
-end
-
-function Shop:cl_openResearch()
-	self.cl.gui:close()
-	self.research = true
-end
-
-function Shop:cl_onGuiClosed()
-	if self.research then
-		Research.cl_e_open_gui()
-	end
-
-	self.research = false
+	return Interface.cl_e_isGuiOpen(g_cl_shop)
 end

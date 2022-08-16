@@ -1,22 +1,24 @@
 ---@class Research : ScriptableObjectClass
-Research = class()
+
+dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+
+Research = class(Interface)
 
 function Research:client_onCreate()
 	if not g_cl_research then
 		g_cl_research = self
 	end
 
-	self.cl = {}
+	local params = {}
+	params.layout = "$CONTENT_DATA/Gui/Layouts/Research.layout"
+	Interface.cient_onCreate(self, params)
+
 	self.cl.tier = 1
 	self.cl.unlockIndex = 0
-	self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Research.layout")
 	self.cl.gui:setButtonCallback("NextTier", "cl_tier_next")
 	self.cl.gui:setButtonCallback("PrevTier", "cl_tier_prev")
 	self.cl.gui:setButtonCallback("UnlocksNext", "cl_unlocks_next")
 	self.cl.gui:setButtonCallback("UnlocksPrev", "cl_unlocks_prev")
-	self.cl.gui:setButtonCallback("shop", "cl_openShop")
-
-	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 end
 
 function Research:client_onFixedUpdate()
@@ -48,16 +50,13 @@ end
 function Research.cl_e_open_gui()
 	g_cl_research.cl.tier = ResearchManager.cl_getCurrentTier()
 	Research.update_gui(g_cl_research)
-
-	g_cl_research.cl.gui:setText("shop", language_tag("Shop"))
-	g_cl_research.cl.gui:setText("prestige", language_tag("Prestige"))
 	g_cl_research.cl.gui:setText("Unlocks", language_tag("ResearchUnlocks"))
 
-	g_cl_research.cl.gui:open()
+	Interface.cl_e_open_gui(g_cl_research)
 end
 
 function Research.cl_e_isGuiOpen()
-	return g_cl_research and g_cl_research.cl.gui:isActive() or false
+	return Interface.cl_e_isGuiOpen(g_cl_research)
 end
 
 function Research:cl_tier_next()
@@ -90,17 +89,4 @@ function Research:change_unlock_index(change)
 	local max = math.max(0, unlocks - 6)
 	self.cl.unlockIndex = math.min(self.cl.unlockIndex, max)
 	self.cl.unlockIndex = math.max(self.cl.unlockIndex, 0)
-end
-
-function Research:cl_openShop()
-	self.cl.gui:close()
-	self.shop = true
-end
-
-function Research:cl_onGuiClosed()
-	if self.shop then
-		Shop.cl_e_open_gui()
-	end
-
-	self.shop = false
 end
