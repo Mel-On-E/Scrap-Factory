@@ -51,6 +51,7 @@
     "ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
 
 
-    //General
-    "DismissTutorial": "Press \"%s\" to dismiss"
+    //Other
+    "DismissTutorial": "Press \"%s\" to dismiss",
+    "RaidWarning": "Unauthorized Factory Detected!"
 }
