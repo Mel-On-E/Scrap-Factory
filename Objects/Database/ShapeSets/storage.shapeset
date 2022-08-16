@@ -1,7 +1,12 @@
 {
-   "partList" : [
-      {
+	"partList": [
+		{
 			"uuid": "91037f2c-5230-464b-8873-ad13355539af",
+			"shop": {
+				"tier": 1,
+				"price": 100,
+				"category": "Generators"
+			},
 			"name": "obj_storage_battery",
 			"renderable": {
 				"lodList": [
@@ -35,15 +40,15 @@
 				"friction": 4,
 				"buoyancy": 7
 			},
-            "scripted": {
+			"scripted": {
 				"filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua",
 				"classname": "Storage",
 				"data": {
-                    "powerLimit": 100
-                }
+					"powerLimit": 100
+				}
 			},
 			"flammable": true,
 			"stackSize": 999
 		}
-   ]
+	]
 }
