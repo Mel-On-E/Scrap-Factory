@@ -173,7 +173,7 @@ function Shop:cl_notEnoughMoney()
 	if self.cl.gui then
 		self.cl.gui:setVisible("OutOfMoney", true)
 		self.cl.clearWarning = sm.game.getCurrentTick() + 40*2.5
-		--sm.audio.play("RaftShark") TODO play sound effect. Probably also on success, etc.
+		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
 	end
 end
 

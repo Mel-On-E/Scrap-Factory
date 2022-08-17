@@ -627,3 +627,7 @@ function SurvivalPlayer:cl_onClearConfirmButtonClick(name)
 	self.cl.confirmClearGui:close()
 	self.cl.confirmClearGui:destroy()
 end
+
+function SurvivalPlayer:cl_e_playAudio(name)
+	sm.audio.play(name)
+end
