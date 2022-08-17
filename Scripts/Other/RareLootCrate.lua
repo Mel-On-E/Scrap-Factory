@@ -5,10 +5,14 @@ dofile("$CONTENT_DATA/Scripts/Other/LootCrate.lua")
 RareLootCrate = class( LootCrate )
 
 function RareLootCrate:get_loot_table()
+    local tier = ResearchManager.cl_getCurrentTier()
     local itemPool = {}
     for uuid, item in pairs(g_shop) do
-        if item.price <= MoneyManager.cl_moneyEarned()*2 + 5000 then
-            itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
+        if (item.tier < tier) or 
+        (item.tier == tier and math.random()) > 0.75 then
+            if item.price <= MoneyManager.cl_moneyEarned()*2 + 5000 then
+                itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
+            end
         end
     end
 
