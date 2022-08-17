@@ -1,6 +1,7 @@
 Drop = class( nil )
 
 local oreCount = 0
+local lifeTime = 40*5--ticks
 
 function Drop:server_onCreate()
     local body = self.shape:getBody()
@@ -19,7 +20,7 @@ function Drop:server_onFixedUpdate()
         self.timeout = 0
     end
 
-    if self.timeout > 40*5 then
+    if self.timeout > lifeTime then
         self.shape:destroyShape(0)
     end
 end
