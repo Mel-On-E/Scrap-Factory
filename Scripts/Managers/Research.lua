@@ -90,3 +90,7 @@ function Research:change_unlock_index(change)
 	self.cl.unlockIndex = math.min(self.cl.unlockIndex, max)
 	self.cl.unlockIndex = math.max(self.cl.unlockIndex, 0)
 end
+
+function Research.cl_close()
+	Interface.cl_close(g_cl_research)
+end

@@ -110,6 +110,9 @@ function ResearchManager:cl_research_done(tier)
     for _, uuid in ipairs(unlocks) do
         sm.gui.chatMessage(language_tag("RsearchUnlockItem") .. "#00dddd" .. sm.shape.getShapeTitle(sm.uuid.new(uuid)))
     end
+    
+    Shop.cl_close()
+    Research.cl_close()
 end
 
 function ResearchManager.cl_getCurrentTier()

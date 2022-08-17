@@ -38,6 +38,7 @@ function Shop:client_onCreate()
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.quantity = 1
+	self.cl.category = "All"
 	self.cl.gui:setButtonState("Buy_x1", true)
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
@@ -56,30 +57,11 @@ function Shop:client_onCreate()
 	self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
 	self.cl.gui:setButtonCallback("NextPage", "changePage")
 	self.cl.gui:setButtonCallback("LastPage", "changePage")
-
-	self:changeQuantity("Buy_x1")
-	self.cl.itemPages = { {} }
-	self.cl.filteredPages = { {} }
-	local pages = {}
-	for k, v in pairs(g_shop) do
-		table.insert(pages, { uuid = k, price = v.price, category = v.category })
-	end
-	table.sort(pages, function(a, b)
-		return a.price < b.price
-	end)
-	local page = 1;
-	for i, v in pairs(pages) do
-		table.insert(self.cl.itemPages[page], v)
-		if i % 32 == 0 then
-			page = page + 1
-		end
-	end
 	for i = 1, 32 do
 		self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 	end
-	self:gui_filter("All")
-	self:gen_page(self.cl.curPage)
-	self:changeItem("Item_" .. self.cl.curItem)
+
+	self:changeQuantity("Buy_x1")
 end
 
 function Shop:gen_page(num)
@@ -169,6 +151,8 @@ end
 function Shop:changeCategory(categoryName)
 	local category = string.sub(categoryName, 1, -4)
 	self:gui_filter(category)
+	self.cl.category = category
+
 	self.cl.curPage = 1
 	self:changeItem("Item_1")
 	self:gen_page(self.cl.curPage)
@@ -215,9 +199,42 @@ function Shop.cl_e_open_gui()
 	g_cl_shop.cl.gui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
 	g_cl_shop.cl.gui:setText("DecorTab", language_tag("DecorTab"))
 
+
+
+	g_cl_shop.cl.itemPages = { {} }
+	g_cl_shop.cl.filteredPages = { {} }
+
+	local tier = ResearchManager.cl_getCurrentTier()
+	local pages = {}
+	for k, v in pairs(g_shop) do
+		if v.tier < tier then
+			table.insert(pages, { uuid = k, price = v.price, category = v.category })
+		end
+	end
+	table.sort(pages, function(a, b)
+		return a.price < b.price
+	end)
+	local page = 1;
+	for i, v in pairs(pages) do
+		table.insert(g_cl_shop.cl.itemPages[page], v)
+		if i % 32 == 0 then
+			page = page + 1
+		end
+	end
+	
+	g_cl_shop:gui_filter(g_cl_shop.cl.category)
+	g_cl_shop:gen_page(g_cl_shop.cl.curPage)
+	g_cl_shop:changeItem("Item_" .. g_cl_shop.cl.curItem)
+
+	
+
 	Interface.cl_e_open_gui(g_cl_shop)
 end
 
 function Shop.cl_e_isGuiOpen()
 	return Interface.cl_e_isGuiOpen(g_cl_shop)
+end
+
+function Shop.cl_close()
+	Interface.cl_close(g_cl_shop)
 end

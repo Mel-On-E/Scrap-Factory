@@ -34,6 +34,10 @@ function Interface:cl_openShop()
 	self.shop = true
 end
 
+function Interface:cl_close()
+	self.cl.gui:close()
+end
+
 function Interface:cl_onGuiClosed()
 	if self.shop then
 		Shop.cl_e_open_gui()
