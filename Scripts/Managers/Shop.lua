@@ -1,7 +1,11 @@
+dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+
+
 ---@class page
 ---@field uuid string
 ---@field price number
 ---@field category string
+---@field tier number
 
 ---@class client;
 ---@field gui GuiInterface
@@ -15,30 +19,34 @@
 ---@field curItem number
 ---current quantity
 ---@field quantity number
+---wheater it should sort from highest value item or lowest value item
+---@field sortHighest boolean
+---current category
+---@field category string
+---Selected tier filter
+---@field tier number
 
 
 ---@class Shop : ScriptableObjectClass
 ---@field cl client
-
-dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
-
 Shop = class(Interface)
 
 function Shop:client_onCreate()
 	if not g_cl_shop then
 		g_cl_shop = self
 	end
-
 	local params = {}
 	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
 	Interface.cient_onCreate(self, params)
 
+	self.cl.sortHighest = false
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.quantity = 1
 	self.cl.category = "All"
+	self.cl.tier = 0
 	self.cl.gui:setButtonState("Buy_x1", true)
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
@@ -57,6 +65,13 @@ function Shop:client_onCreate()
 	self.cl.gui:setButtonCallback("DecorTab", "changeCategory")
 	self.cl.gui:setButtonCallback("NextPage", "changePage")
 	self.cl.gui:setButtonCallback("LastPage", "changePage")
+	self.cl.gui:setButtonCallback("SortBtn", "changeSort")
+	local tiers = { "Filter by (no tier)" }
+	for i = 1, ResearchManager.cl_getTierCount() do
+		table.insert(tiers, "Tier: " .. tostring(i))
+	end
+
+	self.cl.gui:createDropDown("DropDown", "tierChange", tiers)
 	for i = 1, 32 do
 		self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 	end
@@ -73,7 +88,7 @@ function Shop:gen_page(num)
 	end
 	for i, v in pairs(self.cl.filteredPages[num]) do
 		self.cl.gui:setIconImage("ItemPic_" .. tostring(i), sm.uuid.new(v.uuid))
-		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money({money = v.price}))
+		self.cl.gui:setText("ItemPrice_" .. tostring(i), format_money({ money = v.price }))
 	end
 	if pageLen == 32 then return end
 	for i = pageLen + 1, 32 do
@@ -83,17 +98,79 @@ function Shop:gen_page(num)
 
 end
 
----@param category string
-function Shop:gui_filter(category)
-	self.cl.filteredPages = { {} }
-	if category == "All" then
-		self.cl.filteredPages = self.cl.itemPages
+function Shop:changeSort()
+	self.cl.sortHighest = not self.cl.sortHighest
+	self.cl.gui:setText("SortText", self.cl.sortHighest and "Sort from highest" or "Sort from lowest")
+
+	local tier = ResearchManager.cl_getCurrentTier()
+	local pages = {}
+	self.cl.itemPages = { {} }
+	for k, v in pairs(g_shop) do
+		if v.tier < tier then
+			table.insert(pages, { uuid = k, price = v.price, category = v.category })
+		end
+	end
+	table.sort(pages, function(a, b)
+		if self.cl.sortHighest then
+			return a.price < b.price
+		end
+		return a.price > b.price
+	end)
+	local page = 1;
+	for i, v in pairs(pages) do
+		table.insert(self.cl.itemPages[page], v)
+		if i % 32 == 0 then
+			page = page + 1
+		end
+	end
+
+	self:gui_filter(self.cl.category, self.cl.tier)
+	self:gen_page(self.cl.curPage)
+	self:changeItem("Item_1")
+end
+
+---@param optionName string
+function Shop:tierChange(optionName)
+	if optionName == "Filter by (no tier)" then
+		self.cl.tier = 0
+		self:gui_filter(self.cl.category, self.cl.tier)
+		self:gen_page(self.cl.curPage)
+		self:changeItem("Item_1")
 		return
 	end
+	---@type number
+	local tier = tonumber(optionName.sub(string.reverse(optionName), 1, 2))
+	self.cl.tier = tier
+	self:gui_filter(self.cl.category, self.cl.tier)
+	self:gen_page(self.cl.curPage)
+	self:changeItem("Item_1")
+end
+
+---@param category string
+---@param tier number
+function Shop:gui_filter(category, tier)
+	self.cl.filteredPages = { {} }
 	local page = 1
+	if category == "All" then
+		for i, v in pairs(self.cl.itemPages) do
+			for _, v in pairs(v) do
+
+				if tier == 0 and true or (v.tier == tier) then
+					table.insert(self.cl.filteredPages[page], v)
+				end
+			end
+			if i % 32 then
+				page = page + 1
+			end
+		end
+		return
+	end
+
+
 	for i, v in pairs(self.cl.itemPages) do
-		for i, v in pairs(v) do
-			if v.category == category then
+		for _, v in pairs(v) do
+
+			if (v.category == category) and (tier == 0 and true or (v.tier == tier)) then
 				table.insert(self.cl.filteredPages[page], v)
 			end
 		end
@@ -105,14 +182,17 @@ end
 
 ---@param itemName string
 function Shop:changeItem(itemName)
-	self.cl.gui:setButtonState("Item_" .. self.cl.curItem, false)
-	---@diagnostic disable-next-line: assign-type-mismatch
-	self.cl.curItem = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
-	local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid)
-	self.cl.gui:setButtonState(itemName, true)
-	self.cl.gui:setMeshPreview("Preview", uuid)
-	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
-	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
+	if #self.cl.filteredPages[self.cl.curPage] > 0 then
+
+		self.cl.gui:setButtonState("Item_" .. self.cl.curItem, false)
+		---@diagnostic disable-next-line: assign-type-mismatch
+		self.cl.curItem = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
+		local uuid = sm.uuid.new(self.cl.filteredPages[self.cl.curPage][self.cl.curItem].uuid)
+		self.cl.gui:setButtonState(itemName, true)
+		self.cl.gui:setMeshPreview("Preview", uuid)
+		self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
+		self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
+	end
 end
 
 function Shop:changePage(wigetName)
@@ -150,7 +230,7 @@ end
 
 function Shop:changeCategory(categoryName)
 	local category = string.sub(categoryName, 1, -4)
-	self:gui_filter(category)
+	self:gui_filter(category, self.cl.tier)
 	self.cl.category = category
 
 	self.cl.curPage = 1
@@ -163,7 +243,8 @@ function Shop:sv_buyItem(params, player)
 	local price = tonumber(params.price) * params.quantity
 
 	if MoneyManager.sv_spendMoney(price) then
-		sm.event.sendToGame("sv_giveItem", { player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
+		sm.event.sendToGame("sv_giveItem",
+			{ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
 	else
 		self.network:sendToClient(player, "cl_notEnoughMoney")
 	end
@@ -172,7 +253,7 @@ end
 function Shop:cl_notEnoughMoney()
 	if self.cl.gui then
 		self.cl.gui:setVisible("OutOfMoney", true)
-		self.cl.clearWarning = sm.game.getCurrentTick() + 40*2.5
+		self.cl.clearWarning = sm.game.getCurrentTick() + 40 * 2.5
 		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
 	end
 end
@@ -201,6 +282,7 @@ function Shop.cl_e_open_gui()
 
 
 
+
 	g_cl_shop.cl.itemPages = { {} }
 	g_cl_shop.cl.filteredPages = { {} }
 
@@ -208,11 +290,14 @@ function Shop.cl_e_open_gui()
 	local pages = {}
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = v.price, category = v.category })
+			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)
-		return a.price < b.price
+		if g_cl_shop.cl.sortHighest then
+			return a.price < b.price
+		end
+		return a.price > b.price
 	end)
 	local page = 1;
 	for i, v in pairs(pages) do
@@ -221,12 +306,12 @@ function Shop.cl_e_open_gui()
 			page = page + 1
 		end
 	end
-	
-	g_cl_shop:gui_filter(g_cl_shop.cl.category)
+
+	g_cl_shop:gui_filter(g_cl_shop.cl.category, g_cl_shop.cl.tier)
 	g_cl_shop:gen_page(g_cl_shop.cl.curPage)
 	g_cl_shop:changeItem("Item_" .. g_cl_shop.cl.curItem)
 
-	
+
 
 	Interface.cl_e_open_gui(g_cl_shop)
 end

@@ -8,7 +8,7 @@
 			"script": {
 				"file": "$CONTENT_DATA/Scripts/tools/Hub.lua",
 				"class": "Hub",
-				"data": ""
+				"data": {}
 			},
 			"showInInventory": false
 		},
@@ -20,7 +20,7 @@
 			"script": {
 				"file": "$CONTENT_DATA/Scripts/tools/Sell.lua",
 				"class": "Sell",
-				"data": ""
+				"data": {}
 			}
 		},
 		{
@@ -28,7 +28,11 @@
 			"uuid": "5cc12f03-275e-4c8e-b013-79fc0f913e1b",
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_lift_preview.rend",
 			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
-			"script": { "file": "$GAME_DATA/Scripts/game/Lift.lua", "class": "Lift" }
+			"script": {
+				"file": "$GAME_DATA/Scripts/game/Lift.lua",
+				"class": "Lift",
+				"data": {}
+			}
 		},
 		{
 			"name": "tool_hammer",

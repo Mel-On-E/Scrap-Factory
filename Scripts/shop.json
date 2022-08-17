@@ -2,7 +2,7 @@
 	//DROPPERS
 
 	//obj_dropper_scrap_wood
-	"692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
+	"692a5ebd-1793-49ba-b1ef-681a8fdceba7": {
 		"price": 20,
 		"category": "Droppers",
 		"tier": 0
@@ -13,11 +13,7 @@
 		"category": "Droppers",
 		"tier": 0
 	},
-	
 
-
-
-	
 	//Upgraders
 
 	//obj_upgrader_basic
@@ -45,10 +41,6 @@
 		"tier": 1
 	},
 
-
-
-
-
 	//FURNACES
 
 	//obj_furnace_basic
@@ -69,10 +61,6 @@
 		"category": "Furnaces",
 		"tier": 1
 	},
-
-
-
-
 
 	//GENERATORS
 
@@ -101,10 +89,6 @@
 		"tier": 0
 	},
 
-
-
-
-
 	//UTILITIES
 
 	//obj_belt1_straight
@@ -113,10 +97,6 @@
 		"category": "Utilities",
 		"tier": 0
 	},
-
-
-
-
 
 	//DECOR
 
