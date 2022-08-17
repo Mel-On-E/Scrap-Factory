@@ -66,7 +66,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="CraftbotTab" position_real="0.60580912863070535 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="GeneratorsTab">
+            <Widget type="Button" skin="CraftbotTab" position_real="0.60580912863070535 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="UtilitiesTab">
                 <Widget type="TextBox" skin="TextBox" position_real="0.10344827586206896 -0.090909090909090912 0.82758620689655171 1">
                     <Property key="Caption" value="Utilities"/>
                     <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
