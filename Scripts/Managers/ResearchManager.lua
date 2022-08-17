@@ -50,6 +50,11 @@ function ResearchManager:server_onFixedUpdate()
            research[tier] = tonumber(progress)
         end
     end
+
+    if self.notify then
+        self.network:sendToClients("cl_research_done", self.sv.tier - 1 )
+        self.notify = false
+    end
 end
 
 function ResearchManager.sv_addResearch(shape)
@@ -65,8 +70,7 @@ function ResearchManager.sv_addResearch(shape)
 
     if tier.goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
-        --TODO send notification
-        sm.gui.chatMessage("#0000ffReseach finsihed")
+        g_ResearchManager.notify = true
     end
 
     return true
@@ -98,6 +102,14 @@ function ResearchManager:client_onFixedUpdate()
 		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid) )
         g_factoryHud:setText( "Research","#00dddd" .. self.cl.progress .. "%")
 	end
+end
+
+function ResearchManager:cl_research_done(tier)
+    sm.gui.displayAlertText("#00dddd" .. string.format(language_tag("ResearchFinished"), tostring(tier)))
+    local unlocks = self.cl_getTierUnlocks(tier)
+    for _, uuid in ipairs(unlocks) do
+        sm.gui.chatMessage(language_tag("RsearchUnlockItem") .. "#00dddd" .. sm.shape.getShapeTitle(sm.uuid.new(uuid)))
+    end
 end
 
 function ResearchManager.cl_getCurrentTier()

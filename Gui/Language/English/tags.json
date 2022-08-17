@@ -32,6 +32,8 @@
     "ResearchFurnaceRemoved": "Research Furnace Removed",
     "ResearchTier": "Tier ",
     "ResearchUnlocks": "Unlocks",
+    "ResearchFinished": "Tier %s Reseached!",
+    "RsearchUnlockItem": "Unlocked: ",
     "Research": "Research",
 
 
