@@ -107,7 +107,7 @@ function Shop:changeSort()
 	self.cl.itemPages = { {} }
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = v.price, category = v.category })
+			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)
@@ -154,7 +154,8 @@ function Shop:gui_filter(category, tier)
 	if category == "All" then
 		for i, v in pairs(self.cl.itemPages) do
 			for _, v in pairs(v) do
-
+				print(tier)
+				print(v.tier)
 				if tier == 0 and true or (v.tier == tier) then
 					table.insert(self.cl.filteredPages[page], v)
 				end
