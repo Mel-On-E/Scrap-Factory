@@ -30,7 +30,7 @@
                         <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
-                <Widget type="Button" skin="StyledButtonDressbot" position="450 95 140 140" name="Reward_2">
+                <Widget type="Button" skin="StyledButtonDressbot" position_real="0.33582089552238809 0.1962809917355372 0.1044776119402985 0.28925619834710742" name="Reward_2">
                     <Widget type="ImageBox" skin="ImageBox" position_real="0.17857142857142858 0.17857142857142858 0.6428571428571429 0.6428571428571429" name="RewardPic_2">
                         <Property key="NeedKey" value="false"/>
                         <Property key="NeedMouse" value="false"/>
