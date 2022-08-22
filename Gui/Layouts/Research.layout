@@ -11,7 +11,7 @@
             <Property key="NeedMouse" value="false"/>
         </Widget>
         <Widget type="Widget" skin="BackgroundPopup" position_real="0.010040160642570281 0.11392405063291139 0.98493975903614461 0.60126582278481011" align="HStretch Bottom">
-            <Widget type="Widget" skin="SequenceListBackgroundLocked" position="80 15 820 440" align="Left Bottom">
+            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.081549439347604488 0.031578947368421054 0.83588175331294601 0.9263157894736842" align="Left Bottom">
                 <Widget type="TextBox" skin="UpgradeButton" position_real="0.51829268292682928 0.10227272727272728 0.46341463414634149 0.31818181818181818" align="HStretch Top">
                     <Property key="FontName" value="SM_GameName"/>
                     <Property key="TextAlign" value="Center"/>
@@ -25,7 +25,7 @@
                 </Widget>
                 <Widget type="Widget" skin="BackgroundPopup" position_real="0.017073170731707318 0.090909090909090912 0.46341463414634149 0.31818181818181818">
                     <Widget type="Widget" skin="GenericButton" position="15 15 100 100">
-                        <Widget type="ImageBox" skin="ImageBox" position="2 1 98 99" name="Icon">
+                        <Widget type="ImageBox" skin="ImageBox" position_real="0.02 0.01 0.97999999999999998 0.98999999999999999" name="Icon">
                             <Property key="NeedKey" value="false"/>
                             <Property key="NeedMouse" value="false"/>
                             <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png"/>
