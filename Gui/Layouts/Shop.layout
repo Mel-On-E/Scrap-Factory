@@ -237,7 +237,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="170 330 125 20" name="ItemPrice_10">
+            <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_10">
                 <Property key="Caption" value="${ItemPrice_10}"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
@@ -524,7 +524,7 @@
                     <Property key="NeedKey" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Canvas" skin="Canvas" position="920 5 270 52" name="DropDown">
+            <Widget type="Canvas" skin="Canvas" position_real="0.76348547717842319 0.0068587105624142658 0.22406639004149378 0.071330589849108367" name="DropDown">
                 <Controller type=""/>
                 <Controller type=""/>
             </Widget>
