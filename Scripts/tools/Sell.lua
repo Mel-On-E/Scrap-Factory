@@ -292,7 +292,7 @@ end
 function Sell.sv_n_sell( self, params, player ) 
 	if params.shape and sm.exists( params.shape ) then
 		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = tostring(params.value), format = "money" })
+		sm.event.sendToGame("sv_e_stonks", { pos = params.shape.worldPosition, value = tostring(params.value * params.quantity), format = "money" })
 
 		if params.quantity > 1 then
 			sm.container.beginTransaction()
