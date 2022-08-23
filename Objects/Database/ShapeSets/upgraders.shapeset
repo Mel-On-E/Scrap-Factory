@@ -34,7 +34,7 @@
 				]
 			},
 			"restitution": 0.0,
-			"rotationSet": "PropYNegYZ",
+			"rotationSet": "PropY",
 			"scripted": {
 				"classname": "Upgrader",
 				"data": {
@@ -117,7 +117,7 @@
 				]
 			},
 			"restitution": 0.0,
-			"rotationSet": "PropYNegYZ",
+			"rotationSet": "PropY",
 			"scripted": {
 				"classname": "RandomUpgrader",
 				"data": {

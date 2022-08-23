@@ -34,7 +34,7 @@
 				]
 			},
 			"restitution": 0.0,
-			"rotationSet": "PropYNegYZ",
+			"rotationSet": "PropY",
 			"scripted": {
 				"classname": "Belt",
 				"data": {
