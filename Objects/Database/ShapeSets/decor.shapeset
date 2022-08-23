@@ -2,7 +2,7 @@
 	"partList": [
 		{
 			"shop": {
-				"price": 69,
+				"price": "69",
 				"category": "Decor",
 				"tier": 0
 			},

@@ -27,4 +27,6 @@
     "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {"tier":0,"price":"500","category":"Upgrades"},
   // obj_upgrader_tp_random
     "a8a06b6e-4152-4527-9602-dd231c5a1cab": {"tier":1,"price":"5000","category":"Upgrades"},
+  // obj_decor_babyduck
+    "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": {"tier":0,"price":"69","category":"Decor"},
 }
