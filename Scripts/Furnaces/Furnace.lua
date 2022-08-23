@@ -118,6 +118,7 @@ end
 
 function Furnace:cl_toggle_effect(active)
     if cl_research_Effect then
+    if cl_research_Effect and sm.exists(cl_research_Effect) then
         cl_research_Effect:destroy()
     end
 
