@@ -76,6 +76,7 @@ function SurvivalPlayer.client_onCreate( self )
 
 		self.cl.followCutscene = 0.0
 		self.cl.tutorialsWatched = {}
+		self.cl.effects = {}
 	end
 
 	self:cl_init()
@@ -628,6 +629,36 @@ function SurvivalPlayer:cl_onClearConfirmButtonClick(name)
 	self.cl.confirmClearGui:destroy()
 end
 
+
+
+
+--Effects
+
 function SurvivalPlayer:cl_e_playAudio(name)
 	sm.audio.play(name)
+end
+
+function SurvivalPlayer:sv_e_playEffect(params)
+	self.network:sendToClients("cl_e_playEffect", params)
+end
+
+function SurvivalPlayer:cl_e_playEffect(params)
+	sm.effect.playEffect(params.effect, params.pos)
+end
+
+function SurvivalPlayer:cl_e_createEffect(params)
+	self.cl.effects[params.id] = sm.effect.createEffect(params.effect, params.host)
+end
+
+function SurvivalPlayer:cl_e_startEffect(id)
+	if self.cl.effects[id] and not self.cl.effects[id]:isPlaying() then
+		self.cl.effects[id]:start()
+	end
+end
+
+function SurvivalPlayer:cl_e_destroyEffect(id)
+	if self.cl.effects[id] then
+		self.cl.effects[id]:destroy()
+		self.cl.effects[id] = nil
+	end
 end
