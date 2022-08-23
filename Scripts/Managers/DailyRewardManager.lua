@@ -24,6 +24,7 @@ function DailyRewardManager:server_onCreate()
 
     if os.time() - self.saved.time >= DAY then
         self.network:sendToClients("cl_openGui")
+        self.playEffect = true
     end
 
     self.rewards = sm.json.open("$CONTENT_DATA/Scripts/daily rewards.json")
@@ -37,7 +38,7 @@ function DailyRewardManager:sv_spawnRewards(params, player)
         pos.x = pos.x + (math.random()-0.5)*10
         pos.y = pos.y + (math.random()-0.5)*10
         pos.z = pos.z + 5
-        LootCrateManager.sv_spawnCrate(pos, self.rewards[self.saved.streak + 1].crate)
+        LootCrateManager.sv_spawnCrate({pos = pos, uuid = self.rewards[self.saved.streak + 1].crate, effect = "Woc - Destruct"})
     end
     self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
     self.saved.time = os.time()
@@ -47,6 +48,16 @@ end
 function DailyRewardManager:client_onCreate()
     self.cl = {}
     self.cl.day = 1
+end
+
+function DailyRewardManager:client_onFixedUpdate()
+    if self.gui and self.gui:isActive() and self.playEffect and sm.localPlayer.getPlayer().character then
+        local player = sm.localPlayer.getPlayer()
+        sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "DailyReward", effect = "CelebrationBot - Audio", host = player:getCharacter()})
+        sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
+        self.playEffect = false
+    end
+    
 end
 
 function DailyRewardManager:client_onClientDataUpdate(data)
@@ -70,8 +81,6 @@ function DailyRewardManager:cl_openGui()
         self.gui:setText("ClaimRewardText", language_tag("ClaimDailyReward"))
 
         generateDays(self)
-        
-
         self.gui:open()
     end
 end
@@ -107,5 +116,6 @@ function DailyRewardManager:cl_claimReward()
     self.gui = nil
     self.claimed = true
     self.network:sendToServer("sv_spawnRewards")
+    sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_destroyEffect", "DailyReward")
 end
 
