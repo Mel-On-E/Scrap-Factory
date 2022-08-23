@@ -78,7 +78,6 @@ function Shop:client_onCreate()
 end
 
 function Shop:gen_page(num)
-	print("Page Gen")
 	local pageLen = #self.cl.filteredPages[num]
 	for i = 1, 32 do
 		self.cl.gui:setVisible("Item_" .. tostring(i), true)
@@ -152,8 +151,6 @@ function Shop:gui_filter(category, tier)
 	if category == "All" then
 		for i, v in pairs(self.cl.itemPages) do
 			for _, v in pairs(v) do
-				print(tier)
-				print(v.tier)
 				if tier == 0 and true or (v.tier == tier) then
 					table.insert(self.cl.filteredPages[page], v)
 				end
