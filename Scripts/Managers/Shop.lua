@@ -137,7 +137,7 @@ function Shop:tierChange(optionName)
 		return
 	end
 	---@type number
-	local tier = tonumber(optionName.sub(string.reverse(optionName), 1, 2))
+	local tier = tonumber(optionName.sub(optionName, #(language_tag("Tier") .. " : "), #optionName))
 	self.cl.tier = tier
 	self:gui_filter(self.cl.category, self.cl.tier)
 	self:gen_page(self.cl.curPage)
