@@ -33,8 +33,8 @@ function Furnace:server_onCreate()
         if g_research_furnace then
             self.sv.saved.research = nil
             self.storage:save(self.sv.saved)
-        else
-            g_research_furnace = self
+        elseif self.sv.saved.research then
+            g_research_furnace = self.interactable
             self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
         end
     end
