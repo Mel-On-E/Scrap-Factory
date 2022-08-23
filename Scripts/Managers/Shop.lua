@@ -75,8 +75,6 @@ function Shop:client_onCreate()
 	for i = 1, 32 do
 		self.cl.gui:setButtonCallback("Item_" .. i, "changeItem")
 	end
-
-	self:changeQuantity("Buy_x1")
 end
 
 function Shop:gen_page(num)
@@ -215,6 +213,8 @@ end
 
 ---@param wigetName string
 function Shop:changeQuantity(wigetName)
+	sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "Button on")
+
 	self.cl.gui:setButtonState("Buy_x" .. tostring(self.cl.quantity), false)
 	self.cl.gui:setText("Buy_x" .. tostring(self.cl.quantity), "#ffffffx" .. self.cl.quantity)
 	---@diagnostic disable-next-line: assign-type-mismatch
@@ -246,16 +246,22 @@ function Shop:sv_buyItem(params, player)
 	if MoneyManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem",
 			{ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
+			self.network:sendToClient(player, "cl_moneyCheck", true)
 	else
-		self.network:sendToClient(player, "cl_notEnoughMoney")
+		self.network:sendToClient(player, "cl_moneyCheck", false)
 	end
 end
 
-function Shop:cl_notEnoughMoney()
-	if self.cl.gui then
-		self.cl.gui:setVisible("OutOfMoney", true)
-		self.cl.clearWarning = sm.game.getCurrentTick() + 40 * 2.5
-		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
+function Shop:cl_moneyCheck(success)
+	if success then
+		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playEffect", {effect = "Nice Sound", pos = sm.vec3.zero()})
+		self.cl.clearWarning = sm.game.getCurrentTick()
+	else
+		if self.cl.gui then
+			self.cl.gui:setVisible("OutOfMoney", true)
+			self.cl.clearWarning = sm.game.getCurrentTick() + 40 * 2.5
+			sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
+		end
 	end
 end
 
