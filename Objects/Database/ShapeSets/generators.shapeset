@@ -64,7 +64,7 @@
 			"uuid": "daf6f4c4-5402-4fa3-93f4-3180243c8a3c",
 			"shop": {
 				"tier": 1,
-				"price": 150,
+				"price": "150",
 				"category": "Generators"
 			}
 		},
@@ -141,7 +141,7 @@
 			"uuid": "efc10452-8461-44c5-8c21-a06d5aaea16c",
 			"shop": {
 				"tier": 1,
-				"price": 200,
+				"price": "200",
 				"category": "Generators"
 			}
 		},
@@ -188,7 +188,7 @@
 			"uuid": "efc1f452-8431-44c5-8c21-a06d53aed16c",
 			"shop": {
 				"tier": 1,
-				"price": 500,
+				"price": "500",
 				"category": "Generators"
 			}
 		}

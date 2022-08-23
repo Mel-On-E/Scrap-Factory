@@ -1,109 +1,72 @@
 {
-	//DROPPERS
-
-	//obj_dropper_scrap_wood
-	"692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
-		"price": 20,
-		"category": "Droppers",
-		"tier": 0
-	},
-	//obj_dropper_scrap_wood_auto
-	"632a52bd-0791-49ba-b1ef-c81adfdceba7": {
-		"price": 200,
-		"category": "Droppers",
-		"tier": 0
-	},
-
-	//Upgraders
-
-	//obj_upgrader_basic
-	"69b869f1-03dc-4ea2-9391-fd24903945d1": {
-		"price": 100,
-		"category": "Upgrades",
-		"tier": 0
-	},
-	//obj_upgrader_toilet
-	"e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
-		"price": 500,
-		"category": "Upgrades",
-		"tier": 0
-	},
-	//obj_upgrader_random
-	"17de8088-d5a8-45b1-80eb-1d0688a8c39a": {
-		"price": 1500,
-		"category": "Upgrades",
-		"tier": 1
-	},
-	//obj_upgrader_tp_random
-	"a8a06b6e-4152-4527-9602-dd231c5a1cab": {
-		"price": 5000,
-		"category": "Upgrades",
-		"tier": 1
-	},
-
-	//FURNACES
-
-	//obj_furnace_basic
-	"7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
-		"price": 100,
-		"category": "Furnaces",
-		"tier": 0
-	},
-	//obj_furnace_2x
-	"3039176f-dea8-453d-82be-2c73a68ad05f": {
-		"price": 10000,
-		"category": "Furnaces",
-		"tier": 1
-	},
-	//obj_furnace_lunar
-	"e0587c21-2145-4ee1-beaa-d33ca3407c61": {
-		"price": 50000,
-		"category": "Furnaces",
-		"tier": 1
-	},
-
-	//GENERATORS
-
-	//obj_generator_windmill
-	"daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
-		"price": 150,
-		"category": "Generators",
-		"tier": 0
-	},
-	//obj_generator_solar
-	"efc10452-8461-44c5-8c21-a06d5aaea16c": {
-		"price": 200,
-		"category": "Generators",
-		"tier": 0
-	},
-	//obj_storage_battery
-	"91037f2c-5230-464b-8873-ad13355539af": {
-		"price": 100,
-		"category": "Generators",
-		"tier": 0
-	},
-	//obj_generator_campfire
-	"efc1f452-8431-44c5-8c21-a06d53aed16c": {
-		"price": 500,
-		"category": "Generators",
-		"tier": 0
-	},
-
-	//UTILITIES
-
-	//obj_belt1_straight
 	"69b857f1-07dc-4ea2-9391-fd24903945d1": {
+		"tier": 1,
 		"price": 10,
-		"category": "Utilities",
-		"tier": 0
+		"category": "Utilities"
 	},
-
-	//DECOR
-
-	//obj_decor_babyduck
-	"80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": {
-		"price": 69,
-		"category": "Decor",
-		"tier": 0
+	"692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
+		"tier": 1,
+		"price": 20,
+		"category": "Droppers"
+	},
+	"632a52bd-0791-49ba-b1ef-c81adfdceba7": {
+		"tier": 1,
+		"price": 200,
+		"category": "Droppers"
+	},
+	"7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
+		"tier": 1,
+		"price": 100,
+		"category": "Furnaces"
+	},
+	"3039176f-dea8-453d-82be-2c73a68ad05f": {
+		"tier": 1,
+		"price": 10000,
+		"category": "Furnaces"
+	},
+	"e0587c21-2145-4ee1-beaa-d33ca3407c61": {
+		"tier": 1,
+		"price": 50000,
+		"category": "Furnaces"
+	},
+	"daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
+		"tier": 1,
+		"price": 150,
+		"category": "Generators"
+	},
+	"efc10452-8461-44c5-8c21-a06d5aaea16c": {
+		"tier": 1,
+		"price": 200,
+		"category": "Generators"
+	},
+	"efc1f452-8431-44c5-8c21-a06d53aed16c": {
+		"tier": 1,
+		"price": 500,
+		"category": "Generators"
+	},
+	"91037f2c-5230-464b-8873-ad13355539af": {
+		"tier": 1,
+		"price": 100,
+		"category": "Generators"
+	},
+	"69b869f1-03dc-4ea2-9391-fd24903945d1": {
+		"tier": 1,
+		"price": 100,
+		"category": "Upgrades"
+	},
+	"17de8088-d5a8-45b1-80eb-1d0688a8c39a": {
+		"tier": 1,
+		"price": 1500,
+		"category": "Upgrades"
+	},
+	"e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
+		"tier": 1,
+		"price": 500,
+		"category": "Upgrades"
+	},
+	"a8a06b6e-4152-4527-9602-dd231c5a1cab": {
+		"tier": 1,
+		"price": 5000,
+		"category": "Upgrades"
 	}
 }

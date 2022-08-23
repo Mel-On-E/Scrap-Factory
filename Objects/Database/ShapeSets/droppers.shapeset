@@ -35,7 +35,7 @@
 			"uuid": "692a5ebd-0793-49ba-b1ef-681a8fdceba7",
 			"shop": {
 				"tier": 1,
-				"price": 20,
+				"price": "20",
 				"category": "Droppers"
 			}
 		},
@@ -75,7 +75,7 @@
 			"uuid": "632a52bd-0791-49ba-b1ef-c81adfdceba7",
 			"shop": {
 				"tier": 1,
-				"price": 200,
+				"price": "200",
 				"category": "Droppers"
 			}
 		}

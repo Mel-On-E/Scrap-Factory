@@ -74,7 +74,7 @@
 			"uuid": "7e3df19b-2450-44ae-ad46-d2f6b5148cbf",
 			"shop": {
 				"tier": 1,
-				"price": 100,
+				"price": "100",
 				"category": "Furnaces"
 			}
 		},
@@ -152,7 +152,7 @@
 			"uuid": "3039176f-dea8-453d-82be-2c73a68ad05f",
 			"shop": {
 				"tier": 1,
-				"price": 10000,
+				"price": "10000",
 				"category": "Furnaces"
 			}
 		},
@@ -231,7 +231,7 @@
 			"uuid": "e0587c21-2145-4ee1-beaa-d33ca3407c61",
 			"shop": {
 				"tier": 1,
-				"price": 50000,
+				"price": "50000",
 				"category": "Furnaces"
 			}
 		}
