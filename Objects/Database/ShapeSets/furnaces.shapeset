@@ -73,7 +73,7 @@
 			"sticky": "-Y",
 			"uuid": "7e3df19b-2450-44ae-ad46-d2f6b5148cbf",
 			"shop": {
-				"tier": 1,
+				"tier": 0,
 				"price": "100",
 				"category": "Furnaces"
 			}

@@ -80,7 +80,7 @@
 			"shop": {
 				"price": "100",
 				"category": "Upgrades",
-				"tier": 1
+				"tier": 0
 			}
 		},
 		{
@@ -214,7 +214,7 @@
 			"shop": {
 				"price": "500",
 				"category": "Upgrades",
-				"tier": 1
+				"tier": 0
 			}
 		},
 		{
