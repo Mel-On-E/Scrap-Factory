@@ -1,60 +1,57 @@
 {
-    //DailyRewards
-    "DailyRewardTitle": "Daily Rewards",
-    "ClaimDailyReward": "Claim Reward",
-    "DailyRewardDay": "Day %s",
+	//DailyRewards
+	"DailyRewardTitle": "Daily Rewards",
+	"ClaimDailyReward": "Claim Reward",
+	"DailyRewardDay": "Day %s",
 
+	//Energy System
+	"PowerCapacity": "Capacity: ",
+	"PowerOutput": "Producing: ",
 
-    //Energy System
-    "PowerCapacity": "Capacity: ",
-    "PowerOutput": "Producing: ",
+	//Money & Shop
+	"Sell": "Sell",
+	"Buy": "Buy",
+	"OutOfMoney": "#ff0000Not enough money!",
+	"ShopTitle": "SHOP",
+	"Shop": "Shop",
+	"AllTab": "All",
+	"DroppersTab": "Droppers",
+	"UpgradesTab": "Upgraders",
+	"FurnacesTab": "Furnaces",
+	"UtilitiesTab": "Utilities",
+	"GeneratorsTab": "Generators",
+	"DecorTab": "Decor",
+	"NewMaxSellQuantity": "Maximum Sell Quantity: ",
+	"OreValue": "Value: ",
+	"SortHighest": "Sort from highest",
+	"SortLowest": "Sort from lowest",
+	"Tier": "Tier",
+	"FilterBy": "Filter by (no tier)",
 
+	//Research
+	"SetResearchFurnace": "Set Research Furnace",
+	"ResearchFurnaceSet": "Research Furnace Set",
+	"ResearchFurnaceRemoved": "Research Furnace Removed",
+	"ResearchTier": "Tier ",
+	"ResearchUnlocks": "Unlocks",
+	"ResearchFinished": "Tier %s Reseached!",
+	"RsearchUnlockItem": "Unlocked: ",
+	"Research": "Research",
 
-    //Money & Shop
-    "Sell": "Sell",
-    "Buy": "Buy",
-    "OutOfMoney": "#ff0000Not enough money!",
-    "ShopTitle": "SHOP",
-    "Shop": "Shop",
-    "AllTab": "All",
-    "DroppersTab": "Droppers",
-    "UpgradesTab": "Upgraders",
-    "FurnacesTab": "Furnaces",
-    "UtilitiesTab": "Utilities",
-    "GeneratorsTab": "Generators",
-    "DecorTab": "Decor",
-    "NewMaxSellQuantity": "Maximum Sell Quantity: ",
-    "OreValue": "Value: ",
+	//Tiers
+	"DescTier1": "This is quite a long description so we can test if the text actually wraps. Now the real research is this text. But feel free to sell this crap or whatever.",
+	"DescTier2": "Ducks. Everyone likes ducks. You should too! They are really nice. Also they cost $69 in the store lol",
 
+	//Prestige
+	"Prestige": "Prestige",
 
-    //Research
-    "SetResearchFurnace": "Set Research Furnace",
-    "ResearchFurnaceSet": "Research Furnace Set",
-    "ResearchFurnaceRemoved": "Research Furnace Removed",
-    "ResearchTier": "Tier ",
-    "ResearchUnlocks": "Unlocks",
-    "ResearchFinished": "Tier %s Reseached!",
-    "RsearchUnlockItem": "Unlocked: ",
-    "Research": "Research",
+	//Clear Ores
+	"ClearOresTitle": "Clear All Ores?",
+	"ClearOresMessage": "You sure, bro?",
+	"ClearOresTutorialTitle": "How to Clear Ores",
+	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
 
-
-    //Tiers
-    "DescTier1": "This is quite a long description so we can test if the text actually wraps. Now the real research is this text. But feel free to sell this crap or whatever.",
-    "DescTier2": "Ducks. Everyone likes ducks. You should too! They are really nice. Also they cost $69 in the store lol",
-
-
-    //Prestige
-    "Prestige": "Prestige",
-
-
-    //Clear Ores
-    "ClearOresTitle": "Clear All Ores?",
-    "ClearOresMessage": "You sure, bro?",
-    "ClearOresTutorialTitle": "How to Clear Ores",
-    "ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
-
-
-    //Other
-    "DismissTutorial": "Press \"%s\" to dismiss",
-    "RaidWarning": "Unauthorized Factory Detected!"
+	//Other
+	"DismissTutorial": "Press \"%s\" to dismiss",
+	"RaidWarning": "Unauthorized Factory Detected!"
 }

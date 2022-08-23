@@ -1,5 +1,4 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
 ---@class page
@@ -68,9 +67,9 @@ function Shop:client_onCreate()
 	self.cl.gui:setButtonCallback("NextPage", "changePage")
 	self.cl.gui:setButtonCallback("LastPage", "changePage")
 	self.cl.gui:setButtonCallback("SortBtn", "changeSort")
-	local tiers = { "Filter by (no tier)" }
+	local tiers = { language_tag("FilterBy") }
 	for i = 0, ResearchManager.cl_getTierCount() do
-		table.insert(tiers, "Tier: " .. tostring(i))
+		table.insert(tiers, language_tag("Tier") .. " : " .. tostring(i))
 	end
 
 	self.cl.gui:createDropDown("DropDown", "tierChange", tiers)
@@ -99,7 +98,7 @@ end
 
 function Shop:changeSort()
 	self.cl.sortHighest = not self.cl.sortHighest
-	self.cl.gui:setText("SortText", self.cl.sortHighest and "Sort from highest" or "Sort from lowest")
+	self.cl.gui:setText("SortText", self.cl.sortHighest and language_tag("SortHighest") or language_tag("SortLowest"))
 
 	local tier = ResearchManager.cl_getCurrentTier()
 	local pages = {}
@@ -130,8 +129,8 @@ end
 
 ---@param optionName string
 function Shop:tierChange(optionName)
-	if optionName == "Filter by (no tier)" then
-		self.cl.tier = 0
+	if optionName == language_tag("FilterBy") then
+		self.cl.tier = -1
 		self:gui_filter(self.cl.category, self.cl.tier)
 		self:gen_page(self.cl.curPage)
 		self:changeItem("Item_1")
@@ -153,7 +152,7 @@ function Shop:gui_filter(category, tier)
 	if category == "All" then
 		for i, v in pairs(self.cl.itemPages) do
 			for _, v in pairs(v) do
-				if tier == 0 and true or (v.tier == tier) then
+				if tier == -1 and true or (v.tier == tier) then
 					table.insert(self.cl.filteredPages[page], v)
 				end
 			end
@@ -285,9 +284,9 @@ function Shop.cl_e_open_gui()
 	g_cl_shop.cl.gui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
 	g_cl_shop.cl.gui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
 	g_cl_shop.cl.gui:setText("DecorTab", language_tag("DecorTab"))
-
-
-
+	g_cl_shop.cl.gui:setText("DecorTab", language_tag("DecorTab"))
+	g_cl_shop.cl.gui:setText("SortText",
+		g_cl_shop.cl.sortHighest and language_tag("SortHighest") or language_tag("SortLowest"))
 
 	g_cl_shop.cl.itemPages = { {} }
 	g_cl_shop.cl.filteredPages = { {} }
