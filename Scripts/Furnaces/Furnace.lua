@@ -13,6 +13,8 @@ Furnace.connectionOutput = sm.interactable.connectionType.none
 Furnace.colorNormal = sm.color.new( 0x8000ddff )
 Furnace.colorHighlight = sm.color.new( 0x8000ffff )
 
+local cl_research_Effect
+
 function Furnace:server_onCreate()
     local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
@@ -33,6 +35,7 @@ function Furnace:server_onCreate()
             self.storage:save(self.sv.saved)
         else
             g_research_furnace = self
+            self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
         end
     end
 end
@@ -79,7 +82,7 @@ function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, pl
         self.sv.saved.research = true
         self.storage:save(self.sv.saved)
 
-        if g_research_furnace and type(g_research_furnace) == "Interactable" then
+        if g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace) then
             sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
         end
         g_research_furnace = self.interactable
@@ -91,6 +94,7 @@ function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, pl
 
         g_research_furnace = nil
     end
+    self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
 end
 
 function Furnace:sv_removeResearch()
@@ -110,6 +114,21 @@ function Furnace:client_onCreate()
     self.effect:setOffsetPosition(offset)
 	self.effect:start()
     ]]
+end
+
+function Furnace:cl_toggle_effect(active)
+    if cl_research_Effect then
+        cl_research_Effect:destroy()
+    end
+
+    cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y*6, self.data.box.z)
+    cl_research_Effect:setScale(size/18)
+    local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
+    cl_research_Effect:setOffsetPosition(offset)
+    if active then
+        cl_research_Effect:start()
+    end
 end
 
 function Furnace:client_canInteract()
