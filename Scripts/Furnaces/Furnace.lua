@@ -51,6 +51,7 @@ function Furnace:sv_onEnter(trigger, results)
             if not data or not data.value then goto continue end
 
             local value = self:sv_upgrade(shape)
+            data.value = value
 
 
             if self.sv.saved.research then
