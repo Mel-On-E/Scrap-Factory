@@ -40,6 +40,7 @@ function Shop:client_onCreate()
 	Interface.cient_onCreate(self, params)
 
 	self.cl.sortHighest = false
+
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
 	self.cl.curPage = 1
@@ -104,7 +105,7 @@ function Shop:changeSort()
 	self.cl.itemPages = { {} }
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
+			table.insert(pages, { uuid = k, price = tonumber(v.price), category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)
@@ -243,7 +244,7 @@ function Shop:sv_buyItem(params, player)
 	if MoneyManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem",
 			{ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
-			self.network:sendToClient(player, "cl_moneyCheck", true)
+		self.network:sendToClient(player, "cl_moneyCheck", true)
 	else
 		self.network:sendToClient(player, "cl_moneyCheck", false)
 	end
@@ -251,7 +252,7 @@ end
 
 function Shop:cl_moneyCheck(success)
 	if success then
-		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playEffect", {effect = "Nice Sound", pos = sm.vec3.zero()})
+		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playEffect", { effect = "Nice Sound", pos = sm.vec3.zero() })
 		self.cl.clearWarning = sm.game.getCurrentTick()
 	else
 		if self.cl.gui then
@@ -294,7 +295,7 @@ function Shop.cl_e_open_gui()
 	local pages = {}
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
+			table.insert(pages, { uuid = k, price = tonumber(v.price), category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)
