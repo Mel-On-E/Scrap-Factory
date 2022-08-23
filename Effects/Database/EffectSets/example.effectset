@@ -15,5 +15,15 @@
 				"delay": 0.0
 			}
 		]
+	},
+	"Nice Sound":{
+		"effectList":[
+			{
+				"type": "audio",
+				"name": "event:/ui/item_pickup",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"delay": 0.0
+			}
+		]
 	}
 }
