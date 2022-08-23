@@ -53,7 +53,7 @@ end
 function DailyRewardManager:client_onFixedUpdate()
     if self.gui and self.gui:isActive() and self.playEffect and sm.localPlayer.getPlayer().character then
         local player = sm.localPlayer.getPlayer()
-        sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "DailyReward", effect = "CelebrationBot - Audio", host = player:getCharacter()})
+        sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "DailyReward", effect = "Confetti", host = player:getCharacter()})
         sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
         self.playEffect = false
     end
