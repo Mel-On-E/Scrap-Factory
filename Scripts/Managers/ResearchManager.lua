@@ -102,6 +102,11 @@ function ResearchManager:client_onFixedUpdate()
 		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid) )
         g_factoryHud:setText( "Research","#00dddd" .. self.cl.progress .. "%")
 	end
+
+    if self.cl.endEffect and self.cl.endEffect < sm.game.getCurrentTick() then
+        self.cl.endEffect = nil
+        sm.event.sendToPlayer(player, "cl_e_destroyEffect", "ResearchDone")
+    end
 end
 
 function ResearchManager:cl_research_done(tier)
@@ -110,9 +115,14 @@ function ResearchManager:cl_research_done(tier)
     for _, uuid in ipairs(unlocks) do
         sm.gui.chatMessage(language_tag("RsearchUnlockItem") .. "#00dddd" .. sm.shape.getShapeTitle(sm.uuid.new(uuid)))
     end
-    
+
     Shop.cl_close()
     Research.cl_close()
+
+    player = sm.localPlayer.getPlayer()
+    sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "ResearchDone", effect = "ResearchDone", host = player:getCharacter()})
+    sm.event.sendToPlayer(player, "cl_e_startEffect", "ResearchDone")
+    self.cl.endEffect = sm.game.getCurrentTick() + 40*16
 end
 
 function ResearchManager.cl_getCurrentTier()

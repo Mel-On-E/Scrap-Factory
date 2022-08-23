@@ -25,5 +25,20 @@
 				"delay": 0.0
 			}
 		]
+	},
+	"ResearchDone":{
+		"effectList":[
+			{
+				"type": "particle",
+				"name": "p_challengemode_confetti",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"direction" : { "x": 0.0, "y": 1.0, "z": 0.0 }
+			},
+			{
+				"type": "audio",
+				"name": "event:/char/npc/bots/confettibot",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 }
+			}
+		]
 	}
 }
