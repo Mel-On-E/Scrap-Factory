@@ -1,4 +1,5 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
 ---@class page
@@ -68,7 +69,7 @@ function Shop:client_onCreate()
 	self.cl.gui:setButtonCallback("LastPage", "changePage")
 	self.cl.gui:setButtonCallback("SortBtn", "changeSort")
 	local tiers = { "Filter by (no tier)" }
-	for i = 1, ResearchManager.cl_getTierCount() do
+	for i = 0, ResearchManager.cl_getTierCount() do
 		table.insert(tiers, "Tier: " .. tostring(i))
 	end
 
