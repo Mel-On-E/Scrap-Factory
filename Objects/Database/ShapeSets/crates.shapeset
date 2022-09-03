@@ -16,32 +16,35 @@
             "durability" : 6,
             "friction" : 5
          },
-         "renderable": {
-				"lodList": [
-					{
-						"subMeshMap": {
-							"Lootbox": {  
-								"material": "DifAsgNor",
-								"textureList": [
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_dif.tga",
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
-								]
-							},
-							"lightcone_mat": {  
-								"material": "LightCone",
-								"textureList": [
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga", 
-									"",
-									""
-								]
-							}
-						},
-						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx"
-					}
-				]
-			},
-         "restitution" : 0.5,
+         "renderable" : {
+            "lodList" : [
+               {
+                  "mesh" : "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
+                  "subMeshMap" : {
+                     "Lootbox" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_dif.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+                        ]
+                     },
+                     "lightcone_mat" : {
+                        "material" : "LightCone",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
+                           "",
+                           ""
+                        ]
+                     }
+                  }
+               }
+            ]
+         },
+         "restitution" : 0.50,
+         "restrictions" : {
+            "liftable" : false
+         },
          "rotationSet" : "PropYNegYZ",
          "scripted" : {
             "classname" : "LootCrate",
@@ -66,32 +69,35 @@
             "durability" : 6,
             "friction" : 5
          },
-         "renderable": {
-				"lodList": [
-					{
-						"subMeshMap": {
-							"Lootbox": {  
-								"material": "DifAsgNor",
-								"textureList": [
-									"$CONTENT_DATA/Objects/Textures/Crates/rare_lootcrate_dif.tga",
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
-								]
-							},
-							"lightcone_mat": {  
-								"material": "LightCone",
-								"textureList": [
-									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga", 
-									"",
-									""
-								]
-							}
-						},
-						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx"
-					}
-				]
-			},
-         "restitution" : 0.5,
+         "renderable" : {
+            "lodList" : [
+               {
+                  "mesh" : "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
+                  "subMeshMap" : {
+                     "Lootbox" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Crates/rare_lootcrate_dif.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+                        ]
+                     },
+                     "lightcone_mat" : {
+                        "material" : "LightCone",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
+                           "",
+                           ""
+                        ]
+                     }
+                  }
+               }
+            ]
+         },
+         "restitution" : 0.50,
+         "restrictions" : {
+            "liftable" : false
+         },
          "rotationSet" : "PropYNegYZ",
          "scripted" : {
             "classname" : "RareLootCrate",
