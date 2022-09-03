@@ -3,7 +3,7 @@ dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/ElevatorManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/RespawnManager.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua") --FACTORY
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
