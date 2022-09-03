@@ -11,7 +11,7 @@ function LunarFurnace:sv_upgrade(shape)
     local value = shape.interactable.publicData.value
 
     local time = sm.storage.load(STORAGE_CHANNEL_TIME).timeOfDay
-    local night = time < 0.24 or time > 0.76
+    local night = time < sunRiseEnd or time > sunSetStart
     
     if night then
         if self.data.nightMultiplier then

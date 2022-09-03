@@ -23,6 +23,8 @@ end
 function UnitManager.cl_n_detected( self, msg )
 	sm.gui.displayAlertText( language_tag("RaidWarning"), 10 ) --FACTORY
 
+
+	--COPIED
 	local gui = sm.gui.createNameTagGui()
 	gui:setWorldPosition( msg.pos + sm.vec3.new( 0, 0, 0.5 ) )
 	gui:setRequireLineOfSight( false )
