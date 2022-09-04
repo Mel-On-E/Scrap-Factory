@@ -1,4 +1,4 @@
----@class SurvivalPlayer : PlayerClass
+---@class FactoryPlayer : PlayerClass
 
 dofile( "$GAME_DATA/Scripts/game/BasePlayer.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua" )
@@ -12,7 +12,7 @@ dofile( "$SURVIVAL_DATA/scripts/game/quest_util.lua" )
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
-SurvivalPlayer = class( BasePlayer )
+FactoryPlayer = class( BasePlayer )
 
 
 local StatsTickRate = 40
@@ -31,7 +31,7 @@ local RespawnEndDelay = 1.0 * 40
 
 local BaguetteSteps = 9
 
-function SurvivalPlayer.server_onCreate( self )
+function FactoryPlayer.server_onCreate( self )
 	self.sv = {}
 	self.sv.saved = self.storage:load()
 	self.sv.saved = self.sv.saved or {}
@@ -50,12 +50,12 @@ function SurvivalPlayer.server_onCreate( self )
 	self.network:setClientData( self.sv.saved )
 end
 
-function SurvivalPlayer.server_onRefresh( self )
+function FactoryPlayer.server_onRefresh( self )
 	self:sv_init()
 	self.network:setClientData( self.sv.saved )
 end
 
-function SurvivalPlayer.sv_init( self )
+function FactoryPlayer.sv_init( self )
 	BasePlayer.sv_init( self )
 
 	self.sv.statsTimer = Timer()
@@ -64,7 +64,7 @@ function SurvivalPlayer.sv_init( self )
 	self.sv.spawnparams = {}
 end
 
-function SurvivalPlayer.client_onCreate( self )
+function FactoryPlayer.client_onCreate( self )
 	BasePlayer.client_onCreate( self )
 	self.cl = self.cl or {}
 	if self.player == sm.localPlayer.getPlayer() then
@@ -82,7 +82,7 @@ function SurvivalPlayer.client_onCreate( self )
 	self:cl_init()
 end
 
-function SurvivalPlayer.client_onRefresh( self )
+function FactoryPlayer.client_onRefresh( self )
 	self:cl_init()
 
 	sm.gui.hideGui( false )
@@ -90,7 +90,7 @@ function SurvivalPlayer.client_onRefresh( self )
 	sm.localPlayer.setLockedControls( false )
 end
 
-function SurvivalPlayer.cl_init( self )
+function FactoryPlayer.cl_init( self )
 	self.useCutsceneCamera = false
 	self.progress = 0
 	self.nodeIndex = 1
@@ -99,7 +99,7 @@ function SurvivalPlayer.cl_init( self )
 	self.cl.revivalChewCount = 0
 end
 
-function SurvivalPlayer.client_onClientDataUpdate( self, data )
+function FactoryPlayer.client_onClientDataUpdate( self, data )
 	BasePlayer.client_onClientDataUpdate( self, data )
 	if sm.localPlayer.getPlayer() == self.player then
 
@@ -124,7 +124,7 @@ function SurvivalPlayer.client_onClientDataUpdate( self, data )
 	end
 end
 
-function SurvivalPlayer.cl_e_tryPickupItemTutorial( self )
+function FactoryPlayer.cl_e_tryPickupItemTutorial( self )
 	if not g_disableTutorialHints then
 		if not self.cl.tutorialsWatched["pickupitem"] then
 			if not self.cl.tutorialGui then
@@ -141,19 +141,19 @@ function SurvivalPlayer.cl_e_tryPickupItemTutorial( self )
 	end
 end
 
-function SurvivalPlayer.cl_onCloseTutorialPickupItemGui( self )
+function FactoryPlayer.cl_onCloseTutorialPickupItemGui( self )
 	self.cl.tutorialsWatched["pickupitem"] = true
 	self.network:sendToServer( "sv_e_watchedTutorial", { tutorialKey = "pickupitem" } )
 	self.cl.tutorialGui = nil
 end
 
-function SurvivalPlayer.sv_e_watchedTutorial( self, params, player )
+function FactoryPlayer.sv_e_watchedTutorial( self, params, player )
 	self.sv.saved.tutorialsWatched[params.tutorialKey] = true
 	self.storage:save( self.sv.saved )
 	self.network:setClientData( self.sv.saved )
 end
 
-function SurvivalPlayer.cl_localPlayerUpdate( self, dt )
+function FactoryPlayer.cl_localPlayerUpdate( self, dt )
 	BasePlayer.cl_localPlayerUpdate( self, dt )
 	self:cl_updateCamera( dt )
 
@@ -172,7 +172,7 @@ function SurvivalPlayer.cl_localPlayerUpdate( self, dt )
 	end
 end
 
-function SurvivalPlayer.client_onInteract( self, character, state )
+function FactoryPlayer.client_onInteract( self, character, state )
 	if state == true then
 
 		--self:cl_startCutscene( { effectName = "DollyZoomCutscene", worldPosition = character.worldPosition, worldRotation = sm.quat.identity() } )
@@ -201,7 +201,7 @@ function SurvivalPlayer.client_onInteract( self, character, state )
 	end
 end
 
-function SurvivalPlayer.server_onFixedUpdate( self, dt )
+function FactoryPlayer.server_onFixedUpdate( self, dt )
 	BasePlayer.server_onFixedUpdate( self, dt )
 
 	if g_survivalDev and not self.sv.saved.isConscious and not self.sv.saved.hasRevivalItem then
@@ -260,7 +260,7 @@ function SurvivalPlayer.server_onFixedUpdate( self, dt )
 	end
 end
 
-function SurvivalPlayer.server_onInventoryChanges( self, container, changes )
+function FactoryPlayer.server_onInventoryChanges( self, container, changes )
 	QuestManager.Sv_OnEvent( QuestEvent.InventoryChanges, { container = container, changes = changes } )
 
 	local obj_interactive_builderguide = sm.uuid.new( "e83a22c5-8783-413f-a199-46bc30ca8dac" )
@@ -277,11 +277,11 @@ function SurvivalPlayer.server_onInventoryChanges( self, container, changes )
 			
 end
 
-function SurvivalPlayer.sv_e_staminaSpend( self, stamina )
+function FactoryPlayer.sv_e_staminaSpend( self, stamina )
 	return
 end
 
-function SurvivalPlayer.sv_takeDamage( self, damage, source )
+function FactoryPlayer.sv_takeDamage( self, damage, source )
 	if damage > 0 then
 		damage = damage * GetDifficultySettings().playerTakeDamageMultiplier
 		local character = self.player:getCharacter()
@@ -294,7 +294,7 @@ function SurvivalPlayer.sv_takeDamage( self, damage, source )
 			if self.sv.saved.isConscious then
 				self.sv.saved.stats.hp = math.max( self.sv.saved.stats.hp - damage, 0 )
 
-				print( "'SurvivalPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP" )
+				print( "'FactoryPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP" )
 
 				if source then
 					self.network:sendToClients( "cl_n_onEvent", { event = source, pos = character:getWorldPosition(), damage = damage * 0.01 } )
@@ -303,7 +303,7 @@ function SurvivalPlayer.sv_takeDamage( self, damage, source )
 				end
 
 				if self.sv.saved.stats.hp <= 0 then
-					print( "'SurvivalPlayer' knocked out!" )
+					print( "'FactoryPlayer' knocked out!" )
 					self.sv.respawnInteractionAttempted = false
 					self.sv.saved.isConscious = false
 					character:setTumbling( true )
@@ -314,15 +314,15 @@ function SurvivalPlayer.sv_takeDamage( self, damage, source )
 				self.network:setClientData( self.sv.saved )
 			end
 		else
-			print( "'SurvivalPlayer' resisted", damage, "damage" )
+			print( "'FactoryPlayer' resisted", damage, "damage" )
 		end
 	end
 end
 
-function SurvivalPlayer.sv_n_revive( self )
+function FactoryPlayer.sv_n_revive( self )
 	local character = self.player:getCharacter()
 	if not self.sv.saved.isConscious and self.sv.saved.hasRevivalItem and not self.sv.spawnparams.respawn then
-		print( "SurvivalPlayer", self.player.id, "revived" )
+		print( "FactoryPlayer", self.player.id, "revived" )
 		self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
 		self.sv.saved.isConscious = true
 		self.sv.saved.hasRevivalItem = false
@@ -338,7 +338,7 @@ function SurvivalPlayer.sv_n_revive( self )
 	end
 end
 
-function SurvivalPlayer.sv_e_respawn( self )
+function FactoryPlayer.sv_e_respawn( self )
 	if self.sv.spawnparams.respawn then
 		if not self.sv.respawnTimeoutTimer then
 			self.sv.respawnTimeoutTimer = Timer()
@@ -352,11 +352,11 @@ function SurvivalPlayer.sv_e_respawn( self )
 
 		sm.event.sendToGame( "sv_e_respawn", { player = self.player } )
 	else
-		print( "SurvivalPlayer must be unconscious to respawn" )
+		print( "FactoryPlayer must be unconscious to respawn" )
 	end
 end
 
-function SurvivalPlayer.sv_n_tryRespawn( self )
+function FactoryPlayer.sv_n_tryRespawn( self )
 	if not self.sv.saved.isConscious and not self.sv.respawnDelayTimer and not self.sv.respawnInteractionAttempted then
 		self.sv.respawnInteractionAttempted = true
 		self.sv.respawnEndTimer = nil;
@@ -367,7 +367,7 @@ function SurvivalPlayer.sv_n_tryRespawn( self )
 	end
 end
 
-function SurvivalPlayer.sv_e_onSpawnCharacter( self )
+function FactoryPlayer.sv_e_onSpawnCharacter( self )
 	if self.sv.saved.isNewPlayer then
 		-- Intro cutscene for new player
 		if not g_survivalDev then
@@ -389,7 +389,7 @@ function SurvivalPlayer.sv_e_onSpawnCharacter( self )
 	end
 
 	if self.sv.saved.isNewPlayer or self.sv.spawnparams.respawn then
-		print( "SurvivalPlayer", self.player.id, "spawned" )
+		print( "FactoryPlayer", self.player.id, "spawned" )
 		if self.sv.saved.isNewPlayer then
 			self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
 		else
@@ -405,7 +405,7 @@ function SurvivalPlayer.sv_e_onSpawnCharacter( self )
 		self.player.character:setDowned( false )
 		self.sv.damageCooldown:start( 40 )
 	else
-		-- SurvivalPlayer rejoined the game
+		-- FactoryPlayer rejoined the game
 		if self.sv.saved.stats.hp <= 0 or not self.sv.saved.isConscious then
 			self.player.character:setTumbling( true )
 			self.player.character:setDowned( true )
@@ -420,7 +420,7 @@ function SurvivalPlayer.sv_e_onSpawnCharacter( self )
 	sm.event.sendToGame( "sv_e_onSpawnPlayerCharacter", self.player )
 end
 
-function SurvivalPlayer.cl_n_onInventoryChanges( self, params )
+function FactoryPlayer.cl_n_onInventoryChanges( self, params )
 	if params.container == sm.localPlayer.getInventory() then
 		for i, item in ipairs( params.changes ) do
 			if item.difference > 0 then
@@ -430,13 +430,13 @@ function SurvivalPlayer.cl_n_onInventoryChanges( self, params )
 	end
 end
 
-function SurvivalPlayer.cl_seatCharacter( self, params )
+function FactoryPlayer.cl_seatCharacter( self, params )
 	if sm.exists( params.shape ) then
 		params.shape.interactable:setSeatCharacter( self.player.character )
 	end
 end
 
-function SurvivalPlayer.sv_e_debug( self, params )
+function FactoryPlayer.sv_e_debug( self, params )
 	if params.hp then
 		self.sv.saved.stats.hp = params.hp
 	end
@@ -444,7 +444,7 @@ function SurvivalPlayer.sv_e_debug( self, params )
 	self.network:setClientData( self.sv.saved )
 end
 
-function SurvivalPlayer.sv_e_eat( self, edibleParams )
+function FactoryPlayer.sv_e_eat( self, edibleParams )
 	if edibleParams.hpGain then
 		self:sv_restoreHealth( edibleParams.hpGain )
 	end
@@ -452,7 +452,7 @@ function SurvivalPlayer.sv_e_eat( self, edibleParams )
 	self.network:setClientData( self.sv.saved )
 end
 
-function SurvivalPlayer.sv_e_feed( self, params )
+function FactoryPlayer.sv_e_feed( self, params )
 	if not self.sv.saved.isConscious and not self.sv.saved.hasRevivalItem then
 		if sm.container.beginTransaction() then
 			sm.container.spend( params.playerInventory, params.foodUuid, 1, true )
@@ -465,15 +465,15 @@ function SurvivalPlayer.sv_e_feed( self, params )
 	end
 end
 
-function SurvivalPlayer.sv_restoreHealth( self, health )
+function FactoryPlayer.sv_restoreHealth( self, health )
 	if self.sv.saved.isConscious then
 		self.sv.saved.stats.hp = self.sv.saved.stats.hp + health
 		self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp, self.sv.saved.stats.maxhp )
-		print( "'SurvivalPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP" )
+		print( "'FactoryPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP" )
 	end
 end
 
-function SurvivalPlayer.server_onShapeRemoved( self, removedShapes )
+function FactoryPlayer.server_onShapeRemoved( self, removedShapes )
 	--BasePlayer.server_onShapeRemoved( self, removedShapes )
 	local numParts = 0
 	local numBlocks = 0
@@ -498,7 +498,7 @@ end
 
 
 -- Camera
-function SurvivalPlayer.cl_updateCamera( self, dt )
+function FactoryPlayer.cl_updateCamera( self, dt )
 	if self.cl.cutsceneEffect then
 
 		local cutscenePos = self.cl.cutsceneEffect:getCameraPosition()
@@ -534,7 +534,7 @@ function SurvivalPlayer.cl_updateCamera( self, dt )
 	end
 end
 
-function SurvivalPlayer.cl_startCutscene( self, params )
+function FactoryPlayer.cl_startCutscene( self, params )
 	self.cl.cutsceneEffect = sm.effect.createEffect( params.effectName )
 	if params.worldPosition then
 		self.cl.cutsceneEffect:setPosition( params.worldPosition )
@@ -557,18 +557,18 @@ function SurvivalPlayer.cl_startCutscene( self, params )
 	--end
 end
 
-function SurvivalPlayer.sv_e_startCutscene( self, params )
+function FactoryPlayer.sv_e_startCutscene( self, params )
 	self.network:sendToClient( self.player, "cl_startCutscene", params )
 end
 
-function SurvivalPlayer.client_onCancel( self )
+function FactoryPlayer.client_onCancel( self )
 	BasePlayer.client_onCancel( self )
 	g_effectManager:cl_cancelAllCinematics()
 end
 
 
 --FACTORY
-function SurvivalPlayer:cl_e_drop_dropped()
+function FactoryPlayer:cl_e_drop_dropped()
 	if not self.cl.tutorialsWatched["oreDestroy"] then
 		if not self.cl.tutorialGui then
 			self.cl.tutorialGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true, { isHud = true, isInteractive = false, needsCursor = false } )
@@ -583,13 +583,13 @@ function SurvivalPlayer:cl_e_drop_dropped()
 	end
 end
 
-function SurvivalPlayer.cl_onCloseTutorialOreDestroyGui( self )
+function FactoryPlayer.cl_onCloseTutorialOreDestroyGui( self )
 	self.cl.tutorialsWatched["oreDestroy"] = true
 	self.network:sendToServer( "sv_e_watchedTutorial", { tutorialKey = "oreDestroy" } )
 	self.cl.tutorialGui = nil
 end
 
-function SurvivalPlayer:sv_destroyOre()
+function FactoryPlayer:sv_destroyOre()
 	for _, body in ipairs(sm.body.getAllBodies()) do
 		for _, shape in ipairs(body:getShapes()) do
 			local interactable = shape.interactable
@@ -604,14 +604,14 @@ function SurvivalPlayer:sv_destroyOre()
 	end
 end
 
-function SurvivalPlayer:cl_e_audio(effect)
+function FactoryPlayer:cl_e_audio(effect)
 	if sm.localPlayer.getPlayer():getCharacter() and (not self.lastPlay or sm.game.getCurrentTick() > self.lastPlay + 40) then
 		sm.audio.play(effect)
 		self.lastPlay = sm.game.getCurrentTick()
 	end
 end
 
-function SurvivalPlayer:client_onReload()
+function FactoryPlayer:client_onReload()
 	print("destroy ores?")
 	self.cl.confirmClearGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout" )
 	self.cl.confirmClearGui:setButtonCallback( "Yes", "cl_onClearConfirmButtonClick" )
@@ -621,7 +621,7 @@ function SurvivalPlayer:client_onReload()
 	self.cl.confirmClearGui:open()
 end
 
-function SurvivalPlayer:cl_onClearConfirmButtonClick(name)
+function FactoryPlayer:cl_onClearConfirmButtonClick(name)
 	if name == "Yes" then
 		self.network:sendToServer("sv_destroyOre")
 	end
@@ -634,29 +634,29 @@ end
 
 --Effects
 
-function SurvivalPlayer:cl_e_playAudio(name)
+function FactoryPlayer:cl_e_playAudio(name)
 	sm.audio.play(name)
 end
 
-function SurvivalPlayer:sv_e_playEffect(params)
+function FactoryPlayer:sv_e_playEffect(params)
 	self.network:sendToClients("cl_e_playEffect", params)
 end
 
-function SurvivalPlayer:cl_e_playEffect(params)
+function FactoryPlayer:cl_e_playEffect(params)
 	sm.effect.playEffect(params.effect, params.pos)
 end
 
-function SurvivalPlayer:cl_e_createEffect(params)
+function FactoryPlayer:cl_e_createEffect(params)
 	self.cl.effects[params.id] = sm.effect.createEffect(params.effect, params.host)
 end
 
-function SurvivalPlayer:cl_e_startEffect(id)
+function FactoryPlayer:cl_e_startEffect(id)
 	if self.cl.effects[id] and not self.cl.effects[id]:isPlaying() then
 		self.cl.effects[id]:start()
 	end
 end
 
-function SurvivalPlayer:cl_e_destroyEffect(id)
+function FactoryPlayer:cl_e_destroyEffect(id)
 	if self.cl.effects[id] then
 		self.cl.effects[id]:destroy()
 		self.cl.effects[id] = nil

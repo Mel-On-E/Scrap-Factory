@@ -25,17 +25,17 @@ dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
 
 
 
----@class SurvivalGame : GameClass
+---@class FactoryGame : GameClass
 ---@field sv table
 ---@field cl table
 ---@field warehouses table
-SurvivalGame = class(nil)
-SurvivalGame.enableLimitedInventory = true
-SurvivalGame.enableRestrictions = true
-SurvivalGame.enableFuelConsumption = false
-SurvivalGame.enableAmmoConsumption = false
-SurvivalGame.enableUpgrade = true
-SurvivalGame.defaultInventorySize = 1024
+FactoryGame = class(nil)
+FactoryGame.enableLimitedInventory = true
+FactoryGame.enableRestrictions = true
+FactoryGame.enableFuelConsumption = false
+FactoryGame.enableAmmoConsumption = false
+FactoryGame.enableUpgrade = true
+FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 local IntroFadeDuration = 1.1
@@ -50,8 +50,8 @@ local STORAGE_CHANNEL_POWERMANAGER = 70
 local STORAGE_CHANNEL_RESEARCHMANAGER = 71
 local STORAGE_CHANNEL_DAILYREWARDMANAGER = 72
 
-function SurvivalGame.server_onCreate(self)
-	print("SurvivalGame.server_onCreate")
+function FactoryGame.server_onCreate(self)
+	print("FactoryGame.server_onCreate")
 	self.sv = {}
 	self.sv.saved = self.storage:load()
 	print("Saved:", self.sv.saved)
@@ -73,7 +73,7 @@ function SurvivalGame.server_onCreate(self)
 	if self.sv.saved.data and self.sv.saved.data.dev then
 		g_godMode = true
 		g_survivalDev = true
-		sm.log.info("Starting SurvivalGame in DEV mode")
+		sm.log.info("Starting FactoryGame in DEV mode")
 	end
 
 	self:loadCraftingRecipes()
@@ -178,13 +178,13 @@ function SurvivalGame.server_onCreate(self)
 	end
 end
 
-function SurvivalGame.server_onRefresh(self)
+function FactoryGame.server_onRefresh(self)
 	g_craftingRecipes = nil
 	g_refineryRecipes = nil
 	self:loadCraftingRecipes()
 end
 
-function SurvivalGame.client_onCreate(self)
+function FactoryGame.client_onCreate(self)
 
 	self.cl = {}
 	self.cl.time = {}
@@ -237,7 +237,7 @@ function SurvivalGame.client_onCreate(self)
 	end
 end
 
-function SurvivalGame.bindChatCommands(self)
+function FactoryGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
@@ -282,7 +282,7 @@ function SurvivalGame.bindChatCommands(self)
 	end
 end
 
-function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
+function FactoryGame.client_onClientDataUpdate(self, clientData, channel)
 	if channel == 2 then
 		self.cl.time = clientData.time
 	elseif channel == 1 then
@@ -291,7 +291,7 @@ function SurvivalGame.client_onClientDataUpdate(self, clientData, channel)
 	end
 end
 
-function SurvivalGame.loadCraftingRecipes(self)
+function FactoryGame.loadCraftingRecipes(self)
 	LoadCraftingRecipes({
 		workbench = "$SURVIVAL_DATA/CraftingRecipes/workbench.json",
 		dispenser = "$SURVIVAL_DATA/CraftingRecipes/dispenser.json",
@@ -301,7 +301,7 @@ function SurvivalGame.loadCraftingRecipes(self)
 	})
 end
 
-function SurvivalGame.server_onFixedUpdate(self, timeStep)
+function FactoryGame.server_onFixedUpdate(self, timeStep)
 	-- Update time
 
 	local prevTime = self.sv.time.timeOfDay
@@ -348,11 +348,11 @@ function SurvivalGame.server_onFixedUpdate(self, timeStep)
 	end
 end
 
-function SurvivalGame.sv_updateClientData(self)
+function FactoryGame.sv_updateClientData(self)
 	self.network:setClientData({ time = self.sv.time }, 2)
 end
 
-function SurvivalGame.client_onUpdate(self, dt)
+function FactoryGame.client_onUpdate(self, dt)
 	-- Update time
 	if self.cl.time.timeProgress then
 		self.cl.time.timeOfDay = math.fmod(self.cl.time.timeOfDay + dt / DAYCYCLE_TIME, 1.0)
@@ -377,11 +377,11 @@ function SurvivalGame.client_onUpdate(self, dt)
 	sm.render.setOutdoorLighting(light)
 end
 
-function SurvivalGame.client_showMessage(self, msg)
+function FactoryGame.client_showMessage(self, msg)
 	sm.gui.chatMessage(msg)
 end
 
-function SurvivalGame.cl_onChatCommand(self, params)
+function FactoryGame.cl_onChatCommand(self, params)
 
 	local unitSpawnNames =
 	{
@@ -513,14 +513,14 @@ function SurvivalGame.cl_onChatCommand(self, params)
 	end
 end
 
-function SurvivalGame.sv_reloadCell(self, params, player)
+function FactoryGame.sv_reloadCell(self, params, player)
 	print("sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}")
 
 	self.sv.saved.overworld:loadCell(params.x, params.y, player)
 	self.network:sendToClients("cl_reloadCell", params)
 end
 
-function SurvivalGame.cl_reloadCell(self, params)
+function FactoryGame.cl_reloadCell(self, params)
 	print("cl_reloadCell reloading " .. params.x .. " : " .. params.y)
 	for x = -2, 2 do
 		for y = -2, 2 do
@@ -530,22 +530,22 @@ function SurvivalGame.cl_reloadCell(self, params)
 
 end
 
-function SurvivalGame.cl_reloadCellTestCallback(self, world, x, y, result)
+function FactoryGame.cl_reloadCellTestCallback(self, world, x, y, result)
 	print("cl_reloadCellTestCallback")
 	print("result = " .. result)
 end
 
-function SurvivalGame.sv_giveItem(self, params)
+function FactoryGame.sv_giveItem(self, params)
 	sm.container.beginTransaction()
 	sm.container.collect(params.player:getInventory(), params.item, params.quantity, false)
 	sm.container.endTransaction()
 end
 
-function SurvivalGame.cl_n_onJoined(self, params)
+function FactoryGame.cl_n_onJoined(self, params)
 	self.cl.playIntroCinematic = params.newPlayer
 end
 
-function SurvivalGame.client_onLoadingScreenLifted(self)
+function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
 	self.network:sendToServer("sv_n_loadingScreenLifted")
 	if self.cl.playIntroCinematic then
@@ -560,13 +560,13 @@ function SurvivalGame.client_onLoadingScreenLifted(self)
 	UnitManager.cl_setLoaded(g_unitManager, sm.game.getCurrentTick())
 end
 
-function SurvivalGame.sv_n_loadingScreenLifted(self, _, player)
+function FactoryGame.sv_n_loadingScreenLifted(self, _, player)
 	if not g_survivalDev then
 		QuestManager.Sv_TryActivateQuest("quest_tutorial")
 	end
 end
 
-function SurvivalGame.cl_onCinematicEvent(self, eventName, params)
+function FactoryGame.cl_onCinematicEvent(self, eventName, params)
 	local myPlayer = sm.localPlayer.getPlayer()
 	local myCharacter = myPlayer and myPlayer.character or nil
 	if eventName == "survivalstart01.dramatics_standup" then
@@ -580,33 +580,33 @@ function SurvivalGame.cl_onCinematicEvent(self, eventName, params)
 	end
 end
 
-function SurvivalGame.sv_switchGodMode(self)
+function FactoryGame.sv_switchGodMode(self)
 	g_godMode = not g_godMode
 	self.network:sendToClients("client_showMessage", "GODMODE: " .. (g_godMode and "On" or "Off"))
 end
 
-function SurvivalGame.sv_n_switchAggroMode(self, params)
+function FactoryGame.sv_n_switchAggroMode(self, params)
 	sm.game.setEnableAggro(params.aggroMode)
 	self.network:sendToClients("client_showMessage", "AGGRO: " .. (params.aggroMode and "On" or "Off"))
 end
 
-function SurvivalGame.sv_enableRestrictions(self, state)
+function FactoryGame.sv_enableRestrictions(self, state)
 	sm.game.setEnableRestrictions(state)
 	self.network:sendToClients("client_showMessage", (state and "Restricted" or "Unrestricted"))
 end
 
-function SurvivalGame.sv_setLimitedInventory(self, state)
+function FactoryGame.sv_setLimitedInventory(self, state)
 	sm.game.setLimitedInventory(state)
 	self.network:sendToClients("client_showMessage", (state and "Limited inventory" or "Unlimited inventory"))
 end
 
-function SurvivalGame.sv_ambush(self, params)
+function FactoryGame.sv_ambush(self, params)
 	if sm.exists(self.sv.saved.overworld) then
 		sm.event.sendToWorld(self.sv.saved.overworld, "sv_ambush", params)
 	end
 end
 
-function SurvivalGame.sv_setTimeOfDay(self, timeOfDay)
+function FactoryGame.sv_setTimeOfDay(self, timeOfDay)
 	if timeOfDay then
 		self.sv.time.timeOfDay = timeOfDay
 		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
@@ -614,7 +614,7 @@ function SurvivalGame.sv_setTimeOfDay(self, timeOfDay)
 	self.network:sendToClients("client_showMessage", ("Time of day set to " .. self.sv.time.timeOfDay))
 end
 
-function SurvivalGame.sv_setTimeProgress(self, timeProgress)
+function FactoryGame.sv_setTimeProgress(self, timeProgress)
 	if timeProgress ~= nil then
 		self.sv.time.timeProgress = timeProgress
 		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
@@ -623,30 +623,30 @@ function SurvivalGame.sv_setTimeProgress(self, timeProgress)
 		("Time scale set to " .. (self.sv.time.timeProgress and "on" or "off ")))
 end
 
-function SurvivalGame.sv_killPlayer(self, params)
+function FactoryGame.sv_killPlayer(self, params)
 	params.damage = 9999
 	sm.event.sendToPlayer(params.player, "sv_e_receiveDamage", params)
 end
 
-function SurvivalGame.sv_spawnUnit(self, params)
+function FactoryGame.sv_spawnUnit(self, params)
 	sm.event.sendToWorld(params.world, "sv_e_spawnUnit", params)
 end
 
-function SurvivalGame.sv_spawnHarvestable(self, params)
+function FactoryGame.sv_spawnHarvestable(self, params)
 	sm.event.sendToWorld(params.world, "sv_spawnHarvestable", params)
 end
 
-function SurvivalGame.sv_exportCreation(self, params)
+function FactoryGame.sv_exportCreation(self, params)
 	local obj = sm.json.parseJsonString(sm.creation.exportToString(params.body))
 	sm.json.save(obj, "$CONTENT_DATA/LocalBlueprints/" .. params.name .. ".blueprint")
 end
 
-function SurvivalGame.sv_importCreation(self, params)
+function FactoryGame.sv_importCreation(self, params)
 	sm.creation.importFromFile(params.world, "$SURVIVAL_DATA/LocalBlueprints/" .. params.name .. ".blueprint",
 		params.position)
 end
 
-function SurvivalGame.sv_onChatCommand(self, params, player)
+function FactoryGame.sv_onChatCommand(self, params, player)
 	if params[1] == "/sethp" then
 		sm.event.sendToPlayer(player, "sv_e_debug", { hp = params[2] })
 	elseif params[1] == "/respawn" then
@@ -664,7 +664,7 @@ function SurvivalGame.sv_onChatCommand(self, params, player)
 	end
 end
 
-function SurvivalGame.server_onPlayerJoined(self, player, newPlayer)
+function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 	print(player.name, "joined the game")
 
 	if newPlayer then --Player is first time joiners
@@ -720,7 +720,7 @@ function SurvivalGame.server_onPlayerJoined(self, player, newPlayer)
 	g_unitManager:sv_onPlayerJoined(player)
 end
 
-function SurvivalGame.server_onPlayerLeft(self, player)
+function FactoryGame.server_onPlayerLeft(self, player)
 	print(player.name, "left the game")
 	if player.id > 1 then
 		QuestManager.Sv_OnEvent(QuestEvent.PlayerLeft, { player = player })
@@ -729,9 +729,9 @@ function SurvivalGame.server_onPlayerLeft(self, player)
 
 end
 
-function SurvivalGame.sv_e_requestWarehouseRestrictions(self, params)
+function FactoryGame.sv_e_requestWarehouseRestrictions(self, params)
 	-- Send the warehouse restrictions to the world that asked
-	print("SurvivalGame.sv_e_requestWarehouseRestrictions")
+	print("FactoryGame.sv_e_requestWarehouseRestrictions")
 
 	-- Warehouse get
 	local warehouse = nil
@@ -743,7 +743,7 @@ function SurvivalGame.sv_e_requestWarehouseRestrictions(self, params)
 	end
 end
 
-function SurvivalGame.sv_e_setWarehouseRestrictions(self, params)
+function FactoryGame.sv_e_setWarehouseRestrictions(self, params)
 	-- Set the restrictions for this warehouse and propagate the restrictions to all floors
 
 	-- Warehouse get
@@ -771,8 +771,8 @@ function SurvivalGame.sv_e_setWarehouseRestrictions(self, params)
 	end
 end
 
-function SurvivalGame.sv_e_createElevatorDestination(self, params)
-	print("SurvivalGame.sv_e_createElevatorDestination")
+function FactoryGame.sv_e_createElevatorDestination(self, params)
+	print("FactoryGame.sv_e_createElevatorDestination")
 	print(params)
 
 	-- Warehouse get or create
@@ -861,18 +861,18 @@ function SurvivalGame.sv_e_createElevatorDestination(self, params)
 	g_elevatorManager:sv_loadBForPlayersInElevator(params.portal, world, 0, 0)
 end
 
-function SurvivalGame.sv_e_elevatorEvent(self, params)
-	print("SurvivalGame.sv_e_elevatorEvent")
+function FactoryGame.sv_e_elevatorEvent(self, params)
+	print("FactoryGame.sv_e_elevatorEvent")
 	print(params)
 	g_elevatorManager[params.fn](g_elevatorManager, params)
 end
 
-function SurvivalGame.sv_createNewPlayer(self, world, x, y, player)
+function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
 	local params = { player = player, x = x, y = y }
 	sm.event.sendToWorld(self.sv.saved.overworld, "sv_spawnNewCharacter", params)
 end
 
-function SurvivalGame.sv_recreatePlayerCharacter(self, world, x, y, player, params)
+function FactoryGame.sv_recreatePlayerCharacter(self, world, x, y, player, params)
 	local yaw = math.atan2(params.dir.y, params.dir.x) - math.pi / 2
 	local pitch = math.asin(params.dir.z)
 	local newCharacter = sm.character.createCharacter(player, self.sv.saved.overworld, params.pos, yaw, pitch)
@@ -881,7 +881,7 @@ function SurvivalGame.sv_recreatePlayerCharacter(self, world, x, y, player, para
 	print(params)
 end
 
-function SurvivalGame.sv_e_respawn(self, params)
+function FactoryGame.sv_e_respawn(self, params)
 	if params.player.character and sm.exists(params.player.character) then
 		g_respawnManager:sv_requestRespawnCharacter(params.player)
 	else
@@ -894,72 +894,72 @@ function SurvivalGame.sv_e_respawn(self, params)
 	end
 end
 
-function SurvivalGame.sv_loadedRespawnCell(self, world, x, y, player)
+function FactoryGame.sv_loadedRespawnCell(self, world, x, y, player)
 	g_respawnManager:sv_respawnCharacter(player, world)
 end
 
-function SurvivalGame.sv_e_onSpawnPlayerCharacter(self, player)
+function FactoryGame.sv_e_onSpawnPlayerCharacter(self, player)
 	if player.character and sm.exists(player.character) then
 		g_respawnManager:sv_onSpawnCharacter(player)
 		g_beaconManager:sv_onSpawnCharacter(player)
 	else
-		sm.log.warning("SurvivalGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
 	end
 end
 
-function SurvivalGame.sv_e_markBag(self, params)
+function FactoryGame.sv_e_markBag(self, params)
 	if sm.exists(params.world) then
 		sm.event.sendToWorld(params.world, "sv_e_markBag", params)
 	else
-		sm.log.warning("SurvivalGame.sv_e_markBag in a world that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_markBag in a world that doesn't exist")
 	end
 end
 
-function SurvivalGame.sv_e_unmarkBag(self, params)
+function FactoryGame.sv_e_unmarkBag(self, params)
 	if sm.exists(params.world) then
 		sm.event.sendToWorld(params.world, "sv_e_unmarkBag", params)
 	else
-		sm.log.warning("SurvivalGame.sv_e_unmarkBag in a world that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_unmarkBag in a world that doesn't exist")
 	end
 end
 
 -- Beacons
-function SurvivalGame.sv_e_createBeacon(self, params)
+function FactoryGame.sv_e_createBeacon(self, params)
 	if sm.exists(params.beacon.world) then
 		sm.event.sendToWorld(params.beacon.world, "sv_e_createBeacon", params)
 	else
-		sm.log.warning("SurvivalGame.sv_e_createBeacon in a world that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_createBeacon in a world that doesn't exist")
 	end
 end
 
-function SurvivalGame.sv_e_destroyBeacon(self, params)
+function FactoryGame.sv_e_destroyBeacon(self, params)
 	if sm.exists(params.beacon.world) then
 		sm.event.sendToWorld(params.beacon.world, "sv_e_destroyBeacon", params)
 	else
-		sm.log.warning("SurvivalGame.sv_e_destroyBeacon in a world that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_destroyBeacon in a world that doesn't exist")
 	end
 end
 
-function SurvivalGame.sv_e_unloadBeacon(self, params)
+function FactoryGame.sv_e_unloadBeacon(self, params)
 	if sm.exists(params.beacon.world) then
 		sm.event.sendToWorld(params.beacon.world, "sv_e_unloadBeacon", params)
 	else
-		sm.log.warning("SurvivalGame.sv_e_unloadBeacon in a world that doesn't exist")
+		sm.log.warning("FactoryGame.sv_e_unloadBeacon in a world that doesn't exist")
 	end
 end
 
 
 
 --FACTORY
-function SurvivalGame:sv_addMoney(money)
+function FactoryGame:sv_addMoney(money)
 	MoneyManager.sv_addMoney(tonumber(money))
 end
 
-function SurvivalGame:sv_setMoney(money)
+function FactoryGame:sv_setMoney(money)
 	MoneyManager.sv_setMoney(tonumber(money))
 end
 
-function SurvivalGame:sv_factoryRaid()
+function FactoryGame:sv_factoryRaid()
 	print("CUSTOM RAID")
 	local level = 1
 	local wave = 1
@@ -969,11 +969,11 @@ function SurvivalGame:sv_factoryRaid()
 end
 
 ---@param message string
-function SurvivalGame:cl_displayAlert(message)
+function FactoryGame:cl_displayAlert(message)
 	sm.gui.displayAlertText(message)
 end
 
-function SurvivalGame:sv_e_showTagMessage(params)
+function FactoryGame:sv_e_showTagMessage(params)
 	if params.player then
 		self.network:sendToClient(params.player, "cl_onMessage", params.tag)
 	else
@@ -981,19 +981,19 @@ function SurvivalGame:sv_e_showTagMessage(params)
 	end
 end
 
-function SurvivalGame:cl_onMessage(tag)
+function FactoryGame:cl_onMessage(tag)
 	sm.gui.displayAlertText(language_tag(tag))
 end
 
 
-function SurvivalGame:sv_e_stonks(params)
+function FactoryGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)
 end
 
 
 
 --cursed stuff to disable chunk unloading
-function SurvivalGame.sv_loadTerrain(self, data)
+function FactoryGame.sv_loadTerrain(self, data)
 	for x = data.minX, data.maxX do
 		for y = data.minY, data.maxY do
 			data.world:loadCell(x, y, nil, "sv_empty")
@@ -1001,5 +1001,5 @@ function SurvivalGame.sv_loadTerrain(self, data)
 	end
 end
 
-function SurvivalGame.sv_empty(self)
+function FactoryGame.sv_empty(self)
 end
