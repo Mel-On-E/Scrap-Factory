@@ -10,7 +10,7 @@ function RareLootCrate:get_loot_table()
     for uuid, item in pairs(g_shop) do
         if (item.tier < tier) or 
         (item.tier == tier and math.random()) > 0.75 then
-            if tonumber(item.price) <= MoneyManager.cl_moneyEarned()*2 + 5000 then
+            if item.price <= MoneyManager.cl_moneyEarned()*2 + 5000 then
                 itemPool[#itemPool+1] = {price = item.price, uuid = uuid}
             end
         end
@@ -22,8 +22,8 @@ function RareLootCrate:get_loot_table()
         local highestPrice = 0
 
         for k, item in ipairs(itemPool) do
-            if tonumber(item.price) > highestPrice then
-                highestPrice = tonumber(item.price)
+            if item.price > highestPrice then
+                highestPrice = item.price
                 mostExpensiveItem = k
             end
         end

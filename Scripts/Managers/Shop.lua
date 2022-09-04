@@ -105,7 +105,7 @@ function Shop:changeSort()
 	self.cl.itemPages = { {} }
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = tonumber(v.price), category = v.category, tier = v.tier })
+			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)
@@ -295,7 +295,7 @@ function Shop.cl_e_open_gui()
 	local pages = {}
 	for k, v in pairs(g_shop) do
 		if v.tier < tier then
-			table.insert(pages, { uuid = k, price = tonumber(v.price), category = v.category, tier = v.tier })
+			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
 	table.sort(pages, function(a, b)

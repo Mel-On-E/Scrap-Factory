@@ -232,6 +232,9 @@ function SurvivalGame.client_onCreate(self)
 	g_factoryHud:open()
 
 	g_shop = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
+	for _, item in pairs(g_shop) do
+		item.price = tonumber(item.price)
+	end
 end
 
 function SurvivalGame.bindChatCommands(self)
