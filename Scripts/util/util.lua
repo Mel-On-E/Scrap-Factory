@@ -43,3 +43,14 @@ function format_energy(params)
 
     return params.color .. format_number(params.power, metricPrefixes) .. params.unit
 end
+
+function format_pollution(params)
+    if not params.color then
+        params.color = "#bb00dd"
+    end
+    if not params.unit then
+        params.unit = " CO₂"
+    end
+
+    return params.color .. format_number(params.pollution, numeralPrefixes) .. params.unit
+end

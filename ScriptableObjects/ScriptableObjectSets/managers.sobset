@@ -25,6 +25,12 @@
 			"uuid": "6e7f54bb-e54d-46df-920a-bd225d0a9430"
 		},
 		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/PollutionManager.lua",
+			"classname": "PollutionManager",
+			"name": "mgr_pollution",
+			"uuid": "64987a78-5b2b-4267-aeed-3d98dddcf12e"
+		},
+		{
 			"filename": "$CONTENT_DATA/Scripts/Managers/DailyRewardManager.lua",
 			"classname": "DailyRewardManager",
 			"name": "mgr_daily",

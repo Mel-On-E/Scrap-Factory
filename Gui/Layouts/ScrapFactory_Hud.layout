@@ -46,6 +46,15 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
             </Widget>
+            <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.6 0.2986111111111111 0.47368421052631576" name="Pollution">
+                <Property key="FontName" value="SM_ItemTitle"/>
+                <Property key="NeedKey" value="false"/>
+                <Property key="NeedMouse" value="false"/>
+                <Property key="TextColour" value="1 1 1"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="WordWrap" value="true"/>
+                <Property key="Caption" value="#ffff0042.00M (69%)"/>
+            </Widget>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

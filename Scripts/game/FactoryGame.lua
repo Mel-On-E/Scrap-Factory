@@ -49,6 +49,7 @@ local STORAGE_CHANNEL_MONEYMANAGER = 69
 local STORAGE_CHANNEL_POWERMANAGER = 70
 local STORAGE_CHANNEL_RESEARCHMANAGER = 71
 local STORAGE_CHANNEL_DAILYREWARDMANAGER = 72
+local STORAGE_CHANNEL_POLLUTIONMANAGER = 73
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
@@ -171,6 +172,12 @@ function FactoryGame.server_onCreate(self)
 		sm.storage.save(STORAGE_CHANNEL_RESEARCHMANAGER, self.sv.researchManager)
 	end
 
+	self.sv.pollutionManager = sm.storage.load(STORAGE_CHANNEL_POLLUTIONMANAGER)
+	if not self.sv.pollutionManager then
+		self.sv.pollutionManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("64987a78-5b2b-4267-aeed-3d98dddcf12e"))
+		sm.storage.save(STORAGE_CHANNEL_POLLUTIONMANAGER, self.sv.pollutionManager)
+	end
+
 	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNEL_DAILYREWARDMANAGER)
 	if not self.sv.dailyReawardManager then
 		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
@@ -243,7 +250,12 @@ function FactoryGame.bindChatCommands(self)
 	if addCheats then
 		sm.game.bindChatCommand("/giveMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
-		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "Gives moni")
+
+		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
+		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets pollutiion")
+
+
+		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "does test")
 		
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
 		sm.game.bindChatCommand("/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)")
@@ -656,6 +668,13 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		for k, _ in pairs(_G) do
 			print(k)
 		end
+	
+	--FACTORY
+	elseif params[1] == "/addpollution" then
+		PollutionManager.sv_addPollution(tonumber(params[2]))
+	elseif params[1] == "/setpollution" then
+		PollutionManager.sv_setPollution(tonumber(params[2]))
+
 	else
 		params.player = player
 		if sm.exists(player.character) then
