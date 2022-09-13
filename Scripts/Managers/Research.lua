@@ -36,6 +36,9 @@ function Research:update_gui()
 	
 
 	local progress, goal = ResearchManager.cl_getTierProgress(self.cl.tier)
+	if self.cl.tier < ResearchManager.cl_getCurrentTier() then
+		goal = progress
+	end
 	self.cl.gui:setText("Progress", format_money({money = progress, color = "#00dddd"}) .. "/" .. format_money({money = goal, color = "#00dddd"}) ..
 		"\n(" .. string.format("%.2f", progress/goal*100) .. "%)")
 	
