@@ -15,8 +15,8 @@ function PollutionManager:server_onCreate()
         self.saved.pollution = tonumber(self.saved.pollution)
     end
 
-    if not g_pollutionManagerr then
-        g_pollutionManagerr = self
+    if not g_pollutionManager then
+        g_pollutionManager = self
     end
 end
 
@@ -36,19 +36,23 @@ function PollutionManager:server_onFixedUpdate()
 end
 
 function PollutionManager.sv_addPollution(pollution)
-	g_pollutionManagerr.saved.pollution = g_pollutionManagerr.saved.pollution + pollution
+	g_pollutionManager.saved.pollution = g_pollutionManager.saved.pollution + pollution
 end
 
 function PollutionManager.sv_setPollution(pollution)
-	g_pollutionManagerr.saved.pollution = pollution
+	g_pollutionManager.saved.pollution = pollution
+end
+
+function PollutionManager.sv_getPollution()
+    return g_pollutionManager.saved.pollution
 end
 
 function PollutionManager:client_onCreate()
     self.cl = {}
     self.cl.pollution = 0
 
-    if not g_pollutionManagerr then
-        g_pollutionManagerr = self
+    if not g_pollutionManager then
+        g_pollutionManager = self
     end
 end
 
@@ -73,4 +77,8 @@ function PollutionManager:updateHud()
             g_factoryHud:setText("Pollution", format_pollution({pollution = pollution}))
         end
     end
+end
+
+function PollutionManager.cl_getPollution()
+    return g_pollutionManager.saved and g_pollutionManager.saved.pollution or g_pollutionManager.cl.pollution
 end

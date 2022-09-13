@@ -1,6 +1,7 @@
 ---@class ResearchManager:ScriptableObjectClass
 
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/PollutionManager.lua")
 
 ResearchManager = class()
 ResearchManager.isSaveObject = true
@@ -36,7 +37,7 @@ function ResearchManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         local safeData = self.sv.saved
 		local research = safeData.research
-        local progressFraction = (research[self.sv.tier] or 0)/self.tiers[self.sv.tier].goal
+        local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal + PollutionManager.sv_getPollution())
 
         for tier, progress in ipairs(research) do
             research[tier] = tostring(progress)
@@ -65,10 +66,11 @@ function ResearchManager.sv_addResearch(shape)
 
     local money = shape.interactable.publicData.value
     local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier]
+    local goal = tier.goal + PollutionManager.sv_getPollution()
 
-	g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, tier.goal)
+	g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, goal)
 
-    if tier.goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
+    if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
         g_ResearchManager.notify = true
     end
@@ -133,7 +135,7 @@ end
 
 function ResearchManager.cl_getTierProgress(tier)
     local progress = g_ResearchManager.sv.saved.research[tier] or 0
-    local goal = g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal
+    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) + PollutionManager.cl_getPollution()
     return progress, goal
 end
 
