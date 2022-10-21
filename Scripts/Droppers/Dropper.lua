@@ -13,12 +13,10 @@ function Dropper:sv_drop()
     if PowerManager.sv_changePower(-self.data.power) then
         local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
         local shape = sm.shape.createPart(self.drop, self.shape:getWorldPosition() + offset, self.shape:getWorldRotation())
-        
+
         local publicData = {}
         publicData.value = tonumber(self.data.drop.value)
-        if self.data.drop.pollution then
-            publicData.pollution = tonumber(self.data.drop.pollution)
-        end
+        publicData.pollution = (self.data.drop.pollution and tonumber(self.data.drop.pollution)) or nil
         publicData.upgrades = {}
 
         shape.interactable:setPublicData(publicData)
