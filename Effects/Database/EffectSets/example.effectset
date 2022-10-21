@@ -71,5 +71,16 @@
 				"delay": 0.0
 			}
 		]
+	},
+	"Ore Pollution":{
+		"effectList":
+		[
+			{
+				"type": "particle",
+				"name": "p_plants_fertilizer",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"delay": 0.0
+			}
+		]
 	}
 }

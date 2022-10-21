@@ -57,16 +57,23 @@ end
 
 function Drop:client_onClientDataUpdate(data)
     self.cl.value = tonumber(data.value)
+
     if data.pollution then
-        if not self.cl.pollution then
-            sm.effect.playHostedEffect("Plants - Fertilizer", self.interactable)
-        end
         self.cl.pollution = tonumber(data.pollution)
+
+        if not self.cl.pollutionEffect then
+            self.cl.pollutionEffect = sm.effect.createEffect("Ore Pollution", self.interactable)
+            self.cl.pollutionEffect:start()
+        end
     end
 end
 
 function Drop:client_onDestroy()
     oreCount = oreCount - 1
+
+    if self.cl.pollutionEffect then
+        self.cl.pollutionEffect:destroy()
+    end
 end
 
 function Drop:client_canInteract()
