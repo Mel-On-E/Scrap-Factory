@@ -57,7 +57,7 @@ function Furnace:sv_onEnter(trigger, results)
             if self.sv.saved.research then
                 value = (ResearchManager.sv_addResearch(shape) and value) or 0
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research" })
-            else
+            elseif not data.pollution then
                 sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
                 MoneyManager.sv_addMoney(value)
             end
