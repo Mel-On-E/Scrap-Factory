@@ -61,6 +61,7 @@
 			{
 				"type": "particle",
 				"name": "p_projectile_checmical_trail",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.25 },
 				"attached": true,
 				"delay": 0.0
 			},
