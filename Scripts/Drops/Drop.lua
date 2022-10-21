@@ -40,7 +40,7 @@ end
 
 function Drop:server_onDestroy()
     if self.pollution then
-        sm.event.sendToGame("sv_e_stonks", { pos = self.pos, value = tostring(self.pollution), format = "pollution" })
+        sm.event.sendToGame("sv_e_stonks", { pos = self.pos, value = tostring(self.pollution), format = "pollution", effect = "Pollution" })
         PollutionManager.sv_addPollution(self.pollution)
     end
 end
