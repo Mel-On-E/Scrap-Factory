@@ -34,6 +34,7 @@ function Drop:server_onFixedUpdate()
         end
     end
 
+    self.money = self.interactable.publicData.value
     self.pollution = self:getPollution()
     self.pos = self.shape.worldPosition
 end
@@ -71,11 +72,14 @@ end
 function Drop:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
-    local value = format_money({money = self.cl.value, color = "#4fff4f"})
-    if self.cl.pollution then
-        value = format_pollution({pollution = self:getPollution()})
+    local money = format_money({money = self.money or self.cl.value, color = "#4f9f4f"})
+    if self.cl.pollution or self.pollution then
+        local pollution = format_pollution({pollution = self.pollution or self:getPollution(), color = "#9f4f9f"})
+        sm.gui.setInteractionText("", o1 .. pollution .. o2)
+        sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
+    else
+        sm.gui.setInteractionText("", o1 .. money .. o2)
     end
-    sm.gui.setInteractionText("", o1 .. value .. o2)
     return true
 end
 
