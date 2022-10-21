@@ -10,6 +10,13 @@ function Drop:server_onCreate()
     body:setBuildable(false)
     body:setLiftable(false)
     self.timeout = 0
+
+    local saved = self.storage:load()
+    if not saved then
+        self.storage:save(true)
+    else
+        self.shape:destroyShape(0)
+    end
 end
 
 function Drop:server_onFixedUpdate()
@@ -34,8 +41,10 @@ function Drop:server_onFixedUpdate()
         end
     end
 
-    self.money = self.interactable.publicData.value
-    self.pollution = self:getPollution()
+    if self.interactable.publicData then
+        self.money = self.interactable.publicData.value
+        self.pollution = self:getPollution()
+    end
     self.pos = self.shape.worldPosition
 end
 
@@ -93,7 +102,7 @@ end
 function Drop:getPollution()
     local value = self.cl.value
     local pollution = self.cl.pollution
-    if sm.isServerMode() and self.interactable.publicData then
+    if sm.isServerMode() then
         value = self.interactable.publicData.value
         pollution = self.interactable.publicData.pollution
     end
