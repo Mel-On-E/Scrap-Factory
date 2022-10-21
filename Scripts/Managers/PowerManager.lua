@@ -78,7 +78,7 @@ function PowerManager:client_onFixedUpdate()
     if g_factoryHud then
         local power = self.cl.power or 0
 		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
-		g_factoryHud:setText("Power", "#dddd00" .. format_energy({power = power}) .. " (" .. tostring(percentage) .. "%)")
+		g_factoryHud:setText("Power", "#dddd00" .. format_number({format = "energy", value = power}) .. " (" .. tostring(percentage) .. "%)")
 
 		if power < 0 and self.cl.powerStored <= 0 then
 			if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then

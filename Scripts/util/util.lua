@@ -3,7 +3,7 @@
 local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "No"}
 local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
 
-local function format_number(value, suffixes)
+local function number_suffix(value, suffixes)
     local scientific = string.format("%.2e", value)
     local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)e([+-]%d+)")
     roundedNumber = tonumber(roundedNumber)
@@ -25,32 +25,19 @@ local function format_number(value, suffixes)
     end
 end
 
-function format_money(params)
-    if not params.color then
-        params.color = "#00dd00"
-    end
+function format_number(params)
+    if params.format == "money" then
+        params.color = params.color or "#00dd00"
+        return params.color .. "$" .. number_suffix(params.value, numeralPrefixes)
 
-    return params.color .. "$" .. format_number(params.money, numeralPrefixes)
-end
+    elseif params.format == "energy" then
+        params.color = params.color or "#dddd00"
+        params.unit = params.unit or "W"
+        return params.color .. number_suffix(params.value, metricPrefixes) .. params.unit
 
-function format_energy(params)
-    if not params.color then
-        params.color = "#dddd00"
+    elseif params.format == "pollution" then
+        params.color = params.color or "#bb00dd"
+        params.unit = params.unit or " CO₂"
+        return params.color .. number_suffix(params.value, metricPrefixes) .. params.unit
     end
-    if not params.unit then
-        params.unit = "W"
-    end
-
-    return params.color .. format_number(params.power, metricPrefixes) .. params.unit
-end
-
-function format_pollution(params)
-    if not params.color then
-        params.color = "#bb00dd"
-    end
-    if not params.unit then
-        params.unit = " CO₂"
-    end
-
-    return params.color .. format_number(params.pollution, numeralPrefixes) .. params.unit
 end

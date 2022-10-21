@@ -739,15 +739,8 @@ end
 --FACTORY
 function Overworld:sv_e_stonks(params)
 	params.value = tonumber(params.value)
-	if params.format == "money" then
-		params.value = format_money({money = params.value})
-	elseif params.format == "energy" then
-		params.value = format_energy({power = params.value})
-	elseif params.format == "research" then
-		params.value = format_money( {money = params.value, color = "#00dddd"})
-	elseif params.format == "pollution" then
-		params.value = format_pollution( {pollution = params.value})
-	end
+	params.value = format_number({format = params.format, value = params.value, color = params.color})
+
 	self.network:sendToClients("cl_stonks", params)
 end
 

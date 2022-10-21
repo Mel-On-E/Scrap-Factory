@@ -79,9 +79,9 @@ end
 function Drop:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
-    local money = format_money({money = self.money or self.cl.value, color = "#4f9f4f"})
+    local money = format_number({format = "money", value = self.money or self.cl.value, color = "#4f9f4f"})
     if self.cl.pollution or self.pollution then
-        local pollution = format_pollution({pollution = self.pollution or self:getPollution(), color = "#9f4f9f"})
+        local pollution = format_number({format = "pollution", value = self.pollution or self:getPollution(), color = "#9f4f9f"})
         sm.gui.setInteractionText("", o1 .. pollution .. o2)
         sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
     else

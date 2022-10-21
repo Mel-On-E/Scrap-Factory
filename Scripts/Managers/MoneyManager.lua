@@ -88,7 +88,7 @@ function MoneyManager:updateHud()
     if g_factoryHud then
         local money = self.saved and self.saved.money or self.cl.money
         if money then
-            g_factoryHud:setText("Money", format_money({money = money}))
+            g_factoryHud:setText("Money", format_number({format = "money", value = money}))
         end
     end
 end

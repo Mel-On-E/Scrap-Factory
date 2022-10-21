@@ -228,7 +228,7 @@ function Sell.client_onEquippedUpdate( self, primaryState, secondaryState )
 			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
 			
 			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
-			sm.gui.setInteractionText( "", keyBindingText1, language_tag("Sell") .. o1 .. format_money({money = sellValue, color = "#4f4f4f"}) ..o2.."x"..o1..tostring(quantity)..o2.." [" .. keyBindingText2 .. "]" )
+			sm.gui.setInteractionText( "", keyBindingText1, language_tag("Sell") .. o1 .. format_number({format = "money", value = sellValue, color = "#4f4f4f"}) ..o2.."x"..o1..tostring(quantity)..o2.." [" .. keyBindingText2 .. "]" )
 
 			if primaryState == sm.tool.interactState.start then
 				self:onUse()
