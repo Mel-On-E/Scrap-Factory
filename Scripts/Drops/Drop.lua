@@ -57,6 +57,9 @@ end
 function Drop:client_onClientDataUpdate(data)
     self.cl.value = tonumber(data.value)
     if data.pollution then
+        if not self.cl.pollution then
+            sm.effect.playHostedEffect("Plants - Fertilizer", self.interactable)
+        end
         self.cl.pollution = tonumber(data.pollution)
     end
 end
@@ -79,7 +82,7 @@ end
 function Drop:getPollution()
     local value = self.cl.value
     local pollution = self.cl.pollution
-    if sm.isServerMode()then
+    if sm.isServerMode() and self.interactable.publicData then
         value = self.interactable.publicData.value
         pollution = self.interactable.publicData.pollution
     end
