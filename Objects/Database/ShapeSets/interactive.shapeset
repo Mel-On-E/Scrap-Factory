@@ -1,0 +1,39 @@
+{
+    "partList" : [
+        {
+        "uuid": "fd936bf7-33fa-4d47-88de-e7f7ba03861b",
+        "name": "obj_dropcontainer",
+        "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_resourcecontainer.rend",
+        "color": "696969",
+        "box": {
+            "x": 6,
+            "y": 8,
+            "z": 6
+        },
+        "scripted": {
+            "filename": "$CONTENT_DATA/Scripts/Other/DropContainer.lua",
+            "classname": "DropContainer",
+            "data": {
+                "offset": {
+                    "x": -0.125,
+                    "y": 0.500,
+                    "z": 1.000
+                }
+            }
+        },
+        "rotationSet": "PropYX",
+        "sticky": "-Y+Y-X+X",
+        "physicsMaterial": "Mechanical",
+        "ratings": {
+            "density": 5,
+            "durability": 5,
+            "friction": 6,
+            "buoyancy": 3
+        },
+        "flammable": true,
+        "restrictions": {
+            "usable": true
+        }
+        }
+    ]
+}
