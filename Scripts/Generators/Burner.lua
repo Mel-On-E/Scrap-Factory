@@ -26,7 +26,8 @@ function Burner:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
 
-            shape:destroyPart(0)
+            
+            --create power
             local power = data.value
             if self.data.powerFunction == "root" then
                 power = (power ^ (1/(4/3)))
@@ -35,6 +36,20 @@ function Burner:sv_onEnter(trigger, results)
 
             sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
             PowerManager.sv_changePower(power)
+
+
+            --create pollution drop
+            local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape:getWorldRotation())
+
+            local publicData = {}
+            publicData.value = 1
+            publicData.pollution = power
+            publicData.upgrades = {}
+
+            smoke.interactable:setPublicData(publicData)
+
+
+            shape:destroyPart(0)
         end
         ::continue::
     end
