@@ -22,7 +22,7 @@
 				"classname": "ClickDropper",
 				"data": {
 					"drop": {
-						"uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf",
+						"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
 						"value": "1"
 					},
 					"offset": {
@@ -64,7 +64,7 @@
 				"classname": "AutoDropper",
 				"data": {
 					"drop": {
-						"uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf",
+						"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
 						"value": "1"
 					},
 					"offset": {

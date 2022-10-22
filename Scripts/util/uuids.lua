@@ -29,6 +29,7 @@ obj_dropper_scrap_wood_auto = sm.uuid.new("632a52bd-0791-49ba-b1ef-c81adfdceba7"
 -- partList
 
 obj_drop_scrap_wood = sm.uuid.new("87873e83-8270-4796-9401-6baba45ccef2")
+obj_drop_smoke = sm.uuid.new("b7e1dbf0-9267-45c4-aae0-ff00659977bf")
 
 ----------------------------------------
 -- upgraders.shapeset

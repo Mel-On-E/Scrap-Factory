@@ -51,10 +51,10 @@
             "y" : 1,
             "z" : 1
          },
-         "color" : "000000",
+         "color" : "ffffff",
          "flammable" : true,
-         "name" : "obj_ash",
-         "physicsMaterial" : "Wood",
+         "name" : "obj_drop_smoke",
+         "physicsMaterial" : "Dirt",
          "ratings" : {
             "buoyancy" : 1,
             "density" : 4,
@@ -68,10 +68,10 @@
                   "mesh" : "$GAME_DATA/Mesh/cube.mesh",
                   "subMeshList" : [
                      {
-                        "material" : "DifAsgNor",
+                        "material" : "Glass",
                         "textureList" : [
                            "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
-                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_asg.tga",
+                           "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
                            "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
                         ]
                      }
@@ -81,11 +81,12 @@
          },
          "rotationSet" : "StaticYmZmXm",
          "scripted" : {
-            "classname" : "Drop",
+            "classname" : "GasDrop",
             "data" : {
-               "value" : 1
+               "value" : 1,
+               "effect" : ""
             },
-            "filename" : "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+            "filename" : "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
          },
          "showInInventory" : false,
          "uuid" : "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
