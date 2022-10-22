@@ -37,7 +37,7 @@ function ResearchManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         local safeData = self.sv.saved
 		local research = safeData.research
-        local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal + PollutionManager.sv_getPollution())
+        local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
 
         for tier, progress in ipairs(research) do
             research[tier] = tostring(progress)
@@ -66,7 +66,7 @@ function ResearchManager.sv_addResearch(shape)
 
     local money = shape.interactable.publicData.value
     local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier]
-    local goal = tier.goal + PollutionManager.sv_getPollution()
+    local goal = tier.goal * PollutionManager.getResearchMultiplier()
 
 	g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, goal)
 
@@ -135,7 +135,7 @@ end
 
 function ResearchManager.cl_getTierProgress(tier)
     local progress = g_ResearchManager.sv.saved.research[tier] or 0
-    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) + PollutionManager.cl_getPollution()
+    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) * PollutionManager.getResearchMultiplier()
     return progress, goal
 end
 

@@ -82,3 +82,10 @@ end
 function PollutionManager.cl_getPollution()
     return g_pollutionManager.saved and g_pollutionManager.saved.pollution or g_pollutionManager.cl.pollution
 end
+
+function PollutionManager.getResearchMultiplier()
+    if g_pollutionManager.cl_getPollution() > 0 then
+        return 2^math.log(g_pollutionManager.cl_getPollution(), 10)
+    end
+    return 1
+end
