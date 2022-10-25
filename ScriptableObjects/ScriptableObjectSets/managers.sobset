@@ -31,6 +31,12 @@
 			"uuid": "64987a78-5b2b-4267-aeed-3d98dddcf12e"
 		},
 		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/PrestigeManager.lua",
+			"classname": "PrestigeManager",
+			"name": "mgr_prestige",
+			"uuid": "2474d490-4530-4ff8-9436-ba716a0c665e"
+		},
+		{
 			"filename": "$CONTENT_DATA/Scripts/Managers/DailyRewardManager.lua",
 			"classname": "DailyRewardManager",
 			"name": "mgr_daily",

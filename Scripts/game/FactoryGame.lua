@@ -21,6 +21,8 @@ dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/ResearchManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/PollutionManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/PrestigeManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
 
 
@@ -50,6 +52,7 @@ local STORAGE_CHANNEL_POWERMANAGER = 70
 local STORAGE_CHANNEL_RESEARCHMANAGER = 71
 local STORAGE_CHANNEL_DAILYREWARDMANAGER = 72
 local STORAGE_CHANNEL_POLLUTIONMANAGER = 73
+local STORAGE_CHANNEL_PRESTIGEMANAGER = 74
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
@@ -178,6 +181,12 @@ function FactoryGame.server_onCreate(self)
 		sm.storage.save(STORAGE_CHANNEL_POLLUTIONMANAGER, self.sv.pollutionManager)
 	end
 
+	self.sv.prestigeManager = sm.storage.load(STORAGE_CHANNEL_PRESTIGEMANAGER)
+	if not self.sv.prestigeManager then
+		self.sv.prestigeManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("2474d490-4530-4ff8-9436-ba716a0c665e"))
+		sm.storage.save(STORAGE_CHANNEL_PRESTIGEMANAGER, self.sv.prestigeManager)
+	end
+
 	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNEL_DAILYREWARDMANAGER)
 	if not self.sv.dailyReawardManager then
 		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
@@ -253,6 +262,9 @@ function FactoryGame.bindChatCommands(self)
 
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
 		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets pollutiion")
+
+		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives prestige")
+		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets prestige")
 
 
 		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "does test")
@@ -674,6 +686,10 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PollutionManager.sv_addPollution(tonumber(params[2]))
 	elseif params[1] == "/setpollution" then
 		PollutionManager.sv_setPollution(tonumber(params[2]))
+	elseif params[1] == "/addprestige" then
+		PrestigeManager.sv_addPrestige(tonumber(params[2]))
+	elseif params[1] == "/setprestige" then
+		PrestigeManager.sv_setPrestige(tonumber(params[2]))
 
 	else
 		params.player = player

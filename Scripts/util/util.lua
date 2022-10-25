@@ -28,16 +28,22 @@ end
 function format_number(params)
     if params.format == "money" then
         params.color = params.color or "#00dd00"
-        return params.color .. "$" .. number_suffix(params.value, numeralPrefixes)
+        params.prefix = "$"
+        params.prefixes = numeralPrefixes
 
     elseif params.format == "energy" then
         params.color = params.color or "#dddd00"
         params.unit = params.unit or "W"
-        return params.color .. number_suffix(params.value, metricPrefixes) .. params.unit
 
     elseif params.format == "pollution" then
         params.color = params.color or "#bb00dd"
         params.unit = params.unit or " CO₂"
-        return params.color .. number_suffix(params.value, metricPrefixes) .. params.unit
+
+    elseif params.format == "prestige" then
+        params.color = params.color or "#dd6e00"
+        params.prefix = "+ "
+        params.unit = params.unit or " ◊"
     end
+
+    return params.color .. (params.prefix or "") .. number_suffix(params.value, (params.prefixes or metricPrefixes)) .. (params.unit or "")
 end

@@ -86,11 +86,15 @@ end
 
 function MoneyManager:updateHud()
     if g_factoryHud then
-        local money = self.saved and self.saved.money or self.cl.money
+        local money = self.cl_getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({format = "money", value = money}))
         end
     end
+end
+
+function MoneyManager.cl_getMoney()
+    return g_moneyManager.saved and g_moneyManager.saved.money or g_moneyManager.cl.money
 end
 
 function MoneyManager.cl_moneyEarned()

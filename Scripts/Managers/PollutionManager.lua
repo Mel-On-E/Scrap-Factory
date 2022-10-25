@@ -72,7 +72,7 @@ end
 
 function PollutionManager:updateHud()
     if g_factoryHud then
-        local pollution = self.saved and self.saved.pollution or self.cl.pollution
+        local pollution = self.cl_getPollution()
         if pollution then
             g_factoryHud:setText("Pollution", format_number({format = "pollution", value = pollution}))
         end
