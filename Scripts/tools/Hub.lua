@@ -6,8 +6,8 @@ local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
-dofile("$CONTENT_DATA/Scripts/managers/Shop.lua")
-dofile("$CONTENT_DATA/Scripts/managers/Research.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Shop.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Research.lua")
 
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)

@@ -1,15 +1,15 @@
 {
 	"scriptableObjectList": [
 		{
-			"filename": "$CONTENT_DATA/Scripts/Managers/Shop.lua",
+			"filename": "$CONTENT_DATA/Scripts/Managers/Interfaces/Shop.lua",
 			"classname": "Shop",
-			"name": "mgr_shop",
+			"name": "interface_shop",
 			"uuid": "aa53c54c-0760-4270-bd77-f54d0c271d19"
 		},
 		{
-			"filename": "$CONTENT_DATA/Scripts/Managers/Research.lua",
+			"filename": "$CONTENT_DATA/Scripts/Managers/Interfaces/Research.lua",
 			"classname": "Research",
-			"name": "mgr_research",
+			"name": "interface_research",
 			"uuid": "e9461cff-2b3e-4351-b5f6-ff67778a4c88"
 		}
 	]
