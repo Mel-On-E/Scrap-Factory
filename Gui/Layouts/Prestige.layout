@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundInteractableWide" position_real="0 0 0.51875000000000004 0.60185185185185186" name="BackPanel">
+        <Widget type="TextBox" skin="TextBox" position_real="0 0.015384615384615385 0.99899598393574296 0.10923076923076923" align="HStretch Bottom" name="prestige">
+            <Property key="Caption" value="Prestige"/>
+            <Property key="FontName" value="SM_ItemTitle"/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="TextShadow" value="true"/>
+            <Property key="NeedMouse" value="false"/>
+        </Widget>
+        <Widget type="Widget" skin="BackgroundPopup" position_real="0.020080321285140562 0.13076923076923078 0.96887550200803207 0.85384615384615381" align="HStretch Bottom">
+            <Widget type="Widget" skin="SequenceListBackgroundLocked" position_real="0.067357512953367879 0.0990990990990991 0.84974093264248707 0.63963963963963966" align="Left Bottom">
+                <Widget type="Widget" skin="BackgroundPopup" position_real="0.054878048780487805 0.036619718309859155 0.90853658536585369 0.47887323943661969">
+                    <Widget type="EditBox" skin="TextBox" position_real="0.013422818791946308 0.058823529411764705 0.94630872483221473 0.82352941176470584" name="desc">
+                        <Property key="TextAlign" value="Default"/>
+                        <Property key="Caption" value="Font testing"/>
+                        <Property key="FontName" value="SM_ItemTitle"/>
+                        <Property key="MultiLine" value="true"/>
+                        <Property key="WordWrap" value="true"/>
+                        <Property key="VisibleHScroll" value="false"/>
+                        <Property key="VisibleVScroll" value="false"/>
+                        <Property key="ReadOnly" value="true"/>
+                    </Widget>
+                </Widget>
+                <Widget type="Widget" skin="BackgroundPopup" position_real="0.33536585365853661 0.61126760563380278 0.34146341463414637 0.3464788732394366">
+                    <Widget type="TextBox" skin="TextBox" position_real="0 0 1 0.93495934959349591">
+                        <Property key="MultiLine" value="true"/>
+                        <Property key="WordWrap" value="true"/>
+                        <Property key="ReadOnly" value="true"/>
+                        <Property key="FontName" value="SM_ItemTitle"/>
+                        <Property key="Caption" value="Font Test"/>
+                        <Property key="TextAlign" value="Center"/>
+                    </Widget>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.38860103626943004 0.80180180180180183 0.22797927461139897 0.11711711711711711" name="confirm">
+                <Property key="Caption" value="Confirm"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_Header"/>
+            </Widget>
+        </Widget>
+        <Widget type="Button" skin="ActiveButton" position_real="0.81325301204819278 0.015384615384615385 0.13052208835341367 0.10000000000000001" name="research">
+            <Property key="TextColour" value="1 1 1"/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="FontName" value="SM_ButtonSmallBold"/>
+            <Property key="Caption" value="Research"/>
+        </Widget>
+        <Widget type="Button" skin="ActiveButton" position_real="0.035140562248995984 0.015384615384615385 0.13052208835341367 0.10000000000000001" name="shop">
+            <Property key="Caption" value="Shop"/>
+            <Property key="TextColour" value="1 1 1"/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="FontName" value="SM_ButtonSmallBold"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
