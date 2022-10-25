@@ -36,13 +36,13 @@ function DropContainer.server_onCreate( self )
 end
 
 local RemovedHarvests = {}
-local jankyRemovedHarvests = {}
+local droppedShapes = {}
 
 function DropContainer.server_onFixedUpdate( self )
 	RemovedHarvests = {}
-	for key, jank in pairs(jankyRemovedHarvests) do
+	for key, jank in pairs(droppedShapes) do
 		if jank < sm.game.getCurrentTick() then
-			jankyRemovedHarvests[key] = nil
+			droppedShapes[key] = nil
 		end
 	end
 
@@ -64,7 +64,7 @@ function DropContainer.trigger_onEnter( self, trigger, contents )
 	for _, result in ipairs( contents ) do
 		if sm.exists( result ) and type( result ) == "Body" then
 			for _, shape in ipairs( result:getShapes() ) do
-				if self.drops[tostring(shape:getShapeUuid())] and not RemovedHarvests[shape:getId()] and not jankyRemovedHarvests[shape:getId()] then
+				if self.drops[tostring(shape:getShapeUuid())] and not RemovedHarvests[shape:getId()] and not droppedShapes[shape:getId()] then
 					local container = self.interactable:getContainer( 0 )
 					if container then
 						local transactionSlot = nil
@@ -124,7 +124,7 @@ function DropContainer.sv_release_drop( self )
 			local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
 
 			local shape = sm.shape.createPart(slotItem.uuid, self.shape.worldPosition + offset, self.shape:getWorldRotation())
-			jankyRemovedHarvests[shape:getId()] = sm.game.getCurrentTick() + 1
+			droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
 			
 			local publicData = self.sv.drops[slotIndex]
 			publicData.value = tonumber(publicData.value)
