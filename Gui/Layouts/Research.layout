@@ -87,14 +87,14 @@
         </Widget>
         <Widget type="Button" skin="DressbotArrowRight" position_real="0.89859437751004012 0.83544303797468356 0.076305220883534142 0.096202531645569619" name="UnlocksNext"/>
         <Widget type="Button" skin="DressbotArrowLeft" position_real="0.045180722891566265 0.84177215189873422 0.076305220883534142 0.096202531645569619" name="UnlocksPrev"/>
-        <Widget type="Button" skin="ActiveButton" position_real="0.81325301204819278 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="prestige">
-            <Property key="Caption" value="Prestige"/>
+        <Widget type="Button" skin="ActiveButton" position_real="0.81325301204819278 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="shop">
+            <Property key="Caption" value="Shop"/>
             <Property key="TextColour" value="1 1 1"/>
             <Property key="TextAlign" value="Center"/>
             <Property key="FontName" value="SM_ButtonSmallBold"/>
         </Widget>
-        <Widget type="Button" skin="ActiveButton" position_real="0.035140562248995984 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="shop">
-            <Property key="Caption" value="Shop"/>
+        <Widget type="Button" skin="ActiveButton" position_real="0.035140562248995984 0.012658227848101266 0.13052208835341367 0.082278481012658222" name="prestige">
+            <Property key="Caption" value="Prestige"/>
             <Property key="TextColour" value="1 1 1"/>
             <Property key="TextAlign" value="Center"/>
             <Property key="FontName" value="SM_ButtonSmallBold"/>
