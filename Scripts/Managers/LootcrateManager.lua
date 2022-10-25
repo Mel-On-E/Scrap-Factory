@@ -15,10 +15,6 @@ function LootCrateManager:server_onFixedUpdate()
 	end
 end
 
-function LootCrateManager.sv_setWorld(world)
-    g_world = world
-end
-
 function LootCrateManager.sv_spawnCrate(params)
     sm.creation.importFromFile(g_world, "$CONTENT_DATA/LocalBlueprints/" .. crates[params.uuid], params.pos)
     if params.effect then

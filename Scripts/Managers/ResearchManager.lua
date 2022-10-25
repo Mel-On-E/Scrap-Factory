@@ -35,26 +35,30 @@ end
 
 function ResearchManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        local safeData = self.sv.saved
-		local research = safeData.research
-        local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
-
-        for tier, progress in ipairs(research) do
-            research[tier] = tostring(progress)
-        end
-
-		self.storage:save(self.sv.saved)
-
-		self.network:setClientData({ research = safeData.research, tier = self.sv.tier, progress = string.format("%.2f", progressFraction*100)})
-
-        for tier, progress in ipairs(research) do
-           research[tier] = tonumber(progress)
-        end
+        self:sv_saveDataAndSync()
     end
 
     if self.notify then
         self.network:sendToClients("cl_research_done", self.sv.tier - 1 )
         self.notify = false
+    end
+end
+
+function ResearchManager:sv_saveDataAndSync()
+    local safeData = self.sv.saved
+    local research = safeData.research
+    local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+
+    for tier, progress in ipairs(research) do
+        research[tier] = tostring(progress)
+    end
+
+    self.storage:save(self.sv.saved)
+
+    self.network:setClientData({ research = safeData.research, tier = self.sv.tier, progress = string.format("%.2f", progressFraction*100)})
+
+    for tier, progress in ipairs(research) do
+        research[tier] = tonumber(progress)
     end
 end
 
@@ -76,6 +80,14 @@ function ResearchManager.sv_addResearch(shape)
     end
 
     return true
+end
+
+function ResearchManager:sv_resetResearch()
+    self.sv.saved.research = {}
+    self.storage:save(self.sv.saved)
+    self.sv.tier = 1
+
+    self:sv_saveDataAndSync()
 end
 
 function ResearchManager:client_onCreate()

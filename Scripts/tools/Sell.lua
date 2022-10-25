@@ -100,6 +100,8 @@ function Sell.cl_loadAnimations( self )
 end
 
 function Sell.client_onUpdate( self, dt )
+	if not sm.exists(self.tool) then return end
+
 	-- First person animation
 	local isSprinting =  self.tool:isSprinting()
 	local isCrouching =  self.tool:isCrouching()

@@ -612,7 +612,6 @@ function FactoryPlayer:cl_e_audio(effect)
 end
 
 function FactoryPlayer:client_onReload()
-	print("destroy ores?")
 	self.cl.confirmClearGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout" )
 	self.cl.confirmClearGui:setButtonCallback( "Yes", "cl_onClearConfirmButtonClick" )
 	self.cl.confirmClearGui:setButtonCallback( "No", "cl_onClearConfirmButtonClick" )

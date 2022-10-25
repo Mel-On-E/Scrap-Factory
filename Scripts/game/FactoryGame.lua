@@ -155,7 +155,7 @@ function FactoryGame.server_onCreate(self)
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
-	LootCrateManager.sv_setWorld(self.sv.saved.overworld)
+	g_world = self.sv.saved.overworld
 
 	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNEL_MONEYMANAGER)
 	if not self.sv.moneyManager then
@@ -713,6 +713,13 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		sm.container.setItem(inventory, 4, obj_dropper_scrap_wood, 1)
 		sm.container.setItem(inventory, 5, obj_furnace_basic, 1)
 		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
+
+		for i = 7, inventory.size, 1 do
+            sm.container.setItem( inventory, i, sm.uuid.getNil(), 0 )
+        end
+
+		--TODO give special items
+
 		sm.container.endTransaction()
 
 		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
@@ -986,6 +993,20 @@ end
 
 
 --FACTORY
+function FactoryGame.sv_recreateWorld( self )
+	self.sv.saved.data.seed = math.floor(math.random()*10^9)
+
+	self.sv.saved.overworld:destroy()
+	self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/Overworld.lua", "Overworld",
+	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
+	g_world = self.sv.saved.overworld
+	self.storage:save( self.sv.saved )
+
+	for _, player in ipairs(sm.player.getAllPlayers()) do
+		self:server_onPlayerJoined(player, true)
+	end
+end
+
 function FactoryGame:sv_addMoney(money)
 	MoneyManager.sv_addMoney(tonumber(money))
 end

@@ -43,8 +43,13 @@ function PrestigeManager.sv_setPrestige(prestige)
 	g_prestigeManager.saved.prestige = prestige
 end
 
-function PrestigeManager.sv_getPrestige()
-    return g_prestigeManager.saved.prestige
+function PrestigeManager.sv_prestige()
+    g_prestigeManager.sv_addPrestige(g_prestigeManager.getPrestigeGain())
+
+    sm.event.sendToGame("sv_recreateWorld")
+    MoneyManager.sv_setMoney(0)
+    PollutionManager.sv_setPollution(0)
+    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearch")
 end
 
 function PrestigeManager:client_onCreate()
