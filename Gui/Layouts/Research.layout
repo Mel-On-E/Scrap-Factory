@@ -24,7 +24,7 @@
                     </Widget>
                 </Widget>
                 <Widget type="Widget" skin="BackgroundPopup" position_real="0.017073170731707318 0.090909090909090912 0.46341463414634149 0.31818181818181818">
-                    <Widget type="Widget" skin="GenericButton" position="15 15 100 100">
+                    <Widget type="Widget" skin="GenericButton" position_real="0.039473684210526314 0.10714285714285714 0.26315789473684209 0.7142857142857143">
                         <Widget type="ImageBox" skin="ImageBox" position_real="0.02 0.01 0.97999999999999998 0.98999999999999999" name="Icon">
                             <Property key="NeedKey" value="false"/>
                             <Property key="NeedMouse" value="false"/>
