@@ -1,6 +1,6 @@
 ---@class Research : ScriptableObjectClass
 
-dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
 Research = class(Interface)
 

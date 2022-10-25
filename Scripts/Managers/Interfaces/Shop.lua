@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/Managers/Interface.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
 
 ---@class page
