@@ -8,6 +8,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Shop.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Research.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Prestige.lua")
 
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
@@ -43,6 +44,7 @@ function Hub:server_onCreate()
 	if not first then return end
 	sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
 	sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
+	sm.scriptableObject.createScriptableObject(sm.uuid.new("b0972d5e-f131-4aac-94d8-39ce331fe225"), self.tool)
 	first = false
 end
 
@@ -61,7 +63,9 @@ function Hub:client_onFixedUpdate()
 		if Shop.cl_e_isGuiOpen() then
 			self.cl.currentInterface = "shop"
 		elseif Research.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "research"	
+			self.cl.currentInterface = "research"
+		elseif Prestige.cl_e_isGuiOpen() then
+			self.cl.currentInterface = "prestige"
 		else
 			active = false
 		end
@@ -88,6 +92,8 @@ function Hub:cl_openGui()
 		Shop:cl_e_open_gui()
 	elseif interface == "research" then
 		Research:cl_e_open_gui()
+	elseif interface == "prestige" then
+		Prestige:cl_e_open_gui()
 	end
 end
 

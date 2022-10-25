@@ -11,6 +11,12 @@
 			"classname": "Research",
 			"name": "interface_research",
 			"uuid": "e9461cff-2b3e-4351-b5f6-ff67778a4c88"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/Interfaces/Prestige.lua",
+			"classname": "Prestige",
+			"name": "interface_prestige",
+			"uuid": "b0972d5e-f131-4aac-94d8-39ce331fe225"
 		}
 	]
 }

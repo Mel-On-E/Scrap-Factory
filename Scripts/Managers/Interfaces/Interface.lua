@@ -8,6 +8,7 @@ function Interface:cient_onCreate(params)
 
 	self.cl.gui:setButtonCallback("shop", "cl_openShop")
 	self.cl.gui:setButtonCallback("research", "cl_openResearch")
+	self.cl.gui:setButtonCallback("prestige", "cl_openPrestige")
 
 	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 end
@@ -34,6 +35,11 @@ function Interface:cl_openShop()
 	self.shop = true
 end
 
+function Interface:cl_openPrestige()
+	self.cl.gui:close()
+	self.prestige = true
+end
+
 function Interface:cl_close()
 	self.cl.gui:close()
 end
@@ -43,8 +49,11 @@ function Interface:cl_onGuiClosed()
 		Shop.cl_e_open_gui()
 	elseif self.research then
 		Research.cl_e_open_gui()
+	elseif self.prestige then
+		Prestige.cl_e_open_gui()
 	end
 
 	self.shop = false
 	self.research = false
+	self.prestige = false
 end
