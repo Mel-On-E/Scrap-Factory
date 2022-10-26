@@ -1,5 +1,4 @@
 ---@class Interface : ScriptableObjectClass
-
 Interface = class()
 
 function Interface:cient_onCreate(params)

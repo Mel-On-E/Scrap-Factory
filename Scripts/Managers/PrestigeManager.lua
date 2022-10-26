@@ -1,7 +1,6 @@
----@class PrestigeManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@class PrestigeManager : ScriptableObjectClass
 PrestigeManager = class()
 PrestigeManager.isSaveObject = true
 
@@ -25,15 +24,15 @@ function PrestigeManager:server_onFixedUpdate()
 
     if tick % 40 == 0 then
         local safeData = self.saved
-		local prestige = safeData.prestige
+        local prestige = safeData.prestige
 
-		safeData.prestige = tostring(prestige)
+        safeData.prestige = tostring(prestige)
 
-		self.storage:save(self.saved)
+        self.storage:save(self.saved)
 
-		safeData.prestige = prestige
+        safeData.prestige = prestige
 
-		self.network:setClientData({ prestige = tostring(self.saved.prestige)})
+        self.network:setClientData({ prestige = tostring(self.saved.prestige) })
     end
 
     if self.doPrestige and self.doPrestige < tick then
@@ -44,16 +43,16 @@ function PrestigeManager:server_onFixedUpdate()
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
-	g_prestigeManager.saved.prestige = g_prestigeManager.saved.prestige + prestige
+    g_prestigeManager.saved.prestige = g_prestigeManager.saved.prestige + prestige
 end
 
 function PrestigeManager.sv_setPrestige(prestige)
-	g_prestigeManager.saved.prestige = prestige
+    g_prestigeManager.saved.prestige = prestige
 end
 
 function PrestigeManager.sv_prestige()
-    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_fadeToBlack", {duration = 1, timeout = 5})
-    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", {effect = "Prestige"})
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_fadeToBlack", { duration = 1, timeout = 5 })
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", { effect = "Prestige" })
 
     g_prestigeManager.doPrestige = sm.game.getCurrentTick() + 40
 end
@@ -78,7 +77,7 @@ function PrestigeManager:client_onCreate()
 end
 
 function PrestigeManager:client_onClientDataUpdate(clientData, channel)
-	self.cl.prestige = tonumber(clientData.prestige)
+    self.cl.prestige = tonumber(clientData.prestige)
 end
 
 function PrestigeManager:client_onFixedUpdate()
@@ -95,7 +94,7 @@ function PrestigeManager:updateHud()
     if g_factoryHud then
         local prestige = self.getPrestigeGain()
         if prestige then
-            g_factoryHud:setText("Prestige", format_number({format = "prestige", value = prestige, prefix = "+ "}))
+            g_factoryHud:setText("Prestige", format_number({ format = "prestige", value = prestige, prefix = "+ " }))
         end
     end
 end
@@ -106,7 +105,7 @@ function PrestigeManager.getPrestigeGain()
     money = money - minMoney
 
     if money > 0 then
-        return 2^math.log(money, 10) / 100
+        return 2 ^ math.log(money, 10) / 100
     end
     return 0
 end

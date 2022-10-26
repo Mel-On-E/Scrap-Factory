@@ -35,7 +35,6 @@ sm.tool.preloadRenderables(renderablesFp)
 
 ---@class Hub : ToolClass
 ---@field cl client
-
 Hub = class()
 
 local first = true
@@ -117,9 +116,6 @@ function Hub.cl_onGuiClosed(self)
 	sm.tool.forceTool(nil)
 	self.cl.seatedEquiped = false
 end
-
-
-
 
 --ANIMATION STUFF BELOW
 function Hub:client_onEquipAnimations()

@@ -1,5 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 
+
+---@class Solar : Generator
 Solar = class(Generator)
 
 local sunRiseStart = 0.16
@@ -18,6 +20,6 @@ function Solar:getPower()
     elseif time > sunSetStart and time < sunSetEnd then
         timeMultiplier = (time - sunSetStart) / (sunSetEnd - sunSetStart)
     end
-    
-    return math.floor(timeMultiplier*self.data.power)
+
+    return math.floor(timeMultiplier * self.data.power)
 end

@@ -1,17 +1,16 @@
----@class Furnace : ShapeClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
 
+---@class Furnace : Power
 Furnace = class(Power)
 Furnace.maxParentCount = 1
 Furnace.maxChildCount = 0
 Furnace.connectionInput = sm.interactable.connectionType.logic
 Furnace.connectionOutput = sm.interactable.connectionType.none
-Furnace.colorNormal = sm.color.new( 0x8000ddff )
-Furnace.colorHighlight = sm.color.new( 0x8000ffff )
+Furnace.colorNormal = sm.color.new(0x8000ddff)
+Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
 local cl_research_Effect
 
@@ -56,9 +55,11 @@ function Furnace:sv_onEnter(trigger, results)
             if not data.pollution then
                 if self.sv.saved.research then
                     value = (ResearchManager.sv_addResearch(shape) and value) or 0
-                    sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
+                    sm.event.sendToGame("sv_e_stonks",
+                        { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
                 else
-                    sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
+                    sm.event.sendToGame("sv_e_stonks",
+                        { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
                     MoneyManager.sv_addMoney(value)
                 end
             end
@@ -79,8 +80,8 @@ end
 
 function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, player)
     if not self.sv.saved.research then
-        sm.event.sendToGame("sv_e_showTagMessage", {tag = "ResearchFurnaceSet", player = player})
-        
+        sm.event.sendToGame("sv_e_showTagMessage", { tag = "ResearchFurnaceSet", player = player })
+
         self.sv.saved.research = true
         self.storage:save(self.sv.saved)
 
@@ -89,7 +90,7 @@ function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, pl
         end
         g_research_furnace = self.interactable
     else
-        sm.event.sendToGame("sv_e_showTagMessage", {tag = "ResearchFurnaceRemoved", player = player})
+        sm.event.sendToGame("sv_e_showTagMessage", { tag = "ResearchFurnaceRemoved", player = player })
 
         self.sv.saved.research = nil
         self.storage:save(self.sv.saved)
@@ -124,8 +125,8 @@ function Furnace:cl_toggle_effect(active)
     end
 
     cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y*6, self.data.box.z)
-    cl_research_Effect:setScale(size/18)
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y * 6, self.data.box.z)
+    cl_research_Effect:setScale(size / 18)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
     cl_research_Effect:setOffsetPosition(offset)
     if active then
@@ -134,7 +135,7 @@ function Furnace:cl_toggle_effect(active)
 end
 
 function Furnace:client_canInteract()
-	sm.gui.setInteractionText( "", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace") )
+    sm.gui.setInteractionText("", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace"))
     return true
 end
 

@@ -2,7 +2,7 @@ dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
-
+---@class Burner: ShapeClass
 Burner = class(nil)
 
 function Burner:server_onCreate()
@@ -26,15 +26,16 @@ function Burner:sv_onEnter(trigger, results)
             local data = interactable:getPublicData()
             if not data or not data.value then goto continue end
 
-            
+
             --create power
             local power = data.value
             if self.data.powerFunction == "root" then
-                power = (power ^ (1/(4/3)))
+                power = (power ^ (1 / (4 / 3)))
             end
             power = power + 1
 
-            sm.event.sendToGame("sv_e_stonks", { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
+            sm.event.sendToGame("sv_e_stonks",
+                { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
             PowerManager.sv_changePower(power)
 
 
