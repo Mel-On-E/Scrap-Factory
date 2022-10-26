@@ -34,12 +34,12 @@
                     </Widget>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="StyledButtonLarge" position_real="0.225 0.80180180180180183 0.225 0.11711711711711711" name="Reset">
+            <Widget type="Button" skin="StyledButtonDressbotUnbox" position_real="0.225 0.80180180180180183 0.225 0.11711711711711711" name="Reset">
                 <Property key="Caption" value="Confirm"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="FontName" value="SM_Header"/>
             </Widget>
-            <Widget type="Button" skin="StyledButtonLarge" position_real="0.55 0.80180180180180183 0.225 0.11711711711711711" name="Perks">
+            <Widget type="Button" skin="StyledButtonDressbot" position_real="0.55 0.80180180180180183 0.225 0.11711711711711711" name="Perks">
                 <Property key="Caption" value="See Perks"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="FontName" value="SM_Header"/>
