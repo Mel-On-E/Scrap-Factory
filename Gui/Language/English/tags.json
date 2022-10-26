@@ -43,7 +43,7 @@
 
 	//Prestige
 	"Prestige": "Prestige",
-	"PrestigeDescription": "Doing a prestige will DELETE all creations and let you start from scratch on a new planet! You will only keep special items, perks and ◊. If you do a prestige now, you wil gain:",
+	"PrestigeDescription": "Doing a prestige will DELETE all creations and let you start from scratch on a new planet! You will only keep special items, perks and #dd6e00◊#ffffff. If you do a prestige now, you wil gain:",
 	"PrestigeResetButton": "Prestige Now",
 	"PrestigeConfirmation": "This will RESET the entire world. Are you sure?",
 

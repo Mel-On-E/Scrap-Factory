@@ -30,7 +30,7 @@ function Prestige:update_gui()
 	local prestigeGain = PrestigeManager.getPrestigeGain()
 	local newPrestige = PrestigeManager.cl_getPrestige() + prestigeGain
 	self.cl.gui:setText("PrestigeGain", format_number({format = "prestige", value = prestigeGain, prefix = "+ "}) .. "\n" ..
-		"#ffffff(" .. format_number({format = "prestige", value = newPrestige, color = "#ffffff"}) .. ")")
+		"#ffffff(" .. format_number({format = "prestige", value = newPrestige, color = "#ffffff", unit = " #dd6e00◊#ffffff"}) .. ")")
 end
 
 function Prestige.cl_e_open_gui()
