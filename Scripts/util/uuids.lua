@@ -73,6 +73,7 @@ obj_storage_battery = sm.uuid.new("91037f2c-5230-464b-8873-ad13355539af")
 -- partList
 
 obj_lootcrate = sm.uuid.new("69b869f1-03dc-4ea3-9291-fd6490f945dd")
+obj_lootcrate_prestige = sm.uuid.new("423592bc-8505-4c3b-965c-23ee394054d0")
 
 ----------------------------------------
 -- scriptableObjectSets.sobdb

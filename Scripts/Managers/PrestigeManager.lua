@@ -10,6 +10,7 @@ function PrestigeManager:server_onCreate()
     if self.saved == nil then
         self.saved = {}
         self.saved.prestige = 0
+        self.saved.lastPrestigeGain = 0
     else
         self.saved.prestige = tonumber(self.saved.prestige)
     end
@@ -23,23 +24,38 @@ function PrestigeManager:server_onFixedUpdate()
     local tick = sm.game.getCurrentTick()
 
     if tick % 40 == 0 then
-        local safeData = self.saved
-        local prestige = safeData.prestige
-
-        safeData.prestige = tostring(prestige)
-
-        self.storage:save(self.saved)
-
-        safeData.prestige = prestige
-
-        self.network:setClientData({ prestige = tostring(self.saved.prestige) })
+        self:sv_saveData()
+        self.network:setClientData({ prestige = tostring(self.saved.prestige), lastPrestigeGain = tostring(self.saved.lastPrestigeGain) })
     end
 
     if self.doPrestige and self.doPrestige < tick then
         self.doPrestige = nil
+        if g_prestigeManager.getPrestigeGain() >= 1 then
+            self.spawnCrate = tick + 40*3
+        end
         self:sv_doPrestige()
     end
 
+    if self.spawnCrate and self.spawnCrate < tick then
+        self.spawnCrate = nil
+        local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(),math.random(),10)
+        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = obj_lootcrate_prestige,
+            effect = "Woc - Destruct" })
+    end
+end
+
+function PrestigeManager:sv_saveData()
+    local safeData = self.saved
+    local prestige = safeData.prestige
+    local lastPrestigeGain = safeData.lastPrestigeGain
+
+    safeData.prestige = tostring(prestige)
+    safeData.lastPrestigeGain = tostring(lastPrestigeGain)
+
+    self.storage:save(self.saved)
+
+    safeData.prestige = prestige
+    safeData.lastPrestigeGain = lastPrestigeGain
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
@@ -57,8 +73,11 @@ function PrestigeManager.sv_prestige()
     g_prestigeManager.doPrestige = sm.game.getCurrentTick() + 40
 end
 
-function PrestigeManager.sv_doPrestige()
-    g_prestigeManager.sv_addPrestige(g_prestigeManager.getPrestigeGain())
+function PrestigeManager:sv_doPrestige()
+    self.sv_addPrestige(self.getPrestigeGain())
+    self.saved.lastPrestigeGain = self.getPrestigeGain()
+
+    self:sv_saveData()
 
     sm.event.sendToGame("sv_recreateWorld")
 
@@ -70,6 +89,7 @@ end
 function PrestigeManager:client_onCreate()
     self.cl = {}
     self.cl.prestige = 0
+    self.cl.lastPrestigeGain = 0
 
     if not g_prestigeManager then
         g_prestigeManager = self
@@ -78,6 +98,7 @@ end
 
 function PrestigeManager:client_onClientDataUpdate(clientData, channel)
     self.cl.prestige = tonumber(clientData.prestige)
+    self.cl.lastPrestigeGain = tonumber(clientData.lastPrestigeGain)
 end
 
 function PrestigeManager:client_onFixedUpdate()
@@ -108,6 +129,10 @@ function PrestigeManager.getPrestigeGain()
         return 2 ^ math.log(money, 10) / 100
     end
     return 0
+end
+
+function PrestigeManager.cl_e_getLastPrestigeGain()
+    return g_prestigeManager.cl.lastPrestigeGain
 end
 
 function PrestigeManager.cl_getPrestige()
