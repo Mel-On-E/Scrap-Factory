@@ -21,7 +21,9 @@ function PrestigeManager:server_onCreate()
 end
 
 function PrestigeManager:server_onFixedUpdate()
-    if sm.game.getCurrentTick() % 40 == 0 then
+    local tick = sm.game.getCurrentTick()
+
+    if tick % 40 == 0 then
         local safeData = self.saved
 		local prestige = safeData.prestige
 
@@ -33,6 +35,12 @@ function PrestigeManager:server_onFixedUpdate()
 
 		self.network:setClientData({ prestige = tostring(self.saved.prestige)})
     end
+
+    if self.doPrestige and self.doPrestige < tick then
+        self.doPrestige = nil
+        self:sv_doPrestige()
+    end
+
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
@@ -44,9 +52,17 @@ function PrestigeManager.sv_setPrestige(prestige)
 end
 
 function PrestigeManager.sv_prestige()
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_fadeToBlack", {duration = 1, timeout = 5})
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", {effect = "Prestige"})
+
+    g_prestigeManager.doPrestige = sm.game.getCurrentTick() + 40
+end
+
+function PrestigeManager.sv_doPrestige()
     g_prestigeManager.sv_addPrestige(g_prestigeManager.getPrestigeGain())
 
     sm.event.sendToGame("sv_recreateWorld")
+
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
     sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearch")

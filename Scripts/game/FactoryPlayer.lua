@@ -568,6 +568,10 @@ end
 
 
 --FACTORY
+function FactoryPlayer:sv_e_fadeToBlack(params)
+	self.network:sendToClients("cl_n_startFadeToBlack", { duration = params.duration or RespawnFadeDuration, timeout = params.timeout or RespawnFadeTimeout } )
+end
+
 function FactoryPlayer:cl_e_drop_dropped()
 	if not self.cl.tutorialsWatched["oreDestroy"] then
 		if not self.cl.tutorialGui then
@@ -642,7 +646,7 @@ function FactoryPlayer:sv_e_playEffect(params)
 end
 
 function FactoryPlayer:cl_e_playEffect(params)
-	sm.effect.playEffect(params.effect, params.pos)
+	sm.effect.playEffect(params.effect, params.pos or sm.localPlayer.getPlayer().character.worldPosition)
 end
 
 function FactoryPlayer:cl_e_createEffect(params)
