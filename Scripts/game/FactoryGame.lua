@@ -37,15 +37,16 @@ FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 
-SURVIVAL_DEV_SPAWN_POINT = sm.vec3.new(0, 0, 20)
-START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
+SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
-local STORAGE_CHANNEL_MONEYMANAGER = 69
-local STORAGE_CHANNEL_POWERMANAGER = 70
-local STORAGE_CHANNEL_RESEARCHMANAGER = 71
-local STORAGE_CHANNEL_DAILYREWARDMANAGER = 72
-local STORAGE_CHANNEL_POLLUTIONMANAGER = 73
-local STORAGE_CHANNEL_PRESTIGEMANAGER = 74
+local STORAGE_CHANNELS = {
+	MONEYMANAGER = 69,
+	POWERMANAGER = 70,
+	RESEARCHMANAGER = 71,
+	DAILYREWARDMANAGER = 72,
+	POLLUTIONMANAGER = 73,
+	PRESTIGEMANAGER = 74
+}
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
@@ -56,14 +57,11 @@ function FactoryGame.server_onCreate(self)
 		self.sv.saved = {}
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
-		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
+		self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 		self.storage:save(self.sv.saved)
 	end
 	self.data = nil
-
-
-	--FACTORY
 	self.sv.factory = {}
 
 	print(self.sv.saved.data)
@@ -73,35 +71,19 @@ function FactoryGame.server_onCreate(self)
 		sm.log.info("Starting FactoryGame in DEV mode")
 	end
 
-	self:loadCraftingRecipes()
 	g_enableCollisionTumble = true
 
 	g_eventManager = EventManager()
 	g_eventManager:sv_onCreate()
 
 	g_respawnManager = RespawnManager()
-	g_respawnManager:sv_onCreate(self.sv.saved.overworld)
+	g_respawnManager:sv_onCreate(self.sv.saved.factoryWorld)
 
 	g_beaconManager = BeaconManager()
 	g_beaconManager:sv_onCreate()
 
 	g_unitManager = UnitManager()
-	g_unitManager:sv_onCreate(self.sv.saved.overworld)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	g_unitManager:sv_onCreate(self.sv.saved.factoryWorld)
 
 	self.sv.time = sm.storage.load(STORAGE_CHANNEL_TIME)
 	if self.sv.time then
@@ -122,60 +104,52 @@ function FactoryGame.server_onCreate(self)
 	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
-	g_world = self.sv.saved.overworld
+	g_world = self.sv.saved.factoryWorld
 
-	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNEL_MONEYMANAGER)
+	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNELS["MONEYMANAGER"])
 	if not self.sv.moneyManager then
 		self.sv.moneyManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("e97b0595-7912-425b-8a60-ea6dbfba4b39"))
-		sm.storage.save(STORAGE_CHANNEL_MONEYMANAGER, self.sv.moneyManager)
+		sm.storage.save(STORAGE_CHANNELS["MONEYMANAGER"], self.sv.moneyManager)
 	end
 
-	self.sv.powerManager = sm.storage.load(STORAGE_CHANNEL_POWERMANAGER)
+	self.sv.powerManager = sm.storage.load(STORAGE_CHANNELS["POWERMANAGER"])
 	if not self.sv.powerManager then
 		self.sv.powerManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("26ec01d5-6fc8-4088-b06b-25d30dd44309"))
-		sm.storage.save(STORAGE_CHANNEL_POWERMANAGER, self.sv.powerManager)
+		sm.storage.save(STORAGE_CHANNELS["POWERMANAGER"], self.sv.powerManager)
 	end
 
-	self.sv.researchManager = sm.storage.load(STORAGE_CHANNEL_RESEARCHMANAGER)
+	self.sv.researchManager = sm.storage.load(STORAGE_CHANNELS["RESEARCHMANAGER"])
 	if not self.sv.researchManager then
 		self.sv.researchManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("6e7f54bb-e54d-46df-920a-bd225d0a9430"))
-		sm.storage.save(STORAGE_CHANNEL_RESEARCHMANAGER, self.sv.researchManager)
+		sm.storage.save(STORAGE_CHANNELS["RESEARCHMANAGER"], self.sv.researchManager)
 	end
 
-	self.sv.pollutionManager = sm.storage.load(STORAGE_CHANNEL_POLLUTIONMANAGER)
+	self.sv.pollutionManager = sm.storage.load(STORAGE_CHANNELS["POLLUTIONMANAGER"])
 	if not self.sv.pollutionManager then
 		self.sv.pollutionManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("64987a78-5b2b-4267-aeed-3d98dddcf12e"))
-		sm.storage.save(STORAGE_CHANNEL_POLLUTIONMANAGER, self.sv.pollutionManager)
+		sm.storage.save(STORAGE_CHANNELS["POLLUTIONMANAGER"], self.sv.pollutionManager)
 	end
 
-	self.sv.prestigeManager = sm.storage.load(STORAGE_CHANNEL_PRESTIGEMANAGER)
+	self.sv.prestigeManager = sm.storage.load(STORAGE_CHANNELS["PRESTIGEMANAGER"])
 	if not self.sv.prestigeManager then
 		self.sv.prestigeManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("2474d490-4530-4ff8-9436-ba716a0c665e"))
-		sm.storage.save(STORAGE_CHANNEL_PRESTIGEMANAGER, self.sv.prestigeManager)
+		sm.storage.save(STORAGE_CHANNELS["PRESTIGEMANAGER"], self.sv.prestigeManager)
 	end
 
-	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNEL_DAILYREWARDMANAGER)
+	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNELS["DAILYREWARDMANAGER"])
 	if not self.sv.dailyReawardManager then
 		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
-		sm.storage.save(STORAGE_CHANNEL_DAILYREWARDMANAGER, self.sv.dailyReawardManager)
+		sm.storage.save(STORAGE_CHANNELS["DAILYREWARDMANAGER"], self.sv.dailyReawardManager)
 	end
-end
-
-function FactoryGame.server_onRefresh(self)
-	g_craftingRecipes = nil
-	g_refineryRecipes = nil
-	self:loadCraftingRecipes()
 end
 
 function FactoryGame.client_onCreate(self)
-
 	self.cl = {}
 	self.cl.time = {}
 	self.cl.time.timeOfDay = 0.0
 	self.cl.time.timeProgress = true
 
 	if not sm.isHost then
-		self:loadCraftingRecipes()
 		g_enableCollisionTumble = true
 	end
 
@@ -224,7 +198,7 @@ function FactoryGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
-		sm.game.bindChatCommand("/giveMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
+		sm.game.bindChatCommand("/addMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
 
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
@@ -234,15 +208,13 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets prestige")
 
 
-		sm.game.bindChatCommand("/test", {}, "cl_onChatCommand", "does test")
-		
+
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
 		sm.game.bindChatCommand("/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)")
 		sm.game.bindChatCommand("/encrypt", {}, "cl_onChatCommand", "Restrict interactions")
 		sm.game.bindChatCommand("/decrypt", {}, "cl_onChatCommand", "Unrestrict interactions")
 		sm.game.bindChatCommand("/limited", {}, "cl_onChatCommand", "Use the limited inventory")
 		sm.game.bindChatCommand("/unlimited", {}, "cl_onChatCommand", "Use the unlimited inventory")
-		--sm.game.bindChatCommand( "/recreate", {}, "cl_onChatCommand", "Recreate world" )
 		sm.game.bindChatCommand("/timeofday", { { "number", "timeOfDay", true } }, "cl_onChatCommand",
 			"Sets the time of the day as a fraction (0.5=mid day)")
 		sm.game.bindChatCommand("/timeprogress", { { "bool", "enabled", true } }, "cl_onChatCommand",
@@ -252,10 +224,6 @@ function FactoryGame.bindChatCommands(self)
 			"Spawn a unit: 'woc', 'tapebot', 'totebot', 'haybot'")
 		sm.game.bindChatCommand("/harvestable", { { "string", "harvestableName", true } }, "cl_onChatCommand",
 			"Create a harvestable: 'tree', 'stone'")
-		sm.game.bindChatCommand("/export", { { "string", "name", false } }, "cl_onChatCommand",
-			"Exports blueprint $SURVIVAL_DATA/LocalBlueprints/<name>.blueprint")
-		sm.game.bindChatCommand("/import", { { "string", "name", false } }, "cl_onChatCommand",
-			"Imports blueprint $SURVIVAL_DATA/LocalBlueprints/<name>.blueprint")
 		sm.game.bindChatCommand("/die", {}, "cl_onChatCommand", "Kill the player")
 		sm.game.bindChatCommand("/sethp", { { "number", "hp", false } }, "cl_onChatCommand", "Set player hp value")
 		sm.game.bindChatCommand("/aggroall", {}, "cl_onChatCommand",
@@ -281,19 +249,8 @@ function FactoryGame.client_onClientDataUpdate(self, clientData, channel)
 	end
 end
 
-function FactoryGame.loadCraftingRecipes(self)
-	LoadCraftingRecipes({
-		workbench = "$SURVIVAL_DATA/CraftingRecipes/workbench.json",
-		dispenser = "$SURVIVAL_DATA/CraftingRecipes/dispenser.json",
-		cookbot = "$SURVIVAL_DATA/CraftingRecipes/cookbot.json",
-		craftbot = "$SURVIVAL_DATA/CraftingRecipes/craftbot.json",
-		dressbot = "$SURVIVAL_DATA/CraftingRecipes/dressbot.json"
-	})
-end
-
 function FactoryGame.server_onFixedUpdate(self, timeStep)
 	-- Update time
-
 	local prevTime = self.sv.time.timeOfDay
 	if self.sv.time.timeProgress then
 		self.sv.time.timeOfDay = self.sv.time.timeOfDay + timeStep / DAYCYCLE_TIME
@@ -301,22 +258,12 @@ function FactoryGame.server_onFixedUpdate(self, timeStep)
 	local newDay = self.sv.time.timeOfDay >= 1.0
 	if newDay then
 		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
-		--FACTORY
-		self:sv_factoryRaid()
+		self:sv_factoryRaid() --FACTORY
 	end
 
 	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
 		g_unitManager:sv_initNewDay()
 	end
-
-	-- Ambush
-	--if not g_survivalDev then
-	--	for _,ambush in ipairs( AMBUSHES ) do
-	--		if self.sv.time.timeOfDay >= ambush.time and ( prevTime < ambush.time or newDay ) then
-	--			self:sv_ambush( { magnitude = ambush.magnitude, wave = ambush.wave } )
-	--		end
-	--	end
-	--end
 
 	-- Client and save sync
 	self.sv.syncTimer:tick()
@@ -370,7 +317,6 @@ function FactoryGame.client_showMessage(self, msg)
 end
 
 function FactoryGame.cl_onChatCommand(self, params)
-
 	local unitSpawnNames =
 	{
 		woc = unit_woc,
@@ -391,16 +337,9 @@ function FactoryGame.cl_onChatCommand(self, params)
 		f = unit_farmbot,
 	}
 
-	if params[1] == "/giveMoney" then
-		self.network:sendToServer("sv_addMoney", params[2])
-	elseif params[1] == "/setmoney" then
-		self.network:sendToServer("sv_setMoney", params[2])
-	elseif params[1] == "/test" then
-		
 
 
-
-	elseif params[1] == "/camera" then
+	if params[1] == "/camera" then
 		self.network:sendToServer("sv_giveItem",
 			{ player = sm.localPlayer.getPlayer(), item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"), quantity = 1 })
 	elseif params[1] == "/god" then
@@ -471,25 +410,6 @@ function FactoryGame.cl_onChatCommand(self, params)
 		end
 	elseif params[1] == "/cleardebug" then
 		sm.debugDraw.clear()
-	elseif params[1] == "/export" then
-		local rayCastValid, rayCastResult = sm.localPlayer.getRaycast(100)
-		if rayCastValid and rayCastResult.type == "body" then
-			local importParams = {
-				name = params[2],
-				body = rayCastResult:getBody()
-			}
-			self.network:sendToServer("sv_exportCreation", importParams)
-		end
-	elseif params[1] == "/import" then
-		local rayCastValid, rayCastResult = sm.localPlayer.getRaycast(100)
-		if rayCastValid then
-			local importParams = {
-				world = sm.localPlayer.getPlayer().character:getWorld(),
-				name = params[2],
-				position = rayCastResult.pointWorld
-			}
-			self.network:sendToServer("sv_importCreation", importParams)
-		end
 	elseif params[1] == "/noaggro" then
 		if type(params[2]) == "boolean" then
 			self.network:sendToServer("sv_n_switchAggroMode", { aggroMode = not params[2] })
@@ -504,7 +424,7 @@ end
 function FactoryGame.sv_reloadCell(self, params, player)
 	print("sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}")
 
-	self.sv.saved.overworld:loadCell(params.x, params.y, player)
+	self.sv.saved.factoryWorld:loadCell(params.x, params.y, player)
 	self.network:sendToClients("cl_reloadCell", params)
 end
 
@@ -518,19 +438,10 @@ function FactoryGame.cl_reloadCell(self, params)
 
 end
 
-function FactoryGame.cl_reloadCellTestCallback(self, world, x, y, result)
-	print("cl_reloadCellTestCallback")
-	print("result = " .. result)
-end
-
 function FactoryGame.sv_giveItem(self, params)
 	sm.container.beginTransaction()
 	sm.container.collect(params.player:getInventory(), params.item, params.quantity, false)
 	sm.container.endTransaction()
-end
-
-function FactoryGame.cl_n_onJoined(self, params)
-	self.cl.playIntroCinematic = params.newPlayer
 end
 
 function FactoryGame.client_onLoadingScreenLifted(self)
@@ -560,12 +471,6 @@ function FactoryGame.sv_setLimitedInventory(self, state)
 	self.network:sendToClients("client_showMessage", (state and "Limited inventory" or "Unlimited inventory"))
 end
 
-function FactoryGame.sv_ambush(self, params)
-	if sm.exists(self.sv.saved.overworld) then
-		sm.event.sendToWorld(self.sv.saved.overworld, "sv_ambush", params)
-	end
-end
-
 function FactoryGame.sv_setTimeOfDay(self, timeOfDay)
 	if timeOfDay then
 		self.sv.time.timeOfDay = timeOfDay
@@ -584,7 +489,7 @@ function FactoryGame.sv_setTimeProgress(self, timeProgress)
 end
 
 function FactoryGame.sv_killPlayer(self, params)
-	params.damage = 9999
+	params.damage = 6969
 	sm.event.sendToPlayer(params.player, "sv_e_receiveDamage", params)
 end
 
@@ -594,16 +499,6 @@ end
 
 function FactoryGame.sv_spawnHarvestable(self, params)
 	sm.event.sendToWorld(params.world, "sv_spawnHarvestable", params)
-end
-
-function FactoryGame.sv_exportCreation(self, params)
-	local obj = sm.json.parseJsonString(sm.creation.exportToString(params.body))
-	sm.json.save(obj, "$CONTENT_DATA/LocalBlueprints/" .. params.name .. ".blueprint")
-end
-
-function FactoryGame.sv_importCreation(self, params)
-	sm.creation.importFromFile(params.world, "$SURVIVAL_DATA/LocalBlueprints/" .. params.name .. ".blueprint",
-		params.position)
 end
 
 function FactoryGame.sv_onChatCommand(self, params, player)
@@ -618,6 +513,10 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		end
 	
 	--FACTORY
+	elseif params[1] == "/addMoney" then
+		MoneyManager.sv_addMoney(tonumber(params[2]))
+	elseif params[1] == "/setmoney" then
+		MoneyManager.sv_setMoney(tonumber(params[2]))
 	elseif params[1] == "/addpollution" then
 		PollutionManager.sv_addPollution(tonumber(params[2]))
 	elseif params[1] == "/setpollution" then
@@ -658,16 +557,15 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 
 		sm.container.endTransaction()
 
-		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
-		if not sm.exists(self.sv.saved.overworld) then
-			sm.world.loadWorld(self.sv.saved.overworld)
+		if not sm.exists(self.sv.saved.factoryWorld) then
+			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.overworld:loadCell(math.floor(spawnPoint.x / 64), math.floor(spawnPoint.y / 64), player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
 			"sv_createNewPlayer")
-		self.network:sendToClient(player, "cl_n_onJoined", { newPlayer = newPlayer })
 	else
+		--TODO: This code might be redundant? 
+		--[[
 		local inventory = player:getInventory()
-
 		local tool_sledgehammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
 		local sledgehammerCount = sm.container.totalQuantity(inventory, tool_sledgehammer)
 		if sledgehammerCount == 0 then
@@ -679,7 +577,6 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 			sm.container.spend(inventory, tool_sledgehammer, sledgehammerCount - 1)
 			sm.container.endTransaction()
 		end
-
 		local tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
 		local liftCount = sm.container.totalQuantity(inventory, tool_lift)
 		if liftCount == 0 then
@@ -691,33 +588,24 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 			sm.container.spend(inventory, tool_lift, liftCount - 1)
 			sm.container.endTransaction()
 		end
+		]]
 	end
 	g_unitManager:sv_onPlayerJoined(player)
 end
 
 function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
 	local params = { player = player, x = x, y = y }
-	sm.event.sendToWorld(self.sv.saved.overworld, "sv_spawnNewCharacter", params)
-end
-
-function FactoryGame.sv_recreatePlayerCharacter(self, world, x, y, player, params)
-	local yaw = math.atan2(params.dir.y, params.dir.x) - math.pi / 2
-	local pitch = math.asin(params.dir.z)
-	local newCharacter = sm.character.createCharacter(player, self.sv.saved.overworld, params.pos, yaw, pitch)
-	player:setCharacter(newCharacter)
-	print("Recreate character in new world")
-	print(params)
+	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_spawnNewCharacter", params)
 end
 
 function FactoryGame.sv_e_respawn(self, params)
 	if params.player.character and sm.exists(params.player.character) then
 		g_respawnManager:sv_requestRespawnCharacter(params.player)
 	else
-		local spawnPoint = g_survivalDev and SURVIVAL_DEV_SPAWN_POINT or START_AREA_SPAWN_POINT
-		if not sm.exists(self.sv.saved.overworld) then
-			sm.world.loadWorld(self.sv.saved.overworld)
+		if not sm.exists(self.sv.saved.factoryWorld) then
+			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.overworld:loadCell(math.floor(spawnPoint.x / 64), math.floor(spawnPoint.y / 64), params.player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params.player,
 			"sv_createNewPlayer")
 	end
 end
@@ -732,22 +620,6 @@ function FactoryGame.sv_e_onSpawnPlayerCharacter(self, player)
 		g_beaconManager:sv_onSpawnCharacter(player)
 	else
 		sm.log.warning("FactoryGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
-	end
-end
-
-function FactoryGame.sv_e_markBag(self, params)
-	if sm.exists(params.world) then
-		sm.event.sendToWorld(params.world, "sv_e_markBag", params)
-	else
-		sm.log.warning("FactoryGame.sv_e_markBag in a world that doesn't exist")
-	end
-end
-
-function FactoryGame.sv_e_unmarkBag(self, params)
-	if sm.exists(params.world) then
-		sm.event.sendToWorld(params.world, "sv_e_unmarkBag", params)
-	else
-		sm.log.warning("FactoryGame.sv_e_unmarkBag in a world that doesn't exist")
 	end
 end
 
@@ -782,23 +654,15 @@ end
 function FactoryGame.sv_recreateWorld( self )
 	self.sv.saved.data.seed = math.floor(math.random()*10^9)
 
-	self.sv.saved.overworld:destroy()
-	self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
+	self.sv.saved.factoryWorld:destroy()
+	self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
-	g_world = self.sv.saved.overworld
+	g_world = self.sv.saved.factoryWorld
 	self.storage:save( self.sv.saved )
 
 	for _, player in ipairs(sm.player.getAllPlayers()) do
 		self:server_onPlayerJoined(player, true)
 	end
-end
-
-function FactoryGame:sv_addMoney(money)
-	MoneyManager.sv_addMoney(tonumber(money))
-end
-
-function FactoryGame:sv_setMoney(money)
-	MoneyManager.sv_setMoney(tonumber(money))
 end
 
 function FactoryGame:sv_factoryRaid()
@@ -807,7 +671,7 @@ function FactoryGame:sv_factoryRaid()
 	local wave = 1
 	local hours = 12
 
-	sm.event.sendToWorld(self.sv.saved.overworld, "sv_raid", {level = level, wave = wave, hours = hours})
+	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", {level = level, wave = wave, hours = hours})
 end
 
 ---@param message string
@@ -827,9 +691,8 @@ function FactoryGame:cl_onMessage(tag)
 	sm.gui.displayAlertText(language_tag(tag))
 end
 
-
 function FactoryGame:sv_e_stonks(params)
-	sm.event.sendToWorld(self.sv.saved.overworld, "sv_e_stonks", params)
+	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_e_stonks", params)
 end
 
 
