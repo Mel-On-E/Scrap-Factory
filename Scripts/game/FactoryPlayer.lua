@@ -1,12 +1,10 @@
 ---@class FactoryPlayer : PlayerClass
 
 dofile( "$GAME_DATA/Scripts/game/BasePlayer.lua" )
-dofile( "$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/survival_camera.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/survival_constants.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/util/Timer.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/util.lua" )
-dofile( "$SURVIVAL_DATA/scripts/game/quest_util.lua" )
 
 --FACTORY
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
@@ -41,8 +39,6 @@ function FactoryPlayer.server_onCreate( self )
 	if self.sv.saved.isConscious == nil then self.sv.saved.isConscious = true end
 	if self.sv.saved.hasRevivalItem == nil then self.sv.saved.hasRevivalItem = false end
 	if self.sv.saved.isNewPlayer == nil then self.sv.saved.isNewPlayer = true end
-	if self.sv.saved.inChemical == nil then self.sv.saved.inChemical = false end
-	if self.sv.saved.inOil == nil then self.sv.saved.inOil = false end
 	if self.sv.saved.tutorialsWatched == nil then self.sv.saved.tutorialsWatched = {} end
 	self.storage:save( self.sv.saved )
 
@@ -74,7 +70,6 @@ function FactoryPlayer.client_onCreate( self )
 			g_survivalHud:setVisible("WaterBar", false)
 		end
 
-		self.cl.followCutscene = 0.0
 		self.cl.tutorialsWatched = {}
 		self.cl.effects = {}
 	end
@@ -91,11 +86,6 @@ function FactoryPlayer.client_onRefresh( self )
 end
 
 function FactoryPlayer.cl_init( self )
-	self.useCutsceneCamera = false
-	self.progress = 0
-	self.nodeIndex = 1
-	self.currentCutscene = {}
-
 	self.cl.revivalChewCount = 0
 end
 
@@ -124,29 +114,6 @@ function FactoryPlayer.client_onClientDataUpdate( self, data )
 	end
 end
 
-function FactoryPlayer.cl_e_tryPickupItemTutorial( self )
-	if not g_disableTutorialHints then
-		if not self.cl.tutorialsWatched["pickupitem"] then
-			if not self.cl.tutorialGui then
-				self.cl.tutorialGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true, { isHud = true, isInteractive = false, needsCursor = false } )
-				self.cl.tutorialGui:setText( "TextTitle", "#{TUTORIAL_PICKUP_ITEM_TITLE}" )
-				self.cl.tutorialGui:setText( "TextMessage", "#{TUTORIAL_PICKUP_ITEM_MESSAGE}" )
-				local dismissText = string.format( sm.gui.translateLocalizationTags( "#{TUTORIAL_DISMISS}" ), sm.gui.getKeyBinding( "Use" ) )
-				self.cl.tutorialGui:setText( "TextDismiss", dismissText )
-				self.cl.tutorialGui:setImage( "ImageTutorial", "gui_tutorial_image_pickup_items.png" )
-				self.cl.tutorialGui:setOnCloseCallback( "cl_onCloseTutorialPickupItemGui" )
-				self.cl.tutorialGui:open()
-			end
-		end
-	end
-end
-
-function FactoryPlayer.cl_onCloseTutorialPickupItemGui( self )
-	self.cl.tutorialsWatched["pickupitem"] = true
-	self.network:sendToServer( "sv_e_watchedTutorial", { tutorialKey = "pickupitem" } )
-	self.cl.tutorialGui = nil
-end
-
 function FactoryPlayer.sv_e_watchedTutorial( self, params, player )
 	self.sv.saved.tutorialsWatched[params.tutorialKey] = true
 	self.storage:save( self.sv.saved )
@@ -155,7 +122,6 @@ end
 
 function FactoryPlayer.cl_localPlayerUpdate( self, dt )
 	BasePlayer.cl_localPlayerUpdate( self, dt )
-	self:cl_updateCamera( dt )
 
 	local character = self.player:getCharacter()
 	if character and not self.cl.isConscious then
@@ -174,15 +140,6 @@ end
 
 function FactoryPlayer.client_onInteract( self, character, state )
 	if state == true then
-
-		--self:cl_startCutscene( { effectName = "DollyZoomCutscene", worldPosition = character.worldPosition, worldRotation = sm.quat.identity() } )
-		--self:cl_startCutscene( camera_test )
-		--self:cl_startCutscene( camera_test_joint )
-		--self:cl_startCutscene( camera_wakeup_ground )
-		--self:cl_startCutscene( camera_approach_crash )
-		--self:cl_startCutscene( camera_wakeup_crash )
-		--self:cl_startCutscene( camera_wakeup_bed )
-
 		if self.cl.tutorialGui and self.cl.tutorialGui:isActive() then
 			self.cl.tutorialGui:close()
 		end
@@ -261,20 +218,7 @@ function FactoryPlayer.server_onFixedUpdate( self, dt )
 end
 
 function FactoryPlayer.server_onInventoryChanges( self, container, changes )
-	QuestManager.Sv_OnEvent( QuestEvent.InventoryChanges, { container = container, changes = changes } )
-
-	local obj_interactive_builderguide = sm.uuid.new( "e83a22c5-8783-413f-a199-46bc30ca8dac" )
-	if not g_survivalDev then
-		if FindInventoryChange( changes, obj_interactive_builderguide ) > 0 then
-			self.network:sendToClient( self.player, "cl_n_onMessage", { message = "#{ALERT_BUILDERGUIDE_NOT_ON_LIFT}", displayTime = 3 } )
-			QuestManager.Sv_TryActivateQuest( "quest_builder_guide" )
-		end
-		--if FindInventoryChange( changes, blk_scrapwood ) > 0 then
-		--	QuestManager.Sv_TryActivateQuest( "quest_acquire_test" )
-		--end
-	end
-	self.network:sendToClient( self.player, "cl_n_onInventoryChanges", { container = container, changes = changes } )
-			
+	self.network:sendToClient( self.player, "cl_n_onInventoryChanges", { container = container, changes = changes } )		
 end
 
 function FactoryPlayer.sv_e_staminaSpend( self, stamina )
@@ -347,7 +291,6 @@ function FactoryPlayer.sv_e_respawn( self )
 		return
 	end
 	if not self.sv.saved.isConscious then
-		g_respawnManager:sv_performItemLoss( self.player )
 		self.sv.spawnparams.respawn = true
 
 		sm.event.sendToGame( "sv_e_respawn", { player = self.player } )
@@ -361,7 +304,7 @@ function FactoryPlayer.sv_n_tryRespawn( self )
 		self.sv.respawnInteractionAttempted = true
 		self.sv.respawnEndTimer = nil;
 		self.network:sendToClient( self.player, "cl_n_startFadeToBlack", { duration = RespawnFadeDuration, timeout = RespawnFadeTimeout } )
-		
+
 		self.sv.respawnDelayTimer = Timer()
 		self.sv.respawnDelayTimer:start( RespawnDelay )
 	end
@@ -369,23 +312,16 @@ end
 
 function FactoryPlayer.sv_e_onSpawnCharacter( self )
 	if self.sv.saved.isNewPlayer then
-		-- Intro cutscene for new player
-		if not g_survivalDev then
-			--self:sv_e_startLocalCutscene( "camera_approach_crash" )
-		end
+
 	elseif self.sv.spawnparams.respawn then
 		local playerBed = g_respawnManager:sv_getPlayerBed( self.player )
 		if playerBed and playerBed.shape and sm.exists( playerBed.shape ) and playerBed.shape.body:getWorld() == self.player.character:getWorld() then
 			-- Attempt to seat the respawned character in a bed
 			self.network:sendToClient( self.player, "cl_seatCharacter", { shape = playerBed.shape  } )
-		else
-			-- Respawned without a bed
-			--self:sv_e_startLocalCutscene( "camera_wakeup_ground" )
 		end
 
 		self.sv.respawnEndTimer = Timer()
 		self.sv.respawnEndTimer:start( RespawnEndDelay )
-	
 	end
 
 	if self.sv.saved.isNewPlayer or self.sv.spawnparams.respawn then
@@ -403,7 +339,7 @@ function FactoryPlayer.sv_e_onSpawnCharacter( self )
 
 		self.player.character:setTumbling( false )
 		self.player.character:setDowned( false )
-		self.sv.damageCooldown:start( 40 )
+		self.sv.damageCooldown:start( 40*5 )
 	else
 		-- FactoryPlayer rejoined the game
 		if self.sv.saved.stats.hp <= 0 or not self.sv.saved.isConscious then
@@ -436,14 +372,6 @@ function FactoryPlayer.cl_seatCharacter( self, params )
 	end
 end
 
-function FactoryPlayer.sv_e_debug( self, params )
-	if params.hp then
-		self.sv.saved.stats.hp = params.hp
-	end
-	self.storage:save( self.sv.saved )
-	self.network:setClientData( self.sv.saved )
-end
-
 function FactoryPlayer.sv_e_eat( self, edibleParams )
 	if edibleParams.hpGain then
 		self:sv_restoreHealth( edibleParams.hpGain )
@@ -471,94 +399,6 @@ function FactoryPlayer.sv_restoreHealth( self, health )
 		self.sv.saved.stats.hp = math.min( self.sv.saved.stats.hp, self.sv.saved.stats.maxhp )
 		print( "'FactoryPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP" )
 	end
-end
-
-function FactoryPlayer.server_onShapeRemoved( self, removedShapes )
-	--BasePlayer.server_onShapeRemoved( self, removedShapes )
-	local numParts = 0
-	local numBlocks = 0
-	local numJoints = 0
-
-
-
-	for _, removedShapeType in ipairs( removedShapes ) do
-		if removedShapeType.type == "block"  then
-			numBlocks = numBlocks + removedShapeType.amount
-		elseif removedShapeType.type == "part"  then
-			numParts = numParts + removedShapeType.amount
-		elseif removedShapeType.type == "joint"  then
-			numJoints = numJoints + removedShapeType.amount
-
-
-
-
-		end
-	end
-end
-
-
--- Camera
-function FactoryPlayer.cl_updateCamera( self, dt )
-	if self.cl.cutsceneEffect then
-
-		local cutscenePos = self.cl.cutsceneEffect:getCameraPosition()
-		local cutsceneRotation = self.cl.cutsceneEffect:getCameraRotation()
-		local cutsceneFOV = self.cl.cutsceneEffect:getCameraFov()
-		if cutscenePos == nil then cutscenePos = sm.camera.getPosition() end
-		if cutsceneRotation == nil then cutsceneRotation = sm.camera.getRotation() end
-		if cutsceneFOV == nil then cutsceneFOV = sm.camera.getFov() end
-
-		if self.cl.cutsceneEffect:isPlaying() then
-			self.cl.followCutscene = math.min( self.cl.followCutscene + dt / CUTSCENE_FADE_IN_TIME, 1.0 )
-		else
-			self.cl.followCutscene = math.max( self.cl.followCutscene - dt / CUTSCENE_FADE_OUT_TIME, 0.0 )
-		end
-
-		local lerpedCameraPosition = sm.vec3.lerp( sm.camera.getDefaultPosition(), cutscenePos, self.cl.followCutscene )
-		local lerpedCameraRotation = sm.quat.slerp( sm.camera.getDefaultRotation(), cutsceneRotation, self.cl.followCutscene )
-		local lerpedCameraFOV = lerp( sm.camera.getDefaultFov(), cutsceneFOV, self.cl.followCutscene )
-		print(self.cl.followCutscene)
-		sm.camera.setPosition( lerpedCameraPosition )
-		sm.camera.setRotation( lerpedCameraRotation )
-		sm.camera.setFov( lerpedCameraFOV )
-
-		if self.cl.followCutscene <= 0.0 and not self.cl.cutsceneEffect:isPlaying() then
-			sm.gui.hideGui( false )
-			sm.camera.setCameraState( sm.camera.state.default )
-			--sm.localPlayer.setLockedControls( false )
-			self.cl.cutsceneEffect:destroy()
-			self.cl.cutsceneEffect = nil
-		end
-	else
-		self.cl.followCutscene = 0.0
-	end
-end
-
-function FactoryPlayer.cl_startCutscene( self, params )
-	self.cl.cutsceneEffect = sm.effect.createEffect( params.effectName )
-	if params.worldPosition then
-		self.cl.cutsceneEffect:setPosition( params.worldPosition )
-	end
-	if params.worldRotation then
-		self.cl.cutsceneEffect:setRotation( params.worldRotation )
-	end
-	self.cl.cutsceneEffect:start()
-	sm.gui.hideGui( true )
-	sm.camera.setCameraState( sm.camera.state.cutsceneTP )
-	--sm.localPlayer.setLockedControls( true )
-
-	--local camPos = self.cl.cutsceneEffect:getCameraPosition()
-	--local camDir = self.cl.cutsceneEffect:getCameraDirection()
-	--if camPos and camDir then
-	--	sm.camera.setPosition( camPos )
-	--	if camDir:length() > FLT_EPSILON then
-	--		sm.camera.setDirection( camDir )
-	--	end
-	--end
-end
-
-function FactoryPlayer.sv_e_startCutscene( self, params )
-	self.network:sendToClient( self.player, "cl_startCutscene", params )
 end
 
 function FactoryPlayer.client_onCancel( self )

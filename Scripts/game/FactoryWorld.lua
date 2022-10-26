@@ -32,11 +32,6 @@ function FactoryWorld.server_onCreate( self )
 	self.pesticideManager = PesticideManager()
 	self.pesticideManager:sv_onCreate()
 
-	self.foreignConnections = sm.storage.load( STORAGE_CHANNEL_FOREIGN_CONNECTIONS )
-	if self.foreignConnections == nil then
-		self.foreignConnections = {}
-	end--TODO delete later? wtf is this?
-
 	local data = {
 		minX = self.cellMinX or 0,
 		maxX = self.cellMaxX or 0,
@@ -230,7 +225,6 @@ function FactoryWorld.client_onCellUnloaded( self, x, y )
 	g_effectManager:cl_onWorldCellUnloaded( self, x, y )
 end
 
-
 function FactoryWorld.server_onProjectile( self, hitPos, hitTime, hitVelocity, _, attacker, damage, userData, hitNormal, target, projectileUuid )
 	if isAnyOf( projectileUuid, g_potatoProjectiles ) then
 		local units = sm.unit.getAllUnits()
@@ -281,7 +275,6 @@ function FactoryWorld.server_onProjectile( self, hitPos, hitTime, hitVelocity, _
 end
 
 function FactoryWorld.server_onMelee( self, hitPos, attacker, target, damage, power, hitDirection, hitNormal )
-
 	if attacker and sm.exists( attacker ) and target and sm.exists( target ) then
 		if type( target ) == "Shape" and type( attacker) == "Unit" then
 			local targetPlayer = nil
@@ -312,78 +305,6 @@ function FactoryWorld.sv_spawnHarvestable( self, params )
 	local harvestable = sm.harvestable.createHarvestable( params.uuid, params.position, params.quat )
 	if params.harvestableParams then
 		harvestable:setParams( params.harvestableParams )
-	end
-end
-
-function FactoryWorld.sv_ambush( self, params )
-	print( "Ambush - magnitude:", params.magnitude, "wave:", params.wave )
-	local players = sm.player.getAllPlayers()
-
-	for _, player in pairs( players ) do
-		if player.character and player.character:getWorld() == self.world then
-			local incomingUnits = {}
-
-			local playerPosition = player.character.worldPosition
-			local playerDensity = g_unitManager:sv_getPlayerDensity( playerPosition )
-
-			if params.wave then
-				if playerDensity > 0.85 then
-					incomingUnits[#incomingUnits + 1] = unit_haybot
-					incomingUnits[#incomingUnits + 1] = unit_totebot_green
-				elseif playerDensity > 0.5 then
-					incomingUnits[#incomingUnits + 1] = unit_totebot_green
-					incomingUnits[#incomingUnits + 1] = unit_totebot_green
-				elseif playerDensity > 0.3 then
-					incomingUnits[#incomingUnits + 1] = unit_totebot_green
-				end
-			end
-
-			local minDistance = 64
-			local maxDistance = 128 -- 128 is maximum guaranteed terrain distance
-			local validNodes = sm.pathfinder.getSortedNodes( playerPosition, minDistance, maxDistance )
-			local validNodesCount = table.maxn( validNodes )
-
-			--local incomingUnits = g_unitManager:sv_getRandomUnits( unitCount, playerPosition )
-
-			if validNodesCount > 0 then
-				print( #incomingUnits .. " enemies are approaching!" )
-				for i = 1, #incomingUnits do
-					local selectedNode = math.random( validNodesCount )
-					local unitPos = validNodes[selectedNode]:getPosition()
-
-					if validNodesCount >= #incomingUnits - i then
-						table.remove( validNodes, selectedNode )
-						validNodesCount = validNodesCount - 1
-					end
-
-					local playerDirection = playerPosition - unitPos
-					local yaw = math.atan2( playerDirection.y, playerDirection.x ) - math.pi/2
-
-					sm.unit.createUnit( incomingUnits[i], unitPos + sm.vec3.new( 0, 0.1, 0), yaw, { temporary = true, roaming = true, ambush = true, tetherPoint = playerPosition } )
-				end
-			else
-				local maxSpawnAttempts = 32
-				for i = 1, #incomingUnits do
-					local spawnAttempts = 0
-					while spawnAttempts < maxSpawnAttempts do
-						spawnAttempts = spawnAttempts + 1
-						local distanceFromCenter = math.random( minDistance, maxDistance )
-						local spawnDirection = sm.vec3.new( 0, 1, 0 )
-						spawnDirection = spawnDirection:rotateZ( math.rad( math.random( 359 ) ) )
-						local spawnPosition = playerPosition + spawnDirection * distanceFromCenter
-
-						local success, result = sm.physics.raycast( spawnPosition + sm.vec3.new( 0, 0, 128 ), spawnPosition + sm.vec3.new( 0, 0, -128 ), nil , -1 )
-						if success and ( result.type == "limiter" or result.type == "terrainSurface" ) then
-							local directionToPlayer = playerPosition - spawnPosition
-							local yaw = math.atan2( directionToPlayer.y, directionToPlayer.x ) - math.pi / 2
-							spawnPosition = result.pointWorld
-							sm.unit.createUnit( incomingUnits[i], spawnPosition, yaw, { temporary = true, roaming = true, ambush = true, tetherPoint = playerPosition } )
-							break
-						end
-					end
-				end
-			end
-		end
 	end
 end
 
