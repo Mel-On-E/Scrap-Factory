@@ -1,0 +1,29 @@
+{
+	"partList": [
+		{
+			"uuid": "a9ad3ebe-9c19-49fc-855c-5061ce157e4e",
+			"name": "obj_interactive_day_sensor",
+			"renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_logicgate.rend",
+			"color": "df7f01",
+			"box": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"physicsMaterial": "Mechanical",
+			"ratings": {
+				"density": 2,
+				"durability": 3,
+				"friction": 5,
+				"buoyancy": 2
+			},
+			"flammable": false,
+			"stackSize": 999,
+			"scripted": {
+				"filename": "$CONTENT_DATA/Scripts/Other/DaySensor.lua",
+				"classname": "DaySensor",
+				"data": {}
+			}
+		}
+	]
+}

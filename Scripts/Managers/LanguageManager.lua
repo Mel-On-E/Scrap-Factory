@@ -12,7 +12,7 @@ function LanguageManager:client_onCreate()
 end
 
 ---@param name string The name of the language tag from $CONTENT_DATA/Gui/Language/${Language_name}/tags.json
-function Language_tag(name)
+function language_tag(name)
     if not g_languageManager then --STupid fix because quests load befor this.
         g_languageManager = { language = "yo mama" }
     end
