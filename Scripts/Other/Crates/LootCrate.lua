@@ -41,6 +41,8 @@ end
 
 function LootCrate:client_onCreate()
     self.opened = false
+
+    self.blips = {}
 end
 
 function LootCrate:client_onFixedUpdate()
@@ -50,14 +52,26 @@ function LootCrate:client_onFixedUpdate()
             self.loot = self:get_random_item()
             self.gui:setIconImage("Icon", self.loot)
             self.gui:setText("Name", sm.shape.getShapeTitle(self.loot))
-            sm.effect.playEffect("Horn - Honk", sm.localPlayer.getPlayer():getCharacter():getWorldPosition(),
-                sm.vec3.zero(), sm.quat.identity(), sm.vec3.one(), { pitch = 1 - (self.openTick - tick) / self.unboxTime })
+
+
+            local blip = sm.effect.createEffect("LootCrateBlip", sm.localPlayer.getPlayer():getCharacter())
+            blip:setParameter("pitch", 1 - (self.openTick - tick) / self.unboxTime)
+            blip:start()
+
+            self.blips[#self.blips+1] = {effect = blip, tick = tick}
         end
         if tick > self.openTick then
             self.openTick = nil
             self.network:sendToServer("sv_giveItem",
                 { player = sm.localPlayer.getPlayer(), item = self.loot, quantity = 1 })
             sm.gui.displayAlertText("Found #df7f01" .. sm.shape.getShapeTitle(self.loot) .. "#ffffff x" .. tostring(1))
+        end
+    end
+
+    for k, blip in pairs(self.blips) do
+        if blip.tick < sm.game.getCurrentTick() - 4 then
+            blip.effect:destroy()
+            self.blips[k] = nil
         end
     end
 end

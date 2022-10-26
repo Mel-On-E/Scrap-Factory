@@ -92,5 +92,18 @@
 				"type": "audio"
 			}
 		]
+	},
+	"LootCrateBlip": {
+		"effectList": [
+			{
+				"delay": 0.0,
+				"name": "event:/music/robotheads/retrofmblip",
+				"type": "audio",
+				"parameters" : [ "pitch" ]
+			}
+		],
+		"parameterList" : {
+			"pitch" : 0.50
+		}
 	}
 }

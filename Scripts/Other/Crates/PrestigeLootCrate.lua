@@ -4,6 +4,8 @@ dofile("$CONTENT_DATA/Scripts/Other/Crates/LootCrate.lua")
 PrestigeLootCrate = class(LootCrate)
 
 function PrestigeLootCrate:client_onCreate()
+    LootCrate.client_onCreate(self)
+    
     self.cl = {}
     self.cl.iconGui = sm.gui.createWorldIconGui( 32, 32, "$GAME_DATA/Gui/Layouts/Hud/Hud_WorldIcon.layout", false )
 	self.cl.iconGui:setImage( "Icon", "gui_icon_popup_alert.png" )
