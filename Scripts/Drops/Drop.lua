@@ -1,7 +1,8 @@
-Drop = class( nil )
+---@class Drop : ShapeClass
+Drop = class(nil)
 
 local oreCount = 0
-local lifeTime = 40*5--ticks
+local lifeTime = 40 * 5 --ticks
 
 function Drop:server_onCreate()
     local body = self.shape:getBody()
@@ -50,7 +51,8 @@ end
 
 function Drop:server_onDestroy()
     if self.pollution then
-        sm.event.sendToGame("sv_e_stonks", { pos = self.pos, value = tostring(self.pollution), format = "pollution", effect = "Pollution" })
+        sm.event.sendToGame("sv_e_stonks",
+            { pos = self.pos, value = tostring(self.pollution), format = "pollution", effect = "Pollution" })
         PollutionManager.sv_addPollution(self.pollution)
     end
 end
@@ -88,9 +90,10 @@ end
 function Drop:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
-    local money = format_number({format = "money", value = self.money or self.cl.value, color = "#4f9f4f"})
+    local money = format_number({ format = "money", value = self.money or self.cl.value, color = "#4f9f4f" })
     if self.cl.pollution or self.pollution then
-        local pollution = format_number({format = "pollution", value = self.pollution or self:getPollution(), color = "#9f4f9f"})
+        local pollution = format_number({ format = "pollution", value = self.pollution or self:getPollution(),
+            color = "#9f4f9f" })
         sm.gui.setInteractionText("", o1 .. pollution .. o2)
         sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
     else

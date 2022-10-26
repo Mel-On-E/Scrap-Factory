@@ -1,7 +1,6 @@
----@class Prestige : ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
+---@class Prestige : Interface
 Prestige = class(Interface)
 
 function Prestige:sv_prestige()
@@ -29,8 +28,10 @@ end
 function Prestige:update_gui()
 	local prestigeGain = PrestigeManager.getPrestigeGain()
 	local newPrestige = PrestigeManager.cl_getPrestige() + prestigeGain
-	self.cl.gui:setText("PrestigeGain", format_number({format = "prestige", value = prestigeGain, prefix = "+ "}) .. "\n" ..
-		"#ffffff(" .. format_number({format = "prestige", value = newPrestige, color = "#ffffff", unit = " #dd6e00◊#ffffff"}) .. ")")
+	self.cl.gui:setText("PrestigeGain",
+		format_number({ format = "prestige", value = prestigeGain, prefix = "+ " }) .. "\n" ..
+		"#ffffff(" ..
+		format_number({ format = "prestige", value = newPrestige, color = "#ffffff", unit = " #dd6e00◊#ffffff" }) .. ")")
 end
 
 function Prestige.cl_e_open_gui()
@@ -53,11 +54,11 @@ end
 function Prestige.cl_prestige()
 	g_cl_prestige.cl.gui:close()
 
-	g_cl_prestige.cl.confirmPrestigeGui = sm.gui.createGuiFromLayout( "$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout" )
-	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback( "Yes", "cl_onClearConfirmButtonClick" )
-	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback( "No", "cl_onClearConfirmButtonClick" )
-	g_cl_prestige.cl.confirmPrestigeGui:setText( "Title", language_tag("Prestige") )
-	g_cl_prestige.cl.confirmPrestigeGui:setText( "Message", language_tag("PrestigeConfirmation") )
+	g_cl_prestige.cl.confirmPrestigeGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
+	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
+	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
+	g_cl_prestige.cl.confirmPrestigeGui:setText("Title", language_tag("Prestige"))
+	g_cl_prestige.cl.confirmPrestigeGui:setText("Message", language_tag("PrestigeConfirmation"))
 	g_cl_prestige.cl.confirmPrestigeGui:open()
 end
 

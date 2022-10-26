@@ -1,13 +1,14 @@
 dofile("$CONTENT_DATA/Scripts/Other/Belt.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
-Upgrader = class(nil)
+---@class Upgrader : ShapeClass
+Upgrader = class()
 Upgrader.maxParentCount = 1
 Upgrader.maxChildCount = 0
 Upgrader.connectionInput = sm.interactable.connectionType.logic
 Upgrader.connectionOutput = sm.interactable.connectionType.none
-Upgrader.colorNormal = sm.color.new( 0x00dd00ff )
-Upgrader.colorHighlight = sm.color.new( 0x00ff00ff )
+Upgrader.colorNormal = sm.color.new(0x00dd00ff)
+Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 
 function get_size_and_offset(self)
     local size = sm.vec3.new(self.data.upgrade.box.x, self.data.upgrade.box.y, self.data.upgrade.box.z)

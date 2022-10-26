@@ -1,7 +1,6 @@
----@class PowerManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@class PowerManager : ScriptableObjectClass
 PowerManager = class()
 PowerManager.isSaveObject = true
 
@@ -30,16 +29,16 @@ function PowerManager:server_onFixedUpdate()
         local powerStored = safeData.powerStored
 
         if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-			powerStored = math.max(math.min(self.sv.powerLimit, powerStored + self.sv.power), 0)
-		end
+            powerStored = math.max(math.min(self.sv.powerLimit, powerStored + self.sv.power), 0)
+        end
 
-		safeData.powerStored = tostring(powerStored)
-		self.storage:save(self.sv.saved)
-		safeData.powerStored = powerStored
+        safeData.powerStored = tostring(powerStored)
+        self.storage:save(self.sv.saved)
+        safeData.powerStored = powerStored
 
-		self.network:setClientData({ power = tostring(self.sv.power),
-        powerLimit = tostring(self.sv.powerLimit),
-        powerStored = tostring(self.sv.saved.powerStored)})
+        self.network:setClientData({ power = tostring(self.sv.power),
+            powerLimit = tostring(self.sv.powerLimit),
+            powerStored = tostring(self.sv.saved.powerStored) })
 
         self.sv.power = 0
     end
@@ -69,7 +68,7 @@ function PowerManager:client_onCreate()
 end
 
 function PowerManager:client_onClientDataUpdate(clientData)
-	self.cl.power = tonumber(clientData.power)
+    self.cl.power = tonumber(clientData.power)
     self.cl.powerLimit = tonumber(clientData.powerLimit)
     self.cl.powerStored = tonumber(clientData.powerStored)
 end
@@ -77,15 +76,16 @@ end
 function PowerManager:client_onFixedUpdate()
     if g_factoryHud then
         local power = self.cl.power or 0
-		local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
-		g_factoryHud:setText("Power", "#dddd00" .. format_number({format = "energy", value = power}) .. " (" .. tostring(percentage) .. "%)")
+        local percentage = self.cl.powerStored > 0 and math.ceil((self.cl.powerStored / self.cl.powerLimit) * 100) or 0
+        g_factoryHud:setText("Power",
+            "#dddd00" .. format_number({ format = "energy", value = power }) .. " (" .. tostring(percentage) .. "%)")
 
-		if power < 0 and self.cl.powerStored <= 0 then
-			if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-				sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
-				sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
-			end
-		end
+        if power < 0 and self.cl.powerStored <= 0 then
+            if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
+                sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
+                sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
+            end
+        end
     end
 end
 

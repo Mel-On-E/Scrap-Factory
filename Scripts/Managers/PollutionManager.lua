@@ -1,7 +1,6 @@
----@class PollutionManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@class PollutionManager : ScriptableObjectClass
 PollutionManager = class()
 PollutionManager.isSaveObject = true
 
@@ -23,24 +22,24 @@ end
 function PollutionManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         local safeData = self.saved
-		local pollution = safeData.pollution
+        local pollution = safeData.pollution
 
-		safeData.pollution = tostring(pollution)
+        safeData.pollution = tostring(pollution)
 
-		self.storage:save(self.saved)
+        self.storage:save(self.saved)
 
-		safeData.pollution = pollution
+        safeData.pollution = pollution
 
-		self.network:setClientData({ pollution = tostring(self.saved.pollution)})
+        self.network:setClientData({ pollution = tostring(self.saved.pollution) })
     end
 end
 
 function PollutionManager.sv_addPollution(pollution)
-	g_pollutionManager.saved.pollution = g_pollutionManager.saved.pollution + pollution
+    g_pollutionManager.saved.pollution = g_pollutionManager.saved.pollution + pollution
 end
 
 function PollutionManager.sv_setPollution(pollution)
-	g_pollutionManager.saved.pollution = pollution
+    g_pollutionManager.saved.pollution = pollution
 end
 
 function PollutionManager.sv_getPollution()
@@ -57,7 +56,7 @@ function PollutionManager:client_onCreate()
 end
 
 function PollutionManager:client_onClientDataUpdate(clientData, channel)
-	self.cl.pollution = tonumber(clientData.pollution)
+    self.cl.pollution = tonumber(clientData.pollution)
 end
 
 function PollutionManager:client_onFixedUpdate()
@@ -74,7 +73,7 @@ function PollutionManager:updateHud()
     if g_factoryHud then
         local pollution = self.cl_getPollution()
         if pollution then
-            g_factoryHud:setText("Pollution", format_number({format = "pollution", value = pollution}))
+            g_factoryHud:setText("Pollution", format_number({ format = "pollution", value = pollution }))
         end
     end
 end
@@ -85,7 +84,7 @@ end
 
 function PollutionManager.getResearchMultiplier()
     if g_pollutionManager.cl_getPollution() > 0 then
-        return 2^math.log(g_pollutionManager.cl_getPollution(), 10)
+        return 2 ^ math.log(g_pollutionManager.cl_getPollution(), 10)
     end
     return 1
 end

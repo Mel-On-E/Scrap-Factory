@@ -1,7 +1,6 @@
----@class Research : ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
+---@class Research : Interface
 Research = class(Interface)
 
 function Research:client_onCreate()
@@ -33,15 +32,17 @@ function Research:update_gui()
 	self.cl.gui:setIconImage("Icon", tierUuid)
 	self.cl.gui:setText("ResearchName", sm.shape.getShapeTitle(tierUuid))
 	self.cl.gui:setText("ResearchDesc", "#ffffff" .. language_tag("DescTier" .. tostring(self.cl.tier)))
-	
+
 
 	local progress, goal = ResearchManager.cl_getTierProgress(self.cl.tier)
 	if self.cl.tier < ResearchManager.cl_getCurrentTier() then
 		goal = progress
 	end
-	self.cl.gui:setText("Progress", format_number({format = "money", value = progress, color = "#00dddd"}) .. "/" .. format_number({format = "money", value = goal, color = "#00dddd"}) ..
-		"\n(" .. string.format("%.2f", progress/goal*100) .. "%)")
-	
+	self.cl.gui:setText("Progress",
+		format_number({ format = "money", value = progress, color = "#00dddd" }) ..
+		"/" .. format_number({ format = "money", value = goal, color = "#00dddd" }) ..
+		"\n(" .. string.format("%.2f", progress / goal * 100) .. "%)")
+
 
 	local unlocks = ResearchManager.cl_getTierUnlocks(self.cl.tier)
 	for i = 1, 6, 1 do
@@ -72,7 +73,7 @@ end
 
 function Research:change_tier(change)
 	self.cl.tier = self.cl.tier + change
-	self.cl.tier =  math.max(math.min(self.cl.tier,  ResearchManager.cl_getTierCount()), 1)
+	self.cl.tier = math.max(math.min(self.cl.tier, ResearchManager.cl_getTierCount()), 1)
 	self.cl.unlockIndex = 0
 	self:update_gui()
 end

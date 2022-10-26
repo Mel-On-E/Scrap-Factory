@@ -1,11 +1,10 @@
----@class DailyRewardManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@class DailyRewardManager:ScriptableObjectClass
 DailyRewardManager = class()
 DailyRewardManager.isSaveObject = true
 
-local DAY = 1000*60*60*20 --20 Hours
+local DAY = 1000 * 60 * 60 * 20 --20 Hours
 
 function DailyRewardManager:server_onCreate()
     self.saved = self.storage:load()
@@ -17,7 +16,7 @@ function DailyRewardManager:server_onCreate()
         self.storage:save(self.saved)
     end
 
-    if os.time() - self.saved.time >= DAY*2 then
+    if os.time() - self.saved.time >= DAY * 2 then
         self.saved.streak = 0
         self.storage:save(self.saved)
     end
@@ -29,16 +28,17 @@ function DailyRewardManager:server_onCreate()
 
     self.rewards = sm.json.open("$CONTENT_DATA/Scripts/daily rewards.json")
 
-    self.network:setClientData({day = self.saved.streak + 1})
+    self.network:setClientData({ day = self.saved.streak + 1 })
 end
 
 function DailyRewardManager:sv_spawnRewards(params, player)
     for i = 1, self.rewards[self.saved.streak + 1].quantity, 1 do
         local pos = player:getCharacter():getWorldPosition()
-        pos.x = pos.x + (math.random()-0.5)*10
-        pos.y = pos.y + (math.random()-0.5)*10
+        pos.x = pos.x + (math.random() - 0.5) * 10
+        pos.y = pos.y + (math.random() - 0.5) * 10
         pos.z = pos.z + 5
-        LootCrateManager.sv_spawnCrate({pos = pos, uuid = self.rewards[self.saved.streak + 1].crate, effect = "Woc - Destruct"})
+        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = self.rewards[self.saved.streak + 1].crate,
+            effect = "Woc - Destruct" })
     end
     self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
     self.saved.time = os.time()
@@ -53,11 +53,12 @@ end
 function DailyRewardManager:client_onFixedUpdate()
     if self.gui and self.gui:isActive() and self.playEffect and sm.localPlayer.getPlayer().character then
         local player = sm.localPlayer.getPlayer()
-        sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "DailyReward", effect = "Confetti", host = player:getCharacter()})
+        sm.event.sendToPlayer(player, "cl_e_createEffect",
+            { id = "DailyReward", effect = "Confetti", host = player:getCharacter() })
         sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
         self.playEffect = false
     end
-    
+
 end
 
 function DailyRewardManager:client_onClientDataUpdate(data)
@@ -93,7 +94,8 @@ function generateDays(self)
 
         self.gui:setButtonState("Reward_" .. tostring(i), rewardDay)
 
-        self.gui:setText("RewardText_" .. tostring(i), color .. language_tag("DailyRewardDay"):format(tostring(i + offset)))
+        self.gui:setText("RewardText_" .. tostring(i),
+            color .. language_tag("DailyRewardDay"):format(tostring(i + offset)))
         local uuid = sm.uuid.new(self.rewards[i + offset].crate)
         self.gui:setIconImage("RewardPic_" .. tostring(i), uuid)
         self.gui:setText("RewardCount_" .. tostring(i), tostring(self.rewards[i + offset].quantity))
@@ -118,4 +120,3 @@ function DailyRewardManager:cl_claimReward()
     self.network:sendToServer("sv_spawnRewards")
     sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_destroyEffect", "DailyReward")
 end
-

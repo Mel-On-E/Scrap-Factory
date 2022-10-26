@@ -1,6 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
-Dropper = class( nil )
+---@class Dropper : ShapeClass
+Dropper = class(nil)
 
 function Dropper:server_onCreate()
     self.data.power = tonumber(self.data.power)
@@ -12,7 +13,8 @@ end
 function Dropper:sv_drop()
     if PowerManager.sv_changePower(-self.data.power) then
         local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
-        local shape = sm.shape.createPart(self.drop, self.shape:getWorldPosition() + offset, self.shape:getWorldRotation())
+        local shape = sm.shape.createPart(self.drop, self.shape:getWorldPosition() + offset,
+            self.shape:getWorldRotation())
 
         local publicData = {}
         publicData.value = tonumber(self.data.drop.value)

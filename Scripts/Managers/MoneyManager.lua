@@ -1,7 +1,6 @@
----@class MoneyManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@class MoneyManager : ScriptableObjectClass
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
@@ -11,10 +10,10 @@ function MoneyManager:server_onCreate()
     if self.saved == nil then
         self.saved = {}
         self.saved.money = 0
-		self.saved.moneyEarned = 0
+        self.saved.moneyEarned = 0
     else
         self.saved.money = tonumber(self.saved.money)
-		self.saved.moneyEarned = tonumber(self.saved.moneyEarned)
+        self.saved.moneyEarned = tonumber(self.saved.moneyEarned)
     end
 
     if not g_moneyManager then
@@ -25,33 +24,33 @@ end
 function MoneyManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         local safeData = self.saved
-		local money = safeData.money
-		local moneyEarned = safeData.moneyEarned
+        local money = safeData.money
+        local moneyEarned = safeData.moneyEarned
 
-		safeData.money = tostring(money)
-		safeData.moneyEarned = tostring(moneyEarned)
+        safeData.money = tostring(money)
+        safeData.moneyEarned = tostring(moneyEarned)
 
-		self.storage:save(self.saved)
+        self.storage:save(self.saved)
 
-		safeData.money = money
-		safeData.moneyEarned = moneyEarned
+        safeData.money = money
+        safeData.moneyEarned = moneyEarned
 
-		self.network:setClientData({ money = tostring(self.saved.money), moneyEarned = tostring(self.saved.moneyEarned)})
+        self.network:setClientData({ money = tostring(self.saved.money), moneyEarned = tostring(self.saved.moneyEarned) })
     end
 end
 
 function MoneyManager.sv_addMoney(money)
-	g_moneyManager.saved.money = g_moneyManager.saved.money + money
-	g_moneyManager.saved.moneyEarned = g_moneyManager.saved.moneyEarned + money
+    g_moneyManager.saved.money = g_moneyManager.saved.money + money
+    g_moneyManager.saved.moneyEarned = g_moneyManager.saved.moneyEarned + money
 end
 
 function MoneyManager.sv_setMoney(money)
-	g_moneyManager.saved.money = money
-	g_moneyManager.saved.moneyEarned = money
+    g_moneyManager.saved.money = money
+    g_moneyManager.saved.moneyEarned = money
 end
 
 function MoneyManager.sv_spendMoney(price)
-	if price > g_moneyManager.saved.money then
+    if price > g_moneyManager.saved.money then
         return false
     else
         g_moneyManager.saved.money = g_moneyManager.saved.money - price
@@ -70,7 +69,7 @@ function MoneyManager:client_onCreate()
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
-	self.cl.money = tonumber(clientData.money)
+    self.cl.money = tonumber(clientData.money)
     self.cl.moneyEarned = tonumber(clientData.moneyEarned)
 end
 
@@ -88,7 +87,7 @@ function MoneyManager:updateHud()
     if g_factoryHud then
         local money = self.cl_getMoney()
         if money then
-            g_factoryHud:setText("Money", format_number({format = "money", value = money}))
+            g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
         end
     end
 end

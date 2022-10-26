@@ -1,8 +1,7 @@
----@class ResearchManager:ScriptableObjectClass
-
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PollutionManager.lua")
 
+---@class ResearchManager : ScriptableObjectClass
 ResearchManager = class()
 ResearchManager.isSaveObject = true
 
@@ -39,7 +38,7 @@ function ResearchManager:server_onFixedUpdate()
     end
 
     if self.notify then
-        self.network:sendToClients("cl_research_done", self.sv.tier - 1 )
+        self.network:sendToClients("cl_research_done", self.sv.tier - 1)
         self.notify = false
     end
 end
@@ -47,7 +46,8 @@ end
 function ResearchManager:sv_saveDataAndSync()
     local safeData = self.sv.saved
     local research = safeData.research
-    local progressFraction = (research[self.sv.tier] or 0)/ (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+    local progressFraction = (research[self.sv.tier] or 0) /
+        (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
 
     for tier, progress in ipairs(research) do
         research[tier] = tostring(progress)
@@ -55,7 +55,8 @@ function ResearchManager:sv_saveDataAndSync()
 
     self.storage:save(self.sv.saved)
 
-    self.network:setClientData({ research = safeData.research, tier = self.sv.tier, progress = string.format("%.2f", progressFraction*100)})
+    self.network:setClientData({ research = safeData.research, tier = self.sv.tier,
+        progress = string.format("%.2f", progressFraction * 100) })
 
     for tier, progress in ipairs(research) do
         research[tier] = tonumber(progress)
@@ -72,7 +73,7 @@ function ResearchManager.sv_addResearch(shape)
     local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier]
     local goal = tier.goal * PollutionManager.getResearchMultiplier()
 
-	g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, goal)
+    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, goal)
 
     if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
@@ -113,9 +114,9 @@ end
 
 function ResearchManager:client_onFixedUpdate()
     if g_factoryHud and self.cl.tier > 0 then
-		g_factoryHud:setIconImage( "ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid) )
-        g_factoryHud:setText( "Research","#00dddd" .. self.cl.progress .. "%")
-	end
+        g_factoryHud:setIconImage("ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid))
+        g_factoryHud:setText("Research", "#00dddd" .. self.cl.progress .. "%")
+    end
 
     if self.cl.endEffect and self.cl.endEffect < sm.game.getCurrentTick() then
         self.cl.endEffect = nil
@@ -134,9 +135,10 @@ function ResearchManager:cl_research_done(tier)
     Research.cl_close()
 
     player = sm.localPlayer.getPlayer()
-    sm.event.sendToPlayer(player, "cl_e_createEffect", {id = "ResearchDone", effect = "ResearchDone", host = player:getCharacter()})
+    sm.event.sendToPlayer(player, "cl_e_createEffect",
+        { id = "ResearchDone", effect = "ResearchDone", host = player:getCharacter() })
     sm.event.sendToPlayer(player, "cl_e_startEffect", "ResearchDone")
-    self.cl.endEffect = sm.game.getCurrentTick() + 40*16
+    self.cl.endEffect = sm.game.getCurrentTick() + 40 * 16
 end
 
 function ResearchManager.cl_getCurrentTier()
@@ -147,7 +149,8 @@ end
 
 function ResearchManager.cl_getTierProgress(tier)
     local progress = g_ResearchManager.sv.saved.research[tier] or 0
-    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) * PollutionManager.getResearchMultiplier()
+    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) *
+        PollutionManager.getResearchMultiplier()
     return progress, goal
 end
 

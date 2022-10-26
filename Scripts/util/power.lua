@@ -1,4 +1,5 @@
-Power = class (nil)
+---@class Power : ShapeClass
+Power = class(nil)
 
 function Power:server_onCreate()
     self.data.power = tonumber(self.data.power)
@@ -12,7 +13,7 @@ function Power:server_onFixedUpdate(effect)
     self.powerUpdate = self.powerUpdate - 1
 
     local parent = self.interactable:getSingleParent()
-    if not parent then 
+    if not parent then
         self.active = true
     else
         self.active = parent:isActive()
