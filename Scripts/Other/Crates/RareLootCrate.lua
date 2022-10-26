@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/Other/LootCrate.lua")
+dofile("$CONTENT_DATA/Scripts/Other/Crates/LootCrate.lua")
 
 ---@class RareLootCrate : LootCrate
 RareLootCrate = class(LootCrate)
