@@ -41,7 +41,6 @@ function format_number(params)
 
     elseif params.format == "prestige" then
         params.color = params.color or "#dd6e00"
-        params.prefix = "+ "
         params.unit = params.unit or " ◊"
     end
 

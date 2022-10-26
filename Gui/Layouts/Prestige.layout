@@ -20,6 +20,7 @@
                         <Property key="VisibleHScroll" value="false"/>
                         <Property key="VisibleVScroll" value="false"/>
                         <Property key="ReadOnly" value="true"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
                 <Widget type="Widget" skin="BackgroundPopup" position_real="0.33536585365853661 0.61126760563380278 0.34146341463414637 0.3464788732394366">
@@ -33,8 +34,13 @@
                     </Widget>
                 </Widget>
             </Widget>
-            <Widget type="Button" skin="StyledButtonLarge" position_real="0.38860103626943004 0.80180180180180183 0.22797927461139897 0.11711711711711711" name="Reset">
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.225 0.80180180180180183 0.225 0.11711711711711711" name="Reset">
                 <Property key="Caption" value="Confirm"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_Header"/>
+            </Widget>
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.55 0.80180180180180183 0.225 0.11711711711711711" name="Perks">
+                <Property key="Caption" value="See Perks"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="FontName" value="SM_Header"/>
             </Widget>

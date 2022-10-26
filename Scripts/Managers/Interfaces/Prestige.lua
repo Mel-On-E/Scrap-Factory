@@ -27,7 +27,10 @@ function Prestige:client_onFixedUpdate()
 end
 
 function Prestige:update_gui()
-	self.cl.gui:setText("PrestigeGain", format_number({format = "prestige", value = PrestigeManager.getPrestigeGain()}))
+	local prestigeGain = PrestigeManager.getPrestigeGain()
+	local newPrestige = PrestigeManager.cl_getPrestige() + prestigeGain
+	self.cl.gui:setText("PrestigeGain", format_number({format = "prestige", value = prestigeGain, prefix = "+ "}) .. "\n" ..
+		"#ffffff(" .. format_number({format = "prestige", value = newPrestige, color = "#ffffff"}) .. ")")
 end
 
 function Prestige.cl_e_open_gui()

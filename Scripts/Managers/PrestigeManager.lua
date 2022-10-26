@@ -79,7 +79,7 @@ function PrestigeManager:updateHud()
     if g_factoryHud then
         local prestige = self.getPrestigeGain()
         if prestige then
-            g_factoryHud:setText("Prestige", format_number({format = "prestige", value = prestige}))
+            g_factoryHud:setText("Prestige", format_number({format = "prestige", value = prestige, prefix = "+ "}))
         end
     end
 end
