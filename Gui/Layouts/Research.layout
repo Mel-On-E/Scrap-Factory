@@ -44,6 +44,7 @@
                         <Property key="ReadOnly" value="true"/>
                         <Property key="FontName" value="SM_ItemTitle"/>
                         <Property key="Caption" value="Font Test"/>
+                        <Property key="NeedMouse" value="false"/>
                     </Widget>
                 </Widget>
             </Widget>
