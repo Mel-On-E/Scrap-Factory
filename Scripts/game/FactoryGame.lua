@@ -1,7 +1,5 @@
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
-dofile("$SURVIVAL_DATA/Scripts/game/managers/ElevatorManager.lua")
-dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/RespawnManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua") --FACTORY
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
@@ -12,7 +10,6 @@ dofile("$SURVIVAL_DATA/Scripts/game/survival_projectiles.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_meleeattacks.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/recipes.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
-dofile("$SURVIVAL_DATA/Scripts/game/managers/QuestEntityManager.lua")
 dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
@@ -30,7 +27,6 @@ dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
 ---@class FactoryGame : GameClass
 ---@field sv table
 ---@field cl table
----@field warehouses table
 FactoryGame = class(nil)
 FactoryGame.enableLimitedInventory = true
 FactoryGame.enableRestrictions = true
@@ -40,9 +36,6 @@ FactoryGame.enableUpgrade = true
 FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
-local IntroFadeDuration = 1.1
-local IntroEndFadeDuration = 1.1
-local IntroFadeTimeout = 5.0
 
 SURVIVAL_DEV_SPAWN_POINT = sm.vec3.new(0, 0, 20)
 START_AREA_SPAWN_POINT = sm.vec3.new(0, 0, 20)
@@ -63,7 +56,7 @@ function FactoryGame.server_onCreate(self)
 		self.sv.saved = {}
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
-		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/Overworld.lua", "Overworld",
+		self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 		self.storage:save(self.sv.saved)
 	end
@@ -86,14 +79,6 @@ function FactoryGame.server_onCreate(self)
 	g_eventManager = EventManager()
 	g_eventManager:sv_onCreate()
 
-	g_elevatorManager = ElevatorManager()
-	g_elevatorManager:sv_onCreate()
-
-
-
-
-
-
 	g_respawnManager = RespawnManager()
 	g_respawnManager:sv_onCreate(self.sv.saved.overworld)
 
@@ -103,27 +88,9 @@ function FactoryGame.server_onCreate(self)
 	g_unitManager = UnitManager()
 	g_unitManager:sv_onCreate(self.sv.saved.overworld)
 
-	self.sv.questEntityManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c6988ecb-0fc1-4d45-afde-dc583b8b75ee"))
-
-	self.sv.questManager = sm.storage.load(STORAGE_CHANNEL_QUESTMANAGER)
-	if not self.sv.questManager then
-		self.sv.questManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("83b0cc7e-b164-47b8-a83c-0d33ba5f72ec"))
-		sm.storage.save(STORAGE_CHANNEL_QUESTMANAGER, self.sv.questManager)
-	end
 
 
 
-
-
-	-- Game script managed global warehouse table
-	self.sv.warehouses = sm.storage.load(STORAGE_CHANNEL_WAREHOUSES)
-	if self.sv.warehouses then
-		print("Loaded warehouses:")
-		print(self.sv.warehouses)
-	else
-		self.sv.warehouses = {}
-		sm.storage.save(STORAGE_CHANNEL_WAREHOUSES, self.sv.warehouses)
-	end
 
 
 
@@ -271,8 +238,8 @@ function FactoryGame.bindChatCommands(self)
 		
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
 		sm.game.bindChatCommand("/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)")
-		sm.game.bindChatCommand("/encrypt", {}, "cl_onChatCommand", "Restrict interactions in all warehouses")
-		sm.game.bindChatCommand("/decrypt", {}, "cl_onChatCommand", "Unrestrict interactions in all warehouses")
+		sm.game.bindChatCommand("/encrypt", {}, "cl_onChatCommand", "Restrict interactions")
+		sm.game.bindChatCommand("/decrypt", {}, "cl_onChatCommand", "Unrestrict interactions")
 		sm.game.bindChatCommand("/limited", {}, "cl_onChatCommand", "Use the limited inventory")
 		sm.game.bindChatCommand("/unlimited", {}, "cl_onChatCommand", "Use the unlimited inventory")
 		--sm.game.bindChatCommand( "/recreate", {}, "cl_onChatCommand", "Recreate world" )
@@ -296,7 +263,6 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/raid", { { "int", "level", false }, { "int", "wave", true }, { "number", "hours", true } },
 			"cl_onChatCommand", "Start a level <level> raid at player position at wave <wave> in <delay> hours.")
 		sm.game.bindChatCommand("/stopraid", {}, "cl_onChatCommand", "Cancel all incoming raids")
-		sm.game.bindChatCommand("/disableraids", { { "bool", "enabled", false } }, "cl_onChatCommand", "Disable raids if true")
 		sm.game.bindChatCommand("/camera", {}, "cl_onChatCommand", "Spawn a SplineCamera tool")
 		sm.game.bindChatCommand("/noaggro", { { "bool", "enable", true } }, "cl_onChatCommand",
 			"Toggles the player as a target")
@@ -358,8 +324,6 @@ function FactoryGame.server_onFixedUpdate(self, timeStep)
 		self.sv.syncTimer:start(SyncInterval)
 		sm.storage.save(STORAGE_CHANNEL_TIME, self.sv.time)
 	end
-
-	g_elevatorManager:sv_onFixedUpdate()
 
 	g_unitManager:sv_onFixedUpdate()
 	if g_eventManager then
@@ -571,37 +535,9 @@ end
 
 function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
-	self.network:sendToServer("sv_n_loadingScreenLifted")
-	if self.cl.playIntroCinematic then
-		local callbacks = {}
-		callbacks[#callbacks + 1] = { fn = "cl_onCinematicEvent", params = { cinematicName = "cinematic.survivalstart01" },
-			ref = self }
-		g_effectManager:cl_playNamedCinematic("cinematic.survivalstart01", callbacks)
-	end
 
-	--FACTORY
 	PowerManager.cl_setLoaded(sm.game.getCurrentTick())
 	UnitManager.cl_setLoaded(g_unitManager, sm.game.getCurrentTick())
-end
-
-function FactoryGame.sv_n_loadingScreenLifted(self, _, player)
-	if not g_survivalDev then
-		QuestManager.Sv_TryActivateQuest("quest_tutorial")
-	end
-end
-
-function FactoryGame.cl_onCinematicEvent(self, eventName, params)
-	local myPlayer = sm.localPlayer.getPlayer()
-	local myCharacter = myPlayer and myPlayer.character or nil
-	if eventName == "survivalstart01.dramatics_standup" then
-		if sm.exists(myCharacter) then
-			sm.event.sendToCharacter(myCharacter, "cl_e_onEvent", "dramatics_standup")
-		end
-	elseif eventName == "survivalstart01.fadeout" then
-		sm.event.sendToPlayer(myPlayer, "cl_e_startFadeToBlack", { duration = IntroFadeDuration, timeout = IntroFadeTimeout })
-	elseif eventName == "survivalstart01.fadein" then
-		sm.event.sendToPlayer(myPlayer, "cl_n_endFadeToBlack", { duration = IntroEndFadeDuration })
-	end
 end
 
 function FactoryGame.sv_switchGodMode(self)
@@ -756,157 +692,7 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 			sm.container.endTransaction()
 		end
 	end
-	if player.id > 1 then --Too early for self. Questmanager is not created yet...
-		QuestManager.Sv_OnEvent(QuestEvent.PlayerJoined, { player = player })
-	end
 	g_unitManager:sv_onPlayerJoined(player)
-end
-
-function FactoryGame.server_onPlayerLeft(self, player)
-	print(player.name, "left the game")
-	if player.id > 1 then
-		QuestManager.Sv_OnEvent(QuestEvent.PlayerLeft, { player = player })
-	end
-	g_elevatorManager:sv_onPlayerLeft(player)
-
-end
-
-function FactoryGame.sv_e_requestWarehouseRestrictions(self, params)
-	-- Send the warehouse restrictions to the world that asked
-	print("FactoryGame.sv_e_requestWarehouseRestrictions")
-
-	-- Warehouse get
-	local warehouse = nil
-	if params.warehouseIndex then
-		warehouse = self.sv.warehouses[params.warehouseIndex]
-	end
-	if warehouse then
-		sm.event.sendToWorld(params.world, "server_updateRestrictions", warehouse.restrictions)
-	end
-end
-
-function FactoryGame.sv_e_setWarehouseRestrictions(self, params)
-	-- Set the restrictions for this warehouse and propagate the restrictions to all floors
-
-	-- Warehouse get
-	local warehouse = nil
-	if params.warehouseIndex then
-		warehouse = self.sv.warehouses[params.warehouseIndex]
-	end
-
-	if warehouse then
-		for _, newRestrictionSetting in pairs(params.restrictions) do
-			if warehouse.restrictions[newRestrictionSetting.name] then
-				warehouse.restrictions[newRestrictionSetting.name].state = newRestrictionSetting.state
-			else
-				warehouse.restrictions[newRestrictionSetting.name] = newRestrictionSetting
-			end
-		end
-		self.sv.warehouses[params.warehouseIndex] = warehouse
-		sm.storage.save(STORAGE_CHANNEL_WAREHOUSES, self.sv.warehouses)
-
-		for i, world in ipairs(warehouse.worlds) do
-			if sm.exists(world) then
-				sm.event.sendToWorld(world, "server_updateRestrictions", warehouse.restrictions)
-			end
-		end
-	end
-end
-
-function FactoryGame.sv_e_createElevatorDestination(self, params)
-	print("FactoryGame.sv_e_createElevatorDestination")
-	print(params)
-
-	-- Warehouse get or create
-	local warehouse
-	if params.warehouseIndex then
-		warehouse = self.sv.warehouses[params.warehouseIndex]
-	else
-		assert(params.name == "ELEVATOR_ENTRANCE")
-		warehouse = {}
-		warehouse.test = params.test
-		warehouse.world = params.portal:getWorldA()
-		warehouse.worlds = {}
-		warehouse.exits = params.exits
-		warehouse.maxLevels = params.maxLevels
-		warehouse.index = #self.sv.warehouses + 1
-		warehouse.restrictions = { erasable = { name = "erasable", state = false },
-			connectable = { name = "connectable", state = false } }
-		self.sv.warehouses[#self.sv.warehouses + 1] = warehouse
-		sm.storage.save(STORAGE_CHANNEL_WAREHOUSES, self.sv.warehouses)
-	end
-
-
-	-- Level up
-	local level
-	if params.level then
-		if params.name == "ELEVATOR_UP" then
-			level = params.level + 1
-		elseif params.name == "ELEVATOR_DOWN" then
-			level = params.level - 1
-		elseif params.name == "ELEVATOR_EXIT" then
-			if #warehouse.exits > 0 then
-				for _, cell in ipairs(warehouse.exits) do
-					if not sm.exists(warehouse.world) then
-						sm.world.loadWorld(warehouse.world)
-					end
-					local name = params.name .. " " .. cell.x .. "," .. cell.y
-					sm.portal.addWorldPortalHook(warehouse.world, name, params.portal)
-					print("Added portal hook '" .. name .. "' in world " .. warehouse.world.id)
-
-					g_elevatorManager:sv_loadBForPlayersInElevator(params.portal, warehouse.world, cell.x, cell.y)
-				end
-			else
-				sm.log.error("No exit hint found, this elevator is going nowhere!")
-			end
-			return
-		else
-			assert(false)
-		end
-	else
-		if params.name == "ELEVATOR_EXIT" then
-			level = warehouse.maxLevels
-		elseif params.name == "ELEVATOR_ENTRANCE" then
-			level = 1
-		else
-		end
-	end
-
-	-- Create warehouse world
-	local worldData = {}
-	worldData.level = level
-	worldData.warehouseIndex = warehouse.index
-	worldData.maxLevels = warehouse.maxLevels
-
-
-
-	local world = sm.world.createWorld("$SURVIVAL_DATA/Scripts/game/worlds/WarehouseWorld.lua", "WarehouseWorld", worldData)
-	print("Created WarehouseWorld " .. world.id)
-
-	-- Use the same restrictions for the new floor as the other floors
-	warehouse.worlds[#warehouse.worlds + 1] = world
-	if warehouse.restrictions then
-		sm.event.sendToWorld(world, "server_updateRestrictions", warehouse.restrictions)
-	end
-	-- Elevator portal hook
-	local name
-	if params.name == "ELEVATOR_UP" then
-		name = "ELEVATOR_DOWN"
-	elseif params.name == "ELEVATOR_DOWN" then
-		name = "ELEVATOR_UP"
-	else
-		name = params.name
-	end
-	sm.portal.addWorldPortalHook(world, name, params.portal)
-	print("Added portal hook '" .. name .. "' in world " .. world.id)
-
-	g_elevatorManager:sv_loadBForPlayersInElevator(params.portal, world, 0, 0)
-end
-
-function FactoryGame.sv_e_elevatorEvent(self, params)
-	print("FactoryGame.sv_e_elevatorEvent")
-	print(params)
-	g_elevatorManager[params.fn](g_elevatorManager, params)
 end
 
 function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
@@ -997,7 +783,7 @@ function FactoryGame.sv_recreateWorld( self )
 	self.sv.saved.data.seed = math.floor(math.random()*10^9)
 
 	self.sv.saved.overworld:destroy()
-	self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/Overworld.lua", "Overworld",
+	self.sv.saved.overworld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 	g_world = self.sv.saved.overworld
 	self.storage:save( self.sv.saved )
