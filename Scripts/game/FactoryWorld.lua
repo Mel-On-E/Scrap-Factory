@@ -506,6 +506,11 @@ function FactoryWorld:sv_raid(params)
 	end
 end
 
+function FactoryWorld:sv_e_createShape(params)
+	sm.shape.createPart(params.uuid, params.pos, sm.quat.identity())
+end
+
+
 --TODO maybe delete
 function FactoryWorld.cl_n_pesticideMsg( self, msg )
 	self.pesticideManager[msg.fn]( self.pesticideManager, msg )

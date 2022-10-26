@@ -37,7 +37,7 @@ function DailyRewardManager:sv_spawnRewards(params, player)
         pos.x = pos.x + (math.random() - 0.5) * 10
         pos.y = pos.y + (math.random() - 0.5) * 10
         pos.z = pos.z + 5
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = self.rewards[self.saved.streak + 1].crate,
+        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = sm.uuid.new(self.rewards[self.saved.streak + 1].crate),
             effect = "Woc - Destruct" })
     end
     self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
