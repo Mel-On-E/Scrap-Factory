@@ -84,9 +84,8 @@ function ResearchManager.sv_addResearch(shape)
 end
 
 function ResearchManager:sv_resetResearch()
-    self.sv.saved.research = {}
+    self.sv.saved.research[self.sv.tier] = 0
     self.storage:save(self.sv.saved)
-    self.sv.tier = 1
 
     self:sv_saveDataAndSync()
 end
