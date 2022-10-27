@@ -23,6 +23,7 @@ end
 
 function PrestigeManager:server_onFixedUpdate()
     local tick = sm.game.getCurrentTick()
+    local shapeRepo = sm.uuidRepos.shapes
 
     if tick % 40 == 0 then
         self:sv_saveData()
@@ -40,7 +41,7 @@ function PrestigeManager:server_onFixedUpdate()
     if self.spawnCrate and self.spawnCrate < tick then
         self.spawnCrate = nil
         local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(),math.random(),10)
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = obj_lootcrate_prestige,
+        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = shapeRepo:requestUuid("obj_lootcrate_prestige"),
             effect = "Woc - Destruct" })
     end
 end

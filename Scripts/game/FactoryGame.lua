@@ -13,7 +13,7 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
+dofile("$CONTENT_DATA/Scripts/UuidRepository/Init.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
@@ -537,18 +537,19 @@ end
 
 function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 	print(player.name, "joined the game")
+    local shapeRepo, toolRepo = sm.uuidRepos.shapes, sm.uuidRepos.tools
 
 	if newPlayer then --Player is first time joiners
 		local inventory = player:getInventory()
 
 		sm.container.beginTransaction()
-		sm.container.setItem(inventory, 0, tool_hammer, 1)
-		sm.container.setItem(inventory, 1, tool_lift, 1)
+		sm.container.setItem(inventory, 0, toolRepo:requestUuid("tool_hammer"), 1)
+		sm.container.setItem(inventory, 1, toolRepo:requestUuid("tool_lift"), 1)
 		sm.container.setItem(inventory, 2, sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf"), 1) --connect tool
-		sm.container.setItem(inventory, 3, tool_sell, 1)
-		sm.container.setItem(inventory, 4, obj_dropper_scrap_wood, 1)
-		sm.container.setItem(inventory, 5, obj_furnace_basic, 1)
-		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
+		sm.container.setItem(inventory, 3, toolRepo:requestUuid("tool_sell"), 1)
+		sm.container.setItem(inventory, 4, shapeRepo:requestUuid("obj_dropper_scrap_wood"), 1)
+		sm.container.setItem(inventory, 5, shapeRepo:requestUuid("obj_furnace_basic"), 1)
+		sm.container.setItem(inventory, 6, shapeRepo:requestUuid("obj_generator_windmill"), 1)
 
 		for i = 7, inventory.size, 1 do
             sm.container.setItem( inventory, i, sm.uuid.getNil(), 0 )

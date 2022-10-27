@@ -15,6 +15,7 @@ function Burner:server_onDestroy()
 end
 
 function Burner:sv_onEnter(trigger, results)
+    local shapeRepo = sm.uuidRepos.shapes
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
         for k, shape in pairs(result:getShapes()) do
@@ -40,7 +41,7 @@ function Burner:sv_onEnter(trigger, results)
 
 
             --create pollution drop
-            local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape:getWorldRotation())
+            local smoke = sm.shape.createPart(shapeRepo:requestUuid("obj_drop_smoke"), shape.worldPosition, shape:getWorldRotation())
 
             local publicData = {}
             publicData.value = 1

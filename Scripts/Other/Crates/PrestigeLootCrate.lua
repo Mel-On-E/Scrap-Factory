@@ -22,8 +22,9 @@ function PrestigeLootCrate:get_loot_table()
     local prestigeGain = PrestigeManager.cl_e_getLastPrestigeGain()
     print("Generating prestige loot table for: " .. prestigeGain .. " prestige")
     local workInProgress = {}
+    local shapeRepo = sm.uuidRepos.shapes
 
-    workInProgress[#workInProgress+1] = obj_lootcrate --TEST
+    workInProgress[#workInProgress+1] = shapeRepo:requestUuid("obj_lootcrate") --TEST
 
     return workInProgress
 end

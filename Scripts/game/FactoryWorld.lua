@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
+dofile("$CONTENT_DATA/Scripts/UuidRepository/Init.lua")
 
 dofile( "$SURVIVAL_DATA/Scripts/game/managers/PesticideManager.lua" )
 dofile( "$SURVIVAL_DATA/Scripts/game/survival_constants.lua" )
@@ -487,6 +487,7 @@ end
 
 function FactoryWorld:sv_raid(params)
 	local pos
+    local shapeRepo = sm.uuidRepos.shapes
 
 	local allBodies = sm.body.getAllBodies()
 	if #allBodies > 1 then
@@ -495,7 +496,7 @@ function FactoryWorld:sv_raid(params)
 			local shapes = body:getShapes()
 			local shape = shapes[math.random(1, #shapes)]
 
-			if shape.uuid ~= obj_lootcrate then
+			if shape.uuid ~= shapeRepo:requestUuid("obj_lootcrate") then
 				pos = shape.worldPosition
 				break
 			end
