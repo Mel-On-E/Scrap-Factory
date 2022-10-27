@@ -4,21 +4,22 @@ local numeralPrefixes = {"", "k", "M", "B", "T", "Qd", "Qn", "Sx", "Sp", "Oc", "
 local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
 
 local function number_suffix(value, suffixes)
-    local scientific = string.format("%.2e", value)
-    local negate, roundedNumber, digits = string.match(scientific, "(-?)(%d%.%d+)e([+-]%d+)")
-    roundedNumber = tonumber(roundedNumber)
+    -- shamelessly stolen from: BlueFlame
+    local scientific = string.format("%.3e", value)
+    local negate, truncatedNumber, digits = string.match(scientific, "(-?)(%d.%d%d)%d*e([+-]%d+)")
+    truncatedNumber = tonumber(truncatedNumber)
     digits = tonumber(digits)
 
     local orderOfMagnitude = digits % 3
     local suffixIndex = (digits - orderOfMagnitude ) / 3 + 1
 
     if suffixIndex < 1 then
-        return string.format("%.2f", value)
-    else 
+        return string.match(string.format("%.16f", value), "(%d.%d%d)%d*")
+    else
         local suffix = suffixes[suffixIndex]
         if suffix then
             local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
-            return string.format(format, negate, roundedNumber * 10^orderOfMagnitude, suffix)
+            return string.format(format, negate, truncatedNumber * 10^orderOfMagnitude, suffix)
         else  -- Format if suffix does not exist (3 digits scientific).
             return scientific:gsub("+", "")
         end
