@@ -1,7 +1,5 @@
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
-dofile("$SURVIVAL_DATA/Scripts/game/managers/RespawnManager.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua") --FACTORY
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
@@ -12,6 +10,8 @@ dofile("$SURVIVAL_DATA/Scripts/game/util/recipes.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
 dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
+dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
@@ -37,8 +37,6 @@ FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 
-SPAWN_POINT = sm.vec3.new(0, 0, 20)
-
 local STORAGE_CHANNELS = {
 	MONEYMANAGER = 69,
 	POWERMANAGER = 70,
@@ -55,11 +53,14 @@ function FactoryGame.server_onCreate(self)
 	print("Saved:", self.sv.saved)
 	if self.sv.saved == nil then
 		self.sv.saved = {}
+		SPAWN_POINT= sm.vec3.new(0, 0, 20)
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
 		self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 		self.storage:save(self.sv.saved)
+	else
+		SPAWN_POINT = self.sv.saved.spawn
 	end
 	self.data = nil
 	self.sv.factory = {}
@@ -560,7 +561,7 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		if not sm.exists(self.sv.saved.factoryWorld) then
 			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(self.sv.saved.spawn.x / 64), math.floor(self.sv.saved.spawn.y / 64), player,
 			"sv_createNewPlayer")
 	else
 		--TODO: This code might be redundant? 
@@ -598,6 +599,12 @@ function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
 	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_spawnNewCharacter", params)
 end
 
+function FactoryGame.sv_e_setSpawnPoint(self, pos)
+	self.sv.saved.spawn = pos
+	SPAWN_POINT = pos
+	self.storage:save(self.sv.saved)
+end
+
 function FactoryGame.sv_e_respawn(self, params)
 	if params.player.character and sm.exists(params.player.character) then
 		g_respawnManager:sv_requestRespawnCharacter(params.player)
@@ -605,7 +612,7 @@ function FactoryGame.sv_e_respawn(self, params)
 		if not sm.exists(self.sv.saved.factoryWorld) then
 			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params.player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(self.sv.saved.spawn.x / 64), math.floor(self.sv.saved.spawn.y / 64), params.player,
 			"sv_createNewPlayer")
 	end
 end
@@ -658,6 +665,7 @@ function FactoryGame.sv_recreateWorld( self )
 	self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 	g_world = self.sv.saved.factoryWorld
+	g_respawnManager:sv_setWorld(g_world)
 	self.storage:save( self.sv.saved )
 
 	for _, player in ipairs(sm.player.getAllPlayers()) do

@@ -176,6 +176,7 @@ function FactoryWorld.sv_spawnNewCharacter( self, params )
 
 	local character = sm.character.createCharacter( params.player, self.world, pos )
 	params.player:setCharacter( character )
+	sm.event.sendToGame("sv_e_setSpawnPoint", pos)
 end
 
 function FactoryWorld.sv_e_onChatCommand( self, params )
