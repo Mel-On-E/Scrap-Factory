@@ -1,5 +1,5 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
-dofile("$CONTENT_DATA/Scripts/uitl/day.lua")
+dofile("$CONTENT_DATA/Scripts/util/day.lua")
 
 
 ---@class Solar : Generator
