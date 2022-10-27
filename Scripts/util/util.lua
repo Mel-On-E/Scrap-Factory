@@ -5,7 +5,7 @@ local metricPrefixes = {"", "k", "M", "G", "T", "P", "E", "Z", "Y"}
 
 local function number_suffix(value, suffixes)
     -- shamelessly stolen from: BlueFlame
-    local scientific = string.format("%.3e", value)
+    local scientific = string.format("%.16e", value)
     local negate, truncatedNumber, digits = string.match(scientific, "(-?)(%d.%d%d)%d*e([+-]%d+)")
     truncatedNumber = tonumber(truncatedNumber)
     digits = tonumber(digits)
