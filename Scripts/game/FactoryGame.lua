@@ -554,7 +554,14 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
             sm.container.setItem( inventory, i, sm.uuid.getNil(), 0 )
         end
 
-		--TODO give special items
+		if sm.player.getAllPlayers()[1] == player then --if host
+			print(PrestigeManager.sv_getSpecialItems())
+			local i = 7
+			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
+				sm.container.setItem( inventory, i, sm.uuid.new(uuid), quantity )
+				i = i + 1
+			end
+		end
 
 		sm.container.endTransaction()
 

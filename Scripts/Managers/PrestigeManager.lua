@@ -11,6 +11,7 @@ function PrestigeManager:server_onCreate()
         self.saved = {}
         self.saved.prestige = 0
         self.saved.lastPrestigeGain = 0
+        self.saved.specialItems = {}
     else
         self.saved.prestige = tonumber(self.saved.prestige)
     end
@@ -64,6 +65,17 @@ end
 
 function PrestigeManager.sv_setPrestige(prestige)
     g_prestigeManager.saved.prestige = prestige
+end
+
+function PrestigeManager.sv_addSpecialItem(uuid)
+    local uuid = tostring(uuid)
+    local quantity = g_prestigeManager.saved.specialItems[uuid] or 0
+    g_prestigeManager.saved.specialItems[uuid] = math.min(quantity+1, 999)
+    sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
+end
+
+function PrestigeManager.sv_getSpecialItems()
+   return (g_prestigeManager and g_prestigeManager.saved.specialItems) or {}
 end
 
 function PrestigeManager.sv_prestige()

@@ -32,6 +32,9 @@ end
 function LootCrate:sv_giveItem(params)
     sm.container.beginTransaction()
     sm.container.collect(params.player:getInventory(), params.item, params.quantity, false)
+    if g_shop[tostring(params.item)].special then
+        PrestigeManager.sv_addSpecialItem(params.item)
+    end
     sm.container.endTransaction()
     sm.effect.playEffect("Woc - Destruct", self.shape.worldPosition)
     sm.effect.playEffect("Loot - Pickup", self.shape.worldPosition)
