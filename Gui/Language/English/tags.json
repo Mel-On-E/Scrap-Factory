@@ -46,6 +46,27 @@
 	"PrestigeDescription": "Doing a prestige will DELETE all creations and let you start from scratch on a new planet! You will only keep special items, perks and #dd6e00◊#ffffff. If you do a prestige now, you wil gain:",
 	"PrestigeResetButton": "Prestige Now",
 	"PrestigeConfirmation": "This will RESET the entire world. Are you sure?",
+	"Perks": "Perks",
+	"PerksOwned": "Owned",
+	"PerksUnlocked": "Unlocked",
+	"PerksLocked": "Locked",
+	"PerkRequirements": "Requires",
+	"PerksBalance": "Balance: ",
+
+	//Perks
+	"ResearchLv1Name": "Research Lvl.1",
+	"ResearchLv1Desc": "It's time to make science go brr!\nLet's boost our research by 6.9%",
+	"ResearchLv2Name": "Research Lvl.2",
+	"ResearchLv2Desc": "Let's boost our research by anotther 6.9%! Science is nice!",
+	"ResearchLv3Name": "Research Lvl.3",
+	"ResearchLv3Desc": "Time to reach the fullest potential of research and the power of 6.9%!",
+
+	"PollutionLv1Name": "Pollution Lvl.1",
+	"PollutionLv1Desc": "Let's do some lobbying work and get those pesky pollution values down by 2%!",
+	"PollutionLv2Name": "Pollution Lvl.2",
+	"PollutionLv2Desc": "People are still mad about the pollution. Some propaganda should help decrease it by another 2%.",
+	"PollutionLv3Name": "Pollution Lvl.3",
+	"PollutionLv3Desc": "The only solution is pollution! Let's pump some chemtrails into the air to make the public even more dumb. This should shae off another 2%!",
 
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",

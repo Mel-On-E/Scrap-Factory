@@ -2,7 +2,7 @@
 <MyGUI type="Layout" version="3.2.0">
     <Widget type="Widget" skin="PanelEmpty" position_real="0.125 0.064814814814814811 0.79166666666666663 0.81111111111111112" name="CreateGamePanel">
         <Widget type="Widget" skin="BackgroundDarkRoundedUpperRight" position_real="0 0 0.79276315789473684 0.16552511415525115">
-            <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.65517241379310343" name="title">
+            <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.65517241379310343" name="Title">
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="Caption" value="Perks"/>
@@ -66,7 +66,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position="850 45 355 65">
+            <Widget type="TextBox" skin="TextBox" position="850 45 355 65" name="Balance">
                 <Property key="FontName" value="X_Hud_PlayerName"/>
                 <Property key="FontHeight" value="48"/>
                 <Property key="Caption" value="Balance: #006edd74.4M"/>
@@ -480,12 +480,12 @@
         </Widget>
         <Widget type="Widget" skin="BackgroundInventoryToolTip" position_real="0.80263157894736847 0 0.19736842105263158 0.99771689497716898">
             <Widget type="ImageBox" skin="Canvas" position_real="0.050000000000000003 0.040045766590389019 0.90000000000000002 0.29176201372997712" name="Preview"/>
-            <Widget type="TextBox" skin="TextBox" position_real="0.033333333333333333 0.22311212814645309 0.94999999999999996 0.14302059496567507" name="PerkName">
+            <Widget type="TextBox" skin="TextBox" position_real="0.033333333333333333 0.22311212814645309 0.94999999999999996 0.14302059496567507" name="ItemName">
                 <Property key="Caption" value="Very long item name to test shit"/>
                 <Property key="TextAlign" value="Left Bottom"/>
                 <Property key="FontName" value="X_Hud_PlayerName"/>
             </Widget>
-            <Widget type="Button" skin="StyledButtonLarge" position_real="0.23333333333333334 0.90961098398169338 0.5 0.074370709382151026" name="BuyBtn">
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.23333333333333334 0.90961098398169338 0.5 0.074370709382151026" name="BuyButton">
                 <Property key="Caption" value="Buy"/>
                 <Property key="FontName" value="SM_HeaderLarge_Narrow"/>
                 <Property key="TextAlign" value="Center"/>
@@ -501,10 +501,10 @@
                 <Property key="WordWrap" value="true"/>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.4405034324942792 0.90000000000000002 0.022883295194508008" name="Description">
-                <Property key="Caption" value="#{DESCRIPTION_CAPS}"/>
+                <Property key="Caption" value="#{DESCRIPTION}"/>
                 <Property key="FontName" value="SM_HeaderTiny"/>
             </Widget>
-            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.82379862700228834 0.90000000000000002 0.085812356979405036" name="OutOfMoney">
+            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.82379862700228834 0.90000000000000002 0.085812356979405036" name="Requires">
                 <Property key="FontName" value="X_Hud_PlayerName"/>
                 <Property key="TextAlign" value="Left Top"/>
                 <Property key="Static" value="false"/>
@@ -513,13 +513,13 @@
                 <Property key="VisibleHScroll" value="false"/>
                 <Property key="VisibleVScroll" value="false"/>
                 <Property key="MultiLine" value="true"/>
-                <Property key="Caption" value="#0000ff- yo mama lvl.1\n#00ff00- basic understanding of fysiks lvl.1\n- some idiot to make this gui lvl.1"/>
+                <Property key="Caption" value=""/>
                 <Property key="FontHeight" value="12"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.78947368421052633 0.53333333333333333 0.028604118993135013" name="Require">
+            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.78947368421052633 0.53333333333333333 0.028604118993135013" name="Requirements">
                 <Property key="Caption" value="Requires"/>
                 <Property key="TextAlign" value="Center"/>
-                <Property key="FontName" value="SM_HeaderLarge_Medium"/>
+                <Property key="FontName" value="X_Hud_PlayerName"/>
             </Widget>
         </Widget>
     </Widget>

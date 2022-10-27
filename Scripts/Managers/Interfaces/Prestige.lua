@@ -1,7 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Perks.lua")
 
----@class Prestige : Interface
-Prestige = class(Interface)
+---@class Prestige : Perks
+Prestige = class(Perks)
 
 function Prestige:sv_prestige()
 	PrestigeManager.sv_prestige()
@@ -17,12 +18,17 @@ function Prestige:client_onCreate()
 	Interface.cient_onCreate(self, params)
 
 	self.cl.gui:setButtonCallback("Reset", "cl_prestige")
+	self.cl.gui:setButtonCallback("Perks", "cl_perks")
+
+	Perks.client_onCreate(self)
 end
 
 function Prestige:client_onFixedUpdate()
 	if self.cl.gui:isActive() then
 		self:update_gui()
 	end
+
+	Perks.client_onFixedUpdate(self)
 end
 
 function Prestige:update_gui()
@@ -51,15 +57,15 @@ function Prestige.cl_close()
 	Interface.cl_close(g_cl_prestige)
 end
 
-function Prestige.cl_prestige()
-	g_cl_prestige.cl.gui:close()
+function Prestige:cl_prestige()
+	self.cl.gui:close()
 
-	g_cl_prestige.cl.confirmPrestigeGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
-	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
-	g_cl_prestige.cl.confirmPrestigeGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
-	g_cl_prestige.cl.confirmPrestigeGui:setText("Title", language_tag("Prestige"))
-	g_cl_prestige.cl.confirmPrestigeGui:setText("Message", language_tag("PrestigeConfirmation"))
-	g_cl_prestige.cl.confirmPrestigeGui:open()
+	self.cl.confirmPrestigeGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
+	self.cl.confirmPrestigeGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
+	self.cl.confirmPrestigeGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
+	self.cl.confirmPrestigeGui:setText("Title", language_tag("Prestige"))
+	self.cl.confirmPrestigeGui:setText("Message", language_tag("PrestigeConfirmation"))
+	self.cl.confirmPrestigeGui:open()
 end
 
 function Prestige:cl_onClearConfirmButtonClick(name)
@@ -68,4 +74,11 @@ function Prestige:cl_onClearConfirmButtonClick(name)
 	end
 	self.cl.confirmPrestigeGui:close()
 	self.cl.confirmPrestigeGui:destroy()
+end
+
+
+function Prestige:cl_perks()
+	self.cl.gui:close()
+
+	Perks.cl_openPerkGui(self)
 end

@@ -1,0 +1,62 @@
+
+{
+	"ResearchLv1":{
+		"price": "1",
+		"requires": [
+		],
+		"image": "test11.png",
+		"multiplier": {
+			"research": 1.069
+		}
+	},
+	"ResearchLv2":{
+		"price": "10",
+		"requires": [
+			"ResearchLv1"
+		],
+		"image": "test12.png",
+		"multiplier": {
+			"research": 1.069
+		}
+	},
+	"ResearchLv3":{
+		"price": "100",
+		"requires": [
+			"ResearchLv2"
+		],
+		"image": "test13.png",
+		"multiplier": {
+			"research": 1.069
+		}
+	},
+
+	"PollutionLv1":{
+		"price": "1",
+		"requires": [
+		],
+		"image": "test21.png",
+		"multiplier": {
+			"pollution": 0.98
+		}
+	},
+	"PollutionLv2":{
+		"price": "10",
+		"requires": [
+			"PollutionLv1"
+		],
+		"image": "test22.png",
+		"multiplier": {
+			"pollution": 0.98
+		}
+	},
+	"PollutionLv3":{
+		"price": "100",
+		"requires": [
+			"PollutionLv2"
+		],
+		"image": "test23.png",
+		"multiplier": {
+			"pollution": 0.98
+		}
+	}
+}
