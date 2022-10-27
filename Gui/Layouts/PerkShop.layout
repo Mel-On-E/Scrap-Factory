@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position_real="0.125 0.064814814814814811 0.79166666666666663 0.81111111111111112" name="CreateGamePanel">
+        <Widget type="Widget" skin="BackgroundDarkRoundedUpperRight" position_real="0 0 0.79276315789473684 0.16552511415525115">
+            <Widget type="TextBox" skin="TextBox" position_real="0.46887966804979253 0 0.15269709543568466 0.65517241379310343" name="title">
+                <Property key="FontName" value="SM_HeaderLarge_Wide"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="Caption" value="Perks"/>
+                <Property key="FontHeight" value="48"/>
+            </Widget>
+            <Widget type="Button" skin="CraftbotTab" position_real="0.0041493775933609959 0.65517241379310343 0.12033195020746888 0.34482758620689657" name="AllTab">
+                <Property key="FontHeight" value="2"/>
+                <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.72413793103448276 1">
+                    <Property key="Caption" value="All"/>
+                    <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="CraftbotTab" position_real="0.12448132780082988 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="OwnedTab">
+                <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906" name="Owned">
+                    <Property key="Caption" value="Owned"/>
+                    <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="NeedKey" value="false"/>
+                </Widget>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.10344827586206896 0.36363636363636365 0.07586206896551724 0.20000000000000001">
+                    <Property key="ImageGroup" value="ItemTypeColor"/>
+                    <Property key="ImageName" value="tool"/>
+                    <Property key="ImageResource" value="ItemTypeSet"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="CraftbotTab" position_real="0.24481327800829875 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="UnlockedTab">
+                <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.75862068965517238 0.90909090909090906" name="Unlocked">
+                    <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="Unlocked"/>
+                </Widget>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.10344827586206896 0.36363636363636365 0.07586206896551724 0.20000000000000001">
+                    <Property key="ImageGroup" value="ItemTypeColor"/>
+                    <Property key="ImageName" value="block"/>
+                    <Property key="ImageResource" value="ItemTypeSet"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="CraftbotTab" position_real="0.36514522821576761 0.62068965517241381 0.12033195020746888 0.37931034482758619" name="LockedTab">
+                <Widget type="TextBox" skin="TextBox" position_real="0.13793103448275862 0 0.7931034482758621 0.90909090909090906" name="Locked">
+                    <Property key="Caption" value="Locked"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="FontName" value="X_Interactable_LogicGate_Category"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.10344827586206896 0.36363636363636365 0.07586206896551724 0.20000000000000001">
+                    <Property key="ImageGroup" value="ItemTypeColor"/>
+                    <Property key="ImageName" value="interactive"/>
+                    <Property key="ImageResource" value="ItemTypeSet"/>
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position="850 45 355 65">
+                <Property key="FontName" value="X_Hud_PlayerName"/>
+                <Property key="FontHeight" value="48"/>
+                <Property key="Caption" value="Balance: #006edd74.4M"/>
+                <Property key="TextAlign" value="Left VCenter"/>
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="BackgroundLightRoundedLowerLeft" position_real="0 0.16552511415525115 0.79276315789473684 0.8321917808219178">
+            <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_1">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_1">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_1">
+                <Property key="Caption" value="${ItemPrice_1}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.13692946058091288 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_2">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_2">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_2">
+                <Property key="Caption" value="${ItemPrice_2}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.26141078838174275 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_3">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_3">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_3">
+                <Property key="Caption" value="${ItemPrice_3}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.38589211618257263 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_4">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_4">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_4">
+                <Property key="Caption" value="${ItemPrice_4}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.51037344398340245 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_5">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_5">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_5">
+                <Property key="Caption" value="${ItemPrice_5}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.63485477178423233 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_6">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_6">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_6">
+                <Property key="Caption" value="${ItemPrice_6}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.75933609958506221 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_7">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_7">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_7">
+                <Property key="Caption" value="${ItemPrice_7}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.88381742738589208 0.082304526748971193 0.1078838174273859 0.15775034293552812" name="Item_8">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_8">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_8">
+                <Property key="Caption" value="${ItemPrice_8}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_9">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_9">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_9">
+                <Property key="Caption" value="${ItemPrice_9}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.13692946058091288 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_10">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_10">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_10">
+                <Property key="Caption" value="${ItemPrice_10}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.26141078838174275 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_11">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_11">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_11">
+                <Property key="Caption" value="${ItemPrice_11}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.38589211618257263 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_12">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_12">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_12">
+                <Property key="Caption" value="${ItemPrice_12}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.51037344398340245 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_13">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_13">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_13">
+                <Property key="Caption" value="${ItemPrice_13}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.63485477178423233 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_14">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_14">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_14">
+                <Property key="Caption" value="${ItemPrice_14}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.75933609958506221 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_15">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_15">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_15">
+                <Property key="Caption" value="${ItemPrice_15}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.88381742738589208 0.2880658436213992 0.1078838174273859 0.15775034293552812" name="Item_16">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_16">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_16">
+                <Property key="Caption" value="${ItemPrice_16}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_17">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_17">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_17">
+                <Property key="Caption" value="${ItemPrice_17}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.13692946058091288 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_18">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_18">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_18">
+                <Property key="Caption" value="${ItemPrice_18}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.26141078838174275 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_19">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_19">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_19">
+                <Property key="Caption" value="${ItemPrice_19}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.38589211618257263 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_20">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_20">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_20">
+                <Property key="Caption" value="${ItemPrice_20}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.51037344398340245 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_21">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_21">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_21">
+                <Property key="Caption" value="${ItemPrice_21}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.63485477178423233 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_22">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_22">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_22">
+                <Property key="Caption" value="${ItemPrice_22}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.75933609958506221 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_23">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_23">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_23">
+                <Property key="Caption" value="${ItemPrice_23}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.88381742738589208 0.49382716049382713 0.1078838174273859 0.15775034293552812" name="Item_24">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_24">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_24">
+                <Property key="Caption" value="${ItemPrice_24}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.011618257261410789 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_25">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_25">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_25">
+                <Property key="Caption" value="${ItemPrice_25}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.13692946058091288 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_26">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_26">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_26">
+                <Property key="Caption" value="${ItemPrice_26}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.26141078838174275 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_27">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_27">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.26141078838174275 0.86419753086419748 0.1078838174273859 0.027434842249657063" name="ItemPrice_27">
+                <Property key="Caption" value="${ItemPrice_27}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.38589211618257263 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_28">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_28">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_28">
+                <Property key="Caption" value="${ItemPrice_28}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.51037344398340245 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_29">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_29">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_29">
+                <Property key="Caption" value="${ItemPrice_29}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.63485477178423233 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_30">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_30">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_30">
+                <Property key="Caption" value="${ItemPrice_30}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.75933609958506221 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_31">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_31">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_31">
+                <Property key="Caption" value="${ItemPrice_31}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="GenderButton" position_real="0.88381742738589208 0.69958847736625518 0.1078838174273859 0.15775034293552812" name="Item_32">
+                <Property key="FontName" value="Default"/>
+                <Property key="TextAlign" value="Center"/>
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_32">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_32">
+                <Property key="Caption" value="${ItemPrice_32}"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="DressbotArrowLeft" position_real="0.42323651452282157 0.91220850480109739 0.041493775933609957 0.068587105624142664" name="LastPage"/>
+            <Widget type="Button" skin="DressbotArrowRight" position_real="0.61825726141078841 0.91220850480109739 0.041493775933609957 0.068587105624142664" name="NextPage"/>
+            <Widget type="TextBox" skin="TextBox" position_real="0.46473029045643155 0.90534979423868311 0.15269709543568466 0.07407407407407407" name="PageNum">
+                <Property key="Caption" value="1/1"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_ItemTitle"/>
+            </Widget>
+            <Widget type="Button" skin="PrimaryButton" position_real="0.79419087136929456 0.0068587105624142658 0.18589211618257262 0.061728395061728392" name="SortBtn">
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_Button"/>
+                <Widget type="TextBox" skin="TextBox" position_real="0 0 0.9821428571428571 1" name="SortText">
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="Sort from highest"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="TextColour" value="0 0 0"/>
+                    <Property key="FontName" value="SM_Button"/>
+                    <Property key="NeedKey" value="false"/>
+                </Widget>
+            </Widget>
+        </Widget>
+        <Widget type="Widget" skin="BackgroundInventoryToolTip" position_real="0.80263157894736847 0 0.19736842105263158 0.99771689497716898">
+            <Widget type="ImageBox" skin="Canvas" position_real="0.050000000000000003 0.040045766590389019 0.90000000000000002 0.29176201372997712" name="Preview"/>
+            <Widget type="TextBox" skin="TextBox" position_real="0.033333333333333333 0.22311212814645309 0.94999999999999996 0.14302059496567507" name="PerkName">
+                <Property key="Caption" value="Very long item name to test shit"/>
+                <Property key="TextAlign" value="Left Bottom"/>
+                <Property key="FontName" value="X_Hud_PlayerName"/>
+            </Widget>
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.23333333333333334 0.90961098398169338 0.5 0.074370709382151026" name="BuyBtn">
+                <Property key="Caption" value="Buy"/>
+                <Property key="FontName" value="SM_HeaderLarge_Narrow"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Widget" skin="ItemColorLine" position_real="0 0.37757437070938216 1 0.0057208237986270021"/>
+            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.47482837528604122 0.90000000000000002 0.30892448512585813" name="ItemDesc">
+                <Property key="Caption" value="[DEFAUasdasdasdasdLT]"/>
+                <Property key="FontName" value="SM_TextTiny"/>
+                <Property key="TextShadowColour" value="0 0 0"/>
+                <Property key="TextColour" value="0.564706 0.572549 0.572549"/>
+                <Property key="ReadOnly" value="true"/>
+                <Property key="Static" value="true"/>
+                <Property key="WordWrap" value="true"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.4405034324942792 0.90000000000000002 0.022883295194508008" name="Description">
+                <Property key="Caption" value="#{DESCRIPTION_CAPS}"/>
+                <Property key="FontName" value="SM_HeaderTiny"/>
+            </Widget>
+            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.82379862700228834 0.90000000000000002 0.085812356979405036" name="OutOfMoney">
+                <Property key="FontName" value="X_Hud_PlayerName"/>
+                <Property key="TextAlign" value="Left Top"/>
+                <Property key="Static" value="false"/>
+                <Property key="ReadOnly" value="true"/>
+                <Property key="WordWrap" value="true"/>
+                <Property key="VisibleHScroll" value="false"/>
+                <Property key="VisibleVScroll" value="false"/>
+                <Property key="MultiLine" value="true"/>
+                <Property key="Caption" value="#0000ff- yo mama lvl.1\n#00ff00- basic understanding of fysiks lvl.1\n- some idiot to make this gui lvl.1"/>
+                <Property key="FontHeight" value="12"/>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.78947368421052633 0.53333333333333333 0.028604118993135013" name="Require">
+                <Property key="Caption" value="Requires"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_HeaderLarge_Medium"/>
+            </Widget>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings>
+        <Property key="IncludeDirectory" value="e"/>
+        <Property key="PanelName" value="e"/>
+        <Property key="PanelNamespace" value="e"/>
+        <Property key="SourceDirectory" value="e"/>
+    </CodeGeneratorSettings>
+</MyGUI>
