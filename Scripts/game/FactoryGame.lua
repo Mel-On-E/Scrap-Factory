@@ -60,7 +60,7 @@ function FactoryGame.server_onCreate(self)
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 		self.storage:save(self.sv.saved)
 	else
-		SPAWN_POINT = self.sv.saved.spawn
+		SPAWN_POINT = self.sv.saved.spawn or sm.vec3.new(0, 0, 20)
 	end
 	self.data = nil
 	self.sv.factory = {}
@@ -561,7 +561,7 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		if not sm.exists(self.sv.saved.factoryWorld) then
 			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(self.sv.saved.spawn.x / 64), math.floor(self.sv.saved.spawn.y / 64), player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
 			"sv_createNewPlayer")
 	else
 		--TODO: This code might be redundant? 
@@ -612,7 +612,7 @@ function FactoryGame.sv_e_respawn(self, params)
 		if not sm.exists(self.sv.saved.factoryWorld) then
 			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(self.sv.saved.spawn.x / 64), math.floor(self.sv.saved.spawn.y / 64), params.player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params.player,
 			"sv_createNewPlayer")
 	end
 end
