@@ -81,11 +81,11 @@ function MoneyManager:client_onFixedUpdate()
     self:updateHud()
     ---Money a sec
 
-    if sm.game.getCurrentTick() % 40 == 0 then
+    if sm.game.getCurrentTick() % 20 == 0 then
         local money = self.cl_getMoney()
         print(money)
         print(self.lastMoney)
-        local moneyChange = money - self.lastMoney
+        local moneyChange = (money - self.lastMoney) * 2
         g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }) .. "/s")
         self.lastMoney = money
 
