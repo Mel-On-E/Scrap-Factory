@@ -54,7 +54,8 @@ function Furnace:sv_onEnter(trigger, results)
 
             if not data.pollution then
                 if self.sv.saved.research then
-                    value = (ResearchManager.sv_addResearch(shape) and value) or 0
+                    value = value * PerkManager.sv_getMultiplier("research")
+                    value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
                     sm.event.sendToGame("sv_e_stonks",
                         { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
                 else

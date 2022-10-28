@@ -37,6 +37,12 @@
 			"uuid": "2474d490-4530-4ff8-9436-ba716a0c665e"
 		},
 		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/PerkManager.lua",
+			"classname": "PerkManager",
+			"name": "mgr_perk",
+			"uuid": "35492036-d286-4b0f-a17c-efa228875c0d"
+		},
+		{
 			"filename": "$CONTENT_DATA/Scripts/Managers/DailyRewardManager.lua",
 			"classname": "DailyRewardManager",
 			"name": "mgr_daily",

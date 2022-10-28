@@ -26,7 +26,6 @@ function PrestigeManager:server_onFixedUpdate()
 
     if tick % 40 == 0 then
         self:sv_saveData()
-        self.network:setClientData({ prestige = tostring(self.saved.prestige), lastPrestigeGain = tostring(self.saved.lastPrestigeGain) })
     end
 
     if self.doPrestige and self.doPrestige < tick then
@@ -57,6 +56,8 @@ function PrestigeManager:sv_saveData()
 
     safeData.prestige = prestige
     safeData.lastPrestigeGain = lastPrestigeGain
+
+    self.network:setClientData({ prestige = tostring(self.saved.prestige), lastPrestigeGain = tostring(self.saved.lastPrestigeGain) })
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
@@ -65,6 +66,15 @@ end
 
 function PrestigeManager.sv_setPrestige(prestige)
     g_prestigeManager.saved.prestige = prestige
+end
+
+function PrestigeManager.sv_spendPrestige(prestige)
+    if g_prestigeManager.saved.prestige - prestige > 0 then
+        g_prestigeManager.saved.prestige = g_prestigeManager.saved.prestige - prestige
+        sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
+        return true
+    end
+    return false
 end
 
 function PrestigeManager.sv_addSpecialItem(uuid)

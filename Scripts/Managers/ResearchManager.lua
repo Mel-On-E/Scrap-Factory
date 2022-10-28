@@ -63,17 +63,16 @@ function ResearchManager:sv_saveDataAndSync()
     end
 end
 
-function ResearchManager.sv_addResearch(shape)
+function ResearchManager.sv_addResearch(value, shape)
     local tier = g_ResearchManager.tiers[g_ResearchManager.sv.tier]
-    if tier.uuid ~= tostring(shape.uuid) then
+    if shape and tier.uuid ~= tostring(shape.uuid) then
         return false
     end
 
-    local money = shape.interactable.publicData.value
     local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier]
     local goal = tier.goal * PollutionManager.getResearchMultiplier()
 
-    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + money, goal)
+    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + value, goal)
 
     if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1

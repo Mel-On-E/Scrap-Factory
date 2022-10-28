@@ -21,6 +21,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/ResearchManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PollutionManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PrestigeManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/PerkManager.lua")
 
 
 
@@ -43,7 +44,8 @@ local STORAGE_CHANNELS = {
 	RESEARCHMANAGER = 71,
 	DAILYREWARDMANAGER = 72,
 	POLLUTIONMANAGER = 73,
-	PRESTIGEMANAGER = 74
+	PRESTIGEMANAGER = 74,
+	PERKMANAGER = 75
 }
 
 function FactoryGame.server_onCreate(self)
@@ -135,6 +137,12 @@ function FactoryGame.server_onCreate(self)
 	if not self.sv.prestigeManager then
 		self.sv.prestigeManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("2474d490-4530-4ff8-9436-ba716a0c665e"))
 		sm.storage.save(STORAGE_CHANNELS["PRESTIGEMANAGER"], self.sv.prestigeManager)
+	end
+
+	self.sv.perkManager = sm.storage.load(STORAGE_CHANNELS["PERKMANAGER"])
+	if not self.sv.perkManager then
+		self.sv.perkManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("35492036-d286-4b0f-a17c-efa228875c0d"))
+		sm.storage.save(STORAGE_CHANNELS["PERKMANAGER"], self.sv.perkManager)
 	end
 
 	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNELS["DAILYREWARDMANAGER"])
