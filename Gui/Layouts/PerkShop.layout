@@ -65,7 +65,7 @@
                     <Property key="NeedMouse" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position_real="0.73443983402489632 0.31034482758620691 0.26556016597510373 0.44827586206896552" name="Balance">
+            <Widget type="TextBox" skin="TextBox" position_real="0.61 0.55 0.26556016597510373 0.44827586206896552" name="Balance">
                 <Property key="FontName" value="X_Hud_PlayerName"/>
                 <Property key="Caption" value="Balance: #006edd74.4M"/>
                 <Property key="TextAlign" value="Left VCenter"/>
@@ -694,7 +694,7 @@
                 <Property key="Caption" value="#{DESCRIPTION}"/>
                 <Property key="FontName" value="SM_HeaderTiny"/>
             </Widget>
-            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.82379862700228834 0.90000000000000002 0.085812356979405036" name="Requires">
+            <Widget type="EditBox" skin="TextBox" position_real="0.050000000000000003 0.75 0.90000000000000002 0.145" name="Requires">
                 <Property key="FontName" value="X_Hud_PlayerName"/>
                 <Property key="TextAlign" value="Left Top"/>
                 <Property key="Static" value="false"/>
@@ -704,11 +704,11 @@
                 <Property key="VisibleVScroll" value="false"/>
                 <Property key="MultiLine" value="true"/>
                 <Property key="Caption" value=""/>
-                <Property key="FontHeight" value="18"/>
+                <Property key="NeedMouse" value="false"/>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.78947368421052633 0.53333333333333333 0.028604118993135013" name="Requirements">
+            <Widget type="TextBox" skin="TextBox" position_real="0.050000000000000003 0.7175 0.53333333333333333 0.028604118993135013" name="Requirements">
                 <Property key="Caption" value="Requires"/>
-                <Property key="TextAlign" value="Center"/>
+                <Property key="TextAlign" value="Left"/>
                 <Property key="FontName" value="X_Hud_PlayerName"/>
             </Widget>
         </Widget>
