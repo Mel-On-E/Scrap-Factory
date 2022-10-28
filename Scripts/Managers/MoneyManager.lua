@@ -87,7 +87,7 @@ function MoneyManager:client_onFixedUpdate()
     if sm.game.getCurrentTick() % 20 == 0 then
         local money = self.cl_getMoney()
 
-        if #self.lastMoneyCache < 5 then
+        if #self.lastMoneyCache < 50 then
             local moneyChange = money - self.lastMoney
             g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }))
 
@@ -102,7 +102,7 @@ function MoneyManager:client_onFixedUpdate()
             moneyChange = moneyChange + (v.Money - v.LastMoney)
         end
 
-        g_factoryHud:setText("Money/s", format_number({ format = "money", value = (moneyChange / 5) * 2 }))
+        g_factoryHud:setText("Money/s", format_number({ format = "money", value = (moneyChange / 50) * 2 }))
 
         table.insert(self.lastMoneyCache, { LastMoney = self.lastMoney, Money = money })
         table.remove(self.lastMoneyCache, 1)
