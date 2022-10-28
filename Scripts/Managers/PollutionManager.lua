@@ -84,7 +84,7 @@ end
 
 function PollutionManager.getResearchMultiplier()
     if g_pollutionManager.cl_getPollution() > 0 then
-        return 2 ^ math.log(g_pollutionManager.cl_getPollution(), 10)
+        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) * PerkManager.sv_getMultiplier("pollution"), 1)
     end
     return 1
 end

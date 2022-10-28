@@ -227,7 +227,7 @@ function Perks:sort()
 	local pages = {}
 	self.cl.itemPages = { {} }
 	for k, v in pairs(self.perks) do
-		table.insert(pages, {name = k, price = v.price, image = v.image, requires = v.requires})
+		table.insert(pages, {name = k, price = v.price, image = v.image, requires = v.requires, multiplier = v.multiplier})
 	end
 	table.sort(pages, function(a, b)
 		if self.cl.sortLowest then
