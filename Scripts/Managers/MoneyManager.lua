@@ -1,6 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class MoneyManager : ScriptableObjectClass
+---@field lastMoney number Used to calcuulate money/s
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
@@ -36,6 +37,8 @@ function MoneyManager:server_onFixedUpdate()
         safeData.moneyEarned = moneyEarned
 
         self.network:setClientData({ money = tostring(self.saved.money), moneyEarned = tostring(self.saved.moneyEarned) })
+
+
     end
 end
 
@@ -66,6 +69,7 @@ function MoneyManager:client_onCreate()
     if not g_moneyManager then
         g_moneyManager = self
     end
+    self.lastMoney = 0
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
@@ -75,6 +79,17 @@ end
 
 function MoneyManager:client_onFixedUpdate()
     self:updateHud()
+    ---Money a sec
+
+    if sm.game.getCurrentTick() % 40 == 0 then
+        local money = self.cl_getMoney()
+        print(money)
+        print(self.lastMoney)
+        local moneyChange = money - self.lastMoney
+        g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }) .. "/s")
+        self.lastMoney = money
+
+    end
 end
 
 function MoneyManager:client_onUpdate()

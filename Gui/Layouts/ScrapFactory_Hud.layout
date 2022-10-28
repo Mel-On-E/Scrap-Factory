@@ -3,8 +3,8 @@
     <Widget type="Widget" skin="PanelEmpty" position_real="0 0 1 1" name="BackPanel">
         <Property key="NeedKey" value="false"/>
         <Property key="NeedMouse" value="false"/>
-        <Widget type="Widget" skin="PanelEmpty" position_real="0.3515625 0.055555555555555552 0.29999999999999999 0.10555555555555556">
-            <Widget type="EditBox" skin="GenericButton" position_real="0.048611111111111112 0.13157894736842105 0.2986111111111111 0.47368421052631576">
+        <Widget type="Widget" skin="PanelEmpty" position_real="0.3515625 0.07407407407407407 0.29999999999999999 0.12037037037037036">
+            <Widget type="EditBox" skin="ActiveButton" position_real="0.043402777777777776 0.038461538461538464 0.2986111111111111 0.41538461538461541">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
@@ -12,13 +12,12 @@
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value=""/>
-
-                <Widget type="ImageBox" skin="ImageBox" position_real="0.03125 0.05 0.28125 0.9" name="ResearchIcon">
-                    <Property key="NeedKey" value="false" />
-                    <Property key="NeedMouse" value="false" />
-                    <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png" />
+                <Widget type="ImageBox" skin="ImageBox" position_real="0.058139534883720929 0.18518518518518517 0.20348837209302326 0.64814814814814814" name="ResearchIcon">
+                    <Property key="NeedKey" value="false"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png"/>
                 </Widget>
-                <Widget type="EditBox" skin="TextBox" position_real="0.28125 0 0.6875 1" name="Research">
+                <Widget type="EditBox" skin="TextBox" position_real="0.27906976744186046 0.092592592592592587 0.68023255813953487 0.7407407407407407" name="Research">
                     <Property key="FontName" value="SM_ItemTitle"/>
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
@@ -28,7 +27,7 @@
                     <Property key="Caption" value="#00dddd0.69%"/>
                 </Widget>
             </Widget>
-            <Widget type="EditBox" skin="GenericButton" position_real="0.34895833333333331 0.13157894736842105 0.2986111111111111 0.947368421" name="Money">
+            <Widget type="Widget" skin="BackgroundPopup" position_real="0.34895833333333331 0.038461538461538464 0.2986111111111111 0.90000000000000002">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
@@ -36,8 +35,18 @@
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value=""/>
+                <Widget type="TextBox" skin="TextBox" position_real="0.087209302325581398 0.21367521367521367 0.81395348837209303 0.29914529914529914" name="Money">
+                    <Property key="Caption" value="Money"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="FontName" value="SM_ItemTitle"/>
+                </Widget>
+                <Widget type="TextBox" skin="TextBox" position_real="0.087209302325581398 0.55555555555555558 0.81395348837209303 0.17094017094017094" name="Money/s">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="FontName" value="SM_ButtonTiny"/>
+                    <Property key="Caption" value="Money/s"/>
+                </Widget>
             </Widget>
-            <Widget type="EditBox" skin="GenericButton" position_real="0.64930555555555558 0.13157894736842105 0.2986111111111111 0.47368421052631576" name="Power">
+            <Widget type="EditBox" skin="ActiveButton" position_real="0.65972222222222221 0.038461538461538464 0.2986111111111111 0.41538461538461541" name="Power">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
@@ -46,7 +55,7 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
             </Widget>
-            <Widget type="EditBox" skin="GenericButton" position_real="0.048611111111111112 0.6 0.2986111111111111 0.47368421052631576" name="Pollution">
+            <Widget type="EditBox" skin="ActiveButton" position_real="0.043402777777777776 0.5 0.2986111111111111 0.41538461538461541" name="Pollution">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
@@ -55,7 +64,7 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
             </Widget>
-            <Widget type="EditBox" skin="GenericButton" position_real="0.64930555555555558 0.6 0.2986111111111111 0.47368421052631576" name="Prestige">
+            <Widget type="EditBox" skin="ActiveButton" position_real="0.65972222222222221 0.5 0.2986111111111111 0.41538461538461541" name="Prestige">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
