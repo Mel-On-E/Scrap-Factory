@@ -39,10 +39,11 @@ function PerkManager.sv_addPerk(perk)
     print(perk)
     g_perkManager.sv.saved.perks[perk.name] = true
 
-    if perk.multiplier then
-        for k, v in pairs(perk.multiplier) do
-            print(k,v)
-            g_perkManager.sv.multipliers[k] = v * g_perkManager.sv.multipliers[k]
+    for effect, params in pairs(perk.effects) do
+        if effect == "multiplier" then
+            for key, multiplier in pairs(params) do
+                g_perkManager.sv.multipliers[key] = multiplier * g_perkManager.sv.multipliers[key]
+            end
         end
     end
 

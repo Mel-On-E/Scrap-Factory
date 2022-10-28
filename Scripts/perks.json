@@ -5,8 +5,10 @@
 		"requires": [
 		],
 		"image": "test11",
-		"multiplier": {
-			"research": 1.069
+		"effects": {
+			"multiplier": {
+				"research": 1.069
+			}
 		}
 	},
 	"ResearchLv2":{
@@ -15,8 +17,10 @@
 			"ResearchLv1"
 		],
 		"image": "test12",
-		"multiplier": {
-			"research": 1.069
+		"effects": {
+			"multiplier": {
+				"research": 1.069
+			}
 		}
 	},
 	"ResearchLv3":{
@@ -25,8 +29,10 @@
 			"ResearchLv2"
 		],
 		"image": "test13",
-		"multiplier": {
-			"research": 1.069
+		"effects": {
+			"multiplier": {
+				"research": 1.069
+			}
 		}
 	},
 
@@ -35,8 +41,10 @@
 		"requires": [
 		],
 		"image": "test21",
-		"multiplier": {
-			"pollution": 0.98
+		"effects": {
+			"multiplier": {
+				"pollution": 0.98
+			}
 		}
 	},
 	"PollutionLv2":{
@@ -45,8 +53,10 @@
 			"PollutionLv1"
 		],
 		"image": "test22",
-		"multiplier": {
-			"pollution": 0.98
+		"effects": {
+			"multiplier": {
+				"pollution": 0.98
+			}
 		}
 	},
 	"PollutionLv3":{
@@ -55,8 +65,10 @@
 			"PollutionLv2"
 		],
 		"image": "test23",
-		"multiplier": {
-			"pollution": 0.98
+		"effects": {
+			"multiplier": {
+				"pollution": 0.98
+			}
 		}
 	}
 }
