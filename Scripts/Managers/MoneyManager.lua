@@ -2,6 +2,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class MoneyManager : ScriptableObjectClass
 ---@field lastMoney number Used to calcuulate money/s
+---@diagnostic disable-next-line: assign-type-mismatch
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
@@ -83,8 +84,6 @@ function MoneyManager:client_onFixedUpdate()
 
     if sm.game.getCurrentTick() % 20 == 0 then
         local money = self.cl_getMoney()
-        print(money)
-        print(self.lastMoney)
         local moneyChange = (money - self.lastMoney) * 2
         g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }) .. "/s")
         self.lastMoney = money
