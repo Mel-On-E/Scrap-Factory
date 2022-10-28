@@ -3,7 +3,10 @@
     <Widget type="Widget" skin="PanelEmpty" position_real="0 0 1 1" name="BackPanel">
         <Property key="NeedKey" value="false"/>
         <Property key="NeedMouse" value="false"/>
-        <Widget type="Widget" skin="PanelEmpty" position_real="0.3515625 0.07407407407407407 0.29999999999999999 0.12037037037037036">
+        <Widget type="Widget" skin="HudBackgroundLarge" position_real="0.3515625 0.07407407407407407 0.29999999999999999 0.12037037037037036">
+            <Property key="InheritsAlpha" value="false"/>
+            <Property key="Alpha" value="1"/>
+            <Property key="Enabled" value="true"/>
             <Widget type="EditBox" skin="ActiveButton" position_real="0.043402777777777776 0.038461538461538464 0.2986111111111111 0.41538461538461541">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
@@ -25,6 +28,7 @@
                     <Property key="TextAlign" value="Center"/>
                     <Property key="WordWrap" value="true"/>
                     <Property key="Caption" value="#00dddd0.69%"/>
+                    <Property key="TextShadow" value="true"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="BackgroundPopup" position_real="0.34895833333333331 0.038461538461538464 0.2986111111111111 0.90000000000000002">
@@ -38,7 +42,7 @@
                 <Widget type="TextBox" skin="TextBox" position_real="0.087209302325581398 0.21367521367521367 0.81395348837209303 0.29914529914529914" name="Money">
                     <Property key="Caption" value="Money"/>
                     <Property key="TextAlign" value="Center"/>
-                    <Property key="FontName" value="SM_ItemTitle"/>
+                    <Property key="FontName" value="X_Hud_Alert"/>
                 </Widget>
                 <Widget type="TextBox" skin="TextBox" position_real="0.087209302325581398 0.55555555555555558 0.81395348837209303 0.17094017094017094" name="Money/s">
                     <Property key="TextAlign" value="Center"/>
@@ -54,6 +58,7 @@
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
+                <Property key="TextShadow" value="true"/>
             </Widget>
             <Widget type="EditBox" skin="ActiveButton" position_real="0.043402777777777776 0.5 0.2986111111111111 0.41538461538461541" name="Pollution">
                 <Property key="FontName" value="SM_ItemTitle"/>
@@ -63,6 +68,7 @@
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
+                <Property key="TextShadow" value="true"/>
             </Widget>
             <Widget type="EditBox" skin="ActiveButton" position_real="0.65972222222222221 0.5 0.2986111111111111 0.41538461538461541" name="Prestige">
                 <Property key="FontName" value="SM_ItemTitle"/>
@@ -72,6 +78,7 @@
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#dd6e00+42.0M ◊"/>
+                <Property key="TextShadow" value="true"/>
             </Widget>
         </Widget>
     </Widget>
