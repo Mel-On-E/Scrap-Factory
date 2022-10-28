@@ -4,7 +4,7 @@
 		"price": "1",
 		"requires": [
 		],
-		"image": "test11.png",
+		"image": "test11",
 		"multiplier": {
 			"research": 1.069
 		}
@@ -14,7 +14,7 @@
 		"requires": [
 			"ResearchLv1"
 		],
-		"image": "test12.png",
+		"image": "test12",
 		"multiplier": {
 			"research": 1.069
 		}
@@ -24,7 +24,7 @@
 		"requires": [
 			"ResearchLv2"
 		],
-		"image": "test13.png",
+		"image": "test13",
 		"multiplier": {
 			"research": 1.069
 		}
@@ -34,7 +34,7 @@
 		"price": "1",
 		"requires": [
 		],
-		"image": "test21.png",
+		"image": "test21",
 		"multiplier": {
 			"pollution": 0.98
 		}
@@ -44,7 +44,7 @@
 		"requires": [
 			"PollutionLv1"
 		],
-		"image": "test22.png",
+		"image": "test22",
 		"multiplier": {
 			"pollution": 0.98
 		}
@@ -54,7 +54,7 @@
 		"requires": [
 			"PollutionLv2"
 		],
-		"image": "test23.png",
+		"image": "test23",
 		"multiplier": {
 			"pollution": 0.98
 		}

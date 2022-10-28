@@ -11,6 +11,7 @@ function Perks:client_onCreate()
 	self.cl.perkGui:setButtonCallback("NextPage", "changePage")
 	self.cl.perkGui:setButtonCallback("LastPage", "changePage")
 	self.cl.perkGui:setButtonCallback("SortBtn", "changeSort")
+	self.cl.perkGui:setButtonCallback("BuyButton", "buyPerk")
 
 	self.cl.perkGui:setButtonCallback("AllTab", "changeCategory")
 	self.cl.perkGui:setButtonCallback("OwnedTab", "changeCategory")
@@ -27,6 +28,9 @@ function Perks:client_onCreate()
 	self.cl.sortLowest = true
 
 	self.perks = sm.json.open("$CONTENT_DATA/Scripts/perks.json")
+	for k, perk in pairs(self.perks) do
+		perk.price = tonumber(perk.price)
+	end
 
 	self.cl.pageNum = math.floor(#self.perks / 32) == 0 and 1 or
 		math.floor(#self.perks / 32)
@@ -69,8 +73,9 @@ function Perks:gen_page(num)
 		self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), true)
 	end
 	for i, v in pairs(self.cl.filteredPages[num]) do
-		self.cl.perkGui:setImage("ItemPic_" .. tostring(i), IMAGE_PATH .. v.image)
+		self.cl.perkGui:setImage("ItemPic_" .. tostring(i), IMAGE_PATH .. v.image .. ((PerkManager.isPerkOwned(v.name) and "") or "_locked") .. ".png")
 		self.cl.perkGui:setText("ItemPrice_" .. tostring(i), format_number({ format = "prestige", value = v.price }))
+		self.cl.perkGui:setVisible("ItemLock_" .. tostring(i), not self.isUnlocked(v))
 	end
 	if pageLen == 32 then return end
 	for i = pageLen + 1, 32 do
@@ -108,7 +113,7 @@ function Perks:gui_filter(category)
 	elseif category == "Unlocked" then
 		for i, v in pairs(self.cl.itemPages) do
 			for _, v in pairs(v) do
-				if self.isUnlocked(v) then
+				if self.isUnlocked(v) and not PerkManager.isPerkOwned(v.name) then
 					table.insert(self.cl.filteredPages[page], v)
 				end
 			end
@@ -155,8 +160,21 @@ function Perks.isUnlocked(perk)
 	return unlocked
 end
 
-function Perks:changePage()
-	return
+function Perks:changePage(wigetName)
+	if wigetName == "NextPage" then
+		if self.cl.curPage == self.cl.pageNum then
+			return
+		end
+		self.cl.curPage = self.cl.curPage + 1
+	elseif wigetName == "LastPage" then
+		if self.cl.curPage == 1 then
+			return
+		end
+		self.cl.curPage = self.cl.curPage - 1
+	end
+	self.cl.curItem = 1
+	self:gen_page(self.cl.curPage)
+	self:changeItem("Item_1")
 end
 
 function Perks:changeCategory(categoryName)
@@ -183,10 +201,19 @@ function Perks:changeItem(itemName)
 		self.cl.perkGui:setText("ItemDesc", language_tag(item.name .. "Desc"))
 		local requirements = ""
 		for _, requirement in ipairs(item.requires) do
-			local color = PerkManager.isPerkOwned(item.name) and "#00aa00" or "#aa0000"
+			local color = (PerkManager.isPerkOwned(requirement) and "#00aa00") or "#aa0000"
 			requirements = requirements .. color .. "- " .. language_tag(requirement .. "Name") .. "\n"
 		end
 		self.cl.perkGui:setText("Requires", requirements)
+
+		local buyText = "Buy"
+		if PerkManager.isPerkOwned(item.name) then
+			buyText = "PerksOwned"
+		elseif not self.isUnlocked(item) then
+			buyText = "PerksLocked"
+		end
+
+		self.cl.perkGui:setText("BuyButton", language_tag(buyText))
 	end
 end
 
@@ -221,4 +248,26 @@ function Perks:sort()
 	self:gui_filter(self.cl.category)
 	self:gen_page(self.cl.curPage)
 	self:changeItem("Item_1")
+end
+
+function Perks:buyPerk()
+	local item = self.cl.filteredPages[self.cl.curPage][self.cl.curItem]
+	if PerkManager.isPerkOwned(item.name) then
+		return
+	elseif not self.isUnlocked(item) then
+		return
+	end
+
+	if item.price < PrestigeManager.cl_getPrestige() then
+		self.network:sendToServer("sv_buyPerk", item)
+	else
+		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
+	end
+end
+
+function Perks:sv_buyPerk(perk, player)
+	if PrestigeManager.sv_spendPrestige(perk.price) then
+		PerkManager.sv_addPerk(perk)
+		self.network:sendToClient(player, "sort")
+	end
 end

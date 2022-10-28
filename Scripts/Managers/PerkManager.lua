@@ -26,11 +26,11 @@ function PerkManager:sv_saveDataAndSync()
     self.network:setClientData({ perks = self.saved.perks })
 end
 
-function PerkManager.sv_addPerk(params)
-    g_perkManager.saved.perks[params.perk] = true
+function PerkManager.sv_addPerk(perk)
+    g_perkManager.saved.perks[perk.name] = true
 
-    if params.multiplier then
-        for k, v in pairs(params.multiplier) do
+    if perk.multiplier then
+        for k, v in pairs(perk.multiplier) do
             g_perkManager.sv.saved.multipliers[k] = v * g_perkManager.sv.saved.multipliers[k]
         end
     end

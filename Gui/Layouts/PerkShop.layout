@@ -80,6 +80,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_1">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_1" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_1">
@@ -92,6 +98,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_2">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_2" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_2">
@@ -104,6 +116,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_3">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_3" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_3">
@@ -116,6 +134,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_4">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_4" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_4">
@@ -128,6 +152,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_5">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_5" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_5">
@@ -140,6 +170,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_6">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_6" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_6">
@@ -152,6 +188,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_7">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_7" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_7">
@@ -164,6 +206,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_8">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_8" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.24691358024691357 0.1037344398340249 0.027434842249657063" name="ItemPrice_8">
@@ -176,6 +224,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_9">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_9" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_9">
@@ -188,6 +242,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_10">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_10" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_10">
@@ -200,6 +260,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_11">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_11" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_11">
@@ -212,6 +278,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_12">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_12" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_12">
@@ -224,6 +296,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_13">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_13" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_13">
@@ -236,6 +314,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_14">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_14" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_14">
@@ -248,6 +332,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_15">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_15" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_15">
@@ -260,6 +350,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_16">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_16" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.45267489711934156 0.1037344398340249 0.027434842249657063" name="ItemPrice_16">
@@ -272,6 +368,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_17">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_17" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_17">
@@ -284,6 +386,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_18">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_18" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_18">
@@ -296,6 +404,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_19">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_19" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.26556016597510373 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_19">
@@ -308,6 +422,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_20">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_20" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_20">
@@ -320,6 +440,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_21">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_21" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_21">
@@ -332,6 +458,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_22">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_22" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_22">
@@ -344,6 +476,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_23">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_23" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_23">
@@ -356,6 +494,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_24">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_24" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.65843621399176955 0.1037344398340249 0.027434842249657063" name="ItemPrice_24">
@@ -368,6 +512,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_25">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_25" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.016597510373443983 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_25">
@@ -380,6 +530,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_26">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_26" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.14107883817427386 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_26">
@@ -392,6 +548,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_27">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_27" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.26141078838174275 0.86419753086419748 0.1078838174273859 0.027434842249657063" name="ItemPrice_27">
@@ -404,6 +566,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_28">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_28" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.39004149377593361 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_28">
@@ -416,6 +584,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_29">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_29" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.51286307053941904 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_29">
@@ -428,6 +602,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_30">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_30" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.63817427385892112 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_30">
@@ -440,6 +620,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_31">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_31" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.76265560165975099 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_31">
@@ -452,6 +638,12 @@
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.1076923076923077 0.060869565217391307 0.76923076923076927 0.86956521739130432" name="ItemPic_32">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
+                    <Widget name="ItemLock_32" skin="ImageBox" type="ImageBox" position_real="0.65 0.62 0.25 0.33333">
+                        <Property key="ImageTexture" value="gui_icon_craftbot_lock_small.png" />
+                        <Property key="NeedKey" value="false" />
+                        <Property key="NeedMouse" value="false" />
+                        <Property key="Visible" value="false" />
+                    </Widget>
                 </Widget>
             </Widget>
             <Widget type="TextBox" skin="TextBox" position_real="0.88796680497925307 0.86419753086419748 0.1037344398340249 0.027434842249657063" name="ItemPrice_32">
