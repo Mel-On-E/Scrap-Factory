@@ -197,6 +197,7 @@ function Perks:changeItem(itemName)
 		--print(item)
 
 		self.cl.perkGui:setButtonState(itemName, true)
+		self.cl.perkGui:setImage("Preview", IMAGE_PATH .. item.image .. ".png")
 		self.cl.perkGui:setText("ItemName", language_tag(item.name .. "Name"))
 		self.cl.perkGui:setText("ItemDesc", language_tag(item.name .. "Desc"))
 		local requirements = ""
