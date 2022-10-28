@@ -21,6 +21,7 @@ local function number_suffix(value, suffixes)
             local format = "%s%." .. 2 - orderOfMagnitude .. "f%s"
             return string.format(format, negate, truncatedNumber * 10^orderOfMagnitude, suffix)
         else  -- Format if suffix does not exist (3 digits scientific).
+            scientific = string.format("%.2e", value)
             return scientific:gsub("+", "")
         end
     end
