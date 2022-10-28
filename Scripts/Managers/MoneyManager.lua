@@ -1,7 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class MoneyManager : ScriptableObjectClass
----@field lastMoney number Used to calcuulate money/s
+---@field lastMoneyCache LastMoneyCache[] Used to calcuulate money/s
+---@field lastMoney number Used to calc money/s
 ---@diagnostic disable-next-line: assign-type-mismatch
 MoneyManager = class()
 MoneyManager.isSaveObject = true
@@ -70,6 +71,7 @@ function MoneyManager:client_onCreate()
     if not g_moneyManager then
         g_moneyManager = self
     end
+    self.lastMoneyCache = {}
     self.lastMoney = 0
 end
 
@@ -84,10 +86,27 @@ function MoneyManager:client_onFixedUpdate()
 
     if sm.game.getCurrentTick() % 20 == 0 then
         local money = self.cl_getMoney()
-        local moneyChange = (money - self.lastMoney) * 2
-        g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }) .. "/s")
-        self.lastMoney = money
 
+        if #self.lastMoneyCache < 5 then
+            local moneyChange = money - self.lastMoney
+            g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }))
+
+            table.insert(self.lastMoneyCache, { Money = money, LastMoney = self.lastMoney })
+            self.lastMoney = money
+            return
+        end
+
+        local moneyChange = 0
+
+        for k, v in pairs(self.lastMoneyCache) do
+            moneyChange = moneyChange + (v.Money - v.LastMoney)
+        end
+
+        g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange / 5 }))
+
+        table.insert(self.lastMoneyCache, { LastMoney = self.lastMoney, Money = money })
+        table.remove(self.lastMoneyCache, 1)
+        self.lastMoney = money
     end
 end
 
@@ -113,3 +132,9 @@ end
 function MoneyManager.cl_moneyEarned()
     return g_moneyManager.cl.moneyEarned
 end
+
+--Types
+
+---@class LastMoneyCache
+---@field Money number
+---@field LastMoney number
