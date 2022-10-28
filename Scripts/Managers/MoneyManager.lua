@@ -102,7 +102,7 @@ function MoneyManager:client_onFixedUpdate()
             moneyChange = moneyChange + (v.Money - v.LastMoney)
         end
 
-        g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange / 5 }))
+        g_factoryHud:setText("Money/s", format_number({ format = "money", value = (moneyChange / 5 * 2) }))
 
         table.insert(self.lastMoneyCache, { LastMoney = self.lastMoney, Money = money })
         table.remove(self.lastMoneyCache, 1)
