@@ -64,6 +64,7 @@ function Furnace:sv_onEnter(trigger, results)
                 end
             end
 
+            shape.interactable.publicData.value = nil
             shape:destroyPart(0)
         end
         ::continue::
