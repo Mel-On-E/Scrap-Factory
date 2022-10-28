@@ -7,6 +7,8 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
+local moneyCacheInterval = 40*60 --ticks
+
 function MoneyManager:server_onCreate()
     self.saved = self.storage:load()
 
@@ -39,8 +41,6 @@ function MoneyManager:server_onFixedUpdate()
         safeData.moneyEarned = moneyEarned
 
         self.network:setClientData({ money = tostring(self.saved.money), moneyEarned = tostring(self.saved.moneyEarned) })
-
-
     end
 end
 
@@ -52,6 +52,7 @@ end
 function MoneyManager.sv_setMoney(money)
     g_moneyManager.saved.money = money
     g_moneyManager.saved.moneyEarned = money
+    sm.event.sendToScriptableObject(g_moneyManager.scriptableObject, "sv_resetMoneyCache")
 end
 
 function MoneyManager.sv_spendMoney(price)
@@ -63,51 +64,45 @@ function MoneyManager.sv_spendMoney(price)
     end
 end
 
+function MoneyManager:sv_resetMoneyCache()
+    self.network:sendToClients("cl_resetMoneyCache")
+end
+
 function MoneyManager:client_onCreate()
     self.cl = {}
     self.cl.money = 0
     self.cl.moneyEarned = 0
+    self.cl.moneyEarnedCache = {}
+    self.cl.moneyPerIntervall = 0
 
     if not g_moneyManager then
         g_moneyManager = self
     end
-    self.lastMoneyCache = {}
-    self.lastMoney = 0
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
     self.cl.money = tonumber(clientData.money)
-    self.cl.moneyEarned = tonumber(clientData.moneyEarned)
+
+    local newMoneyEarned = tonumber(clientData.moneyEarned)
+    local moneyDuringIntervall = newMoneyEarned - ((#self.cl.moneyEarnedCache == 0 and newMoneyEarned) or self.cl.moneyEarned)
+
+    self.cl.moneyEarnedCache[#self.cl.moneyEarnedCache+1] = {money = moneyDuringIntervall, tick = sm.game.getCurrentTick()}
+
+    self.cl.moneyEarned = newMoneyEarned
 end
 
 function MoneyManager:client_onFixedUpdate()
     self:updateHud()
-    ---Money a sec
 
-    if sm.game.getCurrentTick() % 20 == 0 then
-        local money = self.cl_getMoney()
-
-        if #self.lastMoneyCache < 50 then
-            local moneyChange = money - self.lastMoney
-            g_factoryHud:setText("Money/s", format_number({ format = "money", value = moneyChange }))
-
-            table.insert(self.lastMoneyCache, { Money = money, LastMoney = self.lastMoney })
-            self.lastMoney = money
-            return
+    local newCache = {}
+    self.cl.moneyPerIntervall = 0
+    for _, cache in ipairs(self.cl.moneyEarnedCache) do
+        if sm.game.getCurrentTick() - cache.tick < moneyCacheInterval + 80 then
+            self.cl.moneyPerIntervall = self.cl.moneyPerIntervall + cache.money
+            newCache[#newCache+1] = cache
         end
-
-        local moneyChange = 0
-
-        for k, v in pairs(self.lastMoneyCache) do
-            moneyChange = moneyChange + (v.Money - v.LastMoney)
-        end
-
-        g_factoryHud:setText("Money/s", format_number({ format = "money", value = (moneyChange / 50) * 2 }))
-
-        table.insert(self.lastMoneyCache, { LastMoney = self.lastMoney, Money = money })
-        table.remove(self.lastMoneyCache, 1)
-        self.lastMoney = money
     end
+    self.cl.moneyEarnedCache = newCache
 end
 
 function MoneyManager:updateHud()
@@ -115,6 +110,7 @@ function MoneyManager:updateHud()
         local money = self.cl_getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
+            g_factoryHud:setText("Money/s", format_number({ format = "money", value = (self.cl.moneyPerIntervall/moneyCacheInterval)*40, unit = "/min" }))
         end
     end
 end
@@ -125,6 +121,10 @@ end
 
 function MoneyManager.cl_moneyEarned()
     return g_moneyManager.cl.moneyEarned
+end
+
+function MoneyManager:cl_resetMoneyCache()
+    self.cl.moneyEarnedCache = {}
 end
 
 --Types
