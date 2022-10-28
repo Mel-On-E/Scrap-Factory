@@ -83,6 +83,18 @@ function ResearchManager.sv_addResearch(shape)
     return true
 end
 
+function ResearchManager:getTierProgress()
+    local progressFraction = self.cl.progress
+
+    if self.sv then
+        progressFraction = (self.sv.saved.research[self.sv.tier] or 0) /
+            (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+        progressFraction = string.format("%.2f", progressFraction * 100)
+    end
+
+    return progressFraction
+end
+
 function ResearchManager:sv_resetResearch()
     self.sv.saved.research[self.sv.tier] = 0
     self.storage:save(self.sv.saved)
@@ -114,7 +126,7 @@ end
 function ResearchManager:client_onFixedUpdate()
     if g_factoryHud and self.cl.tier > 0 then
         g_factoryHud:setIconImage("ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid))
-        g_factoryHud:setText("Research", "#00dddd" .. self.cl.progress .. "%")
+        g_factoryHud:setText("Research", "#00dddd" .. self:getTierProgress() .. "%")
     end
 
     if self.cl.endEffect and self.cl.endEffect < sm.game.getCurrentTick() then
