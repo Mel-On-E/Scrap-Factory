@@ -6,7 +6,6 @@
                 <Property key="FontName" value="SM_HeaderLarge_Wide"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="Caption" value="Shop"/>
-                <Property key="FontHeight" value="48"/>
             </Widget>
             <Widget type="Button" skin="CraftbotTab" position_real="0.0041493775933609959 0.65517241379310343 0.12033195020746888 0.34482758620689657" name="AllTab">
                 <Property key="FontHeight" value="2"/>
