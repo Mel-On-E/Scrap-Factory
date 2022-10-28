@@ -110,12 +110,6 @@ function MoneyManager:client_onFixedUpdate()
     end
 end
 
-function MoneyManager:client_onUpdate()
-    if sm.isHost then
-        self:updateHud()
-    end
-end
-
 function MoneyManager:updateHud()
     if g_factoryHud then
         local money = self.cl_getMoney()
