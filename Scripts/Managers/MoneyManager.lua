@@ -65,11 +65,11 @@ function MoneyManager:server_onFixedUpdate()
     end
 end
 
-function MoneyManager.sv_addMoney(money)
+function MoneyManager.sv_addMoney(money, source)
     g_moneyManager.sv.saved.money = g_moneyManager.sv.saved.money + money
     g_moneyManager.sv.saved.moneyEarned = g_moneyManager.sv.saved.moneyEarned + money
 
-    if money > 0 then
+    if money > 0 and source ~= "sellTool" then
         g_moneyManager.sv.moneyEarned = g_moneyManager.sv.moneyEarned + money
     end
 end
