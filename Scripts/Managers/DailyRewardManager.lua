@@ -4,7 +4,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 DailyRewardManager = class()
 DailyRewardManager.isSaveObject = true
 
-local DAY = 1000 * 60 * 60 * 20 --20 Hours
+local DAY = 60 * 60 * 20 --20 Hours
 
 function DailyRewardManager:server_onCreate()
     self.saved = self.storage:load()
@@ -18,7 +18,6 @@ function DailyRewardManager:server_onCreate()
 
     if os.time() - self.saved.time >= DAY * 2 then
         self.saved.streak = 0
-        self.storage:save(self.saved)
     end
 
     if os.time() - self.saved.time >= DAY then
