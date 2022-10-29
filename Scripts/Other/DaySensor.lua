@@ -7,6 +7,8 @@ DaySensor = class()
 DaySensor.connectionOutput = sm.interactable.connectionType.logic
 DaySensor.maxChildCount = 255
 DaySensor.poseWeightCount = 1
+DaySensor.colorNormal = sm.color.new(0x9a0d44ff)
+DaySensor.colorHighlight = sm.color.new(0xc01559ff)
 
 local enabledPose = 10
 
