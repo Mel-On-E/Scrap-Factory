@@ -12,9 +12,9 @@
          "physicsMaterial" : "Metal",
          "ratings" : {
             "buoyancy" : 4,
-            "density" : 4,
+            "density" : 1,
             "durability" : 6,
-            "friction" : 5
+            "friction" : 3
          },
          "renderable" : {
             "lodList" : [
@@ -41,7 +41,7 @@
                }
             ]
          },
-         "restitution" : 0.50,
+         "restitution" : 1.00,
          "restrictions" : {
             "liftable" : false
          },
@@ -65,9 +65,9 @@
          "physicsMaterial" : "Metal",
          "ratings" : {
             "buoyancy" : 4,
-            "density" : 4,
+            "density" : 1,
             "durability" : 6,
-            "friction" : 5
+            "friction" : 3
          },
          "renderable" : {
             "lodList" : [
@@ -94,7 +94,7 @@
                }
             ]
          },
-         "restitution" : 0.50,
+         "restitution" : 1.00,
          "restrictions" : {
             "liftable" : false
          },
@@ -118,9 +118,9 @@
          "physicsMaterial" : "Metal",
          "ratings" : {
             "buoyancy" : 4,
-            "density" : 4,
+            "density" : 1,
             "durability" : 6,
-            "friction" : 5
+            "friction" : 3
          },
          "renderable" : {
             "lodList" : [
@@ -147,7 +147,7 @@
                }
             ]
          },
-         "restitution" : 0.50,
+         "restitution" : 1.00,
          "restrictions" : {
             "liftable" : false
          },
