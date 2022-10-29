@@ -4,12 +4,11 @@ dofile("$CONTENT_DATA/Scripts/util/day.lua")
 ---@field day boolean
 ---@diagnostic disable-next-line: assign-type-mismatch
 DaySensor = class()
-DaySensor.connectionOutput = 1
+DaySensor.connectionOutput = sm.interactable.connectionType.logic
 DaySensor.maxChildCount = 255
 DaySensor.poseWeightCount = 1
 
 local enabledPose = 10
-local disabledPose = 0
 
 function DaySensor:client_onCreate()
     self.day = false
@@ -22,11 +21,10 @@ function DaySensor:server_onFixedUpdate()
     if day == self.day then return end
 
     self.interactable:setActive(day)
-    self.network:sendToClients("cl_changeModel", day)
+    self.network:sendToClients("cl_changeModel")
     self.day = day
 end
 
----@param enable boolean If true makes the model "enabled" if false "disabled"
-function DaySensor:cl_changeModel(enable)
-    self.interactable:setUvFrameIndex(enable and enabledPose or disabledPose)
+function DaySensor:cl_changeModel()
+    self.interactable:setUvFrameIndex(self.interactable.active and enabledPose or 0)
 end
