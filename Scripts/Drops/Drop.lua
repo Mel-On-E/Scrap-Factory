@@ -64,6 +64,17 @@ function Drop:client_onCreate()
     end
     self.cl = {}
     self.cl.value = 0
+    self.cl.effects = {}
+
+    if self.data and self.data.effect then
+        self:cl_createEffect("default",self.data.effect)
+    end
+end
+
+function Drop:cl_createEffect(key, name)
+    self.cl.effects[key] = sm.effect.createEffect(name, self.interactable)
+    self.cl.effects[key]:setAutoPlay(true)
+    self.cl.effects[key]:start()
 end
 
 function Drop:client_onClientDataUpdate(data)
@@ -73,8 +84,7 @@ function Drop:client_onClientDataUpdate(data)
         self.cl.pollution = tonumber(data.pollution)
 
         if not self.cl.pollutionEffect then
-            self.cl.pollutionEffect = sm.effect.createEffect("Ore Pollution", self.interactable)
-            self.cl.pollutionEffect:start()
+            self:cl_createEffect("pollution", "Ore Pollution")
         end
     end
 end
@@ -82,8 +92,10 @@ end
 function Drop:client_onDestroy()
     oreCount = oreCount - 1
 
-    if self.cl.pollutionEffect then
-        self.cl.pollutionEffect:destroy()
+    for _, effect in pairs(self.cl.effects) do
+        if sm.exists(effect) then
+            effect:destroy()
+        end
     end
 end
 
