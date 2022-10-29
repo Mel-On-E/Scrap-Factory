@@ -13,9 +13,7 @@ function ResearchManager:server_onCreate()
         self.sv.saved = {}
         self.sv.saved.research = {}
     else
-        for tier, progress in ipairs(self.sv.saved.research) do
-            self.sv.saved.research[tier] = tonumber(progress)
-        end
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
     self.tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
@@ -44,23 +42,13 @@ function ResearchManager:server_onFixedUpdate()
 end
 
 function ResearchManager:sv_saveDataAndSync()
-    local safeData = self.sv.saved
-    local research = safeData.research
-    local progressFraction = (research[self.sv.tier] or 0) /
+    local progressFraction = (self.sv.saved.research[self.sv.tier] or 0) /
         (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
 
-    for tier, progress in ipairs(research) do
-        research[tier] = tostring(progress)
-    end
+    self.storage:save(packNetworkData(self.sv.saved))
 
-    self.storage:save(self.sv.saved)
-
-    self.network:setClientData({ research = safeData.research, tier = self.sv.tier,
+    self.network:setClientData({ research = packNetworkData(self.sv.saved.research), tier = self.sv.tier,
         progress = string.format("%.2f", progressFraction * 100) })
-
-    for tier, progress in ipairs(research) do
-        research[tier] = tonumber(progress)
-    end
 end
 
 function ResearchManager.sv_addResearch(value, shape)
@@ -115,10 +103,8 @@ function ResearchManager:client_onCreate()
 end
 
 function ResearchManager:client_onClientDataUpdate(clientData)
-    for tier, progress in ipairs(clientData.research) do
-        self.cl.research[tier] = tonumber(progress)
-    end
-    self.cl.tier = tonumber(clientData.tier)
+    self.cl.research = unpackNetworkData(clientData.research)
+    self.cl.tier = clientData.tier
     self.cl.progress = clientData.progress
 end
 

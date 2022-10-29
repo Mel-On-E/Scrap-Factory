@@ -11,7 +11,7 @@ function PollutionManager:server_onCreate()
         self.saved = {}
         self.saved.pollution = 0
     else
-        self.saved.pollution = tonumber(self.saved.pollution)
+        self.saved = unpackNetworkData(self.saved)
     end
 
     if not g_pollutionManager then
@@ -21,14 +21,7 @@ end
 
 function PollutionManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        local safeData = self.saved
-        local pollution = safeData.pollution
-
-        safeData.pollution = tostring(pollution)
-
-        self.storage:save(self.saved)
-
-        safeData.pollution = pollution
+        self.storage:save(packNetworkData(self.saved))
 
         self.network:setClientData({ pollution = tostring(self.saved.pollution) })
     end
@@ -56,7 +49,8 @@ function PollutionManager:client_onCreate()
 end
 
 function PollutionManager:client_onClientDataUpdate(clientData, channel)
-    self.cl.pollution = tonumber(clientData.pollution)
+    clientData = unpackNetworkData(clientData)
+    self.cl.pollution = clientData.pollution
 end
 
 function PollutionManager:client_onFixedUpdate()

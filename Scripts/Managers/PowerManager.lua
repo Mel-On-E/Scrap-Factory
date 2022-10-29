@@ -12,7 +12,7 @@ function PowerManager:server_onCreate()
         self.sv.saved = {}
         self.sv.saved.powerStored = 0
     else
-        self.sv.saved.powerStored = tonumber(self.sv.saved.powerStored)
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
     self.sv.power = 0
@@ -25,16 +25,11 @@ end
 
 function PowerManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        local safeData = self.sv.saved
-        local powerStored = safeData.powerStored
-
         if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-            powerStored = math.max(math.min(self.sv.powerLimit, powerStored + self.sv.power), 0)
+            self.sv.saved.powerStored = math.max(math.min(self.sv.powerLimit, self.sv.saved.powerStored + self.sv.power), 0)
         end
 
-        safeData.powerStored = tostring(powerStored)
-        self.storage:save(self.sv.saved)
-        safeData.powerStored = powerStored
+        self.storage:save(packNetworkData(self.sv.saved))
 
         self.network:setClientData({ power = tostring(self.sv.power),
             powerLimit = tostring(self.sv.powerLimit),
@@ -68,9 +63,10 @@ function PowerManager:client_onCreate()
 end
 
 function PowerManager:client_onClientDataUpdate(clientData)
-    self.cl.power = tonumber(clientData.power)
-    self.cl.powerLimit = tonumber(clientData.powerLimit)
-    self.cl.powerStored = tonumber(clientData.powerStored)
+    clientData = unpackNetworkData(clientData)
+    self.cl.power = clientData.power
+    self.cl.powerLimit = clientData.powerLimit
+    self.cl.powerStored = clientData.powerStored
 end
 
 function PowerManager:client_onFixedUpdate()

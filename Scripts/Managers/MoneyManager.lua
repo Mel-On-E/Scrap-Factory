@@ -20,8 +20,7 @@ function MoneyManager:server_onCreate()
         self.sv.saved.money = 0
         self.sv.saved.moneyEarned = 0
     else
-        self.sv.saved.money = tonumber(self.sv.saved.money)
-        self.sv.saved.moneyEarned = tonumber(self.sv.saved.moneyEarned)
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
     if not g_moneyManager then
@@ -31,17 +30,7 @@ end
 
 function MoneyManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        local safeData = self.sv.saved
-        local money = safeData.money
-        local moneyEarned = safeData.moneyEarned
-
-        safeData.money = tostring(money)
-        safeData.moneyEarned = tostring(moneyEarned)
-
-        self.storage:save(self.sv.saved)
-
-        safeData.money = money
-        safeData.moneyEarned = moneyEarned
+        self.storage:save(packNetworkData(self.sv.saved))
 
 
         self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache+1] = self.sv.moneyEarned
@@ -49,18 +38,18 @@ function MoneyManager:server_onFixedUpdate()
         local newCache = {}
         local syncOffset = 2
         local resizeCache = (#self.sv.moneyEarnedCache > moneyCacheInterval + syncOffset and 1) or 0
-        local moneyPerIntervall = 0
+        local moneyPerInterval = 0
         for k, money in ipairs(self.sv.moneyEarnedCache) do
             if #newCache < moneyCacheInterval + syncOffset then
                 newCache[#newCache+1] = self.sv.moneyEarnedCache[k + resizeCache]
-                moneyPerIntervall = moneyPerIntervall + money
+                moneyPerInterval = moneyPerInterval + money
             end
         end
         self.sv.moneyEarnedCache = newCache
-        moneyPerIntervall = moneyPerIntervall/moneyCacheInterval
+        moneyPerInterval = moneyPerInterval/moneyCacheInterval
 
         self.network:setClientData({ money = tostring(self.sv.saved.money), moneyEarned = tostring(self.sv.saved.moneyEarned),
-                                    moneyPerIntervall = tostring(moneyPerIntervall) })
+                                    moneyPerInterval = tostring(moneyPerInterval) })
         self.sv.moneyEarned = 0
     end
 end
@@ -99,7 +88,7 @@ function MoneyManager:client_onCreate()
     self.cl = {}
     self.cl.money = 0
     self.cl.moneyEarned = 0
-    self.cl.moneyPerIntervall = 0
+    self.cl.moneyPerInterval = 0
 
     if not g_moneyManager then
         g_moneyManager = self
@@ -107,9 +96,10 @@ function MoneyManager:client_onCreate()
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
-    self.cl.money = tonumber(clientData.money)
-    self.cl.moneyEarned = tonumber(clientData.moneyEarned)
-    self.cl.moneyPerIntervall = tonumber(clientData.moneyPerIntervall)
+    clientData = unpackNetworkData(clientData)
+    self.cl.money = clientData.money
+    self.cl.moneyEarned = clientData.moneyEarned
+    self.cl.moneyPerInterval = clientData.moneyPerInterval
 end
 
 function MoneyManager:client_onFixedUpdate()
@@ -121,7 +111,7 @@ function MoneyManager:updateHud()
         local money = self.cl_getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
-            g_factoryHud:setText("Money/s", format_number({ format = "money", value = self.cl.moneyPerIntervall, unit = "/min" }))
+            g_factoryHud:setText("Money/s", format_number({ format = "money", value = self.cl.moneyPerInterval, unit = "/min" }))
         end
     end
 end

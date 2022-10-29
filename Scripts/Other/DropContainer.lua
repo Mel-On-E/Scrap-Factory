@@ -88,10 +88,8 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 								RemovedHarvests[shape:getId()] = true
 
 								local publicData = shape.interactable.publicData
-								publicData.value = tostring(publicData.value)
-								publicData.pollution = publicData.pollution and tostring(publicData.pollution) or nil
 
-								self.sv.drops[transactionSlot] = publicData
+								self.sv.drops[transactionSlot] = packNetworkData(publicData)
 								self.storage:save(self.sv.drops)
 
 								shape:destroyShape()
@@ -131,9 +129,7 @@ function DropContainer.sv_release_drop(self)
 			droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
 
 			local publicData = self.sv.drops[slotIndex]
-			publicData.value = tonumber(publicData.value)
-			publicData.pollution = publicData.pollution and tonumber(publicData.pollution) or nil
-			shape.interactable:setPublicData(publicData)
+			shape.interactable:setPublicData(unpackNetworkData(publicData))
 
 			self.sv.drops[slotIndex] = nil
 			self.storage:save(self.sv.drops)

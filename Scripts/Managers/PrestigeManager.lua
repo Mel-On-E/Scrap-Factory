@@ -13,7 +13,7 @@ function PrestigeManager:server_onCreate()
         self.saved.lastPrestigeGain = 0
         self.saved.specialItems = {}
     else
-        self.saved.prestige = tonumber(self.saved.prestige)
+        self.saved = unpackNetworkData(self.saved)
     end
 
     if not g_prestigeManager then
@@ -45,17 +45,7 @@ function PrestigeManager:server_onFixedUpdate()
 end
 
 function PrestigeManager:sv_saveData()
-    local safeData = self.saved
-    local prestige = safeData.prestige
-    local lastPrestigeGain = safeData.lastPrestigeGain
-
-    safeData.prestige = tostring(prestige)
-    safeData.lastPrestigeGain = tostring(lastPrestigeGain)
-
-    self.storage:save(self.saved)
-
-    safeData.prestige = prestige
-    safeData.lastPrestigeGain = lastPrestigeGain
+    self.storage:save(packNetworkData(self.saved))
 
     self.network:setClientData({ prestige = tostring(self.saved.prestige), lastPrestigeGain = tostring(self.saved.lastPrestigeGain) })
 end
@@ -118,9 +108,10 @@ function PrestigeManager:client_onCreate()
     end
 end
 
-function PrestigeManager:client_onClientDataUpdate(clientData, channel)
-    self.cl.prestige = tonumber(clientData.prestige)
-    self.cl.lastPrestigeGain = tonumber(clientData.lastPrestigeGain)
+function PrestigeManager:client_onClientDataUpdate(clientData)
+    clientData = unpackNetworkData(clientData)
+    self.cl.prestige = clientData.prestige
+    self.cl.lastPrestigeGain = clientData.lastPrestigeGain
 end
 
 function PrestigeManager:client_onFixedUpdate()
