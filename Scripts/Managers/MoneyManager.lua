@@ -47,7 +47,7 @@ function MoneyManager:server_onFixedUpdate()
         self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache+1] = self.sv.moneyEarned
 
         local newCache = {}
-        local syncOffset = 2
+        local syncOffset = 3
         local resizeCache = (#self.sv.moneyEarnedCache > moneyCacheInterval + syncOffset and 1) or 0
         local moneyPerIntervall = 0
         for k, money in ipairs(self.sv.moneyEarnedCache) do
@@ -57,7 +57,6 @@ function MoneyManager:server_onFixedUpdate()
             end
         end
         self.sv.moneyEarnedCache = newCache
-        moneyPerIntervall = moneyPerIntervall/moneyCacheInterval
 
         self.network:setClientData({ money = tostring(self.sv.saved.money), moneyEarned = tostring(self.sv.saved.moneyEarned),
                                     moneyPerIntervall = tostring(moneyPerIntervall) })
