@@ -5,15 +5,16 @@ PrestigeManager = class()
 PrestigeManager.isSaveObject = true
 
 function PrestigeManager:server_onCreate()
-    self.saved = self.storage:load()
+    self.sv = {}
+    self.sv.saved = self.storage:load()
 
-    if self.saved == nil then
-        self.saved = {}
-        self.saved.prestige = 0
-        self.saved.lastPrestigeGain = 0
-        self.saved.specialItems = {}
+    if self.sv.saved == nil then
+        self.sv.saved = {}
+        self.sv.saved.prestige = 0
+        self.sv.saved.lastPrestigeGain = 0
+        self.sv.saved.specialItems = {}
     else
-        self.saved = unpackNetworkData(self.saved)
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
     if not g_prestigeManager then
@@ -45,22 +46,22 @@ function PrestigeManager:server_onFixedUpdate()
 end
 
 function PrestigeManager:sv_saveData()
-    self.storage:save(packNetworkData(self.saved))
+    self.storage:save(packNetworkData(self.sv.saved))
 
-    self.network:setClientData({ prestige = tostring(self.saved.prestige), lastPrestigeGain = tostring(self.saved.lastPrestigeGain) })
+    self.network:setClientData({ prestige = tostring(self.sv.saved.prestige), lastPrestigeGain = tostring(self.sv.saved.lastPrestigeGain) })
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
-    g_prestigeManager.saved.prestige = g_prestigeManager.saved.prestige + prestige
+    g_prestigeManager.sv.saved.prestige = g_prestigeManager.sv.saved.prestige + prestige
 end
 
 function PrestigeManager.sv_setPrestige(prestige)
-    g_prestigeManager.saved.prestige = prestige
+    g_prestigeManager.sv.saved.prestige = prestige
 end
 
 function PrestigeManager.sv_spendPrestige(prestige)
-    if g_prestigeManager.saved.prestige - prestige > 0 then
-        g_prestigeManager.saved.prestige = g_prestigeManager.saved.prestige - prestige
+    if g_prestigeManager.sv.saved.prestige - prestige > 0 then
+        g_prestigeManager.sv.saved.prestige = g_prestigeManager.sv.saved.prestige - prestige
         sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
         return true
     end
@@ -69,13 +70,13 @@ end
 
 function PrestigeManager.sv_addSpecialItem(uuid)
     local uuid = tostring(uuid)
-    local quantity = g_prestigeManager.saved.specialItems[uuid] or 0
-    g_prestigeManager.saved.specialItems[uuid] = math.min(quantity+1, 999)
+    local quantity = g_prestigeManager.sv.saved.specialItems[uuid] or 0
+    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity+1, 999)
     sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
 end
 
 function PrestigeManager.sv_getSpecialItems()
-   return (g_prestigeManager and g_prestigeManager.saved.specialItems) or {}
+   return (g_prestigeManager and g_prestigeManager.sv.saved.specialItems) or {}
 end
 
 function PrestigeManager.sv_prestige()
@@ -87,7 +88,7 @@ end
 
 function PrestigeManager:sv_doPrestige()
     self.sv_addPrestige(self.getPrestigeGain())
-    self.saved.lastPrestigeGain = self.getPrestigeGain()
+    self.sv.saved.lastPrestigeGain = self.getPrestigeGain()
 
     self:sv_saveData()
 
@@ -149,5 +150,5 @@ function PrestigeManager.cl_e_getLastPrestigeGain()
 end
 
 function PrestigeManager.cl_getPrestige()
-    return g_prestigeManager.saved and g_prestigeManager.saved.prestige or g_prestigeManager.cl.prestige
+    return g_prestigeManager.sv.saved and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.prestige
 end

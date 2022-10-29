@@ -5,13 +5,14 @@ PollutionManager = class()
 PollutionManager.isSaveObject = true
 
 function PollutionManager:server_onCreate()
-    self.saved = self.storage:load()
+    self.sv = {}
+    self.sv.saved = self.storage:load()
 
-    if self.saved == nil then
-        self.saved = {}
-        self.saved.pollution = 0
+    if self.sv.saved == nil then
+        self.sv.saved = {}
+        self.sv.saved.pollution = 0
     else
-        self.saved = unpackNetworkData(self.saved)
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
     if not g_pollutionManager then
@@ -21,22 +22,22 @@ end
 
 function PollutionManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        self.storage:save(packNetworkData(self.saved))
+        self.storage:save(packNetworkData(self.sv.saved))
 
-        self.network:setClientData({ pollution = tostring(self.saved.pollution) })
+        self.network:setClientData({ pollution = tostring(self.sv.saved.pollution) })
     end
 end
 
 function PollutionManager.sv_addPollution(pollution)
-    g_pollutionManager.saved.pollution = g_pollutionManager.saved.pollution + pollution
+    g_pollutionManager.sv.saved.pollution = g_pollutionManager.sv.saved.pollution + pollution
 end
 
 function PollutionManager.sv_setPollution(pollution)
-    g_pollutionManager.saved.pollution = pollution
+    g_pollutionManager.sv.saved.pollution = pollution
 end
 
 function PollutionManager.sv_getPollution()
-    return g_pollutionManager.saved.pollution
+    return g_pollutionManager.sv.saved.pollution
 end
 
 function PollutionManager:client_onCreate()
@@ -73,7 +74,7 @@ function PollutionManager:updateHud()
 end
 
 function PollutionManager.cl_getPollution()
-    return g_pollutionManager.saved and g_pollutionManager.saved.pollution or g_pollutionManager.cl.pollution
+    return g_pollutionManager.sv.saved and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.pollution
 end
 
 function PollutionManager.getResearchMultiplier()

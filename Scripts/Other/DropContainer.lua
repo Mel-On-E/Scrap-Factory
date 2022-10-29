@@ -21,15 +21,16 @@ function DropContainer.server_onCreate(self)
 		filter, { resourceCollector = self.shape })
 	self.sv.areaTrigger:bindOnEnter("trigger_onEnter")
 
-	self.sv.drops = self.storage:load()
-	if not self.sv.drops then
-		self.sv.drops = {}
+	self.sv.saved = self.storage:load()
+	if not self.sv.saved then
+		self.sv.saved = {}
+		self.sv.saved.drops = {}
 	end
 
-	self.drops = {}
+	self.sv.drops = {}
 	local drop_json = sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset")
 	for _, part in ipairs(drop_json.partList) do
-		self.drops[part.uuid] = true
+		self.sv.drops[part.uuid] = true
 	end
 
 	self.offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
@@ -65,7 +66,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 	for _, result in ipairs(contents) do
 		if sm.exists(result) and type(result) == "Body" then
 			for _, shape in ipairs(result:getShapes()) do
-				if self.drops[tostring(shape:getShapeUuid())] and not RemovedHarvests[shape:getId()] and
+				if self.sv.drops[tostring(shape:getShapeUuid())] and not RemovedHarvests[shape:getId()] and
 					not droppedShapes[shape:getId()] then
 					local container = self.interactable:getContainer(0)
 					if container then
@@ -89,8 +90,8 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 
 								local publicData = shape.interactable.publicData
 
-								self.sv.drops[transactionSlot] = packNetworkData(publicData)
-								self.storage:save(self.sv.drops)
+								self.sv.saved.drops[transactionSlot] = packNetworkData(publicData)
+								self.storage:save(self.sv.saved)
 
 								shape:destroyShape()
 							end
@@ -128,11 +129,11 @@ function DropContainer.sv_release_drop(self)
 			local shape = sm.shape.createPart(slotItem.uuid, self.shape.worldPosition + offset, self.shape:getWorldRotation())
 			droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
 
-			local publicData = self.sv.drops[slotIndex]
+			local publicData = self.sv.saved.drops[slotIndex]
 			shape.interactable:setPublicData(unpackNetworkData(publicData))
 
-			self.sv.drops[slotIndex] = nil
-			self.storage:save(self.sv.drops)
+			self.sv.saved.drops[slotIndex] = nil
+			self.storage:save(self.sv.saved)
 		end
 	end
 end
