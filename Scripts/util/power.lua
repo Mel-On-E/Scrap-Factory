@@ -4,37 +4,39 @@ Power = class(nil)
 function Power:server_onCreate()
     self.data.power = tonumber(self.data.power)
 
-    self.prevActive = true
-    self.powerUpdate = 1
-    self.hasPower = false
+    self.powerUtil = {}
+    self.powerUtil.prevActive = true
+    self.powerUtil.active = false
+    self.powerUtil.powerUpdate = 1
+    self.powerUtil.hasPower = false
 end
 
 function Power:server_onFixedUpdate(effect)
-    self.powerUpdate = self.powerUpdate - 1
+    self.powerUtil.powerUpdate = self.powerUtil.powerUpdate - 1
 
     local parent = self.interactable:getSingleParent()
     if not parent then
-        self.active = true
+        self.powerUtil.active = true
     else
-        self.active = parent:isActive()
+        self.powerUtil.active = parent:isActive()
     end
 
-    if self.powerUpdate == 0 then
-        self.powerUpdate = 40
+    if self.powerUtil.powerUpdate == 0 then
+        self.powerUtil.powerUpdate = 40
         if not PowerManager.sv_changePower(-self.data.power) then
-            self.hasPower = false
+            self.powerUtil.hasPower = false
         else
-            self.hasPower = true
+            self.powerUtil.hasPower = true
         end
     end
 
-    self.active = self.active and self.hasPower
+    self.powerUtil.active = self.powerUtil.active and self.powerUtil.hasPower
 
-    if self.active ~= self.prevActive then
+    if self.powerUtil.active ~= self.powerUtil.prevActive then
         if effect and type(effect) == "string" then
-            self.network:sendToClients(effect, self.active)
+            self.network:sendToClients(effect, self.powerUtil.active)
         end
     end
 
-    self.prevActive = self.active
+    self.powerUtil.prevActive = self.powerUtil.active
 end

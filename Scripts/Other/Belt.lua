@@ -29,7 +29,7 @@ function Belt:server_onFixedUpdate()
 end
 
 function Belt:sv_onStay(trigger, results)
-    if not self.active then return end
+    if not self.powerUtil.active then return end
     local selfId = self.shape.body.id
     for _, result in ipairs(results) do
         if sm.exists(result) then

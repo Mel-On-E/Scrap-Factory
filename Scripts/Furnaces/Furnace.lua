@@ -40,7 +40,7 @@ function Furnace:server_onCreate()
 end
 
 function Furnace:sv_onEnter(trigger, results)
-    if not self.active then return end
+    if not self.powerUtil.active then return end
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
         for k, shape in pairs(result:getShapes()) do
