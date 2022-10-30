@@ -61,7 +61,7 @@ function LootCrate:client_onFixedUpdate()
             blip:setParameter("pitch", 1 - (self.openTick - tick) / self.unboxTime)
             blip:start()
 
-            self.blips[#self.blips+1] = {effect = blip, tick = tick}
+            self.blips[#self.blips + 1] = { effect = blip, tick = tick }
         end
         if tick > self.openTick then
             self.openTick = nil
