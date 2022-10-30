@@ -5,69 +5,68 @@ local oreCount = 0
 local lifeTime = 40 * 5 --ticks
 
 function Drop:server_onCreate()
+    if not self.storage:load() then
+        self.storage:save(true)
+    else
+        self.shape:destroyShape(0)
+        return
+    end
+
     local body = self.shape:getBody()
     body:setErasable(false)
     body:setPaintable(false)
     body:setBuildable(false)
     body:setLiftable(false)
-    self.timeout = 0
 
-    local saved = self.storage:load()
-    if not saved then
-        self.storage:save(true)
-    else
-        self.shape:destroyShape(0)
-    end
+    self.sv = {}
+    self.sv.timeout = 0
 end
 
 function Drop:server_onFixedUpdate()
     if self.shape:getVelocity():length() < 0.01 then
-        self.timeout = self.timeout + 1
+        self.sv.timeout = self.sv.timeout + 1
     else
-        self.timeout = 0
+        self.sv.timeout = 0
     end
 
-    if self.timeout > lifeTime then
+    if self.sv.timeout > lifeTime then
         self.shape:destroyShape(0)
     end
+
     if sm.game.getCurrentTick() % 40 == 0 then
-        local publicData = self.interactable.publicData
+        local publicData = unpackNetworkData(self.interactable.publicData)
         if publicData then
-            local params = {}
-            params.value = tostring(publicData.value)
-            if publicData.pollution then
-                params.pollution = tostring(publicData.pollution)
-            end
-            self.network:setClientData(params)
+            self.network:setClientData({
+                value = publicData.value,
+                pollution = publicData.pollution
+            })
         end
     end
 
-    if self.interactable.publicData then
-        self.money = self.interactable.publicData.value
-        self.pollution = self:getPollution()
-    end
-    self.pos = self.shape.worldPosition
+    self.sv.pos = self.shape.worldPosition
+    self.sv.pollution = self:getPollution()
 end
 
 function Drop:server_onDestroy()
-    if self.pollution then
+    if self.sv.pollution then
         sm.event.sendToGame("sv_e_stonks",
-            { pos = self.pos, value = tostring(self.pollution), format = "pollution", effect = "Pollution" })
-        PollutionManager.sv_addPollution(self.pollution)
+            { pos = self.sv.pos, value = tostring(self.sv.pollution), format = "pollution", effect = "Pollution" })
+        PollutionManager.sv_addPollution(self.sv.pollution)
     end
 end
 
 function Drop:client_onCreate()
-    oreCount = oreCount + 1
-    if oreCount >= 100 then
-        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
-    end
     self.cl = {}
     self.cl.value = 0
     self.cl.effects = {}
 
     if self.data and self.data.effect then
-        self:cl_createEffect("default",self.data.effect)
+        self:cl_createEffect("default", self.data.effect)
+    end
+
+    oreCount = oreCount + 1
+    if oreCount == 100 then
+        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
     end
 end
 
@@ -78,14 +77,12 @@ function Drop:cl_createEffect(key, name)
 end
 
 function Drop:client_onClientDataUpdate(data)
-    self.cl.value = tonumber(data.value)
+    data = unpackNetworkData(data)
+    self.cl.value = data.value
+    self.cl.pollution = data.pollution
 
-    if data.pollution then
-        self.cl.pollution = tonumber(data.pollution)
-
-        if not self.cl.pollutionEffect then
-            self:cl_createEffect("pollution", "Ore Pollution")
-        end
+    if data.pollution and not self.cl.pollutionEffect then
+        self:cl_createEffect("pollution", "Ore Pollution")
     end
 end
 
@@ -102,9 +99,9 @@ end
 function Drop:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
-    local money = format_number({ format = "money", value = self.money or self.cl.value, color = "#4f9f4f" })
-    if self.cl.pollution or self.pollution then
-        local pollution = format_number({ format = "pollution", value = self.pollution or self:getPollution(),
+    local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
+    if self:getPollution() then
+        local pollution = format_number({ format = "pollution", value = self:getPollution(),
             color = "#9f4f9f" })
         sm.gui.setInteractionText("", o1 .. pollution .. o2)
         sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
@@ -114,12 +111,18 @@ function Drop:client_canInteract()
     return true
 end
 
-function Drop:getPollution()
+function Drop:getValue()
     local value = self.cl.value
-    local pollution = self.cl.pollution
     if sm.isServerMode() then
         value = self.interactable.publicData.value
+    end
+    return value
+end
+
+function Drop:getPollution()
+    local pollution = self.cl.pollution
+    if sm.isServerMode() then
         pollution = self.interactable.publicData.pollution
     end
-    return pollution and math.max(pollution - value, 0) or nil
+    return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
