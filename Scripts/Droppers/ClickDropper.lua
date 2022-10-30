@@ -4,11 +4,6 @@ dofile("$CONTENT_DATA/Scripts/Droppers/Dropper.lua")
 ClickDropper = class(Dropper)
 ClickDropper.poseWeightCount = 1
 
-function ClickDropper:server_onCreate()
-    Dropper.server_onCreate(self)
-    self.sv = {}
-end
-
 function ClickDropper:server_onFixedUpdate()
     local state = self.interactable:isActive()
     if state ~= self.sv.prevState and state then
@@ -22,10 +17,6 @@ function ClickDropper:sv_activate()
     self.network:sendToClients("client_playSound", "Button " .. (self.interactable.active and "off" or "on"))
 end
 
-function ClickDropper:client_onCreate()
-    self.cl = {}
-end
-
 function ClickDropper:client_onFixedUpdate()
     local state = self.interactable:isActive()
     if state ~= self.cl.prevState then
@@ -34,11 +25,11 @@ function ClickDropper:client_onFixedUpdate()
     self.cl.prevState = state
 
     local char = sm.localPlayer.getPlayer().character
-    if character and not self.look and character:getLockingInteractable() == self.interactable then
-        sm.localPlayer.getPlayer().character:setLockingInteractable(nil)
+    if char and not self.cl.look and char:getLockingInteractable() == self.interactable then
+        char:setLockingInteractable(nil)
         self.network:sendToServer("sv_activate")
     end
-    self.look = false
+    self.cl.look = false
 end
 
 function ClickDropper:client_onInteract(character, state)
@@ -57,7 +48,7 @@ function ClickDropper:client_onAction(controllerAction, state)
 end
 
 function ClickDropper:client_canInteract(character, state)
-    self.look = true
+    self.cl.look = true
     return true
 end
 
