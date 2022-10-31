@@ -1,6 +1,9 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
----@type Dropper
+---@class Dropper : ShapeClass
+---@field cl DropperCl
+---@field sv DropperSv
+---@field data DropperData
 ---@diagnostic disable-next-line: assign-type-mismatch
 Dropper = class(nil)
 
@@ -37,7 +40,7 @@ function Dropper:client_onCreate()
 end
 
 --Types
----@class Dropper : ShapeClass
+
 
 ---@class DropperCl
 
@@ -52,3 +55,4 @@ end
 ---@class Drop
 ---@field uuid Uuid Uuid of the drop
 ---@field value string For how much the drop sells
+---@field pollution number
