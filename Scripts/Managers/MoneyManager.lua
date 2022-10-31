@@ -33,38 +33,25 @@ end
 
 function MoneyManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        local safeData = self.sv.saved
-        local money = safeData.money
-        local moneyEarned = safeData.moneyEarned
-
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        safeData.money = tostring(money)
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        safeData.moneyEarned = tostring(moneyEarned)
-
-        self.storage:save(self.sv.saved)
-
-        safeData.money = money
-        safeData.moneyEarned = moneyEarned
-
+        self.storage:save(packNetworkData(self.sv.saved))
 
         self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache + 1] = self.sv.moneyEarned
-
         local newCache = {}
         local syncOffset = 3
         local resizeCache = (#self.sv.moneyEarnedCache > moneyCacheInterval + syncOffset and 1) or 0
-        local moneyPerIntervall = 0
+        local moneyPerInterval = 0
         for k, money in ipairs(self.sv.moneyEarnedCache) do
             if #newCache < moneyCacheInterval + syncOffset then
                 newCache[#newCache + 1] = self.sv.moneyEarnedCache[k + resizeCache]
-                moneyPerIntervall = moneyPerIntervall + money
+                moneyPerInterval = moneyPerInterval + money
             end
         end
         self.sv.moneyEarnedCache = newCache
 
-        self.network:setClientData({ money = tostring(self.sv.saved.money),
-            moneyEarned = tostring(self.sv.saved.moneyEarned),
-            moneyPerIntervall = tostring(moneyPerIntervall) })
+        local clientData = { money = self.sv.saved.money,
+            moneyEarned = self.sv.saved.moneyEarned,
+            moneyPerInterval = moneyPerInterval }
+        self.network:setClientData(packNetworkData(clientData))
         self.sv.moneyEarned = 0
     end
 end
@@ -101,9 +88,10 @@ end
 
 function MoneyManager:client_onCreate()
     self.cl = {}
-    self.cl.money = 0
-    self.cl.moneyEarned = 0
-    self.cl.moneyPerIntervall = 0
+    self.cl.data = {}
+    self.cl.data.money = 0
+    self.cl.data.moneyEarned = 0
+    self.cl.data.moneyPerInterval = 0
 
     if not g_moneyManager then
         g_moneyManager = self
@@ -111,12 +99,7 @@ function MoneyManager:client_onCreate()
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    self.cl.money = tonumber(clientData.money)
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    self.cl.moneyEarned = tonumber(clientData.moneyEarned)
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    self.cl.moneyPerIntervall = tonumber(clientData.moneyPerIntervall)
+    self.cl.data = unpackNetworkData(clientData)
 end
 
 function MoneyManager:client_onFixedUpdate()
@@ -129,17 +112,17 @@ function MoneyManager:updateHud()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
             g_factoryHud:setText("Money/s",
-                format_number({ format = "money", value = self.cl.moneyPerIntervall, unit = "/min" }))
+                format_number({ format = "money", value = self.cl.data.moneyPerInterval, unit = "/min" }))
         end
     end
 end
 
 function MoneyManager.cl_getMoney()
-    return g_moneyManager.sv.saved and g_moneyManager.sv.saved.money or g_moneyManager.cl.money
+    return g_moneyManager.sv.saved and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
 end
 
 function MoneyManager.cl_moneyEarned()
-    return g_moneyManager.cl.moneyEarned
+    return g_moneyManager.cl.data.moneyEarned
 end
 
 --Types
@@ -151,7 +134,7 @@ end
 ---@class MoneyCl
 ---@field money number
 ---@field moneyEarned number
----@field moneyPerIntervall number
+---@field moneyPerInterval number
 
 ---@class MoneySvSaved
 ---@field money number

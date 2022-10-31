@@ -7,17 +7,10 @@ LunarFurnace = class(Furnace)
 function LunarFurnace:sv_upgrade(shape)
     local value = shape.interactable.publicData.value
 
-    local time = sm.storage.load(STORAGE_CHANNEL_TIME).timeOfDay
-    local night = time < SunRiseEnd or time > SunSetStart
-
-    if night then
-        if self.data.nightMultiplier then
-            value = value * self.data.nightMultiplier
-        end
+    if isDay() then
+        value = value * self.data.dayMultiplier
     else
-        if self.data.dayMultiplier then
-            value = value * self.data.dayMultiplier
-        end
+        value = value * self.data.nightMultiplier
     end
 
     return value

@@ -57,7 +57,6 @@ function DailyRewardManager:client_onFixedUpdate()
         sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
         self.playEffect = false
     end
-
 end
 
 function DailyRewardManager:client_onClientDataUpdate(data)

@@ -12,20 +12,16 @@ AutoDropper.colorHighlight = sm.color.new(0x00ff80ff)
 
 function AutoDropper:server_onCreate()
     Dropper.server_onCreate(self)
-    self.prevActive = true
-    self.lastDrop = -1
+    self.sv.prevActive = true
+    self.sv.lastDrop = -1
 end
 
 function AutoDropper:server_onFixedUpdate()
     local parent = self.interactable:getSingleParent()
-    if not parent then
-        self.active = true
-    else
-        self.active = parent:isActive()
-    end
+    local active = not parent or parent:isActive()
 
-    if self.active and self.lastDrop + self.data.interval < sm.game.getCurrentTick() then
+    if active and self.sv.lastDrop + self.data.interval < sm.game.getCurrentTick() then
         self:sv_drop()
-        self.lastDrop = sm.game.getCurrentTick()
+        self.sv.lastDrop = sm.game.getCurrentTick()
     end
 end

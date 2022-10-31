@@ -15,13 +15,6 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 local cl_research_Effect
 
 function Furnace:server_onCreate()
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
-    local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
-    self.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        sm.areaTrigger.filter.dynamicBody)
-    self.trigger:bindOnEnter("sv_onEnter")
-    self.trigger:bindOnStay("sv_onEnter")
-
     Power.server_onCreate(self)
 
     self.sv = {}
@@ -37,39 +30,54 @@ function Furnace:server_onCreate()
             self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
         end
     end
+
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
+
+    self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
+        sm.areaTrigger.filter.dynamicBody)
+    self.sv.trigger:bindOnEnter("sv_onEnter")
+    self.sv.trigger:bindOnStay("sv_onEnter")
 end
 
 function Furnace:sv_onEnter(trigger, results)
     if not self.powerUtil.active then return end
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
+
         for k, shape in pairs(result:getShapes()) do
             local interactable = shape:getInteractable()
             if not interactable then goto continue end
-            local data = interactable:getPublicData()
-            if not data or not data.value then goto continue end
 
-            local value = self:sv_upgrade(shape)
-            data.value = value
+            local publicData = interactable:getPublicData()
+            if not publicData or not publicData.value then goto continue end
 
-            if not data.pollution then
-                if self.sv.saved.research then
-                    value = value * PerkManager.sv_getMultiplier("research")
-                    value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-                    sm.event.sendToGame("sv_e_stonks",
-                        { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
-                else
-                    sm.event.sendToGame("sv_e_stonks",
-                        { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
-                    MoneyManager.sv_addMoney(value)
-                end
-            end
-
-            shape.interactable.publicData.value = nil
-            shape:destroyPart(0)
+            self:sv_onEnterDrop(shape)
         end
         ::continue::
     end
+end
+
+function Furnace:sv_onEnterDrop(shape)
+    local value = self:sv_upgrade(shape)
+    local publicData = shape.interactable:getPublicData()
+    publicData.value = value
+
+    if not publicData.pollution then
+        if self.sv.saved.research then
+            value = value * PerkManager.sv_getMultiplier("research")
+            value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
+            sm.event.sendToGame("sv_e_stonks",
+                { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
+        else
+            sm.event.sendToGame("sv_e_stonks",
+                { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
+            MoneyManager.sv_addMoney(value)
+        end
+    end
+
+    shape.interactable.publicData.value = nil
+    shape:destroyPart(0)
 end
 
 function Furnace:sv_upgrade(shape)
@@ -80,25 +88,18 @@ function Furnace:sv_upgrade(shape)
     return value
 end
 
-function Furnace:sv_setResearch(uselessParameterThatOnlyExistsAsAPlaceholder, player)
-    if not self.sv.saved.research then
-        sm.event.sendToGame("sv_e_showTagMessage", { tag = "ResearchFurnaceSet", player = player })
+function Furnace:sv_setResearch(_, player)
+    sm.event.sendToGame("sv_e_showTagMessage",
+        { tag = (self.sv.saved.research and "ResearchFurnaceRemoved") or "ResearchFurnaceSet", player = player })
 
-        self.sv.saved.research = true
-        self.storage:save(self.sv.saved)
+    self.sv.saved.research = not self.sv.saved.research
+    self.storage:save(self.sv.saved)
 
-        if g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace) then
-            sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
-        end
-        g_research_furnace = self.interactable
-    else
-        sm.event.sendToGame("sv_e_showTagMessage", { tag = "ResearchFurnaceRemoved", player = player })
-
-        self.sv.saved.research = nil
-        self.storage:save(self.sv.saved)
-
-        g_research_furnace = nil
+    if self.sv.saved.research and (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
+        sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
     end
+    g_research_furnace = (self.sv.saved.research and self.interactable) or nil
+
     self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
 end
 
@@ -127,10 +128,13 @@ function Furnace:cl_toggle_effect(active)
     end
 
     cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
+
     local size = sm.vec3.new(self.data.box.x, self.data.box.y * 6, self.data.box.z)
     cl_research_Effect:setScale(size / 18)
+
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
     cl_research_Effect:setOffsetPosition(offset)
+
     if active then
         cl_research_Effect:start()
     end

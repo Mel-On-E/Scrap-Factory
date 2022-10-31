@@ -27,6 +27,24 @@ sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
 
+function Sell.sv_n_sell(self, params, player)
+	if params.shape and sm.exists(params.shape) then
+		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
+		sm.event.sendToGame("sv_e_stonks",
+			{ pos = params.shape.worldPosition, value = tostring(params.value * params.quantity), format = "money" })
+
+		if params.quantity > 1 then
+			sm.container.beginTransaction()
+			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity - 1)
+			print("spend", params.quantity)
+			sm.container.endTransaction()
+		end
+		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity, "sellTool")
+
+		self.network:sendToClients("cl_n_onUse")
+		params.shape:destroyShape(0)
+	end
+end
 
 function Sell.client_onCreate(self)
 	self:cl_init()
@@ -42,6 +60,93 @@ function Sell.cl_init(self)
 	self.cl.quantity = 1
 end
 
+function Sell.client_onUpdate(self, dt)
+	self:cl_onUpdate(dt)
+end
+
+function Sell.client_onEquip(self)
+	self.wantEquipped = true
+
+	currentRenderablesTp = {}
+	currentRenderablesFp = {}
+
+	for k, v in pairs(renderablesTp) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
+	for k, v in pairs(renderablesFp) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
+	for k, v in pairs(renderables) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
+	for k, v in pairs(renderables) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
+
+	local color = sm.item.getShapeDefaultColor(obj_consumable_fertilizer)
+	self.tool:setTpRenderables(currentRenderablesTp)
+	self.tool:setTpColor(color)
+	if self.tool:isLocal() then
+		self.tool:setFpRenderables(currentRenderablesFp)
+		self.tool:setFpColor(color)
+	end
+
+	self:cl_loadAnimations()
+
+	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
+	if self.tool:isLocal() then
+		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
+	end
+end
+
+function Sell.client_onUnequip(self)
+	self.wantEquipped = false
+	self.equipped = false
+	if sm.exists(self.tool) then
+		setTpAnimation(self.tpAnimations, "putdown")
+		if self.tool:isLocal() and self.fpAnimations.currentAnimation ~= "unequip" then
+			swapFpAnimation(self.fpAnimations, "equip", "unequip", 0.2)
+		end
+	end
+end
+
+function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
+	-- Detect shape
+	local success, result = sm.localPlayer.getRaycast(7.5)
+	if result.type == "body" then
+		local shape = result:getShape()
+
+		local shopItem = g_shop[tostring(shape.uuid)]
+		if shopItem then
+			local sellValue = math.floor(shopItem.price * resellValue)
+
+			sm.gui.setCenterIcon("Use")
+			local keyBindingText1 = sm.gui.getKeyBinding("Create", true)
+			local keyBindingText2 = sm.gui.getKeyBinding("NextCreateRotation")
+			local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
+			local o2 = "</p>"
+
+			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
+
+			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
+			sm.gui.setInteractionText("", keyBindingText1,
+				language_tag("Sell") .. o1 .. format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
+				o2 .. "x" .. o1 .. tostring(quantity) .. o2 .. " [" .. keyBindingText2 .. "]")
+
+			if primaryState == sm.tool.interactState.start then
+				self:onUse()
+				self.network:sendToServer("sv_n_sell", { shape = shape, value = tostring(sellValue), quantity = quantity })
+			end
+		end
+	end
+
+	return false, false
+end
+
+function Sell:client_onToggle()
+	if self.cl.quantity == 10000 then
+		self.cl.quantity = 1
+	else
+		self.cl.quantity = math.min(self.cl.quantity * 10, 10000)
+	end
+	sm.gui.displayAlertText(language_tag("NewMaxSellQuantity") .. "#fc8b19" .. tostring(self.cl.quantity))
+	sm.audio.play("ConnectTool - Rotate", sm.localPlayer.getPlayer():getCharacter():getWorldPosition())
+	return true
+end
+
+--ANIMATION STUFF BELOW
 function Sell.cl_loadAnimations(self)
 
 	self.tpAnimations = createTpAnimations(
@@ -102,7 +207,7 @@ function Sell.cl_loadAnimations(self)
 	self.blendTime = 0.2
 end
 
-function Sell.client_onUpdate(self, dt)
+function Sell.cl_onUpdate(self, dt)
 	if not sm.exists(self.tool) then return end
 
 	-- First person animation
@@ -130,7 +235,7 @@ function Sell.client_onUpdate(self, dt)
 		return
 	end
 
-	local crouchWeight = self.tool:isCrouching() and 1.0 or 0.0
+	local crouchWeight = isCrouching and 1.0 or 0.0
 	local normalWeight = 1.0 - crouchWeight
 	local totalWeight = 0.0
 
@@ -177,91 +282,6 @@ function Sell.client_onUpdate(self, dt)
 	end
 end
 
-function Sell.client_onEquip(self)
-
-	self.wantEquipped = true
-
-	currentRenderablesTp = {}
-	currentRenderablesFp = {}
-
-	for k, v in pairs(renderablesTp) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
-	for k, v in pairs(renderablesFp) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
-	for k, v in pairs(renderables) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
-	for k, v in pairs(renderables) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
-
-	local color = sm.item.getShapeDefaultColor(obj_consumable_fertilizer)
-	self.tool:setTpRenderables(currentRenderablesTp)
-	self.tool:setTpColor(color)
-	if self.tool:isLocal() then
-		self.tool:setFpRenderables(currentRenderablesFp)
-		self.tool:setFpColor(color)
-	end
-
-	self:cl_loadAnimations()
-
-	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
-	if self.tool:isLocal() then
-		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
-	end
-end
-
-function Sell.client_onUnequip(self)
-	self.wantEquipped = false
-	self.equipped = false
-	if sm.exists(self.tool) then
-		setTpAnimation(self.tpAnimations, "putdown")
-		if self.tool:isLocal() and self.fpAnimations.currentAnimation ~= "unequip" then
-			swapFpAnimation(self.fpAnimations, "equip", "unequip", 0.2)
-		end
-	end
-end
-
-function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
-	-- Detect shape
-	local success, result = sm.localPlayer.getRaycast(7.5)
-	if result.type == "body" then
-		local shape = result:getShape()
-
-		local shopItem = g_shop[tostring(shape.uuid)]
-		if shopItem then
-			local sellValue = math.floor(shopItem.price * resellValue)
-
-			sm.gui.setCenterIcon("Use")
-			local keyBindingText1 = sm.gui.getKeyBinding("Create", true)
-			local keyBindingText2 = sm.gui.getKeyBinding("NextCreateRotation")
-			local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
-			local o2 = "</p>"
-
-			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
-
-			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
-			sm.gui.setInteractionText("", keyBindingText1,
-				language_tag("Sell") ..
-				o1 ..
-				format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
-				o2 .. "x" .. o1 .. tostring(quantity) .. o2 .. " [" .. keyBindingText2 .. "]")
-
-			if primaryState == sm.tool.interactState.start then
-				self:onUse()
-				self.network:sendToServer("sv_n_sell", { shape = shape, value = tostring(sellValue), quantity = quantity })
-			end
-		end
-	end
-
-	return false, false
-end
-
-function Sell:client_onToggle()
-	if self.cl.quantity == 10000 then
-		self.cl.quantity = 1
-	else
-		self.cl.quantity = math.min(self.cl.quantity * 10, 10000)
-	end
-	sm.gui.displayAlertText(language_tag("NewMaxSellQuantity") .. "#fc8b19" .. tostring(self.cl.quantity))
-	sm.audio.play("ConnectTool - Rotate", sm.localPlayer.getPlayer():getCharacter():getWorldPosition())
-	return true
-end
-
 function Sell.onUse(self)
 	if self.tool:isLocal() then
 		setFpAnimation(self.fpAnimations, "use", 0.25)
@@ -297,24 +317,5 @@ end
 function Sell.cl_n_onUse(self)
 	if not self.tool:isLocal() and self.tool:isEquipped() then
 		self:onUse()
-	end
-end
-
-function Sell.sv_n_sell(self, params, player)
-	if params.shape and sm.exists(params.shape) then
-		sm.effect.playEffect("Part - Upgrade", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_stonks",
-			{ pos = params.shape.worldPosition, value = tostring(params.value * params.quantity), format = "money" })
-
-		if params.quantity > 1 then
-			sm.container.beginTransaction()
-			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity - 1)
-			print("spend", params.quantity)
-			sm.container.endTransaction()
-		end
-		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity, "sellTool")
-
-		self.network:sendToClients("cl_n_onUse")
-		params.shape:destroyShape(0)
 	end
 end

@@ -60,7 +60,8 @@ end
 
 function PerkManager:client_onCreate()
     self.cl = {}
-    self.cl.perks = {}
+    self.cl.data = {}
+    self.cl.data.perks = {}
 
     if not g_perkManager then
         g_perkManager = self
@@ -68,11 +69,11 @@ function PerkManager:client_onCreate()
 end
 
 function PerkManager:client_onClientDataUpdate(clientData, channel)
-    self.cl.perks = clientData.perks
+    self.cl.data = clientData
 end
 
 function PerkManager.isPerkOwned(perk)
-    return (g_perkManager.sv.saved and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.perks[perk]
+    return (g_perkManager.sv.saved and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.data.perks[perk]
 end
 
 --Types

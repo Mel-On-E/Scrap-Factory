@@ -1,12 +1,14 @@
 {
-    "Furnace - Sell":
-	{
-		"effectList":
-		[
+	"Furnace - Sell": {
+		"effectList": [
 			{
 				"type": "particle",
 				"name": "p_lootbox_projectile_pickedup",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.25 },
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.25
+				},
 				"delay": 0.0
 			},
 			{
@@ -16,52 +18,78 @@
 			}
 		]
 	},
-	"Nice Sound":{
-		"effectList":[
+	"Nice Sound": {
+		"effectList": [
 			{
 				"type": "audio",
 				"name": "event:/ui/item_pickup",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
 				"delay": 0.0
 			}
 		]
 	},
-	"ResearchDone":{
-		"effectList":[
+	"ResearchDone": {
+		"effectList": [
 			{
 				"type": "particle",
 				"name": "p_challengemode_confetti",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
-				"direction" : { "x": 0.0, "y": 1.0, "z": 0.0 }
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"direction": {
+					"x": 0.0,
+					"y": 1.0,
+					"z": 0.0
+				}
 			},
 			{
 				"type": "audio",
 				"name": "event:/char/npc/bots/confettibot",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 }
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				}
 			}
 		]
 	},
-	"Confetti":{
-		"effectList":[
+	"Confetti": {
+		"effectList": [
 			{
 				"type": "particle",
 				"name": "p_challengemode_confetti",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
-				"direction" : { "x": 0.0, "y": 1.0, "z": 0.0 }
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"direction": {
+					"x": 0.0,
+					"y": 1.0,
+					"z": 0.0
+				}
 			}
 		]
 	},
-	"Pollution":{
-		"parameterList":
-		{
+	"Pollution": {
+		"parameterList": {
 			"velocity": 0.5
 		},
-		"effectList":
-		[
+		"effectList": [
 			{
 				"type": "particle",
 				"name": "p_projectile_checmical_trail",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.25 },
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.25
+				},
 				"attached": true,
 				"delay": 0.0
 			},
@@ -72,38 +100,27 @@
 			}
 		]
 	},
-	"Ore Pollution":{
-		"effectList":
-		[
+	"Ore Pollution": {
+		"effectList": [
 			{
 				"type": "particle",
 				"name": "p_plants_fertilizer",
-				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
 				"delay": 0.0
 			}
 		]
 	},
 	"Prestige": {
 		"effectList": [
-
 			{
 				"delay": 0.5,
 				"name": "event:/ui/challenge/complete_collect",
 				"type": "audio"
 			}
 		]
-	},
-	"LootCrateBlip": {
-		"effectList": [
-			{
-				"delay": 0.0,
-				"name": "event:/music/robotheads/retrofmblip",
-				"type": "audio",
-				"parameters" : [ "pitch" ]
-			}
-		],
-		"parameterList" : {
-			"pitch" : 0.50
-		}
 	}
 }
