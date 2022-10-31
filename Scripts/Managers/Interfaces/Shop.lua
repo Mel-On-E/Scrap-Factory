@@ -29,6 +29,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
 ---@class Shop : Interface
 ---@field cl client
+---@diagnostic disable-next-line: assign-type-mismatch, param-type-mismatch
 Shop = class(Interface)
 
 function Shop:client_onCreate()
@@ -294,7 +295,7 @@ function Shop.cl_e_open_gui()
 	local tier = ResearchManager.cl_getCurrentTier()
 	local pages = {}
 	for k, v in pairs(g_shop) do
-		if v.tier < tier then
+		if v.tier < tier and v.special ~= true and v.prestige ~= true then
 			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
@@ -328,3 +329,11 @@ end
 function Shop.cl_close()
 	Interface.cl_close(g_cl_shop)
 end
+
+--types
+---@class ShopDb
+---@field tier integer
+---@field price string
+---@field category string
+---@field special boolean?
+---@field prestige boolean?

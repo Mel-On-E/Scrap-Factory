@@ -48,7 +48,7 @@ function Upgrader:client_onCreate()
 end
 
 function Upgrader:sv_onEnter(trigger, results)
-    if not self.active then return end
+    if not self.powerUtil.active then return end
     for _, result in ipairs(results) do
         if not sm.exists(result) then return end
         for k, shape in ipairs(result:getShapes()) do

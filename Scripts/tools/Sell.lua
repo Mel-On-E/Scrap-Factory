@@ -312,7 +312,7 @@ function Sell.sv_n_sell(self, params, player)
 			print("spend", params.quantity)
 			sm.container.endTransaction()
 		end
-		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity)
+		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity, "sellTool")
 
 		self.network:sendToClients("cl_n_onUse")
 		params.shape:destroyShape(0)
