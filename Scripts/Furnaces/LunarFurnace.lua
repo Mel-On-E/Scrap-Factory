@@ -11,13 +11,9 @@ function LunarFurnace:sv_upgrade(shape)
     local night = time < SunRiseEnd or time > SunSetStart
 
     if night then
-        if self.data.nightMultiplier then
-            value = value * self.data.nightMultiplier
-        end
+        value = value * self.data.nightMultiplier
     else
-        if self.data.dayMultiplier then
-            value = value * self.data.dayMultiplier
-        end
+        value = value * self.data.dayMultiplier
     end
 
     return value
