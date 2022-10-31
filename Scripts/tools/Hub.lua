@@ -63,11 +63,8 @@ function Hub:client_onFixedUpdate()
 			if _G[sob.classname].cl_e_isGuiOpen() then
 				self.cl.currentInterface = sob.classname
 				active = true
+				self.cl.unequipTicks = 0
 			end
-		end
-
-		if active then
-			self.cl.unequipTicks = 0
 		end
 
 		if not active and self.tool:isEquipped() then
