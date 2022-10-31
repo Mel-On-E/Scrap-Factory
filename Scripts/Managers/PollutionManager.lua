@@ -45,7 +45,8 @@ end
 
 function PollutionManager:client_onCreate()
     self.cl = {}
-    self.cl.pollution = 0
+    self.cl.data = {}
+    self.cl.data.pollution = 0
 
     if not g_pollutionManager then
         g_pollutionManager = self
@@ -53,8 +54,7 @@ function PollutionManager:client_onCreate()
 end
 
 function PollutionManager:client_onClientDataUpdate(clientData, channel)
-    clientData = unpackNetworkData(clientData)
-    self.cl.pollution = clientData.pollution
+    self.cl.data = unpackNetworkData(clientData)
 end
 
 function PollutionManager:client_onFixedUpdate()
@@ -77,7 +77,7 @@ function PollutionManager:updateHud()
 end
 
 function PollutionManager.cl_getPollution()
-    return g_pollutionManager.sv.saved and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.pollution
+    return g_pollutionManager.sv.saved and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.data.pollution
 end
 
 function PollutionManager.getResearchMultiplier()

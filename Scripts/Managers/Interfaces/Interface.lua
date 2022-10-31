@@ -1,14 +1,12 @@
 ---@class Interface : ScriptableObjectClass
 
-local sobSet = sm.json.open("$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobset")
-
 Interface = class()
 
 function Interface:cient_onCreate(params)
 	self.cl = {}
 	self.cl.gui = sm.gui.createGuiFromLayout(params.layout)
 
-	for _, sob in ipairs(sobSet.scriptableObjectList) do
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 		self.cl.gui:setButtonCallback(string.lower(sob.classname), "cl_open" .. sob.classname)
 
 		self["cl_open" .. sob.classname] = function(self)
@@ -21,7 +19,7 @@ function Interface:cient_onCreate(params)
 end
 
 function Interface:cl_e_open_gui()
-	for _, sob in ipairs(sobSet.scriptableObjectList) do
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 		self.cl.gui:setText(string.lower(sob.classname), language_tag(sob.classname))
 	end
 
@@ -37,7 +35,7 @@ function Interface:cl_close()
 end
 
 function Interface:cl_onGuiClosed()
-	for _, sob in ipairs(sobSet.scriptableObjectList) do
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 		if self[sob.classname] then
 			_G[sob.classname].cl_e_open_gui()
 		end

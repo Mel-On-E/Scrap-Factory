@@ -31,15 +31,15 @@ function PrestigeManager:server_onFixedUpdate()
 
     if self.doPrestige and self.doPrestige < tick then
         self.doPrestige = nil
-        if g_prestigeManager.getPrestigeGain() >= 1 then
-            self.spawnCrate = tick + 40*3
+        if g_prestigeManager.getPrestigeGain() > 0 then
+            self.spawnCrate = tick + 40 * 3
         end
         self:sv_doPrestige()
     end
 
     if self.spawnCrate and self.spawnCrate < tick then
         self.spawnCrate = nil
-        local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(),math.random(),10)
+        local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(), math.random(), 10)
         LootCrateManager.sv_spawnCrate({ pos = pos, uuid = obj_lootcrate_prestige,
             effect = "Woc - Destruct" })
     end
@@ -48,7 +48,11 @@ end
 function PrestigeManager:sv_saveData()
     self.storage:save(packNetworkData(self.sv.saved))
 
-    self.network:setClientData({ prestige = tostring(self.sv.saved.prestige), lastPrestigeGain = tostring(self.sv.saved.lastPrestigeGain) })
+    local clientData = {
+        prestige = self.sv.saved.prestige,
+        lastPrestigeGain = self.sv.saved.lastPrestigeGain
+    }
+    self.network:setClientData(packNetworkData(clientData))
 end
 
 function PrestigeManager.sv_addPrestige(prestige)
@@ -71,12 +75,12 @@ end
 function PrestigeManager.sv_addSpecialItem(uuid)
     local uuid = tostring(uuid)
     local quantity = g_prestigeManager.sv.saved.specialItems[uuid] or 0
-    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity+1, 999)
+    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity + 1, 999)
     sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
 end
 
 function PrestigeManager.sv_getSpecialItems()
-   return (g_prestigeManager and g_prestigeManager.sv.saved.specialItems) or {}
+    return (g_prestigeManager and g_prestigeManager.sv.saved.specialItems) or {}
 end
 
 function PrestigeManager.sv_prestige()
@@ -101,8 +105,9 @@ end
 
 function PrestigeManager:client_onCreate()
     self.cl = {}
-    self.cl.prestige = 0
-    self.cl.lastPrestigeGain = 0
+    self.cl.data = {}
+    self.cl.data.prestige = 0
+    self.cl.data.lastPrestigeGain = 0
 
     if not g_prestigeManager then
         g_prestigeManager = self
@@ -110,19 +115,11 @@ function PrestigeManager:client_onCreate()
 end
 
 function PrestigeManager:client_onClientDataUpdate(clientData)
-    clientData = unpackNetworkData(clientData)
-    self.cl.prestige = clientData.prestige
-    self.cl.lastPrestigeGain = clientData.lastPrestigeGain
+    self.cl.data = unpackNetworkData(clientData)
 end
 
 function PrestigeManager:client_onFixedUpdate()
     self:updateHud()
-end
-
-function PrestigeManager:client_onUpdate()
-    if sm.isHost then
-        self:updateHud()
-    end
 end
 
 function PrestigeManager:updateHud()
@@ -146,9 +143,9 @@ function PrestigeManager.getPrestigeGain()
 end
 
 function PrestigeManager.cl_e_getLastPrestigeGain()
-    return g_prestigeManager.cl.lastPrestigeGain
+    return g_prestigeManager.cl.data.lastPrestigeGain
 end
 
 function PrestigeManager.cl_getPrestige()
-    return g_prestigeManager.sv.saved and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.prestige
+    return g_prestigeManager.sv.saved and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
 end

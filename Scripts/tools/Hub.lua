@@ -6,8 +6,8 @@ local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
-local sobSet = sm.json.open("$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobset")
-for _, sob in ipairs(sobSet.scriptableObjectList) do
+g_sobSet = sm.json.open("$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobSet")
+for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 	dofile(sob.filename)
 end
 
@@ -41,7 +41,7 @@ Hub = class()
 function Hub:server_onCreate()
 	if SOBsInit then return end
 
-	for _, sob in ipairs(sobSet.scriptableObjectList) do
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 		sm.scriptableObject.createScriptableObject(sm.uuid.new(sob.uuid), self.tool)
 	end
 	SOBsInit = true
@@ -59,7 +59,7 @@ function Hub:client_onFixedUpdate()
 	if self.cl.currentInterface then
 		local active = false
 
-		for _, sob in ipairs(sobSet.scriptableObjectList) do
+		for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 			if _G[sob.classname].cl_e_isGuiOpen() then
 				self.cl.currentInterface = sob.classname
 				active = true
@@ -82,7 +82,7 @@ end
 function Hub:cl_openGui()
 	local interface = self.cl.currentInterface
 
-	for _, sob in ipairs(sobSet.scriptableObjectList) do
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
 		if sob.classname == interface then
 			_G[sob.classname]:cl_e_open_gui()
 		end
