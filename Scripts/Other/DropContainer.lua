@@ -62,7 +62,6 @@ function DropContainer.server_onFixedUpdate(self)
 end
 
 function DropContainer.trigger_onEnter(self, trigger, contents)
-	print(contents)
 	for _, result in ipairs(contents) do
 		if sm.exists(result) and type(result) == "Body" then
 			for _, shape in ipairs(result:getShapes()) do
@@ -119,7 +118,6 @@ function DropContainer.sv_release_drop(self)
 	local container = self.interactable:getContainer(0)
 	if container then
 		local slotIndex = self:sv_getLastUsedSlot(container) - 1
-		print(slotIndex)
 		local slotItem = container:getItem(slotIndex)
 		sm.container.beginTransaction()
 		sm.container.spendFromSlot(container, slotIndex, slotItem.uuid, 1, true)
