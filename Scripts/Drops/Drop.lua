@@ -5,6 +5,9 @@ local oreCount = 0
 local lifeTime = 40 * 5 --ticks
 
 function Drop:server_onCreate()
+    self.sv = {}
+    self.sv.timeout = 0
+
     if not self.storage:load() then
         self.storage:save(true)
     else
@@ -17,9 +20,6 @@ function Drop:server_onCreate()
     body:setPaintable(false)
     body:setBuildable(false)
     body:setLiftable(false)
-
-    self.sv = {}
-    self.sv.timeout = 0
 end
 
 function Drop:server_onFixedUpdate()
