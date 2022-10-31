@@ -3,7 +3,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 ---@class LootCrateManager : ScriptableObjectClass
 LootCrateManager = class()
 
-local dropInterval = 1 --40 * 30
+local dropInterval = 40 * 30 --ticks
 local lootTable = {
     { chance = 95, uuid = obj_lootcrate },
     { chance = 5, uuid = obj_lootcrate_rare }
