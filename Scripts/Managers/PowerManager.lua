@@ -1,6 +1,10 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class PowerManager : ScriptableObjectClass
+---@field sv PowerSv
+---@field cl PowerCl
+---@field loaded boolean
+---@diagnostic disable-next-line: assign-type-mismatch
 PowerManager = class()
 PowerManager.isSaveObject = true
 
@@ -12,6 +16,7 @@ function PowerManager:server_onCreate()
         self.sv.saved = {}
         self.sv.saved.powerStored = 0
     else
+        ---@diagnostic disable-next-line: assign-type-mismatch
         self.sv.saved.powerStored = tonumber(self.sv.saved.powerStored)
     end
 
@@ -32,6 +37,7 @@ function PowerManager:server_onFixedUpdate()
             powerStored = math.max(math.min(self.sv.powerLimit, powerStored + self.sv.power), 0)
         end
 
+        ---@diagnostic disable-next-line: assign-type-mismatch
         safeData.powerStored = tostring(powerStored)
         self.storage:save(self.sv.saved)
         safeData.powerStored = powerStored
@@ -68,8 +74,11 @@ function PowerManager:client_onCreate()
 end
 
 function PowerManager:client_onClientDataUpdate(clientData)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.power = tonumber(clientData.power)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.powerLimit = tonumber(clientData.powerLimit)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.powerStored = tonumber(clientData.powerStored)
 end
 
@@ -100,3 +109,17 @@ end
 function PowerManager.cl_getPowerLimit()
     return g_powerManager.cl.powerLimit
 end
+
+--Types
+---@class PowerSv
+---@field power number
+---@field powerLimit number
+---@field saved PowerSvSaved
+
+---@class PowerCl
+---@field power number
+---@field powerLimit number
+---@field powerStored number
+
+---@class PowerSvSaved
+---@field powerStored number
