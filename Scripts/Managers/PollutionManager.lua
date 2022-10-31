@@ -1,6 +1,9 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class PollutionManager : ScriptableObjectClass
+---@field saved PollutionSaved
+---@field cl PollutionCl
+---@diagnostic disable-next-line: assign-type-mismatch
 PollutionManager = class()
 PollutionManager.isSaveObject = true
 
@@ -11,6 +14,7 @@ function PollutionManager:server_onCreate()
         self.saved = {}
         self.saved.pollution = 0
     else
+        ---@diagnostic disable-next-line: assign-type-mismatch
         self.saved.pollution = tonumber(self.saved.pollution)
     end
 
@@ -24,6 +28,7 @@ function PollutionManager:server_onFixedUpdate()
         local safeData = self.saved
         local pollution = safeData.pollution
 
+        ---@diagnostic disable-next-line: assign-type-mismatch
         safeData.pollution = tostring(pollution)
 
         self.storage:save(self.saved)
@@ -56,6 +61,7 @@ function PollutionManager:client_onCreate()
 end
 
 function PollutionManager:client_onClientDataUpdate(clientData, channel)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.pollution = tonumber(clientData.pollution)
 end
 
@@ -84,7 +90,15 @@ end
 
 function PollutionManager.getResearchMultiplier()
     if g_pollutionManager.cl_getPollution() > 0 then
-        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) * PerkManager.sv_getMultiplier("pollution"), 1)
+        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) *
+            PerkManager.sv_getMultiplier("pollution"), 1)
     end
     return 1
 end
+
+--Types
+---@class PollutionCl
+---@field pollution number
+
+---@class PollutionSaved
+---@field pollution number
