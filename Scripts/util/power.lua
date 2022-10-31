@@ -1,4 +1,6 @@
 ---@class Power : ShapeClass
+---@field powerUtil PowerUtil
+---@diagnostic disable-next-line: assign-type-mismatch
 Power = class(nil)
 
 function Power:server_onCreate()
@@ -40,3 +42,9 @@ function Power:server_onFixedUpdate(effect)
 
     self.powerUtil.prevActive = self.powerUtil.active
 end
+
+---@class PowerUtil
+---@field prevActive boolean
+---@field active boolean
+---@field powerUpdate number
+---@field hasPower boolean
