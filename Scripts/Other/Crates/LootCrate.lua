@@ -58,6 +58,7 @@ function LootCrate:client_onFixedUpdate()
 
 
             local blip = sm.effect.createEffect("LootCrateBlip", sm.localPlayer.getPlayer():getCharacter())
+            local blip = sm.effect.createEffect("Horn - Honk", sm.localPlayer.getPlayer():getCharacter())
             blip:setParameter("pitch", 1 - (self.openTick - tick) / self.unboxTime)
             blip:start()
 
