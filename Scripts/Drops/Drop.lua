@@ -45,13 +45,14 @@ function Drop:server_onFixedUpdate()
 
     self.sv.pos = self.shape.worldPosition
     self.sv.pollution = self:getPollution()
+    self.sv.value = self:getValue()
 end
 
 function Drop:server_onDestroy()
-    if self.sv.pollution then
+    if self:getPollution() then
         sm.event.sendToGame("sv_e_stonks",
-            { pos = self.sv.pos, value = tostring(self.sv.pollution), format = "pollution", effect = "Pollution" })
-        PollutionManager.sv_addPollution(self.sv.pollution)
+            { pos = self.sv.pos, value = tostring(self:getPollution()), format = "pollution", effect = "Pollution" })
+        PollutionManager.sv_addPollution(self:getPollution())
     end
 end
 
@@ -113,16 +114,19 @@ end
 
 function Drop:getValue()
     local value = self.cl.value
-    if sm.isServerMode() and self.interactable.publicData then
-        value = self.interactable.publicData.value
+    if sm.isServerMode() then
+        value = (sm.exists(self.interactable) and self.interactable.publicData.value) or self.sv.value
     end
-    return value or 0
+    return value
 end
 
 function Drop:getPollution()
     local pollution = self.cl.pollution
-    if sm.isServerMode() and self.interactable.publicData then
-        pollution = self.interactable.publicData.pollution
+    if sm.isServerMode() then
+        pollution = sm.exists(self.interactable) and self.interactable.publicData.pollution
+        if not pollution then
+            return self.sv.pollution
+        end
     end
     return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
