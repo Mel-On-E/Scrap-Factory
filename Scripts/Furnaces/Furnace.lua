@@ -52,27 +52,32 @@ function Furnace:sv_onEnter(trigger, results)
             local publicData = interactable:getPublicData()
             if not publicData or not publicData.value then goto continue end
 
-            local value = self:sv_upgrade(shape)
-            publicData.value = value
-
-            if not publicData.pollution then
-                if self.sv.saved.research then
-                    value = value * PerkManager.sv_getMultiplier("research")
-                    value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-                    sm.event.sendToGame("sv_e_stonks",
-                        { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
-                else
-                    sm.event.sendToGame("sv_e_stonks",
-                        { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
-                    MoneyManager.sv_addMoney(value)
-                end
-            end
-
-            shape.interactable.publicData.value = nil
-            shape:destroyPart(0)
+            self:sv_onEnterDrop(shape)
         end
         ::continue::
     end
+end
+
+function Furnace:sv_onEnterDrop(shape)
+    local value = self:sv_upgrade(shape)
+    local publicData = shape.interactable:getPublicData()
+    publicData.value = value
+
+    if not publicData.pollution then
+        if self.sv.saved.research then
+            value = value * PerkManager.sv_getMultiplier("research")
+            value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
+            sm.event.sendToGame("sv_e_stonks",
+                { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
+        else
+            sm.event.sendToGame("sv_e_stonks",
+                { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
+            MoneyManager.sv_addMoney(value)
+        end
+    end
+
+    shape.interactable.publicData.value = nil
+    shape:destroyPart(0)
 end
 
 function Furnace:sv_upgrade(shape)
