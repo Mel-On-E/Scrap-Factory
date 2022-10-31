@@ -1,4 +1,6 @@
 ---@class PerkManager : ScriptableObjectClass
+---@field cl PerkCl
+---@field sv PerkSv
 PerkManager = class()
 PerkManager.isSaveObject = true
 
@@ -72,3 +74,17 @@ end
 function PerkManager.isPerkOwned(perk)
     return (g_perkManager.sv.saved and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.perks[perk]
 end
+
+--Types
+---@class PerkSv
+---@field saved PerkSvSaved
+
+---@class PerkSvSaved
+---@field perks table
+
+---@class PerkSvMultipliers
+---@field research number
+---@field pollution number
+
+---@class PerkCl
+---@field perks table

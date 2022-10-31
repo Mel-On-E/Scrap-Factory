@@ -1,6 +1,9 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class PollutionManager : ScriptableObjectClass
+---@field saved PollutionSaved
+---@field cl PollutionCl
+---@diagnostic disable-next-line: assign-type-mismatch
 PollutionManager = class()
 PollutionManager.isSaveObject = true
 
@@ -79,7 +82,15 @@ end
 
 function PollutionManager.getResearchMultiplier()
     if g_pollutionManager.cl_getPollution() > 0 then
-        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) * PerkManager.sv_getMultiplier("pollution"), 1)
+        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) *
+            PerkManager.sv_getMultiplier("pollution"), 1)
     end
     return 1
 end
+
+--Types
+---@class PollutionCl
+---@field pollution number
+
+---@class PollutionSaved
+---@field pollution number

@@ -1,6 +1,10 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class PowerManager : ScriptableObjectClass
+---@field sv PowerSv
+---@field cl PowerCl
+---@field loaded boolean
+---@diagnostic disable-next-line: assign-type-mismatch
 PowerManager = class()
 PowerManager.isSaveObject = true
 
@@ -26,7 +30,8 @@ end
 function PowerManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         if self.loaded and sm.game.getCurrentTick() > self.loaded + 80 then
-            self.sv.saved.powerStored = math.max(math.min(self.sv.powerLimit, self.sv.saved.powerStored + self.sv.power), 0)
+            self.sv.saved.powerStored = math.max(math.min(self.sv.powerLimit, self.sv.saved.powerStored + self.sv.power)
+                , 0)
         end
 
         self.storage:save(packNetworkData(self.sv.saved))
@@ -96,3 +101,17 @@ end
 function PowerManager.cl_getPowerLimit()
     return g_powerManager.cl.powerLimit
 end
+
+--Types
+---@class PowerSv
+---@field power number
+---@field powerLimit number
+---@field saved PowerSvSaved
+
+---@class PowerCl
+---@field power number
+---@field powerLimit number
+---@field powerStored number
+
+---@class PowerSvSaved
+---@field powerStored number
