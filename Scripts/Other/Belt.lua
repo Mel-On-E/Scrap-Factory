@@ -15,9 +15,10 @@ local IDsUpdated = {}
 function Belt:server_onCreate()
     local size = sm.vec3.new(self.data.belt.box.x, self.data.belt.box.y, self.data.belt.box.z)
     local offset = sm.vec3.new(self.data.belt.offset.x, self.data.belt.offset.y, self.data.belt.offset.z)
-    local trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
+    self.sv = {}
+    self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character)
-    trigger:bindOnStay("sv_onStay")
+    self.sv.trigger:bindOnStay("sv_onStay")
 
     Power.server_onCreate(self)
 end
