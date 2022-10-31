@@ -14,7 +14,7 @@ function Solar:getPower()
     elseif isSunrise() then
         timeMultiplier = (time - SunRiseStart) / (SunRiseEnd - SunRiseStart)
     elseif isSunset() then
-        timeMultiplier = (time - SunSetStart) / (SunSetEnd - SunSetStart)
+        timeMultiplier = (SunSetEnd - time) / (SunSetEnd - SunSetStart)
     end
 
     return math.floor(timeMultiplier * self.data.power)
