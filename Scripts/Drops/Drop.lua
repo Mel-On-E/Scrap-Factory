@@ -116,7 +116,7 @@ function Drop:getValue()
     if sm.isServerMode() and self.interactable.publicData then
         value = self.interactable.publicData.value
     end
-    return value
+    return value or 0
 end
 
 function Drop:getPollution()
