@@ -2,6 +2,9 @@ dofile("$CONTENT_DATA/Scripts/Droppers/Dropper.lua")
 
 
 ---@class AutoDropper : Dropper
+---@field sv AutoDropperSv
+---@field data AutoDropperData
+---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 AutoDropper = class(Dropper)
 AutoDropper.maxParentCount = 1
 AutoDropper.maxChildCount = 0
@@ -25,3 +28,10 @@ function AutoDropper:server_onFixedUpdate()
         self.sv.lastDrop = sm.game.getCurrentTick()
     end
 end
+
+---@class AutoDropperSv
+---@field prevActive boolean
+---@field lastDrop number
+
+---@class AutoDropperData : DropperData
+---@field interval number
