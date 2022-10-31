@@ -1,13 +1,13 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@class MoneyManager : ScriptableObjectClass
----@field lastMoneyCache LastMoneyCache[] Used to calcuulate money/s
----@field lastMoney number Used to calc money/s
+---@field sv MoneySv
+---@field cl MoneyCl
 ---@diagnostic disable-next-line: assign-type-mismatch
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
-local moneyCacheInterval = 60--seconds
+local moneyCacheInterval = 60 --seconds
 
 function MoneyManager:server_onCreate()
     self.sv = {}
@@ -20,7 +20,9 @@ function MoneyManager:server_onCreate()
         self.sv.saved.money = 0
         self.sv.saved.moneyEarned = 0
     else
+        ---@diagnostic disable-next-line: assign-type-mismatch
         self.sv.saved.money = tonumber(self.sv.saved.money)
+        ---@diagnostic disable-next-line: assign-type-mismatch
         self.sv.saved.moneyEarned = tonumber(self.sv.saved.moneyEarned)
     end
 
@@ -35,7 +37,9 @@ function MoneyManager:server_onFixedUpdate()
         local money = safeData.money
         local moneyEarned = safeData.moneyEarned
 
+        ---@diagnostic disable-next-line: assign-type-mismatch
         safeData.money = tostring(money)
+        ---@diagnostic disable-next-line: assign-type-mismatch
         safeData.moneyEarned = tostring(moneyEarned)
 
         self.storage:save(self.sv.saved)
@@ -44,7 +48,7 @@ function MoneyManager:server_onFixedUpdate()
         safeData.moneyEarned = moneyEarned
 
 
-        self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache+1] = self.sv.moneyEarned
+        self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache + 1] = self.sv.moneyEarned
 
         local newCache = {}
         local syncOffset = 3
@@ -52,14 +56,15 @@ function MoneyManager:server_onFixedUpdate()
         local moneyPerIntervall = 0
         for k, money in ipairs(self.sv.moneyEarnedCache) do
             if #newCache < moneyCacheInterval + syncOffset then
-                newCache[#newCache+1] = self.sv.moneyEarnedCache[k + resizeCache]
+                newCache[#newCache + 1] = self.sv.moneyEarnedCache[k + resizeCache]
                 moneyPerIntervall = moneyPerIntervall + money
             end
         end
         self.sv.moneyEarnedCache = newCache
 
-        self.network:setClientData({ money = tostring(self.sv.saved.money), moneyEarned = tostring(self.sv.saved.moneyEarned),
-                                    moneyPerIntervall = tostring(moneyPerIntervall) })
+        self.network:setClientData({ money = tostring(self.sv.saved.money),
+            moneyEarned = tostring(self.sv.saved.moneyEarned),
+            moneyPerIntervall = tostring(moneyPerIntervall) })
         self.sv.moneyEarned = 0
     end
 end
@@ -106,8 +111,11 @@ function MoneyManager:client_onCreate()
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.money = tonumber(clientData.money)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.moneyEarned = tonumber(clientData.moneyEarned)
+    ---@diagnostic disable-next-line: assign-type-mismatch
     self.cl.moneyPerIntervall = tonumber(clientData.moneyPerIntervall)
 end
 
@@ -120,7 +128,8 @@ function MoneyManager:updateHud()
         local money = self.cl_getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
-            g_factoryHud:setText("Money/s", format_number({ format = "money", value = self.cl.moneyPerIntervall, unit = "/min" }))
+            g_factoryHud:setText("Money/s",
+                format_number({ format = "money", value = self.cl.moneyPerIntervall, unit = "/min" }))
         end
     end
 end
@@ -134,7 +143,16 @@ function MoneyManager.cl_moneyEarned()
 end
 
 --Types
+---@class MoneySv
+---@field moneyEarned number
+---@field moneyEarnedCache table
+---@field saved MoneySvSaved
 
----@class LastMoneyCache
----@field Money number
----@field LastMoney number
+---@class MoneyCl
+---@field money number
+---@field moneyEarned number
+---@field moneyPerIntervall number
+
+---@class MoneySvSaved
+---@field money number
+---@field moneyEarned number
