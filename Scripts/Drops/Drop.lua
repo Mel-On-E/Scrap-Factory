@@ -113,7 +113,7 @@ end
 
 function Drop:getValue()
     local value = self.cl.value
-    if sm.isServerMode() then
+    if sm.isServerMode() and self.interactable.publicData then
         value = self.interactable.publicData.value
     end
     return value
@@ -121,7 +121,7 @@ end
 
 function Drop:getPollution()
     local pollution = self.cl.pollution
-    if sm.isServerMode() then
+    if sm.isServerMode() and self.interactable.publicData then
         pollution = self.interactable.publicData.pollution
     end
     return (pollution and math.max(pollution - self:getValue(), 0)) or nil
