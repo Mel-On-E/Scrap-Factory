@@ -6,9 +6,9 @@
             {
                "material" : "DifAsgNor",
                "textureList" : [
-                  "$CONTENT_DATA/Objects/Textures/obj_factory_solarpanel_01_dif.tga",
-                  "$CONTENT_DATA/Objects/Textures/obj_factory_solarpanel_01_asg.tga",
-                  "$CONTENT_DATA/Objects/Textures/obj_factory_solarpanel_01_nor.tga"
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_solarpanel_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_solarpanel_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_solarpanel_01_nor.tga"
                ]
             }
          ]
