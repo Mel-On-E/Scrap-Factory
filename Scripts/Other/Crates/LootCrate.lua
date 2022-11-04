@@ -1,31 +1,34 @@
 ---@class LootCrate : ShapeClass
 LootCrate = class(nil)
 
-local despawnTime = 600 --seconds
+local despawnTime = 60 * 10 --seconds
 local minUnboxTime = 3 --seconds
 local maxUnboxTime = 7 --seconds
+local ticksPerItem = 5
 
 function LootCrate:server_onCreate()
     local body = self.shape:getBody()
     body:setErasable(false)
     body:setPaintable(false)
     body:setBuildable(false)
-    self.timeout = 0
+
+    self.sv = {}
+    self.sv.timeout = 0
 end
 
 function LootCrate:server_onFixedUpdate()
     if self.shape:getVelocity():length() < 0.1 then
-        self.timeout = self.timeout + 1
+        self.sv.timeout = self.sv.timeout + 1
     else
-        self.timeout = 0
+        self.sv.timeout = 0
     end
 
-    if self.timeout > 40 * 600 then
+    if self.sv.timeout > 40 * despawnTime then
         self.shape:destroyShape(0)
     end
 end
 
-function LootCrate:sv_openBox(params, player)
+function LootCrate:sv_openBox(_, player)
     self.network:sendToClients("cl_openBoxForReal", player)
 end
 
@@ -43,26 +46,28 @@ function LootCrate:sv_giveItem(params)
 end
 
 function LootCrate:client_onCreate()
-    self.opened = false
-
-    self.blips = {}
+    self.cl = {}
+    self.cl.opened = false
+    self.cl.blips = {}
 end
 
 function LootCrate:client_onFixedUpdate()
-    if self.opened and self.openTick then
-        local tick = sm.game.getCurrentTick()
-        if tick % 5 == 0 then
+    local tick = sm.game.getCurrentTick()
+
+    if self.cl.opened and self.openTick then
+        if tick % ticksPerItem == 0 then
             self.loot = self:get_random_item()
-            self.gui:setIconImage("Icon", self.loot)
-            self.gui:setText("Name", sm.shape.getShapeTitle(self.loot))
+            self.cl.gui:setIconImage("Icon", self.loot)
+            self.cl.gui:setText("Name", sm.shape.getShapeTitle(self.loot))
 
 
-            local blip = sm.effect.createEffect("LootCrateBlip", sm.localPlayer.getPlayer():getCharacter())
+            local blip = sm.effect.createEffect("Horn - Honk", sm.localPlayer.getPlayer():getCharacter())
             blip:setParameter("pitch", 1 - (self.openTick - tick) / self.unboxTime)
             blip:start()
 
-            self.blips[#self.blips + 1] = { effect = blip, tick = tick }
+            self.cl.blips[#self.cl.blips + 1] = { effect = blip, tick = tick }
         end
+
         if tick > self.openTick then
             self.openTick = nil
             self.network:sendToServer("sv_giveItem",
@@ -71,24 +76,24 @@ function LootCrate:client_onFixedUpdate()
         end
     end
 
-    for k, blip in pairs(self.blips) do
-        if blip.tick < sm.game.getCurrentTick() - 4 then
+    for k, blip in pairs(self.cl.blips) do
+        if blip.tick <= tick - ticksPerItem then
             blip.effect:destroy()
-            self.blips[k] = nil
+            self.cl.blips[k] = nil
         end
     end
 end
 
 function LootCrate:client_canInteract(character, state)
-    return not self.opened
+    return not self.cl.opened
 end
 
 function LootCrate:client_onInteract(character, state)
     if state then
-        self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Crate.layout")
-        self.gui:open()
-        self.gui:setIconImage("Icon", self.shape:getShapeUuid())
-        self.gui:setButtonCallback("Open", "cl_openBox")
+        self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Crate.layout")
+        self.cl.gui:open()
+        self.cl.gui:setIconImage("Icon", self.shape:getShapeUuid())
+        self.cl.gui:setButtonCallback("Open", "cl_openBox")
     end
 end
 
@@ -97,23 +102,22 @@ function LootCrate:cl_openBox()
 end
 
 function LootCrate:cl_openBoxForReal(player)
-    self.opened = true
+    self.cl.opened = true
     if sm.localPlayer.getPlayer() == player then
         self.unboxTime = math.random(minUnboxTime, maxUnboxTime) * 40
         self.openTick = sm.game.getCurrentTick() + self.unboxTime
-        self.gui:setVisible("Open", false)
-    elseif self.gui:isActive() then
-        self.gui:close()
+        self.cl.gui:setVisible("Open", false)
+    elseif self.cl.gui:isActive() then
+        self.cl.gui:close()
     end
 end
 
+--LootTable
 dofile("$SURVIVAL_DATA/Scripts/game/survival_items.lua")
 
 function LootCrate:get_random_item()
-    if not self.lootTable then
-        self.lootTable = self:get_loot_table()
-    end
-    return self.lootTable[math.random(1, #self.lootTable)]
+    self.cl.lootTable = self.cl.lootTable or self:get_loot_table()
+    return self.cl.lootTable[math.random(1, #self.cl.lootTable)]
 end
 
 function LootCrate:get_loot_table()

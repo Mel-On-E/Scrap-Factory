@@ -6,9 +6,10 @@ local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Shop.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Research.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Prestige.lua")
+g_sobSet = sm.json.open("$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobSet")
+for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+	dofile(sob.filename)
+end
 
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
@@ -37,47 +38,40 @@ sm.tool.preloadRenderables(renderablesFp)
 ---@field cl client
 Hub = class()
 
-local first = true
-
 function Hub:server_onCreate()
-	if not first then return end
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("b0972d5e-f131-4aac-94d8-39ce331fe225"), self.tool)
-	first = false
+	if SOBsInit then return end
+
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+		sm.scriptableObject.createScriptableObject(sm.uuid.new(sob.uuid), self.tool)
+	end
+	SOBsInit = true
 end
 
 function Hub:client_onCreate()
 	self.cl = {}
-	self.cl.currentInterface = "shop"
+	self.cl.currentInterface = "Shop"
+	self.cl.unequipTicks = 0
 
 	self:client_onRefresh()
-
-	self.unequipTicks = 0
 end
 
 function Hub:client_onFixedUpdate()
 	if self.cl.currentInterface then
-		local active = true
-		if Shop.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "shop"
-		elseif Research.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "research"
-		elseif Prestige.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "prestige"
-		else
-			active = false
-		end
+		local active = false
 
-		if active then
-			self.unequipTicks = 0
+		for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+			if _G[sob.classname].cl_e_isGuiOpen() then
+				self.cl.currentInterface = sob.classname
+				active = true
+				self.cl.unequipTicks = 0
+			end
 		end
 
 		if not active and self.tool:isEquipped() then
-			if self.unequipTicks > 1 then
+			if self.cl.unequipTicks > 1 then
 				self:cl_onGuiClosed()
 			else
-				self.unequipTicks = self.unequipTicks + 1
+				self.cl.unequipTicks = self.cl.unequipTicks + 1
 			end
 		elseif active and not self.tool:isEquipped() then
 			sm.tool.forceTool(self.tool)
@@ -87,12 +81,11 @@ end
 
 function Hub:cl_openGui()
 	local interface = self.cl.currentInterface
-	if interface == "shop" then
-		Shop:cl_e_open_gui()
-	elseif interface == "research" then
-		Research:cl_e_open_gui()
-	elseif interface == "prestige" then
-		Prestige:cl_e_open_gui()
+
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+		if sob.classname == interface then
+			_G[sob.classname]:cl_e_open_gui()
+		end
 	end
 end
 

@@ -5,24 +5,22 @@ dofile("$CONTENT_DATA/Scripts/Managers/PollutionManager.lua")
 ResearchManager = class()
 ResearchManager.isSaveObject = true
 
+g_tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
+
 function ResearchManager:server_onCreate()
     self.sv = {}
-    self.sv.saved = self.storage:load()
+    self.sv.tier = 1
 
+    self.sv.saved = self.storage:load()
     if self.sv.saved == nil then
         self.sv.saved = {}
         self.sv.saved.research = {}
     else
-        for tier, progress in ipairs(self.sv.saved.research) do
-            self.sv.saved.research[tier] = tonumber(progress)
-        end
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 
-    self.tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
-
-    self.sv.tier = 1
     for tier, progress in ipairs(self.sv.saved.research) do
-        if progress == self.tiers[tier].goal then
+        if progress == g_tiers[tier].goal then
             self.sv.tier = tier + 1
         end
     end
@@ -37,34 +35,23 @@ function ResearchManager:server_onFixedUpdate()
         self:sv_saveDataAndSync()
     end
 
-    if self.notify then
+    if self.sv.notify then
         self.network:sendToClients("cl_research_done", self.sv.tier - 1)
-        self.notify = false
+        self.sv.notify = false
     end
 end
 
 function ResearchManager:sv_saveDataAndSync()
-    local safeData = self.sv.saved
-    local research = safeData.research
-    local progressFraction = (research[self.sv.tier] or 0) /
-        (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+    self.storage:save(packNetworkData(self.sv.saved))
 
-    for tier, progress in ipairs(research) do
-        research[tier] = tostring(progress)
-    end
-
-    self.storage:save(self.sv.saved)
-
-    self.network:setClientData({ research = safeData.research, tier = self.sv.tier,
-        progress = string.format("%.2f", progressFraction * 100) })
-
-    for tier, progress in ipairs(research) do
-        research[tier] = tonumber(progress)
-    end
+    local clientData = { research = self.sv.saved.research,
+        tier = self.sv.tier,
+        progress = self:sv_getProgress() }
+    self.network:setClientData(packNetworkData(clientData))
 end
 
 function ResearchManager.sv_addResearch(value, shape)
-    local tier = g_ResearchManager.tiers[g_ResearchManager.sv.tier]
+    local tier = g_tiers[g_ResearchManager.sv.tier]
     if shape and tier.uuid ~= tostring(shape.uuid) then
         return false
     end
@@ -76,22 +63,20 @@ function ResearchManager.sv_addResearch(value, shape)
 
     if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
-        g_ResearchManager.notify = true
+        g_ResearchManager.sv.notify = true
     end
 
     return true
 end
 
 function ResearchManager:getTierProgress()
-    local progressFraction = self.cl.progress
+    return (self.sv and self:sv_getProgress()) or self.cl.data.progress
+end
 
-    if self.sv then
-        progressFraction = (self.sv.saved.research[self.sv.tier] or 0) /
-            (self.tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
-        progressFraction = string.format("%.2f", progressFraction * 100)
-    end
-
-    return progressFraction
+function ResearchManager:sv_getProgress()
+    progressFraction = (self.sv.saved.research[self.sv.tier] or 0) /
+        (g_tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+    return string.format("%.2f", progressFraction * 100)
 end
 
 function ResearchManager:sv_resetResearch()
@@ -103,11 +88,10 @@ end
 
 function ResearchManager:client_onCreate()
     self.cl = {}
-    self.cl.research = {}
-    self.cl.tier = 0
-    self.cl.progress = ""
-
-    self.tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
+    self.cl.data = {}
+    self.cl.data.research = {}
+    self.cl.data.tier = 0
+    self.cl.data.progress = ""
 
     if not g_ResearchManager then
         g_ResearchManager = self
@@ -115,16 +99,12 @@ function ResearchManager:client_onCreate()
 end
 
 function ResearchManager:client_onClientDataUpdate(clientData)
-    for tier, progress in ipairs(clientData.research) do
-        self.cl.research[tier] = tonumber(progress)
-    end
-    self.cl.tier = tonumber(clientData.tier)
-    self.cl.progress = clientData.progress
+    self.cl.data = unpackNetworkData(clientData)
 end
 
 function ResearchManager:client_onFixedUpdate()
-    if g_factoryHud and self.cl.tier > 0 then
-        g_factoryHud:setIconImage("ResearchIcon", sm.uuid.new(self.tiers[self.cl.tier].uuid))
+    if g_factoryHud and self.cl.data.tier > 0 then
+        g_factoryHud:setIconImage("ResearchIcon", sm.uuid.new(g_tiers[self.cl.data.tier].uuid))
         g_factoryHud:setText("Research", "#00dddd" .. self:getTierProgress() .. "%")
     end
 
@@ -141,8 +121,9 @@ function ResearchManager:cl_research_done(tier)
         sm.gui.chatMessage(language_tag("RsearchUnlockItem") .. "#00dddd" .. sm.shape.getShapeTitle(sm.uuid.new(uuid)))
     end
 
-    Shop.cl_close()
-    Research.cl_close()
+    for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+        _G[sob.classname].cl_close()
+    end
 
     player = sm.localPlayer.getPlayer()
     sm.event.sendToPlayer(player, "cl_e_createEffect",
@@ -153,25 +134,25 @@ end
 
 function ResearchManager.cl_getCurrentTier()
     if g_ResearchManager then
-        return g_ResearchManager.cl.tier
+        return g_ResearchManager.cl.data.tier
     end
 end
 
 function ResearchManager.cl_getTierProgress(tier)
     local progress = g_ResearchManager.sv.saved.research[tier] or 0
-    local goal = (g_ResearchManager.tiers[tier] and g_ResearchManager.tiers[tier].goal) *
+    local goal = (g_tiers[tier] and g_tiers[tier].goal) *
         PollutionManager.getResearchMultiplier()
     return progress, goal
 end
 
 function ResearchManager.cl_getTierUnlocks(tier)
-    return g_ResearchManager.tiers[tier].unlocks
+    return g_tiers[tier].unlocks
 end
 
 function ResearchManager.cl_getTierUuid(tier)
-    return sm.uuid.new(g_ResearchManager.tiers[tier].uuid)
+    return sm.uuid.new(g_tiers[tier].uuid)
 end
 
 function ResearchManager.cl_getTierCount()
-    return #g_ResearchManager.tiers
+    return #g_tiers
 end

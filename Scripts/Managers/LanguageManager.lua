@@ -5,7 +5,6 @@
 LanguageManager = class()
 
 local fallbackLanguage = sm.json.open("$CONTENT_DATA/Gui/Language/English/tags.json")
-local noTagFound = "nil"
 
 function LanguageManager:client_onCreate()
     g_languageManager = self
@@ -13,7 +12,7 @@ end
 
 ---@param name string The name of the language tag from $CONTENT_DATA/Gui/Language/${Language_name}/tags.json
 function language_tag(name)
-    if not g_languageManager then --STupid fix because quests load befor this.
+    if not g_languageManager then --Stupid fix because quests load before this.
         g_languageManager = { language = "yo mama" }
     end
 
@@ -28,13 +27,8 @@ function language_tag(name)
 
     local textInJson = nil
     if g_languageManager.tags then
-        textInJson = g_languageManager.tags[name]
-    end
-    --try to find tag in the fallback language
-    if textInJson == nil then
-        textInJson = fallbackLanguage[name]
+        textInJson = g_languageManager.tags[name] or fallbackLanguage[name] --return fallback tag if not found
     end
 
-    --return a fallback tag if its still nil somehow
-    return textInJson == nil and noTagFound or textInJson
+    return tostring(textInJson)
 end

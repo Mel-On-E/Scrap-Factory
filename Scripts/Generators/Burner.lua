@@ -15,45 +15,41 @@ function Burner:server_onDestroy()
 end
 
 function Burner:sv_onEnter(trigger, results)
-    for _, result in ipairs(results) do
-        if not sm.exists(result) then goto continue end
-        for k, shape in pairs(result:getShapes()) do
-            if not self.data.drops[tostring(shape.uuid)] then goto continue end
+    self.powerUtil.active = true
+    Furnace.sv_onEnter(self, trigger, results)
+end
 
-            local interactable = shape:getInteractable()
-            if not interactable then goto continue end
+function Burner:sv_onEnterDrop(shape)
+    --exclude non-burnable drops
+    if not self.data.drops[tostring(shape.uuid)] then return end
 
-            local data = interactable:getPublicData()
-            if not data or not data.value then goto continue end
+    --exclude polluted drops
+    local publicData = shape.interactable.publicData
+    if publicData.pollution then return end
 
-
-            --create power
-            local power = data.value
-            if self.data.powerFunction == "root" then
-                power = (power ^ (1 / (4 / 3)))
-            end
-            power = power + 1
-
-            sm.event.sendToGame("sv_e_stonks",
-                { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
-            PowerManager.sv_changePower(power)
-
-
-            --create pollution drop
-            local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape:getWorldRotation())
-
-            local publicData = {}
-            publicData.value = 1
-            publicData.pollution = power
-            publicData.upgrades = {}
-
-            smoke.interactable:setPublicData(publicData)
-
-
-            shape:destroyPart(0)
-        end
-        ::continue::
+    --create power
+    local power = publicData.value
+    if self.data.powerFunction == "root" then
+        power = (power ^ (1 / (4 / 3)))
     end
+    power = power + 1
+
+    sm.event.sendToGame("sv_e_stonks",
+        { pos = shape:getWorldPosition(), value = tostring(power), effect = "Fire -medium01_putout", format = "energy" })
+    PowerManager.sv_changePower(power)
+
+    --create pollution drop
+    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape:getWorldRotation())
+    local newPublicData = {
+        value = 1,
+        pollution = power,
+        upgrades = {}
+    }
+    smoke.interactable:setPublicData(newPublicData)
+
+    --destory drop
+    shape.interactable.publicData.value = nil
+    shape:destroyPart(0)
 end
 
 function Burner:client_onCreate()

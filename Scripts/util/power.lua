@@ -23,13 +23,14 @@ function Power:server_onFixedUpdate(effect)
 
     if self.powerUtil.powerUpdate == 0 then
         self.powerUtil.powerUpdate = 40
-        if not PowerManager.sv_changePower(-self.data.power) then
-            self.powerUtil.hasPower = false
-        else
-            self.powerUtil.hasPower = true
+        self.powerUtil.hasPower = false
+
+        if self.powerUtil.active then
+            self.powerUtil.hasPower = PowerManager.sv_changePower(-self.data.power)
+        elseif parent then
+            self.powerUtil.powerUpdate = 1
         end
     end
-
     self.powerUtil.active = self.powerUtil.active and self.powerUtil.hasPower
 
     if self.powerUtil.active ~= self.powerUtil.prevActive then

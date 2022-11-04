@@ -6,15 +6,15 @@ dofile("$CONTENT_DATA/Scripts/util/day.lua")
 Solar = class(Generator)
 
 function Solar:getPower()
-    local time = sm.storage.load(STORAGE_CHANNEL_TIME).timeOfDay
+    local time = sm.game.getTimeOfDay()
     local timeMultiplier = 0
 
-    if time > SunRiseStart and time < SunRiseEnd then
-        timeMultiplier = (time - SunRiseStart) / (SunRiseEnd - SunRiseStart)
-    elseif time > SunRiseEnd and time < SunSetStart then
+    if isDay() then
         timeMultiplier = 1
-    elseif time > SunSetStart and time < SunSetEnd then
-        timeMultiplier = (time - SunSetStart) / (SunSetEnd - SunSetStart)
+    elseif isSunrise() then
+        timeMultiplier = (time - SunRiseStart) / (SunRiseEnd - SunRiseStart)
+    elseif isSunset() then
+        timeMultiplier = (SunSetEnd - time) / (SunSetEnd - SunSetStart)
     end
 
     return math.floor(timeMultiplier * self.data.power)

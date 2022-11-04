@@ -12,19 +12,19 @@ DaySensor.colorHighlight = sm.color.new(0xc01559ff)
 
 local enabledPose = 10
 
-function DaySensor:client_onCreate()
-    self.day = false
+function DaySensor:server_onCreate()
+    self.sv = {}
+    self.sv.day = false
 end
 
 function DaySensor:server_onFixedUpdate()
-    local time = sm.game.getTimeOfDay()
-    local day = not (time < SunRiseEnd or time > SunSetStart)
+    local day = isDay()
 
-    if day == self.day then return end
+    if day == self.sv.day then return end
 
     self.interactable:setActive(day)
     self.network:sendToClients("cl_changeModel")
-    self.day = day
+    self.sv.day = day
 end
 
 function DaySensor:cl_changeModel()

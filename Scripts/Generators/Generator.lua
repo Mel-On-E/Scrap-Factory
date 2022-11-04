@@ -24,12 +24,11 @@ function Generator:server_onFixedUpdate()
     if self.data.power and sm.game.getCurrentTick() % 40 == 0 then
         local power = self:getPower()
         PowerManager.sv_changePower(power)
-        self.network:setClientData({ power = power })
+        self.network:setClientData({ power = tostring(power) })
     end
 end
 
 function Generator:getPower()
-    print(self.data.power)
     return self.data.power
 end
 
@@ -39,7 +38,7 @@ function Generator:client_onCreate()
 end
 
 function Generator:client_onClientDataUpdate(data)
-    self.cl.power = data.power
+    self.cl.power = tonumber(data.power)
 end
 
 function Generator:client_canInteract()
