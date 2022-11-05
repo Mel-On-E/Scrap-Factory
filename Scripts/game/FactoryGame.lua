@@ -39,16 +39,6 @@ FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 
-local STORAGE_CHANNELS = {
-	MONEYMANAGER = 69,
-	POWERMANAGER = 70,
-	RESEARCHMANAGER = 71,
-	DAILYREWARDMANAGER = 72,
-	POLLUTIONMANAGER = 73,
-	PRESTIGEMANAGER = 74,
-	PERKMANAGER = 75
-}
-
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
 	self.sv = {}
@@ -107,48 +97,28 @@ function FactoryGame.server_onCreate(self)
 
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
-	g_world = self.sv.saved.factoryWorld
 
-	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNELS["MONEYMANAGER"])
-	if not self.sv.moneyManager then
-		self.sv.moneyManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("e97b0595-7912-425b-8a60-ea6dbfba4b39"))
-		sm.storage.save(STORAGE_CHANNELS["MONEYMANAGER"], self.sv.moneyManager)
-	end
+	local savedManagers = {
+		{ moneyManager = "e97b0595-7912-425b-8a60-ea6dbfba4b39" },
+		{ powerManager = "26ec01d5-6fc8-4088-b06b-25d30dd44309" },
+		{ researchManager = "6e7f54bb-e54d-46df-920a-bd225d0a9430" },
+		{ pollutionManager = "64987a78-5b2b-4267-aeed-3d98dddcf12e" },
+		{ prestigeManager = "2474d490-4530-4ff8-9436-ba716a0c665e" },
+		{ perkManager = "35492036-d286-4b0f-a17c-efa228875c0d" },
+		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" }
+	}
+	local STORAGE_CHANNEL_FACTORY = 69
 
-	self.sv.powerManager = sm.storage.load(STORAGE_CHANNELS["POWERMANAGER"])
-	if not self.sv.powerManager then
-		self.sv.powerManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("26ec01d5-6fc8-4088-b06b-25d30dd44309"))
-		sm.storage.save(STORAGE_CHANNELS["POWERMANAGER"], self.sv.powerManager)
-	end
-
-	self.sv.researchManager = sm.storage.load(STORAGE_CHANNELS["RESEARCHMANAGER"])
-	if not self.sv.researchManager then
-		self.sv.researchManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("6e7f54bb-e54d-46df-920a-bd225d0a9430"))
-		sm.storage.save(STORAGE_CHANNELS["RESEARCHMANAGER"], self.sv.researchManager)
-	end
-
-	self.sv.pollutionManager = sm.storage.load(STORAGE_CHANNELS["POLLUTIONMANAGER"])
-	if not self.sv.pollutionManager then
-		self.sv.pollutionManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("64987a78-5b2b-4267-aeed-3d98dddcf12e"))
-		sm.storage.save(STORAGE_CHANNELS["POLLUTIONMANAGER"], self.sv.pollutionManager)
-	end
-
-	self.sv.prestigeManager = sm.storage.load(STORAGE_CHANNELS["PRESTIGEMANAGER"])
-	if not self.sv.prestigeManager then
-		self.sv.prestigeManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("2474d490-4530-4ff8-9436-ba716a0c665e"))
-		sm.storage.save(STORAGE_CHANNELS["PRESTIGEMANAGER"], self.sv.prestigeManager)
-	end
-
-	self.sv.perkManager = sm.storage.load(STORAGE_CHANNELS["PERKMANAGER"])
-	if not self.sv.perkManager then
-		self.sv.perkManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("35492036-d286-4b0f-a17c-efa228875c0d"))
-		sm.storage.save(STORAGE_CHANNELS["PERKMANAGER"], self.sv.perkManager)
-	end
-
-	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNELS["DAILYREWARDMANAGER"])
-	if not self.sv.dailyReawardManager then
-		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
-		sm.storage.save(STORAGE_CHANNELS["DAILYREWARDMANAGER"], self.sv.dailyReawardManager)
+	for _, manager in ipairs(savedManagers) do
+		for name, uuid in pairs(manager) do
+			print(name, uuid)
+			self.sv[name] = sm.storage.load(STORAGE_CHANNEL_FACTORY)
+			if not self.sv[name] then
+				self.sv[name] = sm.scriptableObject.createScriptableObject(sm.uuid.new(uuid))
+				sm.storage.save(STORAGE_CHANNEL_FACTORY, self.sv[name])
+			end
+			STORAGE_CHANNEL_FACTORY = STORAGE_CHANNEL_FACTORY + 1
+		end
 	end
 end
 
