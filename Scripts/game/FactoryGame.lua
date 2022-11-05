@@ -56,7 +56,7 @@ function FactoryGame.server_onCreate(self)
 	print("Saved:", self.sv.saved)
 	if self.sv.saved == nil then
 		self.sv.saved = {}
-		SPAWN_POINT= sm.vec3.new(0, 0, 20)
+		SPAWN_POINT = sm.vec3.new(0, 0, 20)
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
 		self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
@@ -105,7 +105,6 @@ function FactoryGame.server_onCreate(self)
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start(0)
 
-	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
 	g_world = self.sv.saved.factoryWorld
@@ -521,8 +520,8 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		for k, _ in pairs(_G) do
 			print(k)
 		end
-	
-	--FACTORY
+
+		--FACTORY
 	elseif params[1] == "/addMoney" then
 		MoneyManager.sv_addMoney(tonumber(params[2]))
 	elseif params[1] == "/setmoney" then
@@ -560,14 +559,14 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
 
 		for i = 7, inventory.size, 1 do
-            sm.container.setItem( inventory, i, sm.uuid.getNil(), 0 )
-        end
+			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
+		end
 
 		if sm.player.getAllPlayers()[1] == player then --if host
 			print(PrestigeManager.sv_getSpecialItems())
 			local i = 7
 			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
-				sm.container.setItem( inventory, i, sm.uuid.new(uuid), quantity )
+				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
 				i = i + 1
 			end
 		end
@@ -580,7 +579,7 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
 			"sv_createNewPlayer")
 	else
-		--TODO: This code might be redundant? 
+		--TODO: This code might be redundant?
 		--[[
 		local inventory = player:getInventory()
 		local tool_sledgehammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
@@ -671,18 +670,16 @@ function FactoryGame.sv_e_unloadBeacon(self, params)
 	end
 end
 
-
-
 --FACTORY
-function FactoryGame.sv_recreateWorld( self )
-	self.sv.saved.data.seed = math.floor(math.random()*10^9)
+function FactoryGame.sv_recreateWorld(self)
+	self.sv.saved.data.seed = math.floor(math.random() * 10 ^ 9)
 
 	self.sv.saved.factoryWorld:destroy()
 	self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
-	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
+		{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 	g_world = self.sv.saved.factoryWorld
 	g_respawnManager:sv_setWorld(g_world)
-	self.storage:save( self.sv.saved )
+	self.storage:save(self.sv.saved)
 
 	for _, player in ipairs(sm.player.getAllPlayers()) do
 		self:server_onPlayerJoined(player, true)
@@ -695,7 +692,7 @@ function FactoryGame:sv_factoryRaid()
 	local wave = 1
 	local hours = 12
 
-	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", {level = level, wave = wave, hours = hours})
+	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", { level = level, wave = wave, hours = hours })
 end
 
 ---@param message string
@@ -718,8 +715,6 @@ end
 function FactoryGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_e_stonks", params)
 end
-
-
 
 --cursed stuff to disable chunk unloading
 function FactoryGame.sv_loadTerrain(self, data)
