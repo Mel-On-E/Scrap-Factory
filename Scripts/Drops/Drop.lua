@@ -118,7 +118,8 @@ end
 function Drop:getValue()
     local value = self.cl.value
     if sm.isServerMode() then
-        value = (sm.exists(self.interactable) and self.interactable.publicData.value) or self.sv.value
+        value = (sm.exists(self.interactable) and self.interactable.publicData) and self.interactable.publicData.value or
+            self.sv.value
     end
     return value
 end
@@ -126,8 +127,8 @@ end
 function Drop:getPollution()
     local pollution = self.cl.pollution
     if sm.isServerMode() then
-        ---@diagnostic disable-next-line: cast-local-type
-        pollution = sm.exists(self.interactable) and self.interactable.publicData.pollution
+        pollution = sm.exists(self.interactable) and self.interactable.publicData and
+            self.interactable.publicData.pollution
         if not pollution then
             return self.sv.pollution
         end
