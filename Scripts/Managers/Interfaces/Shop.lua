@@ -105,7 +105,7 @@ function Shop:changeSort()
 	local pages = {}
 	self.cl.itemPages = { {} }
 	for k, v in pairs(g_shop) do
-		if v.tier < tier then
+		if v.tier < tier and not v.special and not v.prestige then
 			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
@@ -295,7 +295,7 @@ function Shop.cl_e_open_gui()
 	local tier = ResearchManager.cl_getCurrentTier()
 	local pages = {}
 	for k, v in pairs(g_shop) do
-		if v.tier < tier and v.special ~= true and v.prestige ~= true then
+		if v.tier < tier and not v.special and not v.prestige then
 			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
