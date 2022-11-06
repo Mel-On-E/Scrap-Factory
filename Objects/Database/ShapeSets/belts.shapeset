@@ -1,68 +1,72 @@
 {
-  "box": {
-    "x": 6,
-    "y": 1,
-    "z": 6
-  },
-  "color": "202b38",
-  "flammable": false,
-  "name": "obj_belt1_straight",
-  "physicsMaterial": "Metal",
-  "ratings": {
-    "buoyancy": 4,
-    "density": 4,
-    "durability": 6,
-    "friction": 3
-  },
-  "renderable": {
-    "lodList": [
-      {
-        "mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_packingtable.mesh",
-        "subMeshList": [
-          {
-            "material": "DifAsgNor",
-            "textureList": [
-              "$CONTENT_DATA/Objects/Textures/obj_warehouse_packingtable_dif.tga",
-              "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_asg.tga",
-              "$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_nor.tga"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "restitution": 0.0,
-  "rotationSet": "PropY",
-  "scripted": {
-    "classname": "Belt",
-    "data": {
-      "belt": {
-        "box": {
-          "x": 1.5,
-          "y": 0.25,
-          "z": 1.5
-        },
-        "direction": {
-          "at": -0.25,
-          "right": -1,
-          "up": 0
-        },
-        "offset": {
-          "x": 0,
-          "y": 0.125,
-          "z": 0
-        },
-        "speed": 1
-      },
-      "power": 1
-    },
-    "filename": "$CONTENT_DATA/Scripts/Other/Belt.lua"
-  },
-  "shop": {
-    "category": "Utilities",
-    "price": "10",
-    "tier": 0
-  },
-  "stackSize": 999.0,
-  "uuid": "69b857f1-07dc-4ea2-9391-fd24903945d1"
+	"partList": [
+		{
+			"box": {
+				"x": 6,
+				"y": 1,
+				"z": 6
+			},
+			"color": "202b38",
+			"flammable": false,
+			"name": "obj_belt1_straight",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"buoyancy": 4,
+				"density": 4,
+				"durability": 6,
+				"friction": 3
+			},
+			"renderable": {
+				"lodList": [
+					{
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/warehouse/obj_warehouse_packingtable.mesh",
+						"subMeshList": [
+							{
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/obj_warehouse_packingtable_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/warehouse/obj_warehouse_packingtable_nor.tga"
+								]
+							}
+						]
+					}
+				]
+			},
+			"restitution": 0.0,
+			"rotationSet": "PropY",
+			"scripted": {
+				"classname": "Belt",
+				"data": {
+					"belt": {
+						"box": {
+							"x": 1.5,
+							"y": 0.25,
+							"z": 1.5
+						},
+						"direction": {
+							"at": -0.25,
+							"right": -1,
+							"up": 0
+						},
+						"offset": {
+							"x": 0,
+							"y": 0.125,
+							"z": 0
+						},
+						"speed": 1
+					},
+					"power": 1
+				},
+				"filename": "$CONTENT_DATA/Scripts/Other/Belt.lua"
+			},
+			"stackSize": 999,
+			"uuid": "69b857f1-07dc-4ea2-9391-fd24903945d1",
+			"shop": {
+				"tier": 0,
+				"price": "10",
+				"category": "Utilities"
+			}
+		}
+	]
 }

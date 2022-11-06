@@ -1,53 +1,169 @@
 {
-  "box": {
-    "x": 4,
-    "y": 4,
-    "z": 4
-  },
-  "color": "ff7f00",
-  "flammable": false,
-  "name": "obj_lootcrate_prestige",
-  "physicsMaterial": "Metal",
-  "ratings": {
-    "buoyancy": 4,
-    "density": 1,
-    "durability": 6,
-    "friction": 3
-  },
-  "renderable": {
-    "lodList": [
-      {
-        "mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
-        "subMeshMap": {
-          "Lootbox": {
-            "material": "DifAsgNor",
-            "textureList": [
-              "$CONTENT_DATA/Objects/Textures/Crates/prestige_lootcrate_dif.tga",
-              "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
-              "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
-            ]
-          },
-          "lightcone_mat": {
-            "material": "LightCone",
-            "textureList": [
-              "$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
-              "",
-              ""
-            ]
-          }
-        }
-      }
-    ]
-  },
-  "restitution": 1.0,
-  "restrictions": {
-    "liftable": false
-  },
-  "rotationSet": "PropYNegYZ",
-  "scripted": {
-    "classname": "PrestigeLootCrate",
-    "filename": "$CONTENT_DATA/Scripts/Other/Crates/PrestigeLootCrate.lua"
-  },
-  "stackSize": 999.0,
-  "uuid": "423592bc-8505-4c3b-965c-23ee394054d0"
+	"partList": [
+		{
+			"box": {
+				"x": 4,
+				"y": 4,
+				"z": 4
+			},
+			"color": "00ff00",
+			"flammable": false,
+			"name": "obj_lootcrate",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"buoyancy": 4,
+				"density": 1,
+				"durability": 6,
+				"friction": 3
+			},
+			"renderable": {
+				"lodList": [
+					{
+						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
+						"subMeshMap": {
+							"Lootbox": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_dif.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+								]
+							},
+							"lightcone_mat": {
+								"material": "LightCone",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
+									"",
+									""
+								]
+							}
+						}
+					}
+				]
+			},
+			"restitution": 1.0,
+			"restrictions": {
+				"liftable": false
+			},
+			"rotationSet": "PropYNegYZ",
+			"scripted": {
+				"classname": "LootCrate",
+				"filename": "$CONTENT_DATA/Scripts/Other/Crates/LootCrate.lua"
+			},
+			"stackSize": 999,
+			"uuid": "69b869f1-03dc-4ea3-9291-fd6490f945dd",
+			"shop": {
+				"tier": 0,
+				"price": "0",
+				"category": "Other",
+				"special": true
+			}
+		},
+		{
+			"box": {
+				"x": 4,
+				"y": 4,
+				"z": 4
+			},
+			"color": "0088ff",
+			"flammable": false,
+			"name": "obj_lootcrate_rare",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"buoyancy": 4,
+				"density": 1,
+				"durability": 6,
+				"friction": 3
+			},
+			"renderable": {
+				"lodList": [
+					{
+						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
+						"subMeshMap": {
+							"Lootbox": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Crates/rare_lootcrate_dif.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+								]
+							},
+							"lightcone_mat": {
+								"material": "LightCone",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
+									"",
+									""
+								]
+							}
+						}
+					}
+				]
+			},
+			"restitution": 1.0,
+			"restrictions": {
+				"liftable": false
+			},
+			"rotationSet": "PropYNegYZ",
+			"scripted": {
+				"classname": "RareLootCrate",
+				"filename": "$CONTENT_DATA/Scripts/Other/Crates/RareLootCrate.lua"
+			},
+			"stackSize": 999,
+			"uuid": "cf48ca1b-3d7a-4b56-83e9-092e681525be"
+		},
+		{
+			"box": {
+				"x": 4,
+				"y": 4,
+				"z": 4
+			},
+			"color": "ff7f00",
+			"flammable": false,
+			"name": "obj_lootcrate_prestige",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"buoyancy": 4,
+				"density": 1,
+				"durability": 6,
+				"friction": 3
+			},
+			"renderable": {
+				"lodList": [
+					{
+						"mesh": "$SURVIVAL_DATA/Harvestables/Mesh/Loot/hvs_lootcrate.fbx",
+						"subMeshMap": {
+							"Lootbox": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Crates/prestige_lootcrate_dif.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_asg.tga",
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate01_nor.tga"
+								]
+							},
+							"lightcone_mat": {
+								"material": "LightCone",
+								"textureList": [
+									"$SURVIVAL_DATA/Harvestables/Textures/Loot/hvs_lootcrate_lightcone_dif.tga",
+									"",
+									""
+								]
+							}
+						}
+					}
+				]
+			},
+			"restitution": 1.0,
+			"restrictions": {
+				"liftable": false
+			},
+			"rotationSet": "PropYNegYZ",
+			"scripted": {
+				"classname": "PrestigeLootCrate",
+				"filename": "$CONTENT_DATA/Scripts/Other/Crates/PrestigeLootCrate.lua"
+			},
+			"stackSize": 999,
+			"uuid": "423592bc-8505-4c3b-965c-23ee394054d0"
+		}
+	]
 }
