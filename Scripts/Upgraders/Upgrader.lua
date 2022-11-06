@@ -33,7 +33,7 @@ function Upgrader:server_onCreate()
 end
 
 function Upgrader:server_onFixedUpdate()
-    Power.server_onFixedUpdate(self, "cl_toggleEffect")
+    Belt.server_onFixedUpdate(self, "cl_toggleEffect")
 end
 
 function Upgrader:client_onCreate()

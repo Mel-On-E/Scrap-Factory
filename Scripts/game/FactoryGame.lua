@@ -179,7 +179,7 @@ function FactoryGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
-		sm.game.bindChatCommand("/addMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
+		sm.game.bindChatCommand("/addmoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
 
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")

@@ -23,8 +23,8 @@ function Belt:server_onCreate()
     Power.server_onCreate(self)
 end
 
-function Belt:server_onFixedUpdate()
-    Power.server_onFixedUpdate(self, nil)
+function Belt:server_onFixedUpdate(effect)
+    Power.server_onFixedUpdate(self, effect)
     IDsUpdated = {}
 end
 
