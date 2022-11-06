@@ -62,6 +62,14 @@ function MoneyManager.sv_addMoney(money, source)
 
     if money > 0 and source ~= "sellTool" then
         g_moneyManager.sv.moneyEarned = g_moneyManager.sv.moneyEarned + money
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "MoneyMade")
+    end
+
+
+    if g_moneyManager.sv.saved.money >= 1e9 then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "1BMoney")
+    elseif g_moneyManager.sv.saved.money >= 100 then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "100Money")
     end
 end
 

@@ -133,7 +133,7 @@ end
 
 function PrestigeManager.getPrestigeGain()
     local money = MoneyManager.cl_getMoney()
-    local minMoney = 1e6
+    local minMoney = 1e9
     money = money - minMoney
 
     if money > 0 then

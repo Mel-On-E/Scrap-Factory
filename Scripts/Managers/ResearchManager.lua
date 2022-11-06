@@ -64,6 +64,8 @@ function ResearchManager.sv_addResearch(value, shape)
     if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
         g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
         g_ResearchManager.sv.notify = true
+
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchComplete")
     end
 
     return true

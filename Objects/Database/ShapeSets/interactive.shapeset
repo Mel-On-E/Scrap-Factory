@@ -33,6 +33,11 @@
 			"flammable": true,
 			"restrictions": {
 				"usable": true
+			},
+			"shop": {
+				"category": "Utilities",
+				"price": "1000",
+				"tier": 1
 			}
 		},
 		{
@@ -59,6 +64,11 @@
 				"filename": "$CONTENT_DATA/Scripts/Other/DaySensor.lua",
 				"classname": "DaySensor",
 				"data": {}
+			},
+			"shop": {
+				"category": "Utilities",
+				"price": "1000",
+				"tier": 1
 			}
 		},
 		{
@@ -87,7 +97,12 @@
 				"friction": 5,
 				"buoyancy": 8
 			},
-			"flammable": false
+			"flammable": false,
+			"shop": {
+				"category": "Utilities",
+				"price": "1000",
+				"tier": 1
+			}
 		}
 	]
 }

@@ -106,7 +106,8 @@ function FactoryGame.server_onCreate(self)
 		{ pollutionManager = "64987a78-5b2b-4267-aeed-3d98dddcf12e" },
 		{ prestigeManager = "2474d490-4530-4ff8-9436-ba716a0c665e" },
 		{ perkManager = "35492036-d286-4b0f-a17c-efa228875c0d" },
-		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" }
+		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" },
+		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" }
 	}
 	local STORAGE_CHANNEL_FACTORY = 69
 

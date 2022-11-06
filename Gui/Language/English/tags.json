@@ -71,10 +71,48 @@
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
 	"ClearOresMessage": "You sure, bro?",
-	"ClearOresTutorialTitle": "How to Clear Ores",
-	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
 
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
-	"RaidWarning": "Unauthorized Factory Detected!"
+	"RaidWarning": "Unauthorized Factory Detected!",
+	"TutorialLockedFeature": "Follow the tutorial to unlock this feature",
+
+	//Tutorials
+	"TutorialQuestName": "The Factory MUST Grow!",
+	"DailyRewardClaimedEvent": "Claim the daily reward",
+	"WelcomeTutorialTitle": "Welcome to Scrap Factory!",
+	"WelcomeTutorialMessage": "To get started, place a down a dropper and a furnace!",
+	"DropperPlacedEvent": "Place down dropper",
+	"FurnacePlacedEvent": "Place down furnace",
+	"PowerTutorialTitle": "Power Management",
+	"PowerTutorialMessage": "Every item consumes power. So you will need to generate electricity to get your first factory started! Place down a windmill.\n\nYou can later optimize your power by turning machines off with logic or storing excess power in batteries.",
+	"WindmillPlacedEvent": "Place down windmill",
+	"WindmillTutorialTitle": "Windmill",
+	"WindmillTutorialMessage": "Each power generator produces power depending on different factors. For example, windmills produce up to 100% more power when placed higher!",
+	"DropperTutorialTitle": "Droppers",
+	"DropperTutorialMessage": "Droppers create drops out of thin air! Your first dropper is manual and requires you to press the button. Drop some ore onto the furnace to earn money!",
+	"MoneyMadeEvent": "Drop ore onto the furnace",
+	"ShopTutorialTitle": "Shop",
+	"ShopTutorialMessage": "To make even more money we are going to need more machines. Press \"%s\" to open the shop. Once you have $100, you can buy your first upgrader!",
+	"100MoneyEvent": "Earn $100",
+	"UpgraderBoughtEvent": "Buy an upgrader from the shop (press to \"%s\" open it)",
+	"UpgraderTutorialTitle": "Upgraders",
+	"UpgraderTutorialMessage": "Upgraders make your drops more valuable! Each upgrader affects drop value differently once a drop passes the upgrade area. You can use the same upgrader multiple times! However, each upgrade can only be used a finite amount of times on each ore. Upgraders sometimes also have a value cap they can't exceed.",
+	"SellUpgradedDropEvent": "Upgrade a drop and sell it",
+	"ResearchFurnaceTutorialTitle": "Research Furnace",
+	"ResearchFurnaceTutorialMessage": "To unlock more items, you need to do some research first. To get started we need to dedicate one furnace to research. You can only have one research furnace at a time. All drops sold in it, will be used for research. Simply interact with your furnace.",
+	"ResearchFurnaceSetEvent": "Set a research furnace",
+	"ResearchTutorialTitle": "Research",
+	"ResearchTutorialMessage": "Research happens one tier at a time. Each tier requires a certain drop. You need to sell enough of this drop with a research furnace until you hit the research goal. Upon completion, you'll unlock new items to help you make even more money!",
+	"ResearchCompleteEvent": "Complete the research tier",
+	"GetRichTutorialTitle": "Get Rich",
+	"GetRichTutorialMessage": "Those are the basics! Now use that oversized brain of yours and make big stonks. Surely, you won't make any unethical decisions along the way... Remember, the factory MUST grow!",
+	"1BMoneyEvent": "Earn $1.00B",
+	"PrestigeTutorialTitle": "Prestige",
+	"PrestigeTutorialMessage": "Look how far you've come! Surely, you wanna go even further? How does space sound? You can prestige at any time to leave to a new planet! Just leave all that nasty pollution behind and start over! You will lose your money, creations, items and current research progress. You will keep special items and ◊. You gain ◊ after a prestige and can spend it on powerful perks.",
+
+
+
+	"ClearOresTutorialTitle": "How to Clear Ores",
+	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores"
 }

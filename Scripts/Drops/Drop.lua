@@ -8,6 +8,11 @@ local oreCount = 0
 local lifeTime = 40 * 5 --ticks
 
 function Drop:server_onCreate()
+    oreCount = oreCount + 1
+    if oreCount >= 100 then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "ClearOresTutorial")
+    end
+
     self.sv = {}
     self.sv.timeout = 0
 
@@ -52,6 +57,8 @@ function Drop:server_onFixedUpdate()
 end
 
 function Drop:server_onDestroy()
+    oreCount = oreCount - 1
+
     if self:getPollution() then
         sm.event.sendToGame("sv_e_stonks",
             { pos = self.sv.pos, value = tostring(self:getPollution()), format = "pollution", effect = "Pollution" })
@@ -66,11 +73,6 @@ function Drop:client_onCreate()
 
     if self.data and self.data.effect then
         self:cl_createEffect("default", self.data.effect)
-    end
-
-    oreCount = oreCount + 1
-    if oreCount == 100 then
-        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
     end
 end
 
@@ -91,8 +93,6 @@ function Drop:client_onClientDataUpdate(data)
 end
 
 function Drop:client_onDestroy()
-    oreCount = oreCount - 1
-
     for _, effect in pairs(self.cl.effects) do
         if sm.exists(effect) then
             effect:destroy()
