@@ -57,6 +57,7 @@ function FactoryGame.server_onCreate(self)
 	end
 	self.data = nil
 	self.sv.factory = {}
+	g_world = self.sv.saved.factoryWorld
 
 	print(self.sv.saved.data)
 	if self.sv.saved.data and self.sv.saved.data.dev then
