@@ -157,6 +157,10 @@ end
 
 function Furnace:client_onInteract(character, state)
     if state then
-        self.network:sendToServer("sv_setResearch")
+        if TutorialManager.cl_getTutorialStep() > 7 then
+            self.network:sendToServer("sv_setResearch")
+        else
+            sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
+        end
     end
 end
