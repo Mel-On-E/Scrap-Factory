@@ -71,10 +71,14 @@
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
 	"ClearOresMessage": "You sure, bro?",
-	"ClearOresTutorialTitle": "How to Clear Ores",
-	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores",
 
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
-	"RaidWarning": "Unauthorized Factory Detected!"
+	"RaidWarning": "Unauthorized Factory Detected!",
+
+	//Tutorials
+	"WelcomeTutorialTitle": "Welcome to Scrap Factory!",
+	"WelcomeTutorialMessage": "To get started, place a down a dropper and a furnace!",
+	"ClearOresTutorialTitle": "How to Clear Ores",
+	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores"
 }
