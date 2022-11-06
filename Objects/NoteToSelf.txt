@@ -1,0 +1,7 @@
+--obj_factory_furnacebasic_01
+----EASY FIXES
+--Add caution decals to the top panel
+--Add more scratches
+----NOT EASY FIXES
+--Attempt to redesign top if possible
+--Update ASG to include slightly more reflective metal

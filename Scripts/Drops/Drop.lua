@@ -1,4 +1,7 @@
 ---@class Drop : ShapeClass
+---@field cl DropCl
+---@field sv DropSv
+---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
 local oreCount = 0
@@ -115,7 +118,8 @@ end
 function Drop:getValue()
     local value = self.cl.value
     if sm.isServerMode() then
-        value = (sm.exists(self.interactable) and self.interactable.publicData.value) or self.sv.value
+        value = (sm.exists(self.interactable) and self.interactable.publicData) and self.interactable.publicData.value or
+            self.sv.value
     end
     return value
 end
@@ -123,10 +127,29 @@ end
 function Drop:getPollution()
     local pollution = self.cl.pollution
     if sm.isServerMode() then
-        pollution = sm.exists(self.interactable) and self.interactable.publicData.pollution
+        pollution = sm.exists(self.interactable) and self.interactable.publicData and
+            self.interactable.publicData.pollution
         if not pollution then
             return self.sv.pollution
         end
     end
     return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
+
+--Types
+
+---@class DropSv
+---@field timeout number
+---@field pos Vec3
+---@field pollution number
+---@field value number
+
+
+---@class DropCl
+---@field value number
+---@field effects table<string, Effect>
+---@field pollution number
+---@field pollutionEffect string
+
+---@class DropData
+---@field effect string
