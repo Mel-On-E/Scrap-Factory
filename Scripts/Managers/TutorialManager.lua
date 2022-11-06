@@ -218,3 +218,7 @@ end
 function TutorialManager.cl_closeTutorialGui()
     return g_tutorialManager.cl.tutorialGui:close()
 end
+
+function TutorialManager.cl_getTutorialStep()
+    return g_tutorialManager.cl.data.tutorialProgress
+end

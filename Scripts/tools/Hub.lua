@@ -91,7 +91,11 @@ end
 
 function Hub.client_onEquip(self)
 	if self.tool:isLocal() then
-		self:cl_openGui()
+		if TutorialManager.cl_getTutorialStep() > 5 then
+			self:cl_openGui()
+		else
+			sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
+		end
 	end
 
 	self:client_onEquipAnimations()

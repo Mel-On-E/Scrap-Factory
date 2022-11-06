@@ -75,6 +75,7 @@
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
 	"RaidWarning": "Unauthorized Factory Detected!",
+	"TutorialLockedFeature": "Follow the tutorial to unlock this feature",
 
 	//Tutorials
 	"TutorialQuestName": "The Factory MUST Grow!",
