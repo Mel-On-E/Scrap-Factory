@@ -53,6 +53,12 @@
 			"classname": "LootCrateManager",
 			"name": "mgr_lootcrate",
 			"uuid": "963f193f-cce8-4ed0-a04d-530fd70b230f"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/TutorialManager.lua",
+			"classname": "TutorialManager",
+			"name": "mgr_tutorial",
+			"uuid": "60702ca7-2d19-4d08-81e6-7a3ded53e338"
 		}
 	]
 }
