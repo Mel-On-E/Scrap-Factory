@@ -153,7 +153,6 @@ function TutorialManager:client_onClientDataUpdate(data)
 
     --update trackerHud
     local tutorialProgress = self.cl.data.tutorialProgress
-    print(tutorialProgress, #tutorialSteps)
     if tutorialProgress <= #tutorialSteps then
         local steps = {}
         for i = 1, #tutorialSteps[tutorialProgress].events, 1 do
