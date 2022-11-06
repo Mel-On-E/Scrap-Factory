@@ -94,7 +94,7 @@
 	"ShopTutorialTitle": "Shop",
 	"ShopTutorialMessage": "To make even more money we are going to need more machines. Press \"%s\" to open the shop. Once you have $100, you can buy your first upgrader!",
 	"100MoneyEvent": "Earn $100",
-	"UpgraderBoughtEvent": "Buy an upgrader from the shop",
+	"UpgraderBoughtEvent": "Buy an upgrader from the shop (press to \"%s\" open it)",
 	"UpgraderTutorialTitle": "Upgraders",
 	"UpgraderTutorialMessage": "Upgraders make your drops more valuable! Each upgrader affects drop value differently once a drop passes the upgrade area. You can use the same upgrader multiple times! However, each upgrade can only be used a finite amount of times on each ore. Upgraders sometimes also have a value cap they can't exceed.",
 	"SellUpgradedDropEvent": "Upgrade a drop and sell it",

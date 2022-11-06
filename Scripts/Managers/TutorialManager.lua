@@ -163,6 +163,9 @@ function TutorialManager:client_onClientDataUpdate(data)
                 name = "step" .. tostring(i),
                 text = (self.cl.data.eventsReceived[event] and "#00dd00" or "") .. "- " .. language_tag(event .. "Event")
             }
+            if event == "UpgraderBought" then
+                step.text = step.text:format(sm.gui.getKeyBinding("Logbook"))
+            end
             steps[#steps + 1] = step
         end
 
