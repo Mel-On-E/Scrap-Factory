@@ -214,7 +214,7 @@
 			"shop": {
 				"price": "500",
 				"category": "Upgrades",
-				"tier": 0
+				"tier": 1
 			}
 		},
 		{
