@@ -127,7 +127,7 @@ function Furnace:cl_toggle_effect(active)
         cl_research_Effect:destroy()
     end
 
-    cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
+    cl_research_Effect = sm.effect.createEffect("Furnace - Area", self.interactable)
 
     local size = sm.vec3.new(self.data.box.x, self.data.box.y * 6, self.data.box.z)
     cl_research_Effect:setScale(size / 18)

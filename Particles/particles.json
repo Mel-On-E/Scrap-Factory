@@ -1,3 +1,6 @@
 {
-   "particleSystemList" : []
+   "particleSystemList" : [
+		//// FURNACE ////
+		"factory/p_furnace_area_sell_01.json"
+   ]
 }
