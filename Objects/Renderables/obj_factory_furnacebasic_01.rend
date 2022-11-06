@@ -1,0 +1,17 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/furnace_basic_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Furnaces/obj_factory_furnacebasic_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Furnaces/obj_factory_furnacebasic_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Furnaces/obj_factory_furnacebasic_01_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}
