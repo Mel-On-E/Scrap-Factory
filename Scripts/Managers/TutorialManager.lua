@@ -113,6 +113,7 @@ function TutorialManager:sv_e_questEvent(event)
     if self.sv.eventsReceived[event] then return end
     self.sv.eventsReceived[event] = true
 
+    ::checkAgain::
     local currentStep = tutorialSteps[self.sv.saved.tutorialProgress]
     if not currentStep then return end
 
@@ -127,6 +128,7 @@ function TutorialManager:sv_e_questEvent(event)
         end
 
         self.sv.saved.tutorialProgress = self.sv.saved.tutorialProgress + 1
+        goto checkAgain
     end
 
     self:sv_saveAndSync()
@@ -174,6 +176,9 @@ end
 
 function TutorialManager:cl_startTutorial(tutorialName)
     if self.cl.activeTutorial ~= tutorialName then
+        if self.cl.tutorialGui then
+            self.cl.tutorialGui:destroy()
+        end
         self.cl.tutorialGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/Tutorial/PopUp_Tutorial.layout", true,
             { isHud = true, isInteractive = false, needsCursor = false })
 
@@ -196,7 +201,9 @@ function TutorialManager:cl_startTutorial(tutorialName)
 end
 
 function TutorialManager:cl_onCloseTutorialGui()
-    self.network:sendToServer("sv_e_watchedTutorial", self.cl.activeTutorial)
+    if self.cl.activeTutorial then
+        self.network:sendToServer("sv_e_watchedTutorial", self.cl.activeTutorial)
+    end
     self.cl.tutorialGui = nil
     self.cl.activeTutorial = nil
 end
