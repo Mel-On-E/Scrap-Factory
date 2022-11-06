@@ -245,6 +245,9 @@ function Shop:sv_buyItem(params, player)
 	if MoneyManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem",
 			{ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
+		if sm.uuid.new(params.uuid) == obj_upgrader_basic then
+			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
+		end
 		self.network:sendToClient(player, "cl_moneyCheck", true)
 	else
 		self.network:sendToClient(player, "cl_moneyCheck", false)

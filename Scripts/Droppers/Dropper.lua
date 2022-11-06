@@ -8,6 +8,8 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 Dropper = class(nil)
 
 function Dropper:server_onCreate()
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "DropperPlaced")
+
     self.data = unpackNetworkData(self.data)
     ---@diagnostic disable-next-line: param-type-mismatch
     self.data.drop.uuid = sm.uuid.new(self.data.drop.uuid)

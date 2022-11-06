@@ -15,6 +15,8 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 local cl_research_Effect
 
 function Furnace:server_onCreate()
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
+
     Power.server_onCreate(self)
 
     self.sv = {}
@@ -73,6 +75,10 @@ function Furnace:sv_onEnterDrop(shape)
             sm.event.sendToGame("sv_e_stonks",
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
             MoneyManager.sv_addMoney(value)
+
+            if next(publicData.upgrades) then
+                sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
+            end
         end
     end
 
@@ -95,8 +101,12 @@ function Furnace:sv_setResearch(_, player)
     self.sv.saved.research = not self.sv.saved.research
     self.storage:save(self.sv.saved)
 
-    if self.sv.saved.research and (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
-        sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+    if self.sv.saved.research then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchFurnaceSet")
+
+        if (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
+            sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+        end
     end
     g_research_furnace = (self.sv.saved.research and self.interactable) or nil
 

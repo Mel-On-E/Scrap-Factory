@@ -31,7 +31,7 @@ function DailyRewardManager:server_onCreate()
 end
 
 function DailyRewardManager:sv_spawnRewards(params, player)
-    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "WelcomeTutorial")
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "DailyRewardClaimed")
 
     for i = 1, self.rewards[self.saved.streak + 1].quantity, 1 do
         local pos = player:getCharacter():getWorldPosition()
