@@ -29,7 +29,7 @@ function Furnace:server_onCreate()
             self.storage:save(self.sv.saved)
         elseif self.sv.saved.research then
             g_research_furnace = self.interactable
-            self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
+            self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
         end
     end
 
@@ -110,7 +110,7 @@ function Furnace:sv_setResearch(_, player)
     end
     g_research_furnace = (self.sv.saved.research and self.interactable) or nil
 
-    self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
+    self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
 end
 
 function Furnace:sv_removeResearch()
@@ -119,28 +119,45 @@ function Furnace:sv_removeResearch()
 end
 
 function Furnace:client_onCreate()
-    --[[
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    self.cl = {}
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-	self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-	self.effect:setParameter("color", sm.color.new(1,1,1))
-    self.effect:setScale(size)
-    self.effect:setOffsetPosition(offset)
-	self.effect:start()
-    ]]
+    self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
+    self.cl.effect:setParameter("uuid", sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770"))
+    self.cl.effect:setParameter("color", sm.color.new(0, 1, 0))
+    self.cl.effect:setScale(size / 4.5)
+    self.cl.effect:setOffsetPosition(offset)
+    local rot1 = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), sm.vec3.new(0, 1, 0))
+    --really fucking weird rotation offset thingy bc epic shader doesn't work on all rotations. WTF axolot why?
+    local rot2 = self.shape.xAxis.y ~= 0 and sm.vec3.getRotation(sm.vec3.new(1, 0, 0), sm.vec3.new(0, 1, 0)) or
+        sm.quat.identity()
+    self.cl.effect:setOffsetRotation(rot1 * rot2)
+
+    self.cl.effect:start()
 end
 
-function Furnace:cl_toggle_effect(active)
+function Furnace:server_onFixedUpdate()
+    Power.server_onFixedUpdate(self, "cl_toggleEffect")
+end
+
+function Furnace:cl_toggleEffect(active)
+    if active and not self.cl.effect:isPlaying() then
+        self.cl.effect:start()
+    else
+        self.cl.effect:stop()
+    end
+end
+
+function Furnace:cl_toggle_research_effect(active)
     if cl_research_Effect and sm.exists(cl_research_Effect) then
         cl_research_Effect:destroy()
     end
 
-    cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
+    cl_research_Effect = sm.effect.createEffect("Builderguide - Background", self.interactable)
 
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y * 6, self.data.box.z)
-    cl_research_Effect:setScale(size / 18)
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    cl_research_Effect:setScale(size)
 
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
     cl_research_Effect:setOffsetPosition(offset)
