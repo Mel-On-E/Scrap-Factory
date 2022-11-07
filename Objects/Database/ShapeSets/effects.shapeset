@@ -36,7 +36,8 @@
 				"friction": 2,
 				"buoyancy": 3
 			},
-			"flammable": false
+			"flammable": false,
+			"showInInventory": false
 		}
 	]
 }
