@@ -58,3 +58,6 @@ g_pollutionManager = {}
 
 ---@type PowerManager
 g_powerManager = {}
+
+---@type TutorialManager
+g_tutorialManager = {}
