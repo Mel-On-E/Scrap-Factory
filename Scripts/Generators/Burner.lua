@@ -53,13 +53,7 @@ function Burner:sv_onEnterDrop(shape)
 end
 
 function Burner:client_onCreate()
-    --[[local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
-    local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
+    Furnace.client_onCreate(self)
 
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-	self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-	self.effect:setParameter("color", sm.color.new(1,1,1))
-    self.effect:setScale(size)
-    self.effect:setOffsetPosition(offset)
-	self.effect:start()]]
+    self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end

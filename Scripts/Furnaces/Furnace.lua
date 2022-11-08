@@ -15,6 +15,8 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 local cl_research_Effect
 
 function Furnace:server_onCreate()
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
+
     Power.server_onCreate(self)
 
     self.sv = {}
@@ -27,7 +29,7 @@ function Furnace:server_onCreate()
             self.storage:save(self.sv.saved)
         elseif self.sv.saved.research then
             g_research_furnace = self.interactable
-            self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
+            self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
         end
     end
 
@@ -73,6 +75,10 @@ function Furnace:sv_onEnterDrop(shape)
             sm.event.sendToGame("sv_e_stonks",
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
             MoneyManager.sv_addMoney(value)
+
+            if next(publicData.upgrades) then
+                sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
+            end
         end
     end
 
@@ -95,42 +101,64 @@ function Furnace:sv_setResearch(_, player)
     self.sv.saved.research = not self.sv.saved.research
     self.storage:save(self.sv.saved)
 
-    if self.sv.saved.research and (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
-        sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+    if self.sv.saved.research then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchFurnaceSet")
+
+        if (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
+            sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+        end
     end
     g_research_furnace = (self.sv.saved.research and self.interactable) or nil
 
-    self.network:sendToClients("cl_toggle_effect", (g_research_furnace and true))
+    self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
 end
 
 function Furnace:sv_removeResearch()
     self.sv.saved.research = nil
     self.storage:save(self.sv.saved)
+    self.network:sendToClients("cl_setSellAreaEffectColor", sm.color.new(0, 1, 0))
 end
 
 function Furnace:client_onCreate()
-    --[[
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    self.cl = {}
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-	self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-	self.effect:setParameter("color", sm.color.new(1,1,1))
-    self.effect:setScale(size)
-    self.effect:setOffsetPosition(offset)
-	self.effect:start()
-    ]]
+    self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
+    self.cl.effect:setParameter("uuid", sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770"))
+    self.cl.effect:setParameter("color", sm.color.new(0, 1, 0))
+    self.cl.effect:setScale(size / 4.5)
+    self.cl.effect:setOffsetPosition(offset)
+    local rot1 = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), sm.vec3.new(0, 1, 0))
+    --really fucking weird rotation offset thingy bc epic shader doesn't work on all rotations. WTF axolot why?
+    local rot2 = self.shape.xAxis.y ~= 0 and sm.vec3.getRotation(sm.vec3.new(1, 0, 0), sm.vec3.new(0, 1, 0)) or
+        sm.quat.identity()
+    self.cl.effect:setOffsetRotation(rot1 * rot2)
+
+    self.cl.effect:start()
 end
 
-function Furnace:cl_toggle_effect(active)
+function Furnace:server_onFixedUpdate()
+    Power.server_onFixedUpdate(self, "cl_toggleEffect")
+end
+
+function Furnace:cl_toggleEffect(active)
+    if active and not self.cl.effect:isPlaying() then
+        self.cl.effect:start()
+    else
+        self.cl.effect:stop()
+    end
+end
+
+function Furnace:cl_toggle_research_effect(active)
     if cl_research_Effect and sm.exists(cl_research_Effect) then
         cl_research_Effect:destroy()
     end
 
-    cl_research_Effect = sm.effect.createEffect("Buildarea - Oncreate", self.interactable)
+    cl_research_Effect = sm.effect.createEffect("Builderguide - Background", self.interactable)
 
-    local size = sm.vec3.new(self.data.box.x, self.data.box.y * 6, self.data.box.z)
-    cl_research_Effect:setScale(size / 18)
+    local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
+    cl_research_Effect:setScale(size)
 
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
     cl_research_Effect:setOffsetPosition(offset)
@@ -138,6 +166,12 @@ function Furnace:cl_toggle_effect(active)
     if active then
         cl_research_Effect:start()
     end
+    self:cl_setSellAreaEffectColor(active and sm.color.new(0, 0, 1) or sm.color.new(0, 1, 0))
+end
+
+function Furnace:cl_setSellAreaEffectColor(color)
+    self.cl.effect:setParameter("color", color)
+
 end
 
 function Furnace:client_canInteract()
@@ -147,6 +181,10 @@ end
 
 function Furnace:client_onInteract(character, state)
     if state then
-        self.network:sendToServer("sv_setResearch")
+        if TutorialManager.cl_getTutorialStep() > 7 then
+            self.network:sendToServer("sv_setResearch")
+        else
+            sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
+        end
     end
 end

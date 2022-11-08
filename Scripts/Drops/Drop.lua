@@ -1,10 +1,18 @@
 ---@class Drop : ShapeClass
+---@field cl DropCl
+---@field sv DropSv
+---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
 local oreCount = 0
 local lifeTime = 40 * 5 --ticks
 
 function Drop:server_onCreate()
+    oreCount = oreCount + 1
+    if oreCount >= 100 then
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "ClearOresTutorial")
+    end
+
     self.sv = {}
     self.sv.timeout = 0
 
@@ -49,6 +57,8 @@ function Drop:server_onFixedUpdate()
 end
 
 function Drop:server_onDestroy()
+    oreCount = oreCount - 1
+
     if self:getPollution() then
         sm.event.sendToGame("sv_e_stonks",
             { pos = self.sv.pos, value = tostring(self:getPollution()), format = "pollution", effect = "Pollution" })
@@ -63,11 +73,6 @@ function Drop:client_onCreate()
 
     if self.data and self.data.effect then
         self:cl_createEffect("default", self.data.effect)
-    end
-
-    oreCount = oreCount + 1
-    if oreCount == 100 then
-        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
     end
 end
 
@@ -88,8 +93,6 @@ function Drop:client_onClientDataUpdate(data)
 end
 
 function Drop:client_onDestroy()
-    oreCount = oreCount - 1
-
     for _, effect in pairs(self.cl.effects) do
         if sm.exists(effect) then
             effect:destroy()
@@ -115,7 +118,8 @@ end
 function Drop:getValue()
     local value = self.cl.value
     if sm.isServerMode() then
-        value = (sm.exists(self.interactable) and self.interactable.publicData.value) or self.sv.value
+        value = (sm.exists(self.interactable) and self.interactable.publicData) and self.interactable.publicData.value or
+            self.sv.value
     end
     return value
 end
@@ -123,10 +127,29 @@ end
 function Drop:getPollution()
     local pollution = self.cl.pollution
     if sm.isServerMode() then
-        pollution = sm.exists(self.interactable) and self.interactable.publicData.pollution
+        pollution = sm.exists(self.interactable) and self.interactable.publicData and
+            self.interactable.publicData.pollution
         if not pollution then
             return self.sv.pollution
         end
     end
     return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
+
+--Types
+
+---@class DropSv
+---@field timeout number
+---@field pos Vec3
+---@field pollution number
+---@field value number
+
+
+---@class DropCl
+---@field value number
+---@field effects table<string, Effect>
+---@field pollution number
+---@field pollutionEffect string
+
+---@class DropData
+---@field effect string

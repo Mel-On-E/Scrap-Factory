@@ -9,8 +9,17 @@ DropContainer.colorNormal = sm.color.new(0x00ccccff)
 DropContainer.colorHighlight = sm.color.new(0x00ffffff)
 
 function DropContainer.server_onCreate(self)
-	if not self.interactable:getContainer(0) then
+	local container = self.interactable:getContainer(0)
+	if not container then
 		self.interactable:addContainer(0, self.ContainerSize, 1)
+
+	elseif self.shape.body:isOnLift() then
+		--prevent ore duping via lift
+		sm.container.beginTransaction()
+		for i = 0, container.size, 1 do
+			sm.container.setItem(container, i, sm.uuid.getNil(), 0)
+		end
+		sm.container.endTransaction()
 	end
 
 	self.sv = {}

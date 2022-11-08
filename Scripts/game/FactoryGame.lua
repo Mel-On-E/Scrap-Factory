@@ -39,16 +39,6 @@ FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 
-local STORAGE_CHANNELS = {
-	MONEYMANAGER = 69,
-	POWERMANAGER = 70,
-	RESEARCHMANAGER = 71,
-	DAILYREWARDMANAGER = 72,
-	POLLUTIONMANAGER = 73,
-	PRESTIGEMANAGER = 74,
-	PERKMANAGER = 75
-}
-
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
 	self.sv = {}
@@ -56,7 +46,7 @@ function FactoryGame.server_onCreate(self)
 	print("Saved:", self.sv.saved)
 	if self.sv.saved == nil then
 		self.sv.saved = {}
-		SPAWN_POINT= sm.vec3.new(0, 0, 20)
+		SPAWN_POINT = sm.vec3.new(0, 0, 20)
 		self.sv.saved.data = self.data
 		printf("Seed: %.0f", self.sv.saved.data.seed)
 		self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
@@ -67,6 +57,7 @@ function FactoryGame.server_onCreate(self)
 	end
 	self.data = nil
 	self.sv.factory = {}
+	g_world = self.sv.saved.factoryWorld
 
 	print(self.sv.saved.data)
 	if self.sv.saved.data and self.sv.saved.data.dev then
@@ -105,51 +96,31 @@ function FactoryGame.server_onCreate(self)
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start(0)
 
-	--FACTORY
 	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
 	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
-	g_world = self.sv.saved.factoryWorld
 
-	self.sv.moneyManager = sm.storage.load(STORAGE_CHANNELS["MONEYMANAGER"])
-	if not self.sv.moneyManager then
-		self.sv.moneyManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("e97b0595-7912-425b-8a60-ea6dbfba4b39"))
-		sm.storage.save(STORAGE_CHANNELS["MONEYMANAGER"], self.sv.moneyManager)
-	end
+	local savedManagers = {
+		{ moneyManager = "e97b0595-7912-425b-8a60-ea6dbfba4b39" },
+		{ powerManager = "26ec01d5-6fc8-4088-b06b-25d30dd44309" },
+		{ researchManager = "6e7f54bb-e54d-46df-920a-bd225d0a9430" },
+		{ pollutionManager = "64987a78-5b2b-4267-aeed-3d98dddcf12e" },
+		{ prestigeManager = "2474d490-4530-4ff8-9436-ba716a0c665e" },
+		{ perkManager = "35492036-d286-4b0f-a17c-efa228875c0d" },
+		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" },
+		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" }
+	}
+	local STORAGE_CHANNEL_FACTORY = 69
 
-	self.sv.powerManager = sm.storage.load(STORAGE_CHANNELS["POWERMANAGER"])
-	if not self.sv.powerManager then
-		self.sv.powerManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("26ec01d5-6fc8-4088-b06b-25d30dd44309"))
-		sm.storage.save(STORAGE_CHANNELS["POWERMANAGER"], self.sv.powerManager)
-	end
-
-	self.sv.researchManager = sm.storage.load(STORAGE_CHANNELS["RESEARCHMANAGER"])
-	if not self.sv.researchManager then
-		self.sv.researchManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("6e7f54bb-e54d-46df-920a-bd225d0a9430"))
-		sm.storage.save(STORAGE_CHANNELS["RESEARCHMANAGER"], self.sv.researchManager)
-	end
-
-	self.sv.pollutionManager = sm.storage.load(STORAGE_CHANNELS["POLLUTIONMANAGER"])
-	if not self.sv.pollutionManager then
-		self.sv.pollutionManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("64987a78-5b2b-4267-aeed-3d98dddcf12e"))
-		sm.storage.save(STORAGE_CHANNELS["POLLUTIONMANAGER"], self.sv.pollutionManager)
-	end
-
-	self.sv.prestigeManager = sm.storage.load(STORAGE_CHANNELS["PRESTIGEMANAGER"])
-	if not self.sv.prestigeManager then
-		self.sv.prestigeManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("2474d490-4530-4ff8-9436-ba716a0c665e"))
-		sm.storage.save(STORAGE_CHANNELS["PRESTIGEMANAGER"], self.sv.prestigeManager)
-	end
-
-	self.sv.perkManager = sm.storage.load(STORAGE_CHANNELS["PERKMANAGER"])
-	if not self.sv.perkManager then
-		self.sv.perkManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("35492036-d286-4b0f-a17c-efa228875c0d"))
-		sm.storage.save(STORAGE_CHANNELS["PERKMANAGER"], self.sv.perkManager)
-	end
-
-	self.sv.dailyReawardManager = sm.storage.load(STORAGE_CHANNELS["DAILYREWARDMANAGER"])
-	if not self.sv.dailyReawardManager then
-		self.sv.dailyReawardManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("d0bed7e0-7065-40a5-b246-9f7356856037"))
-		sm.storage.save(STORAGE_CHANNELS["DAILYREWARDMANAGER"], self.sv.dailyReawardManager)
+	for _, manager in ipairs(savedManagers) do
+		for name, uuid in pairs(manager) do
+			print(name, uuid)
+			self.sv[name] = sm.storage.load(STORAGE_CHANNEL_FACTORY)
+			if not self.sv[name] then
+				self.sv[name] = sm.scriptableObject.createScriptableObject(sm.uuid.new(uuid))
+				sm.storage.save(STORAGE_CHANNEL_FACTORY, self.sv[name])
+			end
+			STORAGE_CHANNEL_FACTORY = STORAGE_CHANNEL_FACTORY + 1
+		end
 	end
 end
 
@@ -208,7 +179,7 @@ function FactoryGame.bindChatCommands(self)
 	local addCheats = g_survivalDev
 
 	if addCheats then
-		sm.game.bindChatCommand("/addMoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
+		sm.game.bindChatCommand("/addmoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
 
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
@@ -521,9 +492,9 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		for k, _ in pairs(_G) do
 			print(k)
 		end
-	
-	--FACTORY
-	elseif params[1] == "/addMoney" then
+
+		--FACTORY
+	elseif params[1] == "/addmoney" then
 		MoneyManager.sv_addMoney(tonumber(params[2]))
 	elseif params[1] == "/setmoney" then
 		MoneyManager.sv_setMoney(tonumber(params[2]))
@@ -560,14 +531,14 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
 
 		for i = 7, inventory.size, 1 do
-            sm.container.setItem( inventory, i, sm.uuid.getNil(), 0 )
-        end
+			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
+		end
 
 		if sm.player.getAllPlayers()[1] == player then --if host
 			print(PrestigeManager.sv_getSpecialItems())
 			local i = 7
 			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
-				sm.container.setItem( inventory, i, sm.uuid.new(uuid), quantity )
+				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
 				i = i + 1
 			end
 		end
@@ -580,7 +551,7 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
 			"sv_createNewPlayer")
 	else
-		--TODO: This code might be redundant? 
+		--TODO: This code might be redundant?
 		--[[
 		local inventory = player:getInventory()
 		local tool_sledgehammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
@@ -671,18 +642,16 @@ function FactoryGame.sv_e_unloadBeacon(self, params)
 	end
 end
 
-
-
 --FACTORY
-function FactoryGame.sv_recreateWorld( self )
-	self.sv.saved.data.seed = math.floor(math.random()*10^9)
+function FactoryGame.sv_recreateWorld(self)
+	self.sv.saved.data.seed = math.floor(math.random() * 10 ^ 9)
 
 	self.sv.saved.factoryWorld:destroy()
 	self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
-	{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
+		{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
 	g_world = self.sv.saved.factoryWorld
 	g_respawnManager:sv_setWorld(g_world)
-	self.storage:save( self.sv.saved )
+	self.storage:save(self.sv.saved)
 
 	for _, player in ipairs(sm.player.getAllPlayers()) do
 		self:server_onPlayerJoined(player, true)
@@ -695,7 +664,7 @@ function FactoryGame:sv_factoryRaid()
 	local wave = 1
 	local hours = 12
 
-	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", {level = level, wave = wave, hours = hours})
+	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", { level = level, wave = wave, hours = hours })
 end
 
 ---@param message string
@@ -718,8 +687,6 @@ end
 function FactoryGame:sv_e_stonks(params)
 	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_e_stonks", params)
 end
-
-
 
 --cursed stuff to disable chunk unloading
 function FactoryGame.sv_loadTerrain(self, data)

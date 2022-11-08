@@ -1,29 +1,64 @@
 {
-  "color": "ffd504",
-  "cylinder": {
-    "axis": "Y",
-    "depth": 1,
-    "diameter": 1,
-    "margin": 0.1
-  },
-  "flammable": true,
-  "legacyId": 807,
-  "name": "obj_decor_babyduck",
-  "physicsMaterial": "Plastic",
-  "ratings": {
-    "buoyancy": 8,
-    "density": 2,
-    "durability": 4,
-    "friction": 5
-  },
-  "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_babyduck.rend",
-  "rotationSet": "PropY",
-  "shop": {
-    "category": "Decor",
-    "price": "69",
-    "tier": 0
-  },
-  "stackSize": 999.0,
-  "sticky": "-Y",
-  "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
+  "partList": [
+    {
+      "color": "ffd504",
+      "cylinder": {
+        "axis": "Y",
+        "depth": 1,
+        "diameter": 1,
+        "margin": 0.1
+      },
+      "flammable": true,
+      "legacyId": 807,
+      "name": "obj_decor_babyduck",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "buoyancy": 8,
+        "density": 2,
+        "durability": 4,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_babyduck.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "69",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "sticky": "-Y",
+      "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
+    }
+  ],
+  "blockList": [
+    {
+      "color": "ffd504",
+      "cylinder": {
+        "axis": "Y",
+        "depth": 1,
+        "diameter": 1,
+        "margin": 0.1
+      },
+      "flammable": true,
+      "legacyId": 807,
+      "name": "obj_decor_babyduck",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "buoyancy": 8,
+        "density": 2,
+        "durability": 4,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_babyduck.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "69",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "sticky": "-Y",
+      "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
+    }
+  ]
 }
