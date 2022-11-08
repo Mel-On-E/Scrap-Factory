@@ -5,6 +5,11 @@ dofile("$CONTENT_DATA/Scripts/util/day.lua")
 ---@class Solar : Generator
 Solar = class(Generator)
 
+function Solar:server_onCreate()
+    Generator.server_onCreate(self)
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SolarTutorial")
+end
+
 function Solar:getPower()
     local time = sm.game.getTimeOfDay()
     local timeMultiplier = 0

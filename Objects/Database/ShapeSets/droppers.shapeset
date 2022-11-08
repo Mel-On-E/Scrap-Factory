@@ -1,89 +1,176 @@
 {
-	"partList": [
-		{
-			"box": {
-				"x": 4,
-				"y": 6,
-				"z": 4
-			},
-			"color": "df7f01",
-			"flammable": false,
-			"name": "obj_dropper_scrap_wood",
-			"physicsMaterial": "Wood",
-			"ratings": {
-				"buoyancy": 5,
-				"density": 5,
-				"durability": 10,
-				"friction": 5
-			},
-			"renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
-			"rotationSet": "PropY",
-			"scripted": {
-				"classname": "ClickDropper",
-				"data": {
-					"drop": {
-						"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
-						"value": "1"
-					},
-					"offset": {
-						"x": -0.055,
-						"y": 0.475,
-						"z": 0.785
-					},
-					"power": 1
-				},
-				"filename": "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
-			},
-			"stackSize": 999,
-			"uuid": "692a5ebd-0793-49ba-b1ef-681a8fdceba7",
-			"shop": {
-				"tier": 0,
-				"price": "20",
-				"category": "Droppers"
-			}
-		},
-		{
-			"box": {
-				"x": 4,
-				"y": 6,
-				"z": 4
-			},
-			"color": "df7f01",
-			"flammable": false,
-			"name": "obj_dropper_scrap_wood_auto",
-			"physicsMaterial": "Wood",
-			"ratings": {
-				"buoyancy": 5,
-				"density": 5,
-				"durability": 10,
-				"friction": 5
-			},
-			"renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
-			"rotationSet": "PropY",
-			"scripted": {
-				"classname": "AutoDropper",
-				"data": {
-					"drop": {
-						"uuid": "87873e83-8270-4796-9401-6baba45ccef2",
-						"value": "1"
-					},
-					"offset": {
-						"x": -0.055,
-						"y": 0.475,
-						"z": 0.785
-					},
-					"power": 2,
-					"interval": 40
-				},
-				"filename": "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
-			},
-			"stackSize": 999,
-			"uuid": "632a52bd-0791-49ba-b1ef-c81adfdceba7",
-			"shop": {
-				"tier": 1,
-				"price": "200",
-				"category": "Droppers"
-			}
-		}
-	]
+  "partList": [
+    {
+      "box": {
+        "x": 4,
+        "y": 6,
+        "z": 4
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_dropper_scrap_wood",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 5,
+        "durability": 10,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "ClickDropper",
+        "data": {
+          "drop": {
+            "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+            "value": "1"
+          },
+          "offset": {
+            "x": -0.055,
+            "y": 0.475,
+            "z": 0.785
+          },
+          "power": 1
+        },
+        "filename": "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
+      },
+      "shop": {
+        "category": "Droppers",
+        "price": "20",
+        "tier": 0
+      },
+      "stackSize": 999.0,
+      "uuid": "692a5ebd-0793-49ba-b1ef-681a8fdceba7"
+    },
+    {
+      "box": {
+        "x": 4,
+        "y": 6,
+        "z": 4
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_dropper_scrap_wood_auto",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 5,
+        "durability": 10,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "AutoDropper",
+        "data": {
+          "drop": {
+            "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+            "value": "1"
+          },
+          "interval": 40,
+          "offset": {
+            "x": -0.055,
+            "y": 0.475,
+            "z": 0.785
+          },
+          "power": 2
+        },
+        "filename": "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+      },
+      "shop": {
+        "category": "Droppers",
+        "price": "200",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "uuid": "632a52bd-0791-49ba-b1ef-c81adfdceba7"
+    }
+  ],
+  "blockList": [
+    {
+      "box": {
+        "x": 4,
+        "y": 6,
+        "z": 4
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_dropper_scrap_wood",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 5,
+        "durability": 10,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "ClickDropper",
+        "data": {
+          "drop": {
+            "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+            "value": "1"
+          },
+          "offset": {
+            "x": -0.055,
+            "y": 0.475,
+            "z": 0.785
+          },
+          "power": 1
+        },
+        "filename": "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
+      },
+      "shop": {
+        "category": "Droppers",
+        "price": "20",
+        "tier": 0
+      },
+      "stackSize": 999.0,
+      "uuid": "692a5ebd-0793-49ba-b1ef-681a8fdceba7"
+    },
+    {
+      "box": {
+        "x": 4,
+        "y": 6,
+        "z": 4
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_dropper_scrap_wood_auto",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 5,
+        "durability": 10,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "AutoDropper",
+        "data": {
+          "drop": {
+            "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+            "value": "1"
+          },
+          "interval": 40,
+          "offset": {
+            "x": -0.055,
+            "y": 0.475,
+            "z": 0.785
+          },
+          "power": 2
+        },
+        "filename": "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+      },
+      "shop": {
+        "category": "Droppers",
+        "price": "200",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "uuid": "632a52bd-0791-49ba-b1ef-c81adfdceba7"
+    }
+  ]
 }

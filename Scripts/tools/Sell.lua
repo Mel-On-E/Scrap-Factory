@@ -46,6 +46,10 @@ function Sell.sv_n_sell(self, params, player)
 	end
 end
 
+function Sell:sv_tryTutorial()
+	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SellTutorial")
+end
+
 function Sell.client_onCreate(self)
 	self:cl_init()
 end
@@ -65,6 +69,12 @@ function Sell.client_onUpdate(self, dt)
 end
 
 function Sell.client_onEquip(self)
+	self.unlocked = TutorialManager.cl_getTutorialStep() >= 10
+	if self.unlocked then
+		self.network:sendToServer("sv_tryTutorial")
+	else
+		sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
+	end
 	self.wantEquipped = true
 
 	currentRenderablesTp = {}
@@ -103,6 +113,7 @@ function Sell.client_onUnequip(self)
 end
 
 function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
+	if not self.unlocked then return false, false end
 	-- Detect shape
 	local success, result = sm.localPlayer.getRaycast(7.5)
 	if result.type == "body" then

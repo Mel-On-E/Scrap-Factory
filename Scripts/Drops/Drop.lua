@@ -131,6 +131,9 @@ function Drop:getPollution()
             self.interactable.publicData.pollution
         if not pollution then
             return self.sv.pollution
+        else
+            sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial",
+                "PollutionTutorial")
         end
     end
     return (pollution and math.max(pollution - self:getValue(), 0)) or nil

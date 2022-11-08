@@ -148,7 +148,14 @@ function ResearchManager.cl_getTierProgress(tier)
 end
 
 function ResearchManager.cl_getTierUnlocks(tier)
-    return g_tiers[tier].unlocks
+    local unlocks = {}
+    for uuid, item in pairs(g_shop) do
+        if item.tier == tier then
+            unlocks[#unlocks + 1] = uuid
+        end
+    end
+
+    return unlocks
 end
 
 function ResearchManager.cl_getTierUuid(tier)

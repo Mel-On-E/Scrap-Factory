@@ -4,6 +4,11 @@ dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 ---@class Storage : Generator
 Storage = class(Generator)
 
+function Storage:server_onCreate()
+    Generator.server_onCreate(self)
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "PowerStorageTutorial")
+end
+
 function Storage:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
