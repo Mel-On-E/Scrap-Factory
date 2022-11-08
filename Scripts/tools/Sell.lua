@@ -46,6 +46,10 @@ function Sell.sv_n_sell(self, params, player)
 	end
 end
 
+function Sell:sv_tryTutorial()
+	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SellTutorial")
+end
+
 function Sell.client_onCreate(self)
 	self:cl_init()
 end
@@ -67,6 +71,7 @@ end
 function Sell.client_onEquip(self)
 	self.unlocked = TutorialManager.cl_getTutorialStep() >= 10
 	if self.unlocked then
+		self.network:sendToServer("sv_tryTutorial")
 	else
 		sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
 	end

@@ -191,6 +191,8 @@ function TutorialManager:cl_startTutorial(tutorialName)
             description = description:format(sm.gui.getKeyBinding("Reload"))
         elseif tutorialName == "ShopTutorial" then
             description = description:format(sm.gui.getKeyBinding("Logbook"))
+        elseif tutorialName == "SellTutorial" then
+            description = description:format(sm.gui.getKeyBinding("NextCreateRotation"))
         end
         self.cl.tutorialGui:setText("TextMessage", description)
 

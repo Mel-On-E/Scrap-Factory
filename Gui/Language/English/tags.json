@@ -111,8 +111,16 @@
 	"PrestigeTutorialTitle": "Prestige",
 	"PrestigeTutorialMessage": "Look how far you've come! Surely, you wanna go even further? How does space sound? You can prestige at any time to leave to a new planet! Just leave all that nasty pollution behind and start over! You will lose your money, creations, items and current research progress. You will keep special items and ◊. You gain ◊ after a prestige and can spend it on powerful perks.",
 
-
-
-	"ClearOresTutorialTitle": "How to Clear Ores",
-	"ClearOresTutorialMessage": "Press \"%s\" to delete all ores"
+	"ClearOresTutorialTitle": "How to Clear Drops",
+	"ClearOresTutorialMessage": "Press \"%s\" to delete all drops",
+	"PollutionTutorialTitle": "Pollution",
+	"PollutionTutorialMessage": "You've just created a polluted drop. When the drop is sold or despawns, it will release its pollution. You can either store it, or upgrade it to reduce its pollution. Once pollution is created, you cannot remove it. The more polluted this planet becomes, the harder research gets. But don't worry. You can always prestige and screw a new planet over!",
+	"BurnerTutorialTitle": "Burners",
+	"BurnerTutorialMessage": "Burners destroy ores but not for money or research. They give real power! The more valuable the drops you sell, the more power you generate! However, this creates pollution. And don't forget to store all that energy you generate!",
+	"SolarTutorialTitle": "Solar Power",
+	"SolarTutorialMessage": "Solar panels generate power during the day. Sadly days don't last forever. If you want to run your factory all the time, you need to store power during the day to spend it at night.",
+	"SellTutorialTitle": "Sell Tool",
+	"SellTutorialMessage": "You can use the sell tool to turn unneeded items into money. Simply look at an item you want to sell. By pressing \"%s\" you can increase the amount of items you want to sell. This will sell items from your inventory as well. Cleanig out your inventory was never as profitable before!",
+	"PowerStorageTutorialTitle": "Power Storage",
+	"PowerStorageTutorialMessage": "As your factory grows, your power needs will change. It's always a good idea to have excess capaciy in case of a power surge. Batteries can store excess power, and provide power when you need it. The HUD will show you how much all of your batteries are charged."
 }

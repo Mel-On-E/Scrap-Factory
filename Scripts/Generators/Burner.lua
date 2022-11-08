@@ -8,6 +8,8 @@ Burner = class(nil)
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)
     Generator.server_onCreate(self)
+
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
 end
 
 function Burner:server_onDestroy()
