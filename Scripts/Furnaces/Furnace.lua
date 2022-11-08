@@ -116,6 +116,7 @@ end
 function Furnace:sv_removeResearch()
     self.sv.saved.research = nil
     self.storage:save(self.sv.saved)
+    self.network:sendToClients("cl_setSellAreaEffectColor", sm.color.new(0, 1, 0))
 end
 
 function Furnace:client_onCreate()
@@ -165,6 +166,12 @@ function Furnace:cl_toggle_research_effect(active)
     if active then
         cl_research_Effect:start()
     end
+    self:cl_setSellAreaEffectColor(active and sm.color.new(0, 0, 1) or sm.color.new(0, 1, 0))
+end
+
+function Furnace:cl_setSellAreaEffectColor(color)
+    self.cl.effect:setParameter("color", color)
+
 end
 
 function Furnace:client_canInteract()
