@@ -1,0 +1,43 @@
+{
+	"partList": [
+		{
+			"uuid": "f74a0354-05e9-411c-a8ba-75359449f770",
+			"name": "obj_furnace_effect",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshMap": {
+							"glass": {
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
+								],
+								"material": "GlassWave"
+							}
+						},
+						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx"
+					}
+				]
+			},
+			"color": "00ff00",
+			"hull": {
+				"x": 5,
+				"y": 4,
+				"z": 2,
+				"col": "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj"
+			},
+			"rotationSet": "PropYZmX",
+			"sticky": "+Y-Y+X-X-Z",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 2,
+				"durability": 3,
+				"friction": 2,
+				"buoyancy": 3
+			},
+			"flammable": false,
+			"showInInventory": false
+		}
+	]
+}

@@ -40,7 +40,7 @@ function Shop:client_onCreate()
 	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
 	Interface.cient_onCreate(self, params)
 
-	self.cl.sortHighest = false
+	self.cl.sortHighest = true
 
 	self.cl.pageNum = math.floor(#g_shop / 32) == 0 and 1 or
 		math.floor(#g_shop / 32)
@@ -48,7 +48,7 @@ function Shop:client_onCreate()
 	self.cl.curItem = 1
 	self.cl.quantity = 1
 	self.cl.category = "All"
-	self.cl.tier = 0
+	self.cl.tier = -1
 	self.cl.gui:setButtonState("Buy_x1", true)
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
@@ -105,7 +105,7 @@ function Shop:changeSort()
 	local pages = {}
 	self.cl.itemPages = { {} }
 	for k, v in pairs(g_shop) do
-		if v.tier < tier then
+		if v.tier < tier and not v.special and not v.prestige then
 			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
@@ -153,7 +153,7 @@ function Shop:gui_filter(category, tier)
 	if category == "All" then
 		for i, v in pairs(self.cl.itemPages) do
 			for _, v in pairs(v) do
-				if tier == -1 and true or (v.tier == tier) then
+				if (tier == -1 or v.tier == tier) and v.tier < ResearchManager.cl_getCurrentTier() then
 					table.insert(self.cl.filteredPages[page], v)
 				end
 			end
@@ -164,11 +164,10 @@ function Shop:gui_filter(category, tier)
 		return
 	end
 
-
 	for i, v in pairs(self.cl.itemPages) do
 		for _, v in pairs(v) do
 
-			if (v.category == category) and (tier == 0 and true or (v.tier == tier)) then
+			if ((v.category == category) and (tier == -1 or v.tier == tier)) and v.tier < ResearchManager.cl_getCurrentTier() then
 				table.insert(self.cl.filteredPages[page], v)
 			end
 		end
@@ -245,6 +244,9 @@ function Shop:sv_buyItem(params, player)
 	if MoneyManager.sv_spendMoney(price) then
 		sm.event.sendToGame("sv_giveItem",
 			{ player = params.player, item = sm.uuid.new(params.uuid), quantity = params.quantity })
+		if sm.uuid.new(params.uuid) == obj_upgrader_basic then
+			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
+		end
 		self.network:sendToClient(player, "cl_moneyCheck", true)
 	else
 		self.network:sendToClient(player, "cl_moneyCheck", false)
@@ -295,7 +297,7 @@ function Shop.cl_e_open_gui()
 	local tier = ResearchManager.cl_getCurrentTier()
 	local pages = {}
 	for k, v in pairs(g_shop) do
-		if v.tier < tier and v.special ~= true and v.prestige ~= true then
+		if v.tier < tier and not v.special and not v.prestige then
 			table.insert(pages, { uuid = k, price = v.price, category = v.category, tier = v.tier })
 		end
 	end
