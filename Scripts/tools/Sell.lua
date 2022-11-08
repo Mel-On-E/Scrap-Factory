@@ -70,9 +70,9 @@ end
 
 function Sell.client_onEquip(self)
 	self.unlocked = TutorialManager.cl_getTutorialStep() >= 10
-	if self.unlocked then
+	if self.unlocked and self.tool:isLocal() then
 		self.network:sendToServer("sv_tryTutorial")
-	else
+	elseif self.tool:isLocal() then
 		sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
 	end
 	self.wantEquipped = true
