@@ -44,16 +44,16 @@ function DropContainer.server_onCreate(self)
 
 	self.offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 	self.prevParentState = false
+
+	self.RemovedHarvests = {}
+	self.droppedShapes = {}
 end
 
-local RemovedHarvests = {}
-local droppedShapes = {}
-
 function DropContainer.server_onFixedUpdate(self)
-	RemovedHarvests = {}
-	for key, jank in pairs(droppedShapes) do
+	self.RemovedHarvests = {}
+	for key, jank in pairs(self.droppedShapes) do
 		if jank < sm.game.getCurrentTick() then
-			droppedShapes[key] = nil
+			self.droppedShapes[key] = nil
 		end
 	end
 
@@ -74,8 +74,8 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 	for _, result in ipairs(contents) do
 		if sm.exists(result) and type(result) == "Body" then
 			for _, shape in ipairs(result:getShapes()) do
-				if self.sv.drops[tostring(shape:getShapeUuid())] and not RemovedHarvests[shape:getId()] and
-					not droppedShapes[shape:getId()] then
+				if self.sv.drops[tostring(shape:getShapeUuid())] and not self.RemovedHarvests[shape:getId()] and
+					not self.droppedShapes[shape:getId()] then
 					local container = self.interactable:getContainer(0)
 					if container then
 						local transactionSlot = nil
@@ -94,7 +94,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 								self.network:sendToClients("cl_n_addPickupItem",
 									{ shapeUuid = shape:getShapeUuid(), fromPosition = shape.worldPosition, fromRotation = shape.worldRotation,
 										slotIndex = transactionSlot, showRenderable = true })
-								RemovedHarvests[shape:getId()] = true
+								self.RemovedHarvests[shape:getId()] = true
 
 								local publicData = shape.interactable.publicData
 
@@ -134,7 +134,7 @@ function DropContainer.sv_release_drop(self)
 			local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
 
 			local shape = sm.shape.createPart(slotItem.uuid, self.shape.worldPosition + offset, self.shape:getWorldRotation())
-			droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
+			self.droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
 
 			local publicData = self.sv.saved.drops[slotIndex]
 			shape.interactable:setPublicData(unpackNetworkData(publicData))
