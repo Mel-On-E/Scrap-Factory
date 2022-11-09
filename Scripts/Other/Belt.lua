@@ -51,6 +51,19 @@ function Belt:sv_onStay(trigger, results)
     end
 end
 
+function Belt:client_onCreate()
+    self.cl = {}
+    ---@type number
+    self.cl.uvIndex = 0
+end
+
+function Belt:client_onUpdate(dt)
+    local uvFrames = 40
+    local timeScale = 0.1
+    self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
+    self.interactable:setUvFrameIndex(self.cl.uvIndex * uvFrames)
+end
+
 function getDirectionalVelocity(vel, dir)
     local dimensions = { "x", "y", "z" }
     local dirVelocity = sm.vec3.zero()

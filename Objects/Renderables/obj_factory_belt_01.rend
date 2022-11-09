@@ -1,16 +1,22 @@
 {
-   "lodList" : [
+   "lodList": [
       {
-         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_belt_01.fbx",
-         "pose0" : "$CONTENT_DATA/Objects/Mesh/obj_factory_belt_01_pose0.fbx",
-         "subMeshList" : [
+         "mesh": "$CONTENT_DATA/Objects/Mesh/obj_factory_belt_01.fbx",
+         "pose0": "$CONTENT_DATA/Objects/Mesh/obj_factory_belt_01_pose0.fbx",
+         "subMeshList": [
             {
-               "material" : "UVAnimDifAsgNor",
-               "textureList" : [
+               "material": "UVAnimDifAsgNor",
+               "textureList": [
                   "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_dif.tga",
                   "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_asg.tga",
                   "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_nor.tga"
-               ]
+               ],
+               "custom": {
+                  "uv0": {
+                     "u": 0.1,
+                     "v": 0.1
+                  }
+               }
             }
          ]
       }
