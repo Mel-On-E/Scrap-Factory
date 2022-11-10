@@ -126,7 +126,7 @@ function MoneyManager:updateHud()
 end
 
 function MoneyManager.cl_getMoney()
-    return g_moneyManager.sv.saved and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
+    return g_moneyManager.sv and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
 end
 
 function MoneyManager.cl_moneyEarned()

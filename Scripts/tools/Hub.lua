@@ -56,7 +56,7 @@ function Hub:client_onCreate()
 end
 
 function Hub:client_onFixedUpdate()
-	if self.cl.currentInterface then
+	if self.tool:isLocal() and self.cl.currentInterface then
 		local active = false
 
 		for _, sob in ipairs(g_sobSet.scriptableObjectList) do

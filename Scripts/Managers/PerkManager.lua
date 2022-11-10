@@ -73,7 +73,7 @@ function PerkManager:client_onClientDataUpdate(clientData, channel)
 end
 
 function PerkManager.isPerkOwned(perk)
-    return (g_perkManager.sv.saved and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.data.perks[perk]
+    return (g_perkManager.sv and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.data.perks[perk]
 end
 
 --Types

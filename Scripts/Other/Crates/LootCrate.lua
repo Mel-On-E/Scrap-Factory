@@ -107,7 +107,7 @@ function LootCrate:cl_openBoxForReal(player)
         self.unboxTime = math.random(minUnboxTime, maxUnboxTime) * 40
         self.openTick = sm.game.getCurrentTick() + self.unboxTime
         self.cl.gui:setVisible("Open", false)
-    elseif self.cl.gui:isActive() then
+    elseif self.cl.gui and self.cl.gui:isActive() then
         self.cl.gui:close()
     end
 end

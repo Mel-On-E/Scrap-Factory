@@ -77,7 +77,7 @@ function PollutionManager:updateHud()
 end
 
 function PollutionManager.cl_getPollution()
-    return g_pollutionManager.sv.saved and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.data.pollution
+    return g_pollutionManager.sv and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.data.pollution
 end
 
 function PollutionManager.getResearchMultiplier()
