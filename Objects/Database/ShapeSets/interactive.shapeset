@@ -43,9 +43,9 @@
       },
       {
          "box" : {
-            "x" : 1,
-            "y" : 1,
-            "z" : 1
+            "x" : 4,
+            "y" : 2,
+            "z" : 3
          },
          "color" : "df7f01",
          "flammable" : false,
@@ -57,8 +57,8 @@
             "durability" : 3,
             "friction" : 5
          },
-         "renderable" : "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_logicgate.rend",
-         "rotationSet" : "PropYX",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_photodiode_01.rend",
+         "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "DaySensor",
             "data" : {},
@@ -70,6 +70,7 @@
             "tier" : 1
          },
          "stackSize" : 999.0,
+         "sticky" : "-X+X-Y",
          "uuid" : "a9ad3ebe-9c19-49fc-855c-5061ce157e4e"
       },
       {
