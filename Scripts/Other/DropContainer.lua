@@ -11,7 +11,7 @@ DropContainer.colorHighlight = sm.color.new(0x00ffffff)
 function DropContainer.server_onCreate(self)
 	local container = self.interactable:getContainer(0)
 	if not container then
-		self.interactable:addContainer(0, self.ContainerSize, 1)
+		container = self.interactable:addContainer(0, self.ContainerSize, 1)
 
 	elseif self.shape.body:isOnLift() then
 		--prevent ore duping via lift
@@ -68,6 +68,9 @@ function DropContainer.server_onFixedUpdate(self)
 		end
 		self.prevParentState = parent.active
 	end
+
+	self.sv.pos = self.shape.worldPosition
+	self.sv.rot = self.shape.worldRotation
 end
 
 function DropContainer.trigger_onEnter(self, trigger, contents)
@@ -78,14 +81,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 					not self.droppedShapes[shape:getId()] then
 					local container = self.interactable:getContainer(0)
 					if container then
-						local transactionSlot = nil
-						for i = 1, self.ContainerSize do
-							local slotItem = container:getItem(i - 1)
-							if slotItem.quantity == 0 then
-								transactionSlot = i - 1
-								break
-							end
-						end
+						local transactionSlot = self:sv_getLastUsedSlot(container)
 
 						if transactionSlot then
 							sm.container.beginTransaction()
@@ -97,6 +93,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 								self.RemovedHarvests[shape:getId()] = true
 
 								local publicData = shape.interactable.publicData
+								publicData.uuid = shape:getShapeUuid()
 
 								self.sv.saved.drops[transactionSlot] = packNetworkData(publicData)
 								self.storage:save(self.sv.saved)
@@ -131,12 +128,13 @@ function DropContainer.sv_release_drop(self)
 		sm.container.beginTransaction()
 		sm.container.spendFromSlot(container, slotIndex, slotItem.uuid, 1, true)
 		if sm.container.endTransaction() then
+			local publicData = self.sv.saved.drops[slotIndex]
 			local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
 
-			local shape = sm.shape.createPart(slotItem.uuid, self.shape.worldPosition + offset, self.shape:getWorldRotation())
+			local shape = sm.shape.createPart(publicData.uuid, self.sv.pos + offset, self.sv.rot)
 			self.droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
 
-			local publicData = self.sv.saved.drops[slotIndex]
+			publicData.uuid = nil
 			shape.interactable:setPublicData(unpackNetworkData(publicData))
 
 			self.sv.saved.drops[slotIndex] = nil
@@ -145,9 +143,19 @@ function DropContainer.sv_release_drop(self)
 	end
 end
 
-function DropContainer:server_canErase()
-	local container = self.interactable:getContainer(0)
-	return container:isEmpty()
+function DropContainer:server_onDestroy()
+	for slotIndex, publicData in ipairs(self.sv.saved.drops) do
+		local positionOffset, rotationOffset = self:calculateSlotItemOffset(slotIndex - 1)
+		local params = {
+			uuid = publicData.uuid,
+			pos = self.sv.pos - rotationOffset * positionOffset,
+			rot = self.sv.rot,
+			publicData = publicData
+		}
+		params.publicData.uuid = nil
+
+		sm.event.sendToWorld(g_world, "sv_e_createShape", params)
+	end
 end
 
 function DropContainer.client_onCreate(self)

@@ -517,7 +517,10 @@ function FactoryWorld:sv_raid(params)
 end
 
 function FactoryWorld:sv_e_createShape(params)
-	sm.shape.createPart(params.uuid, params.pos, sm.quat.identity())
+	local shape = sm.shape.createPart(params.uuid, params.pos, params.rot or sm.quat.identity())
+	if params.publicData then
+		shape.interactable:setPublicData(unpackNetworkData(params.publicData))
+	end
 end
 
 --TODO maybe delete
