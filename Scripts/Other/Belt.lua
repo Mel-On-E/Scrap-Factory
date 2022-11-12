@@ -58,10 +58,10 @@ function Belt:client_onCreate()
 end
 
 function Belt:client_onUpdate(dt)
-    local uvFrames = 40
-    local timeScale = 0.1
+    local uvFrames = 50
+    local timeScale = 0.6
     self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
-    self.interactable:setUvFrameIndex(self.cl.uvIndex * uvFrames)
+    self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
 end
 
 function getDirectionalVelocity(vel, dir)
