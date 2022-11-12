@@ -15,6 +15,8 @@ local enabledPose = 10
 function DaySensor:server_onCreate()
     self.sv = {}
     self.sv.day = false
+
+    self.network:sendToClients("cl_changeModel")
 end
 
 function DaySensor:server_onFixedUpdate()
@@ -28,5 +30,5 @@ function DaySensor:server_onFixedUpdate()
 end
 
 function DaySensor:cl_changeModel()
-    self.interactable:setUvFrameIndex(self.interactable.active and enabledPose or 0)
+    self.interactable:setPoseWeight(0, self.interactable.active and 0 or 1)
 end
