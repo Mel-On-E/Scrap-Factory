@@ -1,91 +1,91 @@
 {
-   "partList" : [
+   "partList": [
       {
-         "box" : {
-            "x" : 6,
-            "y" : 1,
-            "z" : 6
+         "box": {
+            "x": 6,
+            "y": 1,
+            "z": 6
          },
-         "color" : "df7f01",
-         "flammable" : false,
-         "name" : "obj_furnace_basic",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "buoyancy" : 3,
-            "density" : 5,
-            "durability" : 2,
-            "friction" : 5
+         "color": "df7f01",
+         "flammable": false,
+         "name": "obj_furnace_basic",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 3,
+            "density": 5,
+            "durability": 2,
+            "friction": 5
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacebasic_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "Furnace",
-            "data" : {
-               "box" : {
-                  "x" : 1.50,
-                  "y" : 0.250,
-                  "z" : 1.50
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacebasic_01.rend",
+         "rotationSet": "PropY",
+         "scripted": {
+            "classname": "Furnace",
+            "data": {
+               "box": {
+                  "x": 1.50,
+                  "y": 0.250,
+                  "z": 1.50
                },
-               "multiplier" : 1,
-               "offset" : {
-                  "x" : 0,
-                  "y" : 0.1250,
-                  "z" : 0
+               "multiplier": 1,
+               "offset": {
+                  "x": 0,
+                  "y": 0.1250,
+                  "z": 0
                },
-               "power" : 3
+               "power": 3
             },
-            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+            "filename": "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
-         "shop" : {
-            "category" : "Furnaces",
-            "price" : "100",
-            "tier" : 0
+         "shop": {
+            "category": "Furnaces",
+            "price": "100",
+            "tier": 0
          },
-         "stackSize" : 999.0,
-         "sticky" : "-X+X-Y-Z+Z",
-         "uuid" : "7e3df19b-2450-44ae-ad46-d2f6b5148cbf"
+         "stackSize": 999.0,
+         "sticky": "-X+X-Y-Z+Z",
+         "uuid": "7e3df19b-2450-44ae-ad46-d2f6b5148cbf"
       },
       {
-         "box" : {
-            "x" : 6,
-            "y" : 1,
-            "z" : 6
+         "box": {
+            "x": 6,
+            "y": 1,
+            "z": 6
          },
-         "color" : "ffff00",
-         "flammable" : false,
-         "name" : "obj_furnace_2x",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "buoyancy" : 3,
-            "density" : 5,
-            "durability" : 2,
-            "friction" : 5
+         "color": "ffff00",
+         "flammable": false,
+         "name": "obj_furnace_2x",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 3,
+            "density": 5,
+            "durability": 2,
+            "friction": 5
          },
-         "renderable" : {
-            "lodList" : [
+         "renderable": {
+            "lodList": [
                {
-                  "mesh" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_off.fbx",
-                  "pose0" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_on.fbx",
-                  "subMeshMap" : {
-                     "arealight" : {
-                        "material" : "PoseAnimDifAsgNor",
-                        "textureList" : [
+                  "mesh": "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_off.fbx",
+                  "pose0": "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_on.fbx",
+                  "subMeshMap": {
+                     "arealight": {
+                        "material": "PoseAnimDifAsgNor",
+                        "textureList": [
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_dif.tga",
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_asg.tga",
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_nor.tga"
                         ]
                      },
-                     "beam" : {
-                        "material" : "PoseAnimLightCone",
-                        "textureList" : [
+                     "beam": {
+                        "material": "PoseAnimLightCone",
+                        "textureList": [
                            "$GAME_DATA/Objects/Textures/lights/obj_light_headlightbeam_dif.tga",
                            "",
                            ""
                         ]
                      },
-                     "flare" : {
-                        "material" : "PoseAnimLightFlare",
-                        "textureList" : [
+                     "flare": {
+                        "material": "PoseAnimLightFlare",
+                        "textureList": [
                            "$GAME_DATA/Objects/Textures/lights/obj_light_headlightflare_dif.tga",
                            "",
                            ""
@@ -95,75 +95,75 @@
                }
             ]
          },
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "Furnace",
-            "data" : {
-               "box" : {
-                  "x" : 1.50,
-                  "y" : 0.250,
-                  "z" : 1.50
+         "rotationSet": "PropY",
+         "scripted": {
+            "classname": "Furnace",
+            "data": {
+               "box": {
+                  "x": 1.50,
+                  "y": 0.250,
+                  "z": 1.50
                },
-               "multiplier" : 2,
-               "offset" : {
-                  "x" : 0,
-                  "y" : 0.1250,
-                  "z" : 0
+               "multiplier": 2,
+               "offset": {
+                  "x": 0,
+                  "y": 0.1250,
+                  "z": 0
                },
-               "power" : 30
+               "power": 30
             },
-            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+            "filename": "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
-         "shop" : {
-            "category" : "Furnaces",
-            "price" : "10000",
-            "tier" : 1
+         "shop": {
+            "category": "Furnaces",
+            "price": "10000",
+            "tier": 1
          },
-         "stackSize" : 999.0,
-         "sticky" : "-X+X-Y-Z+Z",
-         "uuid" : "3039176f-dea8-453d-82be-2c73a68ad05f"
+         "stackSize": 999.0,
+         "sticky": "-X+X-Y-Z+Z",
+         "uuid": "3039176f-dea8-453d-82be-2c73a68ad05f"
       },
       {
-         "box" : {
-            "x" : 6,
-            "y" : 1,
-            "z" : 6
+         "box": {
+            "x": 6,
+            "y": 1,
+            "z": 6
          },
-         "color" : "000000",
-         "flammable" : false,
-         "name" : "obj_furnace_lunar",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "buoyancy" : 3,
-            "density" : 5,
-            "durability" : 2,
-            "friction" : 5
+         "color": "000000",
+         "flammable": false,
+         "name": "obj_furnace_lunar",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 3,
+            "density": 5,
+            "durability": 2,
+            "friction": 5
          },
-         "renderable" : {
-            "lodList" : [
+         "renderable": {
+            "lodList": [
                {
-                  "mesh" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_off.fbx",
-                  "pose0" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_on.fbx",
-                  "subMeshMap" : {
-                     "arealight" : {
-                        "material" : "PoseAnimDifAsgNor",
-                        "textureList" : [
+                  "mesh": "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_off.fbx",
+                  "pose0": "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_on.fbx",
+                  "subMeshMap": {
+                     "arealight": {
+                        "material": "PoseAnimDifAsgNor",
+                        "textureList": [
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_dif.tga",
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_asg.tga",
                            "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_nor.tga"
                         ]
                      },
-                     "beam" : {
-                        "material" : "PoseAnimLightCone",
-                        "textureList" : [
+                     "beam": {
+                        "material": "PoseAnimLightCone",
+                        "textureList": [
                            "$GAME_DATA/Objects/Textures/lights/obj_light_headlightbeam_dif.tga",
                            "",
                            ""
                         ]
                      },
-                     "flare" : {
-                        "material" : "PoseAnimLightFlare",
-                        "textureList" : [
+                     "flare": {
+                        "material": "PoseAnimLightFlare",
+                        "textureList": [
                            "$GAME_DATA/Objects/Textures/lights/obj_light_headlightflare_dif.tga",
                            "",
                            ""
@@ -173,34 +173,34 @@
                }
             ]
          },
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "LunarFurnace",
-            "data" : {
-               "box" : {
-                  "x" : 1.50,
-                  "y" : 0.250,
-                  "z" : 1.50
+         "rotationSet": "PropY",
+         "scripted": {
+            "classname": "LunarFurnace",
+            "data": {
+               "box": {
+                  "x": 1.50,
+                  "y": 0.250,
+                  "z": 1.50
                },
-               "dayMultiplier" : 0.50,
-               "nightMultiplier" : 5,
-               "offset" : {
-                  "x" : 0,
-                  "y" : 0.1250,
-                  "z" : 0
+               "dayMultiplier": 0.50,
+               "nightMultiplier": 5,
+               "offset": {
+                  "x": 0,
+                  "y": 0.1250,
+                  "z": 0
                },
-               "power" : 50
+               "power": 50
             },
-            "filename" : "$CONTENT_DATA/Scripts/Furnaces/LunarFurnace.lua"
+            "filename": "$CONTENT_DATA/Scripts/Furnaces/LunarFurnace.lua"
          },
-         "shop" : {
-            "category" : "Furnaces",
-            "price" : "50000",
-            "tier" : 1
+         "shop": {
+            "category": "Furnaces",
+            "price": "50000",
+            "tier": 1
          },
-         "stackSize" : 999.0,
-         "sticky" : "-X+X-Y-Z+Z",
-         "uuid" : "e0587c21-2145-4ee1-beaa-d33ca3407c61"
+         "stackSize": 999.0,
+         "sticky": "-X+X-Y-Z+Z",
+         "uuid": "e0587c21-2145-4ee1-beaa-d33ca3407c61"
       }
    ]
 }
