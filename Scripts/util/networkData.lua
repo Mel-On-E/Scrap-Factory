@@ -13,7 +13,7 @@ function packNetworkData(data)
         return newTable
     end
 
-    return packData(data)
+    return data and packData(data) or nil
 end
 
 function unpackNetworkData(data)
@@ -31,5 +31,5 @@ function unpackNetworkData(data)
         return newTable
     end
 
-    return unpackData(data)
+    return data and unpackData(data) or nil
 end
