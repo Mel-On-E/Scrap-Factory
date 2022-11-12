@@ -54,7 +54,7 @@ end
 function Belt:client_onCreate()
     self.cl = {}
     self.cl.uvIndex = 0
-    self.cl.active = false
+    self.cl.active = true
 end
 
 function Belt:cl_toggleEffects(active)

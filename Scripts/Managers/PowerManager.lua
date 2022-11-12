@@ -46,7 +46,7 @@ end
 
 function PowerManager.sv_changePower(power)
     g_powerManager.sv.power = g_powerManager.sv.power + power
-    return g_powerManager.sv.saved.powerStored + g_powerManager.sv.power > 0
+    return g_powerManager.sv.saved.powerStored + g_powerManager.sv.power >= 0
 end
 
 function PowerManager.sv_changePowerLimit(powerLimit)
