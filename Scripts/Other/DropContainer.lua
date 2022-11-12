@@ -15,11 +15,7 @@ function DropContainer.server_onCreate(self)
 
 	elseif self.shape.body:isOnLift() then
 		--prevent ore duping via lift
-		sm.container.beginTransaction()
-		for i = 0, container.size, 1 do
-			sm.container.setItem(container, i, sm.uuid.getNil(), 0)
-		end
-		sm.container.endTransaction()
+		self:sv_emptyContainer()
 	end
 
 	self.sv = {}
@@ -142,6 +138,20 @@ function DropContainer.sv_release_drop(self)
 			self.storage:save(self.sv.saved)
 		end
 	end
+end
+
+function DropContainer:server_canErase()
+	self:sv_emptyContainer()
+	return true
+end
+
+function DropContainer:sv_emptyContainer()
+	sm.container.beginTransaction()
+	local container = self.interactable:getContainer(0)
+	for i = 0, container.size, 1 do
+		sm.container.setItem(container, i, sm.uuid.getNil(), 0)
+	end
+	sm.container.endTransaction()
 end
 
 function DropContainer:server_onDestroy()
