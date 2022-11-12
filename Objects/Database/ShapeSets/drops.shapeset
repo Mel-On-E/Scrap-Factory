@@ -1,208 +1,93 @@
 {
-  "partList": [
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "cd9d71",
-      "flammable": true,
-      "name": "obj_drop_scrap_wood",
-      "physicsMaterial": "Wood",
-      "ratings": {
-        "buoyancy": 1,
-        "density": 4,
-        "durability": 4,
-        "friction": 3
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "DifAsgNor",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_dif.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_nor.tga"
-                ]
-              }
+   "partList" : [
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "cd9d71",
+         "flammable" : true,
+         "name" : "obj_drop_scrap_wood",
+         "physicsMaterial" : "Wood",
+         "ratings" : {
+            "buoyancy" : 1,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 3
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "includes" : [ "POSITION", "UV0", "UV1", "NORMAL", "TANGENTS" ],
+                  "mesh" : "$GAME_DATA/Mesh/cube.mesh",
+                  "subMeshList" : [
+                     {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_nor.tga"
+                        ]
+                     }
+                  ]
+               }
             ]
-          }
-        ]
+         },
+         "rotationSet" : "StaticYmZmXm",
+         "scripted" : {
+            "classname" : "Drop",
+            "filename" : "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+         },
+         "showInInventory" : false,
+         "stackSize" : 999.0,
+         "uuid" : "87873e83-8270-4796-9401-6baba45ccef2"
       },
-      "rotationSet": "StaticYmZmXm",
-      "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
-      },
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "87873e83-8270-4796-9401-6baba45ccef2"
-    },
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "ffffff",
-      "flammable": true,
-      "name": "obj_drop_smoke",
-      "physicsMaterial": "Dirt",
-      "ratings": {
-        "buoyancy": 1,
-        "density": 4,
-        "durability": 4,
-        "friction": 3
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "Glass",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
-                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
-                ]
-              }
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "ffffff",
+         "flammable" : true,
+         "name" : "obj_drop_smoke",
+         "physicsMaterial" : "Dirt",
+         "ratings" : {
+            "buoyancy" : 1,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 3
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "includes" : [ "POSITION", "UV0", "UV1", "NORMAL", "TANGENTS" ],
+                  "mesh" : "$GAME_DATA/Mesh/cube.mesh",
+                  "subMeshList" : [
+                     {
+                        "material" : "Glass",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                           "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                        ]
+                     }
+                  ]
+               }
             ]
-          }
-        ]
-      },
-      "rotationSet": "StaticYmZmXm",
-      "scripted": {
-        "classname": "GasDrop",
-        "data": {
-          "effect": "Paintcharacter - Small"
-        },
-        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
-      },
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
-    }
-  ],
-  "blockList": [
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "cd9d71",
-      "flammable": true,
-      "name": "obj_drop_scrap_wood",
-      "physicsMaterial": "Wood",
-      "ratings": {
-        "buoyancy": 1,
-        "density": 4,
-        "durability": 4,
-        "friction": 3
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "DifAsgNor",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_dif.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapwood_nor.tga"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "rotationSet": "StaticYmZmXm",
-      "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
-      },
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "87873e83-8270-4796-9401-6baba45ccef2"
-    },
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "ffffff",
-      "flammable": true,
-      "name": "obj_drop_smoke",
-      "physicsMaterial": "Dirt",
-      "ratings": {
-        "buoyancy": 1,
-        "density": 4,
-        "durability": 4,
-        "friction": 3
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "Glass",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
-                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "rotationSet": "StaticYmZmXm",
-      "scripted": {
-        "classname": "GasDrop",
-        "data": {
-          "effect": "Paintcharacter - Small"
-        },
-        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
-      },
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
-    }
-  ]
+         },
+         "rotationSet" : "StaticYmZmXm",
+         "scripted" : {
+            "classname" : "GasDrop",
+            "data" : {
+               "effect" : "Paintcharacter - Small"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+         },
+         "showInInventory" : false,
+         "stackSize" : 999.0,
+         "uuid" : "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
+      }
+   ]
 }

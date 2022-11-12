@@ -1,86 +1,44 @@
 {
-  "partList": [
-    {
-      "color": "00ff00",
-      "flammable": false,
-      "hull": {
-        "col": "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj",
-        "x": 5,
-        "y": 4,
-        "z": 2
-      },
-      "name": "obj_furnace_effect",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 2,
-        "durability": 3,
-        "friction": 2
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx",
-            "subMeshMap": {
-              "glass": {
-                "material": "GlassWave",
-                "textureList": [
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "rotationSet": "PropYZmX",
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "sticky": "+Y-Y+X-X-Z",
-      "uuid": "f74a0354-05e9-411c-a8ba-75359449f770"
-    }
-  ],
-  "blockList": [
-    {
-      "color": "00ff00",
-      "flammable": false,
-      "hull": {
-        "col": "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj",
-        "x": 5,
-        "y": 4,
-        "z": 2
-      },
-      "name": "obj_furnace_effect",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 2,
-        "durability": 3,
-        "friction": 2
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx",
-            "subMeshMap": {
-              "glass": {
-                "material": "GlassWave",
-                "textureList": [
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "rotationSet": "PropYZmX",
-      "showInInventory": false,
-      "stackSize": 999.0,
-      "sticky": "+Y-Y+X-X-Z",
-      "uuid": "f74a0354-05e9-411c-a8ba-75359449f770"
-    }
-  ]
+   "partList" : [
+      {
+         "color" : "00ff00",
+         "flammable" : false,
+         "hull" : {
+            "col" : "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj",
+            "x" : 5,
+            "y" : 4,
+            "z" : 2
+         },
+         "name" : "obj_furnace_effect",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 2,
+            "durability" : 3,
+            "friction" : 2
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "mesh" : "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx",
+                  "subMeshMap" : {
+                     "glass" : {
+                        "material" : "GlassWave",
+                        "textureList" : [
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
+                        ]
+                     }
+                  }
+               }
+            ]
+         },
+         "rotationSet" : "PropYZmX",
+         "showInInventory" : false,
+         "stackSize" : 999.0,
+         "sticky" : "+Y-Y+X-X-Z",
+         "uuid" : "f74a0354-05e9-411c-a8ba-75359449f770"
+      }
+   ]
 }

@@ -23,8 +23,8 @@ function Belt:server_onCreate()
     Power.server_onCreate(self)
 end
 
-function Belt:server_onFixedUpdate(effect)
-    Power.server_onFixedUpdate(self, effect)
+function Belt:server_onFixedUpdate()
+    Power.server_onFixedUpdate(self, "cl_toggleEffects")
     IDsUpdated = {}
 end
 
@@ -48,6 +48,26 @@ function Belt:sv_onStay(trigger, results)
             end
         end
         ::continue::
+    end
+end
+
+function Belt:client_onCreate()
+    self.cl = {}
+    self.cl.uvIndex = 0
+    self.cl.active = true
+end
+
+function Belt:cl_toggleEffects(active)
+    self.cl.active = active
+end
+
+function Belt:client_onUpdate(dt)
+    ---update uv animation
+    if self.cl and self.cl.active then
+        local uvFrames = 50
+        local timeScale = 0.58
+        self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
+        self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
     end
 end
 
