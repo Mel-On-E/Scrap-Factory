@@ -98,6 +98,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 								self.sv.saved.drops[transactionSlot] = packNetworkData(publicData)
 								self.storage:save(self.sv.saved)
 
+								g_deletedDrops.tick[#g_deletedDrops.tick + 1] = shape:getId()
 								shape:destroyShape()
 							end
 						end
@@ -144,7 +145,7 @@ function DropContainer.sv_release_drop(self)
 end
 
 function DropContainer:server_onDestroy()
-	for slotIndex, publicData in ipairs(self.sv.saved.drops) do
+	for slotIndex, publicData in pairs(self.sv.saved.drops) do
 		local positionOffset, rotationOffset = self:calculateSlotItemOffset(slotIndex - 1)
 		local params = {
 			uuid = publicData.uuid,

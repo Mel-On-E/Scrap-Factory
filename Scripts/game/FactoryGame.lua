@@ -67,6 +67,7 @@ function FactoryGame.server_onCreate(self)
 	end
 
 	g_enableCollisionTumble = true
+	g_deletedDrops = { lastTick = {}, tick = {} }
 
 	g_eventManager = EventManager()
 	g_eventManager:sv_onCreate()
@@ -96,8 +97,8 @@ function FactoryGame.server_onCreate(self)
 	self.sv.syncTimer = Timer()
 	self.sv.syncTimer:start(0)
 
-	local languageManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0"))
-	local lootCrateManager = sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f"))
+	sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0")) --languageManager
+	sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f")) --lootCrateManager
 
 	local savedManagers = {
 		{ moneyManager = "e97b0595-7912-425b-8a60-ea6dbfba4b39" },
@@ -262,6 +263,11 @@ function FactoryGame.server_onFixedUpdate(self, timeStep)
 	if sm.game.getCurrentTick() % 40 == 0 then
 		self:sv_updateClientData()
 	end
+
+	g_deletedDrops = {
+		lastTick = g_deletedDrops.tick,
+		tick = {}
+	}
 end
 
 function FactoryGame.sv_updateClientData(self)

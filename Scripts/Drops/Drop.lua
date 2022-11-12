@@ -60,6 +60,12 @@ function Drop:server_onDestroy()
     oreCount = oreCount - 1
 
     if self:getPollution() then
+        for _, id in pairs(g_deletedDrops.lastTick) do
+            if self.shape:getId() == id then
+                return
+            end
+        end
+
         sm.event.sendToGame("sv_e_stonks",
             { pos = self.sv.pos, value = tostring(self:getPollution()), format = "pollution", effect = "Pollution" })
         PollutionManager.sv_addPollution(self:getPollution())
