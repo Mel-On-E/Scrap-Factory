@@ -1,1 +1,82 @@
-{}
+{
+    //Furnaces
+    "7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
+        "title": "Basic Furnace",
+        "description": "Your very first furnace! And you got one for free (how nice). Dump all your drops into it to turn them into sweet cash (or research).\n\n#929292Power: #dddd00-3.00W"
+    },
+    "3039176f-dea8-453d-82be-2c73a68ad05f": {
+        "title": "Better Furnace",
+        "description": "It's just better. Sell your drops for twice their value while only consuming 10x more power!\n\nPower: #dddd00-30.0W"
+    },
+    "e0587c21-2145-4ee1-beaa-d33ca3407c61": {
+        "title": "Lunar Furnace",
+        "description": "Some business is better handled at night time. Sell your drops for 5x their value! But avoid selling during the day...\n\n#929292Power: #dddd00-50.0W"
+    },
+    //Droppers
+    "692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
+        "title": "Wood Dropper",
+        "description": "This old dropper isn't the best anymore, but it's very reliable. Just press the button and see!\n\n#929292Drop Value: #00dd00$1.00\n#929292Power: #dddd00-1.00W/click"
+    },
+    "632a52bd-0791-49ba-b1ef-c81adfdceba7": {
+        "title": "Auto Wood Dropper",
+        "description": "Are you tired of clicking? About time you invest in a fancy automated dropper.\n\n#929292Drop Value: #00dd00$1.00\n#929292Power: #dddd00-2.00W"
+    },
+    //Upgraders
+    "69b869f1-03dc-4ea2-9391-fd24903945d1": {
+        "title": "Basic Upgrader",
+        "description": "You want more bang for your drops? Just make 'em better. Everything that passes this upgrader becomes a whole buck more valuable!\n\n#929292Upgrade Cap: #00dd00$100\n#929292Upgrade Limit: #ffffff10\n#929292Power: #dddd00-2.00W"
+    },
+    "17de8088-d5a8-45b1-80eb-1d0688a8c39a": {
+        "title": "Random Upgrader",
+        "description": "Get even more out of your drops! However this upgrader is not as consistent...\n\n#929292Upgrade Cap: #00dd00$1.00k\n#929292Upgrade Limit: #ffffff5\n#929292Power: #dddd00-10.0W"
+    },
+    "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
+        "title": "Drop Refiner",
+        "description": "How do you get rich? Exactly, already being rich! Adds 10% value to all drops.\n\n#929292Upgrade Cap: #00dd00$100\n#929292Upgrade Limit: #ffffff3\n#929292Power: #dddd00-5.00W"
+    },
+    "a8a06b6e-4152-4527-9602-dd231c5a1cab": {
+        "title": "Random Refiner",
+        "description": "What else do you need to get rich? Exactly, being lucky! Multiplies ore value by 0% - 200%.\n\n#929292Upgrade Cap: #00dd00$2.04\n#929292Upgrade Limit: #ffffffNone\n#929292Power: #dddd00-15.0W"
+    },
+    //Belts
+    "69b857f1-07dc-4ea2-9391-fd24903945d1": {
+        "title": "Basic Belt",
+        "description": "Moves drops and other things around...\n\n#929292Power: #dddd00-1.00W"
+    },
+    //Generators
+    "daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
+        "title": "Windmill",
+        "description": "Let's utilize the power of the wind that very much affects physics in this world. The wind gets stronger the higher you go.\n\n#929292Power: #dddd00Up to 20.0W"
+    },
+    "efc10452-8461-44c5-8c21-a06d5aaea16c": {
+        "title": "Solar Panel",
+        "description": "Harvest the power of the sun! The stuff that makes plants grow, can also help your factories grow.\n\n#929292Power: #dddd00Up to 25.0W"
+    },
+    "efc1f452-8431-44c5-8c21-a06d53aed16c": {
+        "title": "Campfire",
+        "description": "Why not burn those valuable wood drops for energy? This machine can turn the cube root of each drop into pure energy! Surely nothing bad can come out of this...\n\n#929292Power: #dddd00The sky is the limit"
+    },
+    //Storage
+    "91037f2c-5230-464b-8873-ad13355539af": {
+        "title": "Basic Battery",
+        "description": "This simple battery can store a small amount of power. Useful for power spikes or when your energy production isn't constant.\n\n#929292Power Capacity: #dddd00100J"
+    },
+    //Interactive
+    "fd936bf7-33fa-4d47-88de-e7f7ba03861b": {
+        "title": "Drop Container",
+        "description": "This container can store any drop! Interact with it or power it with logic to release drops. Outputs a logic signal when not empty."
+    },
+    "a9ad3ebe-9c19-49fc-855c-5061ce157e4e": {
+        "title": "Photo Sensor",
+        "description": "This sensor can detect sunlight. Yeah, that's it."
+    },
+    "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe": {
+        "title": "Chest",
+        "description": "A chest to store extra items. When your inventory gets too full. Don't worry, everything inside the chest won't get lost. And if it does, it's definitely not my fault..."
+    },
+    //Tools
+    "8f190ce2-3a59-423e-8483-a7aa67bd5bc0": {
+        "title": "Sell Tool",
+        "description": "Use this tool to sell items. You can change the maximum sell amount to sell extra items from your inventory."
+    }
+}
