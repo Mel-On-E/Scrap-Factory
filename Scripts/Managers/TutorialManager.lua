@@ -85,6 +85,8 @@ function TutorialManager:server_onCreate()
     if not g_tutorialManager then
         g_tutorialManager = self
     end
+
+    self:sv_saveAndSync()
 end
 
 ---save data and sync clientData

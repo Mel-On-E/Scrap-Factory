@@ -1,111 +1,111 @@
 {
-   "partList" : [
-      {
-         "box" : {
-            "x" : 6,
-            "y" : 8,
-            "z" : 6
-         },
-         "color" : "696969",
-         "flammable" : true,
-         "name" : "obj_dropcontainer",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 3,
-            "density" : 5,
-            "durability" : 5,
-            "friction" : 6
-         },
-         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_resourcecontainer.rend",
-         "restrictions" : {
-            "usable" : true
-         },
-         "rotationSet" : "PropYX",
-         "scripted" : {
-            "classname" : "DropContainer",
-            "data" : {
-               "offset" : {
-                  "x" : -0.1250,
-                  "y" : 0.50,
-                  "z" : 1.0
-               }
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Other/DropContainer.lua"
-         },
-         "shop" : {
-            "category" : "Utilities",
-            "price" : "1000",
-            "tier" : 1
-         },
-         "stackSize" : 999.0,
-         "sticky" : "-Y+Y-X+X",
-         "uuid" : "fd936bf7-33fa-4d47-88de-e7f7ba03861b"
+  "partList": [
+    {
+      "box": {
+        "x": 6,
+        "y": 8,
+        "z": 6
       },
-      {
-         "box" : {
-            "x" : 4,
-            "y" : 2,
-            "z" : 3
-         },
-         "color" : "df7f01",
-         "flammable" : false,
-         "name" : "obj_interactive_day_sensor",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 2,
-            "density" : 2,
-            "durability" : 3,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_photodiode_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "DaySensor",
-            "data" : {},
-            "filename" : "$CONTENT_DATA/Scripts/Other/DaySensor.lua"
-         },
-         "shop" : {
-            "category" : "Utilities",
-            "price" : "1000",
-            "tier" : 1
-         },
-         "stackSize" : 999.0,
-         "sticky" : "-X+X-Y",
-         "uuid" : "a9ad3ebe-9c19-49fc-855c-5061ce157e4e"
+      "color": "696969",
+      "flammable": true,
+      "name": "obj_dropcontainer",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 3,
+        "density": 5,
+        "durability": 5,
+        "friction": 6
       },
-      {
-         "box" : {
-            "x" : 3,
-            "y" : 2,
-            "z" : 3
-         },
-         "color" : "ff7fff",
-         "flammable" : false,
-         "name" : "obj_chest",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 8,
-            "density" : 8,
-            "durability" : 6,
-            "friction" : 5
-         },
-         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_smallchest.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "Chest",
-            "data" : {
-               "slots" : 69
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Other/Chest.lua"
-         },
-         "shop" : {
-            "category" : "Utilities",
-            "price" : "1000",
-            "tier" : 1
-         },
-         "stackSize" : 999.0,
-         "sticky" : "-Y",
-         "uuid" : "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe"
-      }
-   ]
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_resourcecontainer.rend",
+      "restrictions": {
+        "usable": true
+      },
+      "rotationSet": "PropYX",
+      "scripted": {
+        "classname": "DropContainer",
+        "data": {
+          "offset": {
+            "x": -0.125,
+            "y": 0.5,
+            "z": 1.0
+          }
+        },
+        "filename": "$CONTENT_DATA/Scripts/Other/DropContainer.lua"
+      },
+      "shop": {
+        "category": "Utilities",
+        "price": "1000",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "sticky": "-Y+Y-X+X",
+      "uuid": "fd936bf7-33fa-4d47-88de-e7f7ba03861b"
+    },
+    {
+      "box": {
+        "x": 4,
+        "y": 2,
+        "z": 3
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_interactive_day_sensor",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 2,
+        "density": 2,
+        "durability": 3,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_photodiode_01.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "DaySensor",
+        "data": {},
+        "filename": "$CONTENT_DATA/Scripts/Other/DaySensor.lua"
+      },
+      "shop": {
+        "category": "Utilities",
+        "price": "1000",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "sticky": "-X+X-Y",
+      "uuid": "a9ad3ebe-9c19-49fc-855c-5061ce157e4e"
+    },
+    {
+      "box": {
+        "x": 3,
+        "y": 2,
+        "z": 3
+      },
+      "color": "ff7fff",
+      "flammable": false,
+      "name": "obj_chest",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 8,
+        "density": 8,
+        "durability": 6,
+        "friction": 5
+      },
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_smallchest.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "Chest",
+        "data": {
+          "slots": 69
+        },
+        "filename": "$CONTENT_DATA/Scripts/Other/Chest.lua"
+      },
+      "shop": {
+        "category": "Utilities",
+        "price": "1000",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "sticky": "-Y",
+      "uuid": "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe"
+    }
+  ]
 }

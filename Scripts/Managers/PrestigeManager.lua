@@ -147,5 +147,5 @@ function PrestigeManager.cl_e_getLastPrestigeGain()
 end
 
 function PrestigeManager.cl_getPrestige()
-    return g_prestigeManager.sv.saved and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
+    return g_prestigeManager.sv and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
 end

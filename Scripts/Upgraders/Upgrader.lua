@@ -70,14 +70,16 @@ function Upgrader:sv_onUpgrade(shape)
 end
 
 function Upgrader:client_onCreate()
+    Belt.client_onCreate(self)
+
     local size, offset = get_size_and_offset(self)
 
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-    self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-    self.effect:setParameter("color", sm.color.new(1, 1, 1))
-    self.effect:setScale(size)
-    self.effect:setOffsetPosition(offset)
-    self.effect:start()
+    self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
+    self.cl.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
+    self.cl.effect:setParameter("color", sm.color.new(1, 1, 1))
+    self.cl.effect:setScale(size)
+    self.cl.effect:setOffsetPosition(offset)
+    self.cl.effect:start()
 end
 
 function Upgrader:client_onUpdate(dt)
@@ -86,9 +88,9 @@ end
 
 function Upgrader:cl_toggleEffects(active)
     Belt.cl_toggleEffects(self, active)
-    if active and not self.effect:isPlaying() then
-        self.effect:start()
+    if active and not self.cl.effect:isPlaying() then
+        self.cl.effect:start()
     else
-        self.effect:stop()
+        self.cl.effect:stop()
     end
 end
