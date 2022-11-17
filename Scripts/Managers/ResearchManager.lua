@@ -9,20 +9,15 @@ g_tiers = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
 
 function ResearchManager:server_onCreate()
     self.sv = {}
-    self.sv.tier = 1
+
 
     self.sv.saved = self.storage:load()
     if self.sv.saved == nil then
         self.sv.saved = {}
+        self.sv.saved.tier = 1
         self.sv.saved.research = {}
     else
         self.sv.saved = unpackNetworkData(self.sv.saved)
-    end
-
-    for tier, progress in ipairs(self.sv.saved.research) do
-        if progress == g_tiers[tier].goal then
-            self.sv.tier = tier + 1
-        end
     end
 
     if not g_ResearchManager then
@@ -36,7 +31,7 @@ function ResearchManager:server_onFixedUpdate()
     end
 
     if self.sv.notify then
-        self.network:sendToClients("cl_research_done", self.sv.tier - 1)
+        self.network:sendToClients("cl_research_done", self.sv.saved.tier - 1)
         self.sv.notify = false
     end
 end
@@ -45,27 +40,28 @@ function ResearchManager:sv_saveDataAndSync()
     self.storage:save(packNetworkData(self.sv.saved))
 
     local clientData = { research = self.sv.saved.research,
-        tier = self.sv.tier,
+        tier = self.sv.saved.tier,
         progress = self:sv_getProgress() }
     self.network:setClientData(packNetworkData(clientData))
 end
 
 function ResearchManager.sv_addResearch(value, shape)
-    local tier = g_tiers[g_ResearchManager.sv.tier]
+    local tier = g_tiers[g_ResearchManager.sv.saved.tier]
     if shape and tier.uuid ~= tostring(shape.uuid) then
         return false
     end
 
-    local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier]
+    local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier]
     local goal = tier.goal * PollutionManager.getResearchMultiplier()
 
-    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] = math.min((reserachProgress or 0) + value, goal)
+    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier] = math.min((reserachProgress or 0) + value, goal)
 
-    if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.tier] then
-        g_ResearchManager.sv.tier = g_ResearchManager.sv.tier + 1
+    if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier] then
+        g_ResearchManager.sv.saved.tier = g_ResearchManager.sv.saved.tier + 1
         g_ResearchManager.sv.notify = true
 
         sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchComplete")
+        sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_saveDataAndSync")
     end
 
     return true
@@ -76,13 +72,13 @@ function ResearchManager:getTierProgress()
 end
 
 function ResearchManager:sv_getProgress()
-    progressFraction = (self.sv.saved.research[self.sv.tier] or 0) /
-        (g_tiers[self.sv.tier].goal * PollutionManager.getResearchMultiplier())
+    progressFraction = (self.sv.saved.research[self.sv.saved.tier] or 0) /
+        (g_tiers[self.sv.saved.tier].goal * PollutionManager.getResearchMultiplier())
     return string.format("%.2f", progressFraction * 100)
 end
 
 function ResearchManager:sv_resetResearch()
-    self.sv.saved.research[self.sv.tier] = 0
+    self.sv.saved.research[self.sv.saved.tier] = 0
     self.storage:save(self.sv.saved)
 
     self:sv_saveDataAndSync()
