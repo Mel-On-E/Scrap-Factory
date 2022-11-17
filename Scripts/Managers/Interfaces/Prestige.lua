@@ -15,7 +15,7 @@ function Prestige:client_onCreate()
 
 	local params = {}
 	params.layout = "$CONTENT_DATA/Gui/Layouts/Prestige.layout"
-	Interface.cient_onCreate(self, params)
+	Interface.client_onCreate(self, params)
 
 	self.cl.gui:setButtonCallback("Reset", "cl_prestige")
 	self.cl.gui:setButtonCallback("Perks", "cl_perks")
@@ -75,7 +75,6 @@ function Prestige:cl_onClearConfirmButtonClick(name)
 	self.cl.confirmPrestigeGui:close()
 	self.cl.confirmPrestigeGui:destroy()
 end
-
 
 function Prestige:cl_perks()
 	self.cl.gui:close()
