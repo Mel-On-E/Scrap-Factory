@@ -72,6 +72,10 @@ function Drop:server_onDestroy()
     end
 end
 
+function Drop:sv_e_createEffect(params)
+    self.network:sendToClients("cl_e_createEffect", params)
+end
+
 function Drop:client_onCreate()
     self.cl = {}
     self.cl.value = 0
@@ -86,6 +90,20 @@ function Drop:cl_createEffect(key, name)
     self.cl.effects[key] = sm.effect.createEffect(name, self.interactable)
     self.cl.effects[key]:setAutoPlay(true)
     self.cl.effects[key]:start()
+end
+
+function Drop:cl_e_createEffect(params)
+    local effect = sm.effect.createEffect(params.effect, self.interactable)
+    if params.effect == "ShapeRenderable" then
+        effect:setParameter("uuid", params.uuid)
+        effect:setParameter("color", params.color)
+        effect:setScale(params.scale)
+        effect:setOffsetPosition(params.offset or sm.vec3.zero())
+    end
+    effect:setAutoPlay(true)
+    effect:start()
+
+    self.cl.effects[params.key] = effect
 end
 
 function Drop:client_onClientDataUpdate(data)
