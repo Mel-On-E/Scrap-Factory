@@ -153,6 +153,56 @@
       "showInInventory": false,
       "stackSize": 999.0,
       "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "00ffff",
+      "flammable": true,
+      "name": "obj_drop_bouncium",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_bubblewrap_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_bubblewrap_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_bubblewrap_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "BouncyDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/BouncyDrop.lua"
+      },
+      "showInInventory": false,
+      //"restitution": 1.0,
+      "stackSize": 999.0,
+      "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
     }
   ]
 }
