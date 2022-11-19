@@ -39,6 +39,50 @@
       "stackSize": 999.0,
       "sticky": "+Y-Y+X-X-Z",
       "uuid": "f74a0354-05e9-411c-a8ba-75359449f770"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "00ff00",
+      "name": "obj_drop_radioactive_effect",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 7,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_nor.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_asg.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 999.0,
+      "uuid": "d7807dca-e429-4822-9a66-2efabb09118b"
     }
   ]
 }

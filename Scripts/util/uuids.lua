@@ -15,6 +15,7 @@ obj_furnace_lunar = sm.uuid.new("e0587c21-2145-4ee1-beaa-d33ca3407c61")
 
 obj_dropper_scrap_wood = sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7")
 obj_dropper_scrap_wood_auto = sm.uuid.new("632a52bd-0791-49ba-b1ef-c81adfdceba7")
+obj_dropper_radioactive_auto = sm.uuid.new("f028c17e-d4ce-409b-af20-84141c880629")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/drops.shapeset
@@ -22,6 +23,7 @@ obj_dropper_scrap_wood_auto = sm.uuid.new("632a52bd-0791-49ba-b1ef-c81adfdceba7"
 
 obj_drop_scrap_wood = sm.uuid.new("87873e83-8270-4796-9401-6baba45ccef2")
 obj_drop_smoke = sm.uuid.new("b7e1dbf0-9267-45c4-aae0-ff00659977bf")
+obj_drop_radioactive = sm.uuid.new("d519f6e3-14c2-4bbc-851d-96eb30ed6688")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/upgraders.shapeset
@@ -79,6 +81,7 @@ obj_chest = sm.uuid.new("4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe")
 ----------------------------------------
 
 obj_furnace_effect = sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770")
+obj_drop_radioactive_effect = sm.uuid.new("d7807dca-e429-4822-9a66-2efabb09118b")
 
 ----------------------------------------
 --./ScriptableObjects/ScriptableObjectSets/managers.sobset

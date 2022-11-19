@@ -126,7 +126,7 @@
               "NORMAL",
               "TANGENTS"
             ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "mesh": "",
             "subMeshList": [
               {
                 "material": "DifAsgNor",
@@ -142,8 +142,13 @@
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "classname": "RadioactiveDrop",
+        "data": {
+          "halfLife": 690,
+          "effect": "Uranium Glow",
+          "effectShape": "d7807dca-e429-4822-9a66-2efabb09118b"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 999.0,

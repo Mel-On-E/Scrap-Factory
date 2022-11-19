@@ -122,5 +122,36 @@
 				"type": "audio"
 			}
 		]
+	},
+	"Uranium Glow": {
+		"parameterList": {
+			"Color": [
+				0,
+				1,
+				0,
+				1
+			],
+			"radius": 12.5,
+			"intensity": 1.25,
+			"color": "00ff00"
+		},
+		"effectList": [
+			{
+				"type": "pointLight",
+				"name": "",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"parameters": [
+					"color",
+					"radius",
+					"intensity"
+				],
+				"duration": -1.0,
+				"delay": 0.0
+			}
+		]
 	}
 }
