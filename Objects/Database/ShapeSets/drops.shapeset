@@ -100,6 +100,54 @@
       "showInInventory": false,
       "stackSize": 999.0,
       "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "00ff00",
+      "name": "obj_drop_radioactive",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 7,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_nor.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_asg.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 999.0,
+      "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688"
     }
   ]
 }

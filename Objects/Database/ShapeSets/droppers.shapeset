@@ -84,6 +84,49 @@
       },
       "stackSize": 999.0,
       "uuid": "632a52bd-0791-49ba-b1ef-c81adfdceba7"
+    },
+    {
+      "box": {
+        "x": 4,
+        "y": 6,
+        "z": 4
+      },
+      "color": "00ff00",
+      "flammable": false,
+      "name": "obj_dropper_radioactive_auto",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 5,
+        "durability": 10,
+        "friction": 5
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "rotationSet": "PropY",
+      "scripted": {
+        "classname": "AutoDropper",
+        "data": {
+          "drop": {
+            "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688",
+            "value": "69"
+          },
+          "interval": 40,
+          "offset": {
+            "x": -0.055,
+            "y": 0.475,
+            "z": 0.785
+          },
+          "power": 2
+        },
+        "filename": "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+      },
+      "shop": {
+        "category": "Droppers",
+        "price": "200",
+        "tier": 1
+      },
+      "stackSize": 999.0,
+      "uuid": "f028c17e-d4ce-409b-af20-84141c880629"
     }
   ]
 }
