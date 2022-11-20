@@ -122,5 +122,15 @@
 				"type": "audio"
 			}
 		]
+	},
+	"Skirt": {
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Skirt/skirt.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 }
+			}
+		]
 	}
 }
