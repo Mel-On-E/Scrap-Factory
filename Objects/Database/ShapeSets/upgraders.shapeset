@@ -20,7 +20,7 @@
       "restitution": 0.0,
       "rotationSet": "PropY",
       "scripted": {
-        "classname": "Upgrader",
+        "classname": "BasicUpgrader",
         "data": {
           "belt": {
             "box": {
@@ -57,7 +57,7 @@
             }
           }
         },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua"
+        "filename": "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
       },
       "shop": {
         "category": "Upgrades",
@@ -155,7 +155,7 @@
       "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_toiletroll.rend",
       "rotationSet": "PropY",
       "scripted": {
-        "classname": "Upgrader",
+        "classname": "BasicUpgrader",
         "data": {
           "power": 5,
           "upgrade": {
@@ -174,7 +174,7 @@
             }
           }
         },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua"
+        "filename": "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
       },
       "shop": {
         "category": "Upgrades",
@@ -272,6 +272,14 @@
               "x": 0,
               "y": 0,
               "z": 0
+            }
+          },
+          "effect": {
+            "uuid": "bbc5cc77-443d-4aa7-a175-ebdeb09c2df3",
+            "color": {
+              "r": 1,
+              "g": 0.753,
+              "b": 0.796
             }
           }
         },

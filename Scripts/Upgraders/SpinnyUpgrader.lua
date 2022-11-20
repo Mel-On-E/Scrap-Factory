@@ -3,48 +3,30 @@ dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 ---@class RandomUpgrader : Upgrader
 SpinnyUpgrader = class(Upgrader)
 
-function SpinnyUpgrader:sv_onUpgrade(shape)
-    local publicData = shape.interactable:getPublicData()
-    local upgrade = self.data.upgrade
-    if upgrade.multiplier then
-        local angular = math.min(self.shape.body.angularVelocity:length(), upgrade.maxSpin)
-        local upgradeFraction = angular / upgrade.maxSpin
-        publicData.value = publicData.value + (publicData.value * (upgrade.multiplier * upgradeFraction))
-    end
-    sm.event.sendToInteractable(shape.interactable, "sv_e_addEffect",
-        { effect = "ShapeRenderable", key = tostring(self.shape.uuid),
-            uuid = sm.uuid.new("bbc5cc77-443d-4aa7-a175-ebdeb09c2df3"),
-            color = sm.color.new(1, 0.753, 0.796), scale = sm.vec3.one() / 4 })
-    return publicData
-end
-
-function SpinnyUpgrader:server_onCreate()
-    local size, offset = self:get_size_and_offset()
-
-    self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        sm.areaTrigger.filter.dynamicBody)
-    self.upgradeTrigger:bindOnEnter("sv_onEnter")
-    Power.server_onCreate(self)
-end
-
 function SpinnyUpgrader:server_onFixedUpdate()
-    Belt.server_onFixedUpdate(self)
+    Upgrader.server_onFixedUpdate(self)
 
     local size, offset = self:get_size_and_offset()
     self.upgradeTrigger:setSize(size / 2)
 end
 
-function SpinnyUpgrader:client_onCreate()
-    Belt.client_onCreate(self)
+function SpinnyUpgrader:sv_onUpgrade(shape, data)
+    local upgrade = self.data.upgrade
 
-    local size, offset = self:get_size_and_offset()
+    if upgrade.multiplier then
+        local angular = math.min(self.shape.body.angularVelocity:length(), upgrade.maxSpin)
+        local upgradeFraction = angular / upgrade.maxSpin
+        data.value = data.value + (data.value * (upgrade.multiplier * upgradeFraction))
+    end
 
-    self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-    self.cl.effect:setParameter("uuid", sm.uuid.new("bbc5cc77-443d-4aa7-a175-ebdeb09c2df3"))
-    self.cl.effect:setParameter("color", sm.color.new(1, 0.753, 0.796))
-    self.cl.effect:setScale(size)
-    self.cl.effect:setOffsetPosition(offset)
-    self.cl.effect:start()
+    sm.event.sendToInteractable(shape.interactable, "sv_e_addEffect", {
+        effect = "ShapeRenderable",
+        key = tostring(self.shape.uuid),
+        uuid = sm.uuid.new("bbc5cc77-443d-4aa7-a175-ebdeb09c2df3"),
+        color = sm.color.new(1, 0.753, 0.796), scale = sm.vec3.one() / 4
+    })
+
+    Upgrader.sv_onUpgrade(self, shape, data)
 end
 
 function SpinnyUpgrader:client_onFixedUpdate()
@@ -62,7 +44,6 @@ function SpinnyUpgrader:get_size_and_offset()
     local speed = math.min(self.shape.body.angularVelocity:length() ^ 0.333, self.data.upgrade.maxSpin)
     size = size * speed
     size = size + self.shape:getBoundingBox()
-
 
     return size, offset
 end
