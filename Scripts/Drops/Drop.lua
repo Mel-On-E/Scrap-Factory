@@ -72,6 +72,13 @@ function Drop:server_onDestroy()
     end
 end
 
+function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
+    --destroy drop when hit terrain
+    if not other then
+        self.shape:destroyShape(0)
+    end
+end
+
 function Drop:sv_e_createEffect(params)
     self.network:sendToClients("cl_e_createEffect", params)
 end

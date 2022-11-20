@@ -16,9 +16,9 @@ function BouncyDrop:server_onFixedUpdate()
 end
 
 function BouncyDrop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
-
-
     sm.physics.applyImpulse(self.shape, normal * 10, true)
+
+    Drop.server_onCollision(self, other, position, selfPointVelocity, otherPointVelocity, normal)
 end
 
 --Types
