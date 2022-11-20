@@ -91,7 +91,7 @@ end
 ---add an effect to a drop
 ---@param params effectParam
 function Drop:sv_e_addEffect(params)
-    self.network:sendToClients("cl_e_createEffect", params)
+    self.network:sendToClients("cl_createEffect", params)
 end
 
 function Drop:client_onCreate()
