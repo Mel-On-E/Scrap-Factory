@@ -36,7 +36,7 @@
       },
       "rotationSet": "PropYZmX",
       "showInInventory": false,
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "+Y-Y+X-X-Z",
       "uuid": "f74a0354-05e9-411c-a8ba-75359449f770"
     }

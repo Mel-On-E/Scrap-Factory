@@ -64,7 +64,7 @@
         "price": "100",
         "tier": 0
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "69b869f1-03dc-4ea2-9391-fd24903945d1"
     },
     {
@@ -132,7 +132,7 @@
         "price": "1500",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "17de8088-d5a8-45b1-80eb-1d0688a8c39a"
     },
     {
@@ -181,7 +181,7 @@
         "price": "500",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y+Y",
       "uuid": "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3"
     },
@@ -231,7 +231,7 @@
         "price": "5000",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y+Y",
       "uuid": "a8a06b6e-4152-4527-9602-dd231c5a1cab"
     }

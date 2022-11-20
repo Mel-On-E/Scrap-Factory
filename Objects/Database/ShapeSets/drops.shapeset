@@ -46,7 +46,7 @@
         "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "87873e83-8270-4796-9401-6baba45ccef2"
     },
     {
@@ -98,7 +98,7 @@
         "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
     }
   ]

@@ -70,7 +70,7 @@
         "price": "150",
         "tier": 0
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y",
       "uuid": "daf6f4c4-5402-4fa3-93f4-3180243c8a3c"
     },
@@ -104,7 +104,7 @@
         "price": "200",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-X+X-Y-Z+Z",
       "uuid": "efc10452-8461-44c5-8c21-a06d5aaea16c"
     },
@@ -151,7 +151,7 @@
         "price": "500",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y",
       "uuid": "efc1f452-8431-44c5-8c21-a06d53aed16c"
     }
