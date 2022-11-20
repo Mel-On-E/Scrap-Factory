@@ -47,7 +47,14 @@
       },
       "showInInventory": false,
       "stackSize": 999.0,
-      "uuid": "87873e83-8270-4796-9401-6baba45ccef2"
+      "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
+      "restrictions": {
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false,
+        "buildable": false
+      }
     },
     {
       "box": {
@@ -99,7 +106,14 @@
       },
       "showInInventory": false,
       "stackSize": 999.0,
-      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
+      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf",
+      "restrictions": {
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false,
+        "buildable": false
+      }
     },
     {
       "box": {
@@ -152,7 +166,14 @@
       },
       "showInInventory": false,
       "stackSize": 999.0,
-      "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688"
+      "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688",
+      "restrictions": {
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false,
+        "buildable": false
+      }
     },
     {
       "box": {
@@ -202,7 +223,14 @@
       "showInInventory": false,
       //"restitution": 1.0,
       "stackSize": 999.0,
-      "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
+      "uuid": "44e23282-feaf-4911-b51f-303300c92a7e",
+      "restrictions": {
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false,
+        "buildable": false
+      }
     }
   ]
 }

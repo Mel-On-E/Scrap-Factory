@@ -11,7 +11,7 @@ function SpinnyUpgrader:sv_onUpgrade(shape)
         local upgradeFraction = angular / upgrade.maxSpin
         publicData.value = publicData.value + (publicData.value * (upgrade.multiplier * upgradeFraction))
     end
-    sm.event.sendToInteractable(shape.interactable, "sv_e_createEffect",
+    sm.event.sendToInteractable(shape.interactable, "sv_e_addEffect",
         { effect = "ShapeRenderable", key = tostring(self.shape.uuid),
             uuid = sm.uuid.new("bbc5cc77-443d-4aa7-a175-ebdeb09c2df3"),
             color = sm.color.new(1, 0.753, 0.796), scale = sm.vec3.one() / 4 })
