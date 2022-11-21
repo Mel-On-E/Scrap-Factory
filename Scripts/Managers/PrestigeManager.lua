@@ -75,7 +75,7 @@ end
 function PrestigeManager.sv_addSpecialItem(uuid)
     local uuid = tostring(uuid)
     local quantity = g_prestigeManager.sv.saved.specialItems[uuid] or 0
-    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity + 1, 999)
+    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity + 1, 65535)
     sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
 end
 

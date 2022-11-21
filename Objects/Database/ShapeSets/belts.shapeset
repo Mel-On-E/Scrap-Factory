@@ -49,7 +49,7 @@
         "price": "10",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "69b857f1-07dc-4ea2-9391-fd24903945d1"
     }
   ]
