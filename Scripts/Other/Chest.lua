@@ -5,7 +5,7 @@ Chest = class(nil)
 function Chest.server_onCreate(self)
 	local container = self.shape.interactable:getContainer(0)
 	if not container then
-		container = self.shape:getInteractable():addContainer(0, self.data.slots, 9999)
+		container = self.shape:getInteractable():addContainer(0, self.data.slots, 65535)
 	elseif self.shape.body:isOnLift() then
 		sm.container.beginTransaction()
 		for i = 0, container.size, 1 do
