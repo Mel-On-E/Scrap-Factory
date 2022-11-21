@@ -16,7 +16,7 @@
         "durability": 10,
         "friction": 5
       },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
       "rotationSet": "PropY",
       "scripted": {
         "classname": "ClickDropper",
@@ -58,7 +58,7 @@
         "durability": 10,
         "friction": 5
       },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
       "rotationSet": "PropY",
       "scripted": {
         "classname": "AutoDropper",
@@ -101,7 +101,7 @@
         "durability": 10,
         "friction": 5
       },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
       "rotationSet": "PropY",
       "scripted": {
         "classname": "AutoDropper",
@@ -144,7 +144,7 @@
         "durability": 10,
         "friction": 5
       },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/dropper_scrap_wood.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
       "rotationSet": "PropY",
       "scripted": {
         "classname": "AutoDropper",
