@@ -8,6 +8,18 @@
 	"PowerCapacity": "Capacity: ",
 	"PowerOutput": "Producing: ",
 
+	//Factory Import/Export
+	"ExportInteraction": "Export creation",
+	"ExportTitle": "Enter creation name",
+	"ExportedCreation": "Exported creation!",
+	"InvalidName": "Please enter a name!",
+	"ExportBlueprintExists": "Blueprint by the name of '%s' already exists, do you want to overwrite it?",
+	
+	"ImportInteraction": "Import creation",
+	"ImportTitle": "Select a creation to import!",
+	"ImportedCreation": "Imported Creation!",
+	"ImportNeededMoney": "Money needed: ",
+
 	//Money & Shop
 	"Sell": "Sell",
 	"Buy": "Buy",
