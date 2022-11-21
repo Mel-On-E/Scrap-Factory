@@ -153,8 +153,8 @@ function Drop:cl_createEffect(params)
 
     if params.effect == "ShapeRenderable" then
         effect:setParameter("uuid", params.uuid)
-        effect:setParameter("color", params.color)
-        effect:setScale(params.scale)
+        effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
+        effect:setScale(params.scale or sm.vec3.one())
     end
 
     effect:setOffsetPosition(params.offset or sm.vec3.zero())
