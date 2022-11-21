@@ -38,7 +38,7 @@ function Shop:client_onCreate()
 	end
 	local params = {}
 	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
-	Interface.cient_onCreate(self, params)
+	Interface.client_onCreate(self, params)
 
 	self.cl.sortHighest = true
 
