@@ -257,13 +257,16 @@
       "scripted": {
         "classname": "SpinnyUpgrader",
         "data": {
+          "effect": {
+            "color": {
+              "b": 0.796,
+              "g": 0.753,
+              "r": 1
+            },
+            "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
+          },
           "power": 30,
           "upgrade": {
-            "sphere": {
-              "x": 1,
-              "y": 0,
-              "z": 1
-            },
             "cap": 10000,
             "limit": 1,
             "maxSpin": 10,
@@ -272,14 +275,11 @@
               "x": 0,
               "y": 0,
               "z": 0
-            }
-          },
-          "effect": {
-            "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a",
-            "color": {
-              "r": 1,
-              "g": 0.753,
-              "b": 0.796
+            },
+            "sphere": {
+              "x": 1,
+              "y": 0,
+              "z": 1
             }
           }
         },
@@ -290,7 +290,7 @@
         "price": "15000",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y+Y",
       "uuid": "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e"
     }

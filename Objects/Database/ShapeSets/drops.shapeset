@@ -40,21 +40,21 @@
           }
         ]
       },
+      "restrictions": {
+        "buildable": false,
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
         "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "87873e83-8270-4796-9401-6baba45ccef2",
-      "restrictions": {
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false,
-        "buildable": false
-      }
+      "stackSize": 65535.0,
+      "uuid": "87873e83-8270-4796-9401-6baba45ccef2"
     },
     {
       "box": {
@@ -96,6 +96,13 @@
           }
         ]
       },
+      "restrictions": {
+        "buildable": false,
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "GasDrop",
@@ -105,15 +112,8 @@
         "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf",
-      "restrictions": {
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false,
-        "buildable": false
-      }
+      "stackSize": 65535.0,
+      "uuid": "b7e1dbf0-9267-45c4-aae0-ff00659977bf"
     },
     {
       "box": {
@@ -154,26 +154,26 @@
           }
         ]
       },
+      "restrictions": {
+        "buildable": false,
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "RadioactiveDrop",
         "data": {
-          "halfLife": 690,
           "effect": "Uranium Glow",
-          "effectShape": "d7807dca-e429-4822-9a66-2efabb09118b"
+          "effectShape": "d7807dca-e429-4822-9a66-2efabb09118b",
+          "halfLife": 690
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688",
-      "restrictions": {
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false,
-        "buildable": false
-      }
+      "stackSize": 65535.0,
+      "uuid": "d519f6e3-14c2-4bbc-851d-96eb30ed6688"
     },
     {
       "box": {
@@ -215,21 +215,21 @@
           }
         ]
       },
+      "restrictions": {
+        "buildable": false,
+        "destructable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "BouncyDrop",
         "filename": "$CONTENT_DATA/Scripts/Drops/BouncyDrop.lua"
       },
       "showInInventory": false,
-      "stackSize": 999.0,
-      "uuid": "44e23282-feaf-4911-b51f-303300c92a7e",
-      "restrictions": {
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false,
-        "buildable": false
-      }
+      "stackSize": 65535.0,
+      "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
     }
   ]
 }

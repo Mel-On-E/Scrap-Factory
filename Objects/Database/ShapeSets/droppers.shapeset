@@ -125,7 +125,7 @@
         "price": "200",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "f028c17e-d4ce-409b-af20-84141c880629"
     },
     {
@@ -168,7 +168,7 @@
         "price": "200",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "3a40ff89-76bc-49ee-8b67-a0c742bdcb9b"
     }
   ]
