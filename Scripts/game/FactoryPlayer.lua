@@ -246,7 +246,7 @@ function FactoryPlayer.sv_takeDamage(self, damage, source)
 				self.network:setClientData(self.sv.saved)
 			end
 		else
-			print("'FactoryPlayer' resisted", damage, "damage")
+			--print("'FactoryPlayer' resisted", damage, "damage")
 		end
 	end
 end
@@ -415,6 +415,10 @@ function FactoryPlayer:sv_destroyOre()
 			end
 		end
 	end
+end
+
+function FactoryPlayer:sv_e_takeDamage(params)
+	self:sv_takeDamage(params.damage, params.source)
 end
 
 function FactoryPlayer:cl_e_audio(effect)
