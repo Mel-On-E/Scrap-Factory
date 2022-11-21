@@ -75,6 +75,14 @@ function Upgrader:client_onCreate()
         self.cl = {}
     end
 
+    self:cl_createUpgradeEffect()
+end
+
+function Upgrader:client_onUpdate(dt)
+    Belt.client_onUpdate(self, dt)
+end
+
+function Upgrader:cl_createUpgradeEffect()
     local size, offset = self:get_size_and_offset()
     local uuid = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f" or (self.data.effect and self.data.effect.uuid))
     local color = sm.color.new(1, 1, 1)
@@ -96,10 +104,6 @@ function Upgrader:client_onCreate()
     self.cl.effect:setScale(size)
     self.cl.effect:setOffsetPosition(offset)
     self.cl.effect:start()
-end
-
-function Upgrader:client_onUpdate(dt)
-    Belt.client_onUpdate(self, dt)
 end
 
 function Upgrader:cl_toggleEffects(active)

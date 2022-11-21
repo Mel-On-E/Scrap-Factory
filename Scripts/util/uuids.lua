@@ -16,6 +16,7 @@ obj_furnace_lunar = sm.uuid.new("e0587c21-2145-4ee1-beaa-d33ca3407c61")
 obj_dropper_scrap_wood = sm.uuid.new("692a5ebd-0793-49ba-b1ef-681a8fdceba7")
 obj_dropper_scrap_wood_auto = sm.uuid.new("632a52bd-0791-49ba-b1ef-c81adfdceba7")
 obj_dropper_radioactive_auto = sm.uuid.new("f028c17e-d4ce-409b-af20-84141c880629")
+obj_dropper_bouncium = sm.uuid.new("3a40ff89-76bc-49ee-8b67-a0c742bdcb9b")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/drops.shapeset
@@ -24,6 +25,7 @@ obj_dropper_radioactive_auto = sm.uuid.new("f028c17e-d4ce-409b-af20-84141c880629
 obj_drop_scrap_wood = sm.uuid.new("87873e83-8270-4796-9401-6baba45ccef2")
 obj_drop_smoke = sm.uuid.new("b7e1dbf0-9267-45c4-aae0-ff00659977bf")
 obj_drop_radioactive = sm.uuid.new("d519f6e3-14c2-4bbc-851d-96eb30ed6688")
+obj_drop_bouncium = sm.uuid.new("44e23282-feaf-4911-b51f-303300c92a7e")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/upgraders.shapeset
@@ -33,6 +35,7 @@ obj_upgrader_basic = sm.uuid.new("69b869f1-03dc-4ea2-9391-fd24903945d1")
 obj_upgrader_random = sm.uuid.new("17de8088-d5a8-45b1-80eb-1d0688a8c39a")
 obj_upgrader_toilet = sm.uuid.new("e2a6970b-2bb9-4b3b-b9f2-994b534b79f3")
 obj_upgrader_tp_random = sm.uuid.new("a8a06b6e-4152-4527-9602-dd231c5a1cab")
+obj_upgrader_spinny = sm.uuid.new("43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/belts.shapeset
@@ -82,6 +85,7 @@ obj_chest = sm.uuid.new("4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe")
 
 obj_furnace_effect = sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770")
 obj_drop_radioactive_effect = sm.uuid.new("d7807dca-e429-4822-9a66-2efabb09118b")
+obj_skirt_effect = sm.uuid.new("819ebf4c-4b7b-4f20-ab53-724e0952b95a")
 
 ----------------------------------------
 --./ScriptableObjects/ScriptableObjectSets/managers.sobset

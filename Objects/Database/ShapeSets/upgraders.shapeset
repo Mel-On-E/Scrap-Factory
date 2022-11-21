@@ -239,7 +239,7 @@
       "color": "ff0000",
       "cylinder": {
         "axis": "Y",
-        "depth": 4,
+        "depth": 2,
         "diameter": 1,
         "margin": 0.04
       },
@@ -275,7 +275,7 @@
             }
           },
           "effect": {
-            "uuid": "bbc5cc77-443d-4aa7-a175-ebdeb09c2df3",
+            "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a",
             "color": {
               "r": 1,
               "g": 0.753,

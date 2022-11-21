@@ -83,6 +83,19 @@
       "showInInventory": false,
       "stackSize": 999.0,
       "uuid": "d7807dca-e429-4822-9a66-2efabb09118b"
+    },
+    {
+      "cylinder": {
+        "axis": "Y",
+        "depth": 1,
+        "diameter": 1,
+        "margin": 0.04
+      },
+      "name": "obj_skirt_effect",
+      "renderable": "$CONTENT_DATA/Effects/Skirt/skirt.rend",
+      "showInInventory": true,
+      "stackSize": 999.0,
+      "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
     }
   ]
 }
