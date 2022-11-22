@@ -28,6 +28,9 @@ local RespawnEndDelay = 1.0 * 40
 
 local BaguetteSteps = 9
 
+local cl_effects = {}
+local cl_skirts = {}
+
 function FactoryPlayer.server_onCreate(self)
 	self.sv = {}
 	self.sv.saved = self.storage:load()
@@ -67,8 +70,6 @@ function FactoryPlayer.client_onCreate(self)
 			g_survivalHud:setVisible("FoodBar", false)
 			g_survivalHud:setVisible("WaterBar", false)
 		end
-
-		self.cl.effects = {}
 
 		self:cl_initSkirts()
 	end
@@ -456,7 +457,9 @@ end
 
 --Effects
 function FactoryPlayer:sv_e_createEffect(params)
-	self.network:sendToClients("cl_e_createEffect", params)
+	for _, player in ipairs(sm.player.getAllPlayers()) do
+		self.network:sendToClient(player, "cl_e_createEffect", params)
+	end
 end
 
 function FactoryPlayer:sv_e_playEffect(params)
@@ -479,23 +482,23 @@ function FactoryPlayer:cl_e_createEffect(params)
 		effect:start()
 	end
 
-	if self.cl.effects[params.id] then
-		self.cl.effects[params.id]:destroy()
+	if cl_effects[params.id] then
+		cl_effects[params.id]:destroy()
 	end
 
-	self.cl.effects[params.id] = effect
+	cl_effects[params.id] = effect
 end
 
 function FactoryPlayer:cl_e_startEffect(id)
-	if self.cl.effects[id] and not self.cl.effects[id]:isPlaying() then
-		self.cl.effects[id]:start()
+	if cl_effects[id] and not cl_effects[id]:isPlaying() then
+		cl_effects[id]:start()
 	end
 end
 
 function FactoryPlayer:cl_e_destroyEffect(id)
-	if self.cl.effects[id] then
-		self.cl.effects[id]:destroy()
-		self.cl.effects[id] = nil
+	if cl_effects[id] then
+		cl_effects[id]:destroy()
+		cl_effects[id] = nil
 	end
 end
 
@@ -505,15 +508,13 @@ end
 
 ---Skirts ❤ UwU
 function FactoryPlayer:cl_initSkirts()
-	self.cl.skirts = {}
-
 	for _, player in pairs(sm.player.getAllPlayers()) do
 		self:cl_initSkirt(player)
 	end
 end
 
 function FactoryPlayer:cl_initSkirt(player)
-	self.cl.skirts[player.id] = {
+	cl_skirts[player.id] = {
 		dir = sm.vec3.zero(),
 		spin = 1,
 		player = player
@@ -521,7 +522,7 @@ function FactoryPlayer:cl_initSkirt(player)
 end
 
 function FactoryPlayer:cl_updateSkirtData()
-	for id, skirtData in ipairs(self.cl.skirts) do
+	for id, skirtData in ipairs(cl_skirts) do
 		local character = skirtData.player.character
 		if character then
 			local dir = character.direction
@@ -531,13 +532,13 @@ function FactoryPlayer:cl_updateSkirtData()
 			skirtData.dir = dir
 
 			local effectName = "skirt" .. tonumber(id)
-			if self.cl.effects[effectName] then
+			if cl_effects[effectName] then
 				local scale = skirtData.spin ^ 0.5
 				local skirtLength = 1.75
 				local length = skirtLength / scale
 
-				self.cl.effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
-				self.cl.effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+				cl_effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
+				cl_effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
 			end
 		end
 	end
