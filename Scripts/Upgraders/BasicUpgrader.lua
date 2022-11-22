@@ -4,7 +4,6 @@ dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 BasicUpgrader = class(Upgrader)
 
 function BasicUpgrader:sv_onUpgrade(shape, data)
-    print("upgrade")
     local upgrade = self.data.upgrade
 
     if upgrade.multiplier then
