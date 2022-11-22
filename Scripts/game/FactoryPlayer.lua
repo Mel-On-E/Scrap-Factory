@@ -482,7 +482,7 @@ function FactoryPlayer:cl_e_createEffect(params)
 		effect:start()
 	end
 
-	if cl_effects[params.id] then
+	if cl_effects[params.id] and sm.exists(cl_effects[params.id]) then
 		cl_effects[params.id]:destroy()
 	end
 
@@ -532,7 +532,7 @@ function FactoryPlayer:cl_updateSkirtData()
 			skirtData.dir = dir
 
 			local effectName = "skirt" .. tonumber(id)
-			if cl_effects[effectName] then
+			if cl_effects[effectName] and sm.exists(cl_effects[effectName]) then
 				local scale = skirtData.spin ^ 0.5
 				local skirtLength = 1.75
 				local length = skirtLength / scale
