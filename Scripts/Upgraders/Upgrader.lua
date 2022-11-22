@@ -16,8 +16,11 @@ function Upgrader:get_size_and_offset()
     return size, offset
 end
 
-function Upgrader:server_onCreate()
-    self.data.upgrade.add = tonumber(self.data.upgrade.add)
+---@class Params
+---@field filters number filters of the areaTrigger
+---@param params Params
+function Upgrader:server_onCreate(params)
+    params = params or {}
 
     if self.data.belt then
         Belt.server_onCreate(self)
@@ -29,7 +32,7 @@ function Upgrader:server_onCreate()
     local size, offset = self:get_size_and_offset()
 
     self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        sm.areaTrigger.filter.dynamicBody)
+        params.filters or sm.areaTrigger.filter.dynamicBody)
     self.upgradeTrigger:bindOnEnter("sv_onEnter")
     Power.server_onCreate(self)
 end
@@ -45,7 +48,9 @@ end
 function Upgrader:sv_onEnter(trigger, results)
     if not self.powerUtil.active then return end
     for _, result in ipairs(results) do
-        if not sm.exists(result) then return end
+        if not sm.exists(result) then goto continue end
+        if type(result) ~= "Body" then goto continue end
+
         for k, shape in ipairs(result:getShapes()) do
             local interactable = shape:getInteractable()
             if not interactable then return end

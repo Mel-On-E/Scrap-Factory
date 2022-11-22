@@ -1,5 +1,3 @@
----@class FactoryPlayer : PlayerClass
-
 dofile("$GAME_DATA/Scripts/game/BasePlayer.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_camera.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
@@ -9,7 +7,8 @@ dofile("$SURVIVAL_DATA/Scripts/util.lua")
 --FACTORY
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
-
+---@class FactoryPlayer : PlayerClass
+---@field cl PlayerCl
 FactoryPlayer = class(BasePlayer)
 
 
@@ -71,9 +70,10 @@ function FactoryPlayer.client_onCreate(self)
 
 		self.cl.effects = {}
 
-		self.cl.dir = sm.vec3.zero()
-		self.cl.spin = 1
+		self:cl_initSkirts()
 	end
+
+	self:cl_initSkirt(self.player)
 
 	self:cl_init()
 end
@@ -145,18 +145,6 @@ function FactoryPlayer.client_onInteract(self, character, state)
 				self.network:sendToServer("sv_n_tryRespawn")
 			end
 		end
-
-		local effect = sm.effect.createEffect("ShapeRenderable", character, "jnt_hips")
-		effect:setParameter("uuid", obj_skirt_effect)
-		effect:setParameter("color", sm.color.new(1, 1, 1))
-		effect:setScale(sm.vec3.one())
-		effect:setOffsetPosition(sm.vec3.new(0, 0, 0.01))
-		effect:start()
-
-		if self.cl.effects["skirt"] then
-			self.cl.effects["skirt"]:destroy()
-		end
-		self.cl.effects["skirt"] = effect
 	end
 end
 
@@ -413,23 +401,8 @@ end
 
 --FACTORY
 function FactoryPlayer:client_onFixedUpdate()
-	if self.player == sm.localPlayer.getPlayer() and self.player.character then
-		local dir = self.player.character.direction
-		local change = (self.cl.dir - dir):length()
-		self.cl.dir = dir
-
-		self.cl.spin = self.cl.spin ^ 0.95 + change
-
-
-		if self.cl.effects["skirt"] then
-			local scale = self.cl.spin ^ 0.5
-			local skirtLength = 1.75
-			local length = skirtLength / scale
-
-			self.cl.effects["skirt"]:setScale(sm.vec3.new(scale, length, scale))
-
-			self.cl.effects["skirt"]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
-		end
+	if self.player == sm.localPlayer.getPlayer() then
+		self:cl_updateSkirtData()
 	end
 end
 
@@ -482,9 +455,8 @@ function FactoryPlayer:cl_onClearConfirmButtonClick(name)
 end
 
 --Effects
-
-function FactoryPlayer:cl_e_playAudio(name)
-	sm.audio.play(name)
+function FactoryPlayer:sv_e_createEffect(params)
+	self.network:sendToClients("cl_e_createEffect", params)
 end
 
 function FactoryPlayer:sv_e_playEffect(params)
@@ -496,7 +468,22 @@ function FactoryPlayer:cl_e_playEffect(params)
 end
 
 function FactoryPlayer:cl_e_createEffect(params)
-	self.cl.effects[params.id] = sm.effect.createEffect(params.effect, params.host)
+	local effect = sm.effect.createEffect(params.effect, params.host, params.name)
+
+	if params.effect == "ShapeRenderable" then
+		effect:setParameter("uuid", params.uuid)
+		effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
+	end
+
+	if params.start then
+		effect:start()
+	end
+
+	if self.cl.effects[params.id] then
+		self.cl.effects[params.id]:destroy()
+	end
+
+	self.cl.effects[params.id] = effect
 end
 
 function FactoryPlayer:cl_e_startEffect(id)
@@ -511,3 +498,57 @@ function FactoryPlayer:cl_e_destroyEffect(id)
 		self.cl.effects[id] = nil
 	end
 end
+
+function FactoryPlayer:cl_e_playAudio(name)
+	sm.audio.play(name)
+end
+
+---Skirts ❤ UwU
+function FactoryPlayer:cl_initSkirts()
+	self.cl.skirts = {}
+
+	for _, player in pairs(sm.player.getAllPlayers()) do
+		self:cl_initSkirt(player)
+	end
+end
+
+function FactoryPlayer:cl_initSkirt(player)
+	self.cl.skirts[player.id] = {
+		dir = sm.vec3.zero(),
+		spin = 1,
+		player = player
+	}
+end
+
+function FactoryPlayer:cl_updateSkirtData()
+	for id, skirtData in ipairs(self.cl.skirts) do
+		local character = skirtData.player.character
+		if character then
+			local dir = character.direction
+			local change = (skirtData.dir - dir):length()
+
+			skirtData.spin = skirtData.spin ^ 0.95 + change
+			skirtData.dir = dir
+
+			local effectName = "skirt" .. tonumber(id)
+			if self.cl.effects[effectName] then
+				local scale = skirtData.spin ^ 0.5
+				local skirtLength = 1.75
+				local length = skirtLength / scale
+
+				self.cl.effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
+				self.cl.effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+			end
+		end
+	end
+end
+
+---@class PlayerCl
+---@field skirts table<number, skirtData>
+---@field effects table<string, Effect>
+
+
+---@class skirtData
+---@field dir Vec3
+---@field spin number
+---@field player Player
