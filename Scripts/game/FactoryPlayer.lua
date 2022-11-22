@@ -70,6 +70,9 @@ function FactoryPlayer.client_onCreate(self)
 		end
 
 		self.cl.effects = {}
+
+		self.cl.dir = sm.vec3.zero()
+		self.cl.spin = 1
 	end
 
 	self:cl_init()
@@ -142,6 +145,18 @@ function FactoryPlayer.client_onInteract(self, character, state)
 				self.network:sendToServer("sv_n_tryRespawn")
 			end
 		end
+
+		local effect = sm.effect.createEffect("ShapeRenderable", character, "jnt_hips")
+		effect:setParameter("uuid", obj_skirt_effect)
+		effect:setParameter("color", sm.color.new(1, 1, 1))
+		effect:setScale(sm.vec3.one())
+		effect:setOffsetPosition(sm.vec3.new(0, 0, 0.01))
+		effect:start()
+
+		if self.cl.effects["skirt"] then
+			self.cl.effects["skirt"]:destroy()
+		end
+		self.cl.effects["skirt"] = effect
 	end
 end
 
@@ -397,6 +412,27 @@ function FactoryPlayer.client_onCancel(self)
 end
 
 --FACTORY
+function FactoryPlayer:client_onFixedUpdate()
+	if self.player == sm.localPlayer.getPlayer() and self.player.character then
+		local dir = self.player.character.direction
+		local change = (self.cl.dir - dir):length()
+		self.cl.dir = dir
+
+		self.cl.spin = self.cl.spin ^ 0.95 + change
+
+
+		if self.cl.effects["skirt"] then
+			local scale = self.cl.spin ^ 0.5
+			local skirtLength = 1.75
+			local length = skirtLength / scale
+
+			self.cl.effects["skirt"]:setScale(sm.vec3.new(scale, length, scale))
+
+			self.cl.effects["skirt"]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+		end
+	end
+end
+
 function FactoryPlayer:sv_e_fadeToBlack(params)
 	self.network:sendToClients("cl_n_startFadeToBlack",
 		{ duration = params.duration or RespawnFadeDuration, timeout = params.timeout or RespawnFadeTimeout })
