@@ -3,6 +3,10 @@ dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 ---@class RandomUpgrader : Upgrader
 SpinnyUpgrader = class(Upgrader)
 
+function SpinnyUpgrader:server_onCreate()
+    Upgrader.server_onCreate(self, { filters = sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character })
+end
+
 function SpinnyUpgrader:server_onFixedUpdate()
     Upgrader.server_onFixedUpdate(self)
 
@@ -27,6 +31,30 @@ function SpinnyUpgrader:sv_onUpgrade(shape, data)
     })
 
     Upgrader.sv_onUpgrade(self, shape, data)
+end
+
+function SpinnyUpgrader:sv_onEnter(trigger, results)
+    if not self.powerUtil.active then return end
+    for _, result in ipairs(results) do
+        if not sm.exists(result) then goto continue end
+        if type(result) ~= "Character" then goto continue end
+
+        local player = result:getPlayer()
+        if player then
+            sm.event.sendToPlayer(player, "sv_e_createEffect", {
+                id = "skirt" .. tostring(player.id),
+                effect = "ShapeRenderable",
+                host = player.character,
+                name = "jnt_hips",
+                uuid = obj_skirt_effect,
+                start = true
+            })
+        end
+
+        ::continue::
+    end
+
+    Upgrader.sv_onEnter(self, trigger, results)
 end
 
 function SpinnyUpgrader:client_onFixedUpdate()
