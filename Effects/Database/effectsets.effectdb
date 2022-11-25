@@ -3,6 +3,10 @@
       {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/example.effectset",
          "showInEditor" : true
+      },
+	  {
+         "path" : "$CONTENT_DATA/Effects/Database/EffectSets/interactive.effectset",
+         "showInEditor" : true
       }
    ]
 }
