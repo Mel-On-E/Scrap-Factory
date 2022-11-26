@@ -10,6 +10,7 @@
 		"$CONTENT_DATA/Objects/Database/ShapeSets/crates.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/decor.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/interactive.shapeset",
-		"$CONTENT_DATA/Objects/Database/ShapeSets/effects.shapeset"
+		"$CONTENT_DATA/Objects/Database/ShapeSets/effects.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla.shapeset"
 	]
 }
