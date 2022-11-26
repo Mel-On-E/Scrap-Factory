@@ -38,6 +38,7 @@ FactoryGame.enableUpgrade = true
 FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
+DEVMODE = true
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
@@ -60,7 +61,7 @@ function FactoryGame.server_onCreate(self)
 	g_world = self.sv.saved.factoryWorld
 
 	print(self.sv.saved.data)
-	if self.sv.saved.data and self.sv.saved.data.dev then
+	if (self.sv.saved.data and self.sv.saved.data.dev) or DEVMODE then
 		g_godMode = true
 		g_survivalDev = true
 		sm.log.info("Starting FactoryGame in DEV mode")

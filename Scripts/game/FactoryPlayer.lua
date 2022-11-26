@@ -1,5 +1,3 @@
----@class FactoryPlayer : PlayerClass
-
 dofile("$GAME_DATA/Scripts/game/BasePlayer.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_camera.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
@@ -9,7 +7,8 @@ dofile("$SURVIVAL_DATA/Scripts/util.lua")
 --FACTORY
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
-
+---@class FactoryPlayer : PlayerClass
+---@field cl PlayerCl
 FactoryPlayer = class(BasePlayer)
 
 
@@ -28,6 +27,9 @@ local RespawnDelay = RespawnFadeDuration * 40
 local RespawnEndDelay = 1.0 * 40
 
 local BaguetteSteps = 9
+
+local cl_effects = {}
+local cl_skirts = {}
 
 function FactoryPlayer.server_onCreate(self)
 	self.sv = {}
@@ -69,8 +71,10 @@ function FactoryPlayer.client_onCreate(self)
 			g_survivalHud:setVisible("WaterBar", false)
 		end
 
-		self.cl.effects = {}
+		self:cl_initSkirts()
 	end
+
+	self:cl_initSkirt(self.player)
 
 	self:cl_init()
 end
@@ -246,7 +250,7 @@ function FactoryPlayer.sv_takeDamage(self, damage, source)
 				self.network:setClientData(self.sv.saved)
 			end
 		else
-			print("'FactoryPlayer' resisted", damage, "damage")
+			--print("'FactoryPlayer' resisted", damage, "damage")
 		end
 	end
 end
@@ -397,6 +401,12 @@ function FactoryPlayer.client_onCancel(self)
 end
 
 --FACTORY
+function FactoryPlayer:client_onFixedUpdate()
+	if self.player == sm.localPlayer.getPlayer() then
+		self:cl_updateSkirtData()
+	end
+end
+
 function FactoryPlayer:sv_e_fadeToBlack(params)
 	self.network:sendToClients("cl_n_startFadeToBlack",
 		{ duration = params.duration or RespawnFadeDuration, timeout = params.timeout or RespawnFadeTimeout })
@@ -415,6 +425,10 @@ function FactoryPlayer:sv_destroyOre()
 			end
 		end
 	end
+end
+
+function FactoryPlayer:sv_e_takeDamage(params)
+	self:sv_takeDamage(params.damage, params.source)
 end
 
 function FactoryPlayer:cl_e_audio(effect)
@@ -442,9 +456,10 @@ function FactoryPlayer:cl_onClearConfirmButtonClick(name)
 end
 
 --Effects
-
-function FactoryPlayer:cl_e_playAudio(name)
-	sm.audio.play(name)
+function FactoryPlayer:sv_e_createEffect(params)
+	for _, player in ipairs(sm.player.getAllPlayers()) do
+		self.network:sendToClient(player, "cl_e_createEffect", params)
+	end
 end
 
 function FactoryPlayer:sv_e_playEffect(params)
@@ -456,18 +471,85 @@ function FactoryPlayer:cl_e_playEffect(params)
 end
 
 function FactoryPlayer:cl_e_createEffect(params)
-	self.cl.effects[params.id] = sm.effect.createEffect(params.effect, params.host)
+	local effect = sm.effect.createEffect(params.effect, params.host, params.name)
+
+	if params.effect == "ShapeRenderable" then
+		effect:setParameter("uuid", params.uuid)
+		effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
+	end
+
+	if params.start then
+		effect:start()
+	end
+
+	if cl_effects[params.id] and sm.exists(cl_effects[params.id]) then
+		cl_effects[params.id]:destroy()
+	end
+
+	cl_effects[params.id] = effect
 end
 
 function FactoryPlayer:cl_e_startEffect(id)
-	if self.cl.effects[id] and not self.cl.effects[id]:isPlaying() then
-		self.cl.effects[id]:start()
+	if cl_effects[id] and not cl_effects[id]:isPlaying() then
+		cl_effects[id]:start()
 	end
 end
 
 function FactoryPlayer:cl_e_destroyEffect(id)
-	if self.cl.effects[id] then
-		self.cl.effects[id]:destroy()
-		self.cl.effects[id] = nil
+	if cl_effects[id] then
+		cl_effects[id]:destroy()
+		cl_effects[id] = nil
 	end
 end
+
+function FactoryPlayer:cl_e_playAudio(name)
+	sm.audio.play(name)
+end
+
+---Skirts ❤ UwU
+function FactoryPlayer:cl_initSkirts()
+	for _, player in pairs(sm.player.getAllPlayers()) do
+		self:cl_initSkirt(player)
+	end
+end
+
+function FactoryPlayer:cl_initSkirt(player)
+	cl_skirts[player.id] = {
+		dir = sm.vec3.zero(),
+		spin = 1,
+		player = player
+	}
+end
+
+function FactoryPlayer:cl_updateSkirtData()
+	for id, skirtData in ipairs(cl_skirts) do
+		local character = skirtData.player.character
+		if character then
+			local dir = character.direction
+			local change = (skirtData.dir - dir):length()
+
+			skirtData.spin = skirtData.spin ^ 0.95 + change
+			skirtData.dir = dir
+
+			local effectName = "skirt" .. tonumber(id)
+			if cl_effects[effectName] and sm.exists(cl_effects[effectName]) then
+				local scale = skirtData.spin ^ 0.5
+				local skirtLength = 1.75
+				local length = skirtLength / scale
+
+				cl_effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
+				cl_effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+			end
+		end
+	end
+end
+
+---@class PlayerCl
+---@field skirts table<number, skirtData>
+---@field effects table<string, Effect>
+
+
+---@class skirtData
+---@field dir Vec3
+---@field spin number
+---@field player Player

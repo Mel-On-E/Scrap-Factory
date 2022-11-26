@@ -25,7 +25,7 @@
         "price": "69",
         "tier": 1
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "sticky": "-Y",
       "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
     }
