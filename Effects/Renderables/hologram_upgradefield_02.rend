@@ -10,7 +10,7 @@
                     "material": "Hologram"
                 }
             ],
-            "mesh": "$CONTENT_DATA/Effects/Meshes/hologram_upgradefield_geo.fbx"
+            "mesh": "$CONTENT_DATA/Effects/Meshes/hologram_upgradefield_02_geo.fbx"
         }
     ]
 }
