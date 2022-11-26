@@ -74,11 +74,11 @@ function Upgrader:client_onCreate()
 
     local size, offset = get_size_and_offset(self)
 
-    self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-    self.cl.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-    self.cl.effect:setParameter("color", sm.color.new(1, 1, 1))
-    self.cl.effect:setScale(size)
-    self.cl.effect:setOffsetPosition(offset)
+    self.cl.effect = sm.effect.createEffect("Upgradearea - Hexagon", self.interactable)
+    --self.cl.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
+    self.cl.effect:setParameter("color", sm.color.new(0, 0, 1))
+    --self.cl.effect:setScale(size)
+    --self.cl.effect:setOffsetPosition(offset)
     self.cl.effect:start()
 end
 

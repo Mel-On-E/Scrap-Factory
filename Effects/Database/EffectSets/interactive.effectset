@@ -19,7 +19,7 @@
 			},
 			{
 				"type": "renderable",
-				"name": "$CHALLENGE_DATA/Effects/Renderables/hologram_upgradefieldrim.rend",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim.rend",
 				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
 				"parameters" : [ "minColor", "maxColor" ]
 			}
