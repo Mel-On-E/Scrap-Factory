@@ -394,7 +394,7 @@ end
 ---@class Item
 ---@field tier integer
 ---@field price integer
----@field category string
+---@field category "All" | "Generators" | "Utilities" | "Upgrades" | "Furnaces" | "Decor"
 ---@field uuid Uuid
 
 ---Has also a highestValueItem wich i dont know how to use luadoc syntax to document it
