@@ -27,7 +27,7 @@ local function number_suffix(value, suffixes)
     end
 end
 
----@param params FNParams
+---@param params FormatNumberParams
 function format_number(params)
     if params.format == "money" then
         params.color = params.color or "#00dd00"
@@ -100,7 +100,7 @@ end
 --Types
 --------------------
 
----@class FNParams
+---@class FormatNumberParams
 ---@field format "energy" | "pollution" | "prestige" | "money"
 ---@field color string A hex color (#rrggbb) that will be the text color
 ---@field unit string The symbol after the number
