@@ -99,15 +99,15 @@ function Shop:cl_tierChange(optionName)
 	self:gui_display()
 end
 
----@param wdigetName string
-function Shop:cl_changePage(wdigetName)
-	if wdigetName == "NextPage" then
+---@param widgetName string
+function Shop:cl_changePage(widgetName)
+	if widgetName == "NextPage" then
 		if self.cl.curPage == #self.cl.renderedPages then return end
 
 		self.cl.curPage = self.cl.curPage + 1
 	end
 
-	if wdigetName == "LastPage" then
+	if widgetName == "LastPage" then
 		if self.cl.curPage == 1 then return end
 
 		self.cl.curPage = self.cl.curPage - 1
@@ -116,20 +116,20 @@ function Shop:cl_changePage(wdigetName)
 	self:gui_display()
 end
 
----@param wdigetName string
-function Shop:cl_changeItem(wdigetName)
+---@param widgetName string
+function Shop:cl_changeItem(widgetName)
 	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
 
 
 	---@type number
 	---@diagnostic disable-next-line: assign-type-mismatch
-	local item = tonumber(wdigetName:sub(6))
+	local item = tonumber(widgetName:sub(6))
 
 	self.cl.item = item
 
 	local uuid = self.cl.renderedPages[self.cl.curPage][self.cl.item].uuid
 
-	self.cl.gui:setButtonState(wdigetName, true)
+	self.cl.gui:setButtonState(widgetName, true)
 	self.cl.gui:setMeshPreview("Preview", uuid)
 	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
 	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
@@ -155,18 +155,18 @@ function Shop:cl_buy()
 	self.network:sendToServer("sv_buy", { quantity = self.cl.quantity, item = item })
 end
 
----@param wdigetName string
-function Shop:cl_changeQuantity(wdigetName)
+---@param widgetName string
+function Shop:cl_changeQuantity(widgetName)
 	self.cl.gui:setText("Buy_x" .. self.cl.quantity, "#ffffffx" .. self.cl.quantity)
 	self.cl.gui:setButtonState("Buy_x" .. self.cl.quantity, false)
 
-	local quantity = tonumber(wdigetName:sub(6))
+	local quantity = tonumber(widgetName:sub(6))
 
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.quantity = quantity
 
-	self.cl.gui:setText(wdigetName, "#000000x" .. self.cl.quantity)
-	self.cl.gui:setButtonState(wdigetName, true)
+	self.cl.gui:setText(widgetName, "#000000x" .. self.cl.quantity)
+	self.cl.gui:setButtonState(widgetName, true)
 end
 
 -- #endregion
