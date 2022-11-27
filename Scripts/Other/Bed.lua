@@ -42,19 +42,24 @@ function Bed:client_onInteract(character, state)
 end
 
 function Bed:cl_seat()
-	if sm.localPlayer.getPlayer() and sm.localPlayer.getPlayer():getCharacter() then
-		self.interactable:setSeatCharacter(sm.localPlayer.getPlayer():getCharacter())
+	if not (sm.localPlayer.getPlayer()
+		and sm.localPlayer.getPlayer():getCharacter()) then
+
+		return
 	end
+
+
+	self.interactable:setSeatCharacter(sm.localPlayer.getPlayer():getCharacter())
 end
 
 function Bed:client_onAction(controllerAction, state)
-	if not state then return false end
-
-	if controllerAction == sm.interactable.actions.use or controllerAction == sm.interactable.actions.jump then
-		self:cl_seat()
-
-		return true
+	if not state
+		or controllerAction ~= sm.interactable.actions.use
+		or controllerAction ~= sm.interactable.actions.jump then
+		return false
 	end
 
-	return false
+	self:cl_seat()
+
+	return true
 end
