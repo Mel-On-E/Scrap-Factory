@@ -383,7 +383,7 @@ end
 ---@field filterByText string Used for dropdown cuz lang doesnt change ***DONT MODIFY***
 ---@field item number The item selected
 ---@field clearWarning number? The tick on wich the OutOfMoney text should be hidden
----@field quantity number The amount of items you but at once
+---@field quantity number The amount of items you buy at once
 
 ---@class ShopDb
 ---@field tier integer
