@@ -88,6 +88,46 @@ obj_drop_radioactive_effect = sm.uuid.new("d7807dca-e429-4822-9a66-2efabb09118b"
 obj_skirt_effect = sm.uuid.new("819ebf4c-4b7b-4f20-ab53-724e0952b95a")
 
 ----------------------------------------
+--./Objects/Database/ShapeSets/vanilla/blocks.shapeset
+----------------------------------------
+
+blk_concrete1 = sm.uuid.new("a6c6ce30-dd47-4587-b475-085d55c6a3b4")
+blk_caution = sm.uuid.new("09ca2713-28ee-4119-9622-e85490034758")
+blk_bricks = sm.uuid.new("0603b36e-0bdb-4828-b90c-ff19abcdfe34")
+blk_glass = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
+blk_glasstile = sm.uuid.new("749f69e0-56c9-488c-adf6-66c58531818f")
+
+----------------------------------------
+--./Objects/Database/ShapeSets/vanilla/interactive.shapeset
+----------------------------------------
+
+obj_interactive_comfybed = sm.uuid.new("5eb8975b-0acf-43a7-ab4e-62ce661c0df7")
+jnt_bearing = sm.uuid.new("4a1b886b-913e-4aad-b5b6-6e41b0db23a6")
+jnt_suspensionsport_creative = sm.uuid.new("aa8d89eb-919b-42f4-8b58-af6f0d5856bc")
+jnt_suspensionoffroad_creative = sm.uuid.new("a481138b-fae9-47c9-9bc2-91b6d2e2bf52")
+obj_interactive_driverseat_creative = sm.uuid.new("cf3fdcfc-a7e5-4497-b000-ffda67dd8db7")
+obj_interactive_driversaddle_creative = sm.uuid.new("38ee0516-abc5-4e46-9195-c763610d7ec4")
+obj_interactive_gasengine_creative = sm.uuid.new("d5e36413-b3c1-4636-8447-3410c352ec7b")
+obj_interactive_electricengine_creative = sm.uuid.new("6546c293-a5aa-4442-80d5-a2819f077746")
+obj_interactive_thruster_creative = sm.uuid.new("5e96037a-a338-490a-a76f-6b4d820f8e46")
+obj_interactive_controller_creative = sm.uuid.new("12862001-666c-4bdd-8326-a1f43610d28b")
+obj_interactive_switch = sm.uuid.new("7cf717d7-d167-4f2d-a6e7-6b2c70aa3986")
+obj_interactive_button = sm.uuid.new("1e8d93a4-506b-470d-9ada-9c0a321e2db5")
+obj_interactive_sensor_creative = sm.uuid.new("add3acc6-a6fd-44e8-a384-a7a16ce13c81")
+obj_interactive_logicgate = sm.uuid.new("9f0f56e8-2c31-4d83-996c-d00a9b296c3f")
+obj_interactive_timer = sm.uuid.new("8f7fd0e7-c46e-4944-a414-7ce2437bb30f")
+jnt_interactive_piston_creative = sm.uuid.new("260b4597-f1ac-409c-8e6b-90c998c5fe94")
+jnt_interactive_piston_creative = sm.uuid.new("260b4597-f1ac-409c-8e6b-90c998c5fe94")
+
+----------------------------------------
+--./Objects/Database/ShapeSets/vanilla/others.shapeset
+----------------------------------------
+
+obj_vehicle_smallwheel = sm.uuid.new("69e362c3-32aa-4cd1-adc0-dcfc47b92c0d")
+obj_vehicle_bigwheel = sm.uuid.new("db66f0b1-0c50-4b74-bdc7-771374204b1f")
+obj_industrial_stairwedge = sm.uuid.new("e02620a5-371b-4d63-be35-fd8a0552eba9")
+
+----------------------------------------
 --./ScriptableObjects/ScriptableObjectSets/managers.sobset
 ----------------------------------------
 
