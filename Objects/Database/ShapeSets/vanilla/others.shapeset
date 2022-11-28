@@ -1,0 +1,107 @@
+{
+	"partList": [
+		{
+			"uuid": "69e362c3-32aa-4cd1-adc0-dcfc47b92c0d",
+			"name": "obj_vehicle_smallwheel",
+			"legacyId": 300,
+			"renderable": "$GAME_DATA/Objects/Renderable/vehicle/obj_vehicle_smallwheel.rend",
+			"color": "df7f01",
+			"cylinder": {
+				"diameter": 3,
+				"depth": 1,
+				"margin": 0.5,
+				"axis": "Z"
+			},
+			"rotationSet": "PropZ",
+			"sticky": "-Z+Z",
+			"physicsMaterial": "Plastic",
+			"ratings": {
+				"density": 7,
+				"durability": 5,
+				"friction": 5,
+				"buoyancy": 6
+			},
+			"flammable": true,
+			"shop": {
+				"price": "1337",
+				"category": "Utilities",
+				"tier": 0
+			}
+		},
+		{
+			"uuid": "db66f0b1-0c50-4b74-bdc7-771374204b1f",
+			"name": "obj_vehicle_bigwheel",
+			"legacyId": 301,
+			"renderable": "$GAME_DATA/Objects/Renderable/vehicle/obj_vehicle_bigwheel.rend",
+			"color": "df7f01",
+			"cylinder": {
+				"diameter": 5,
+				"depth": 2,
+				"margin": 0.5,
+				"axis": "Z"
+			},
+			"rotationSet": "PropZ",
+			"sticky": "-Z+Z",
+			"physicsMaterial": "Plastic",
+			"ratings": {
+				"density": 4,
+				"durability": 5,
+				"friction": 5,
+				"buoyancy": 6
+			},
+			"flammable": false,
+			"shop": {
+				"price": "1337",
+				"category": "Utilities",
+				"tier": 0
+			}
+		},
+		{
+			"uuid": "e02620a5-371b-4d63-be35-fd8a0552eba9",
+			"name": "obj_industrial_stairwedge",
+			"legacyId": 413,
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_nor.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_stairwedge_ao.tga"
+								],
+								"material": "DifAsgNorAo"
+							}
+						],
+						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_stairwedge.fbx",
+						"includes": ["POSITION", "UV0", "UV1", "NORMAL", "TANGENTS"]
+					}
+				]
+			},
+			"color": "c36512",
+			"slant": {
+				"x": 1,
+				"y": 1,
+				"z": 1,
+				"back": "-Z",
+				"bottom": "-Y"
+			},
+			"rotationSet": "PropYX",
+			"sticky": "-X+X-Y-Z",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 4,
+				"durability": 4,
+				"friction": 5,
+				"buoyancy": 2
+			},
+			"flammable": false,
+			"shop": {
+				"price": "1337",
+				"category": "Decor",
+				"tier": 0
+			}
+		}
+	]
+}

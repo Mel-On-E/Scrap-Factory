@@ -12,6 +12,7 @@
 		"$CONTENT_DATA/Objects/Database/ShapeSets/interactive.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/effects.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/blocks.shapeset",
-		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/interactive.shapeset"
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/interactive.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/others.shapeset"
 	]
 }
