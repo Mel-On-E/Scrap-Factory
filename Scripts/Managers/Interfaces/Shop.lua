@@ -56,7 +56,6 @@ end
 function Shop.cl_e_open_gui()
 	Shop.gui_setLang(g_cl_shop)
 	Shop.gui_render(g_cl_shop)
-	print(g_cl_shop.cl)
 	Shop.gui_display(g_cl_shop)
 	Interface.cl_e_open_gui(g_cl_shop)
 end
