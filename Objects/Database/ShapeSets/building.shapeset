@@ -1,0 +1,28 @@
+{
+   "partList" : [
+      {
+         "box" : {
+            "x" : 16,
+            "y" : 4,
+            "z" : 16
+         },
+         "color" : "df7f01",
+         "name" : "obj_factory_building_foundation_01",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 4,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_foundation_01.rend",
+         "rotationSet" : "PropYZX",
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 0
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "1b4711f6-b5ae-4e41-b82d-065867a9d0d3"
+      }
+   ]
+}
