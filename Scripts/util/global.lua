@@ -4,7 +4,7 @@ g_cl_shop = {}
 ---@type GuiInterface
 g_factoryHud = {}
 
----@type ShopDb
+---@type table<string, ShopDb>
 g_shop = {}
 
 ---@type Interactable
