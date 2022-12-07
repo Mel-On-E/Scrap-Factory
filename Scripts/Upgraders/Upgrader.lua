@@ -80,8 +80,6 @@ function Upgrader:client_onCreate()
         self.cl = {}
     end
 
-    local size, offset = get_size_and_offset(self)
-
     self:cl_createUpgradeEffect()
 end
 
