@@ -1,0 +1,17 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/Building/obj_factory_building_collumn_02.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_collumn_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_collumn_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_collumn_01_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}
