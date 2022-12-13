@@ -17,7 +17,7 @@
          "rotationSet" : "PropYZX",
          "shop" : {
             "category" : "Decor",
-            "price" : "50",
+            "price" : "100",
             "tier" : 0
          },
          "stackSize" : 65535,
@@ -41,7 +41,7 @@
          "rotationSet" : "PropYZX",
          "shop" : {
             "category" : "Decor",
-            "price" : "50",
+            "price" : "100",
             "tier" : 0
          },
          "stackSize" : 65535,
@@ -65,7 +65,7 @@
          "rotationSet" : "PropY",
          "shop" : {
             "category" : "Decor",
-            "price" : "50",
+            "price" : "100",
             "tier" : 0
          },
          "stackSize" : 65535,
@@ -89,12 +89,60 @@
          "rotationSet" : "PropY",
          "shop" : {
             "category" : "Decor",
-            "price" : "50",
+            "price" : "25",
             "tier" : 0
          },
          "stackSize" : 65535,
          "sticky" : "All",
          "uuid" : "d5c4fc84-ad5a-41c1-876b-591412b37b11"
+      },
+      {
+         "box" : {
+            "x" : 14,
+            "y" : 14,
+            "z" : 1
+         },
+         "color" : "df7f01",
+         "name" : "obj_factory_building_wall_01",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 6,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_01.rend",
+         "rotationSet" : "PropY",
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 0
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "b1b7dc53-d143-4241-92e7-d92be98eec1a"
+      },
+      {
+         "box" : {
+            "x" : 7,
+            "y" : 7,
+            "z" : 1
+         },
+         "color" : "df7f01",
+         "name" : "obj_factory_building_wall_03",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 4,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_03.rend",
+         "rotationSet" : "PropY",
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 0
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "4ae033f6-15b8-4cc1-89ac-db200809a2dc"
       }
    ]
 }
