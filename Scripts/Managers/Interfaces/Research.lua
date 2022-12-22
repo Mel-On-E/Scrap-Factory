@@ -1,6 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
 ---@class Research : Interface
+---@diagnostic disable-next-line: param-type-mismatch
 Research = class(Interface)
 
 function Research:client_onCreate()

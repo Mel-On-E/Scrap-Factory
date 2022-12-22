@@ -2,6 +2,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Perks.lua")
 
 ---@class Prestige : Perks
+---@diagnostic disable-next-line: param-type-mismatch
 Prestige = class(Perks)
 
 function Prestige:sv_prestige()

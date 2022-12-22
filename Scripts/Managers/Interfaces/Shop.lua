@@ -52,7 +52,7 @@ end
 
 ---The open gui method
 ---> **Warning**\
----> You have to use the g_cl_shop global to acces values
+---> You have to use the g_cl_shop global to acces `self`
 function Shop.cl_e_open_gui()
 	Shop.gui_setLang(g_cl_shop)
 	Shop.gui_render(g_cl_shop)
@@ -397,7 +397,6 @@ end
 ---@field category "All" | "Generators" | "Utilities" | "Upgrades" | "Furnaces" | "Decor"
 ---@field uuid Uuid
 
----Has also a highestValueItem wich i dont know how to use luadoc syntax to document it
 ---@alias Page Item[]
 
 -- #endregion

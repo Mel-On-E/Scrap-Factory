@@ -1,6 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
----@class Perks
+---@class Perks : Interface
+---@diagnostic disable-next-line: param-type-mismatch
 Perks = class(Interface)
 
 local IMAGE_PATH = "$CONTENT_DATA/Gui/Images/Perks/"
@@ -59,12 +60,10 @@ function Perks:cl_openPerkGui()
 end
 
 function Perks:update_gui()
-	self.cl.perkGui:setText("Balance", language_tag("PerksBalance") .. 
-		format_number({ format = "prestige", value = PrestigeManager.cl_getPrestige()}))
+	self.cl.perkGui:setText("Balance", language_tag("PerksBalance") ..
+		format_number({ format = "prestige", value = PrestigeManager.cl_getPrestige() }))
 	self.cl.perkGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
 end
-
-
 
 function Perks:gen_page(num)
 	local pageLen = #self.cl.filteredPages[num]
@@ -73,7 +72,8 @@ function Perks:gen_page(num)
 		self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), true)
 	end
 	for i, v in pairs(self.cl.filteredPages[num]) do
-		self.cl.perkGui:setImage("ItemPic_" .. tostring(i), IMAGE_PATH .. v.image .. ((PerkManager.isPerkOwned(v.name) and "") or "_locked") .. ".png")
+		self.cl.perkGui:setImage("ItemPic_" .. tostring(i),
+			IMAGE_PATH .. v.image .. ((PerkManager.isPerkOwned(v.name) and "") or "_locked") .. ".png")
 		self.cl.perkGui:setText("ItemPrice_" .. tostring(i), format_number({ format = "prestige", value = v.price }))
 		self.cl.perkGui:setVisible("ItemLock_" .. tostring(i), not self.isUnlocked(v))
 	end
@@ -228,7 +228,7 @@ function Perks:sort()
 	local pages = {}
 	self.cl.itemPages = { {} }
 	for k, v in pairs(self.perks) do
-		table.insert(pages, {name = k, price = v.price, image = v.image, requires = v.requires, effects = v.effects})
+		table.insert(pages, { name = k, price = v.price, image = v.image, requires = v.requires, effects = v.effects })
 	end
 	table.sort(pages, function(a, b)
 		if self.cl.sortLowest then

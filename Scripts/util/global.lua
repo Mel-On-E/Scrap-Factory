@@ -1,3 +1,4 @@
+---@diagnostic disable: lowercase-global
 ---@type Shop
 g_cl_shop = {}
 
