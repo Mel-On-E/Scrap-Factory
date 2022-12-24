@@ -4,8 +4,12 @@
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/effects.effectset",
          "showInEditor" : true
       },
-	  {
+      {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/interactive.effectset",
+         "showInEditor" : true
+      },
+      {
+         "path" : "$CONTENT_DATA/Effects/Database/EffectSets/hologrammatt.effectset",
          "showInEditor" : true
       }
    ]
