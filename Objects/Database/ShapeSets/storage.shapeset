@@ -1,54 +1,38 @@
 {
-  "partList": [
-    {
-      "box": {
-        "x": 2,
-        "y": 2,
-        "z": 2
-      },
-      "color": "696969",
-      "flammable": true,
-      "name": "obj_storage_battery",
-      "physicsMaterial": "Plastic",
-      "ratings": {
-        "buoyancy": 7,
-        "density": 2,
-        "durability": 2,
-        "friction": 4
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_battery.fbx",
-            "subMeshList": [
-              {
-                "material": "DifAsgNor",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_dif.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_nor.tga"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "Storage",
-        "data": {
-          "powerLimit": 100
-        },
-        "filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua"
-      },
-      "shop": {
-        "category": "Generators",
-        "price": "100",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y+Y",
-      "uuid": "91037f2c-5230-464b-8873-ad13355539af"
-    }
-  ]
+   "partList" : [
+      {
+         "box" : {
+            "x" : 4,
+            "y" : 3,
+            "z" : 4
+         },
+         "color" : "df7f01",
+         "flammable" : true,
+         "name" : "obj_storage_battery",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 7,
+            "density" : 2,
+            "durability" : 2,
+            "friction" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_storage_battery_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Storage",
+            "data" : {
+               "powerLimit" : 100
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Storage.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "100",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y+Y",
+         "uuid" : "91037f2c-5230-464b-8873-ad13355539af"
+      }
+   ]
 }

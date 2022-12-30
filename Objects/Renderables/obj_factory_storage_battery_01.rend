@@ -1,0 +1,21 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_storagebattery_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_dif.TGA",
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_asg.TGA",
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_nor.TGA"
+               ]
+            },
+            {
+               "material" : "Dif",
+               "textureList" : [ "", "", "" ]
+            }
+         ]
+      }
+   ]
+}
