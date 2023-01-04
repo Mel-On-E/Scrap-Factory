@@ -30,6 +30,11 @@ function FactoryLift:cl_exportCreation( args )
         map[#map + 1] = path
         sm.json.save(map, creationMap)
     end
+
+    local options = self:cl_import_createUI()
+    local option = options[1]
+    self.importCreation = option
+    self:cl_import_updateItemGrid(option)
 end
 
 
@@ -95,18 +100,7 @@ function FactoryLift:client_onEquippedUpdate(lmb, rmb, f)
                 end
             elseif result.type == "lift" then
                 if f and not self.importGui:isActive() then
-                    local needUpdate = true
-                    if self.importCreation == nil and sm.json.fileExists(creationMap) then
-                        local options = self:cl_import_createUI()
-                        local option = options[1]
-                        self.importCreation = option
-                        self:cl_import_updateItemGrid(option)
-                        needUpdate = false
-                    end
-
-                    if needUpdate then
-                        self:cl_import_updateItemGrid(self.importCreation, false)
-                    end
+                    self:cl_import_updateItemGrid(self.importCreation, false)
                     self.importGui:setText("title", language_tag("ImportTitle"))
                     self.importGui:open()
                 end
