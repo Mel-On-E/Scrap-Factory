@@ -5,7 +5,7 @@
             <Widget type="TextBox" skin="TextBox" position="10 10 560 75" name="title">
                 <Property key="TextAlign" value="Center"/>
                 <Property key="FontName" value="SM_Header"/>
-                <Property key="Caption" value="name creation dumbass"/>
+                <Property key="Caption" value="name creation"/>
             </Widget>
             <Widget type="Button" skin="SecondaryButton" position="100 210 150 50" name="cancel">
                 <Property key="Caption" value="#{MENU_YN_CANCEL}"/>

@@ -8,10 +8,10 @@ FactoryLift = class(Lift)
 
 local specialCharacters = {
     "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
-    --[["-", "_",]] "+", "=", "{", "}", "[", "]", "|", "\\", "/", ":",
-    ";", '"', "'", "<", ">", ",", ".", "?"
+    "+", "=", "{", "}", "[", "]", "|", "\\", "/", ":", ";", '"',
+    "'", "<", ">", ",", ".", "?"
 }
-local creationMap = "$CONTENT_DATA/UserData/ExportedCreationMap.json"
+local exportedCreations = "$CONTENT_DATA/UserData/ExportedCreations.json"
 
 function FactoryLift:sv_exportCreation(args, caller)
     args.creation = sm.creation.exportToTable(args.creation, false, true)
@@ -25,10 +25,10 @@ function FactoryLift:cl_exportCreation( args )
         path
     )
 
-    local map = sm.json.fileExists(creationMap) and sm.json.open(creationMap) or {}
-    if not isAnyOf(path, map) then
-        map[#map + 1] = path
-        sm.json.save(map, creationMap)
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    if not isAnyOf(path, creations) then
+        creations[#creations + 1] = path
+        sm.json.save(creations, exportedCreations)
     end
 
     local options = self:cl_import_createUI()
@@ -85,21 +85,21 @@ function FactoryLift:client_onCreate()
     end
 end
 
-function FactoryLift:client_onEquippedUpdate(lmb, rmb, f)
+function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, forceBuild)
     if self.isLocal then
         local hit, result = sm.localPlayer.getRaycast(7.5)
-        self:client_interact(lmb, rmb, result)
+        self:client_interact(primaryState, secondaryState, result)
 
         if hit then
             if result.type == "body" then
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
-                if f and not self.exportGui:isActive() then
+                if forceBuild and not self.exportGui:isActive() then
                     self.exportCreation = result:getBody()
                     self.exportGui:setText("title", language_tag("ExportTitle"))
                     self.exportGui:open()
                 end
             elseif result.type == "lift" then
-                if f and not self.importGui:isActive() then
+                if forceBuild and not self.importGui:isActive() then
                     self:cl_import_updateItemGrid(self.importCreation, false)
                     self.importGui:setText("title", language_tag("ImportTitle"))
                     self.importGui:open()
@@ -152,8 +152,8 @@ function FactoryLift:cl_export_ok(widget, override)
     if not override and
         sm.json.fileExists(self:getCreationPath(self.exportName)) then
         self.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
-        self.confirmClearGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
-        self.confirmClearGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
+        self.confirmClearGui:setButtonCallback("Yes", "cl_export_overrideButtonClick")
+        self.confirmClearGui:setButtonCallback("No", "cl_export_overrideButtonClick")
         self.confirmClearGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
         self.confirmClearGui:setText("Message", language_tag("ExportBlueprintExists"):format(self.exportName))
 
@@ -169,7 +169,7 @@ function FactoryLift:cl_export_ok(widget, override)
     sm.audio.play("Blueprint - Save")
 end
 
-function FactoryLift:cl_onClearConfirmButtonClick(name)
+function FactoryLift:cl_export_overrideButtonClick(name)
     if name == "Yes" then
         self.confirmClearGui:close()
         self:cl_export_ok("", true)
@@ -187,8 +187,8 @@ function FactoryLift:cl_import_createUI()
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
 
     local options = {}
-    local map = sm.json.fileExists(creationMap) and sm.json.open(creationMap) or {}
-    for k, path in pairs(map) do
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    for k, path in pairs(creations) do
         options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
     end
     self.importGui:createDropDown(
@@ -220,7 +220,7 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
 
     local items = {}
     if name then
-        items = self:cl_getBlueprintItems(name)
+        items = self:getBlueprintItems(name)
         if createGrid == nil then
             self.importGui:createGridFromJson(
                 "inventory",
@@ -249,13 +249,13 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
         count = count + 1
     end
 
-    local canImport, missingMoney, ownedItems = self:cl_getImportStats(items)
+    local canImport, missingMoney, ownedItems = self:getImportStats(items)
     self.importGui:setVisible("import", canImport)
     self.importGui:setText("money", language_tag("ImportNeededMoney") .. format_number({ format = "money", value = missingMoney }))
 end
 
 function FactoryLift:cl_import_importCreation()
-    local canImport, missingMoney, ownedItems = self:cl_getImportStats(self:cl_getBlueprintItems(self.importCreation))
+    local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.importCreation))
 
     self.network:sendToServer("sv_importCreation",
         {
@@ -272,7 +272,7 @@ end
 
 
 
-function FactoryLift:cl_getBlueprintItems(name)
+function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
     local items = {}
     for k, body in pairs(blueprint.bodies) do
@@ -291,7 +291,7 @@ function FactoryLift:cl_getBlueprintItems(name)
     return items
 end
 
-function FactoryLift:cl_getImportStats(items)
+function FactoryLift:getImportStats(items)
     local ownedItems = {}
     local neededMoney = 0
     local inv = sm.localPlayer.getInventory()
