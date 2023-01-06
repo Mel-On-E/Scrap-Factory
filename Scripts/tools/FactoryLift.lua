@@ -55,12 +55,21 @@ function FactoryLift:sv_importCreation(args, caller)
 
     MoneyManager.sv_spendMoney(args.money)
 
-    sm.creation.importFromFile(
+    local bodies = sm.creation.importFromFile(
         caller.character:getWorld(),
         self:getCreationPath(args.name),
-        args.pos + sm.vec3.new(0, 0, 10)
+        args.pos + sm.vec3.new(0, 0, 100)
     )
+
+    local placeable, level = sm.tool.checkLiftCollision(bodies, args.pos, 1)
+    if placeable then
+        caller:placeLift(bodies, args.pos, level, 1)
+    else
+        self.network:sendToClient(caller, "cl_setSelectedBodies", bodies)
+    end
 end
+
+
 
 function FactoryLift:client_onCreate()
     self:client_init()
@@ -83,6 +92,10 @@ function FactoryLift:client_onCreate()
         self.importCreation = option
         self:cl_import_updateItemGrid(option)
     end
+end
+
+function FactoryLift:cl_setSelectedBodies( bodies )
+    self.selectedBodies = bodies
 end
 
 function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, forceBuild)
@@ -260,7 +273,7 @@ function FactoryLift:cl_import_importCreation()
     self.network:sendToServer("sv_importCreation",
         {
             name = self.importCreation,
-            pos = sm.localPlayer.getOwnedLift():getWorldPosition(),
+            pos = self.liftPos, --sm.localPlayer.getOwnedLift():getWorldPosition(),
             items = ownedItems,
             money = missingMoney
         }
