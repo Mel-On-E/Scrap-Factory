@@ -152,8 +152,8 @@ function FactoryLift:cl_export_ok(widget, override)
     if not override and
         sm.json.fileExists(self:getCreationPath(self.exportName)) then
         self.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
-        self.confirmClearGui:setButtonCallback("Yes", "cl_export_overrideButtonClick")
-        self.confirmClearGui:setButtonCallback("No", "cl_export_overrideButtonClick")
+        self.confirmClearGui:setButtonCallback("Yes", "cl_export_overwriteButtonClick")
+        self.confirmClearGui:setButtonCallback("No", "cl_export_overwriteButtonClick")
         self.confirmClearGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
         self.confirmClearGui:setText("Message", language_tag("ExportBlueprintExists"):format(self.exportName))
 
@@ -169,7 +169,7 @@ function FactoryLift:cl_export_ok(widget, override)
     sm.audio.play("Blueprint - Save")
 end
 
-function FactoryLift:cl_export_overrideButtonClick(name)
+function FactoryLift:cl_export_overwriteButtonClick(name)
     if name == "Yes" then
         self.confirmClearGui:close()
         self:cl_export_ok("", true)
