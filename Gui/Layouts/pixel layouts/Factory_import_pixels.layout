@@ -4,9 +4,8 @@
         <Widget type="Canvas" skin="BackgroundLiftExport" position="10 10 580 430">
             <Widget type="TextBox" skin="TextBox" position="10 10 560 75" name="title">
                 <Property key="TextAlign" value="Center"/>
-                <Property key="FontName" value="SM_HeaderLarge_Wide"/>
+                <Property key="FontName" value="SM_Header"/>
                 <Property key="Caption" value="name creation"/>
-                <Property key="FontHeight" value="20"/>
             </Widget>
             <Widget type="Button" skin="StyledButtonLarge" position="160 370 260 60" name="import">
                 <Property key="Caption" value="#{LIFT_IMPORT_BUILD}"/>
@@ -25,7 +24,7 @@
                     <Property key="FontName" value="SM_Header"/>
                     <Property key="TextAlign" value="Left VCenter"/>
                     <Property key="Caption" value="abcd"/>
-                    <Property key="FontHeight" value="10"/>
+                    <Property key="FontHeight" value="15"/>
                 </Widget>
             </Widget>
         </Widget>
