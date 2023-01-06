@@ -1,8 +1,7 @@
 ---@class Interface : ScriptableObjectClass
-
 Interface = class()
 
-function Interface:cient_onCreate(params)
+function Interface:client_onCreate(params)
 	self.cl = {}
 	self.cl.gui = sm.gui.createGuiFromLayout(params.layout)
 

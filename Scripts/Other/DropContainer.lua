@@ -8,6 +8,8 @@ DropContainer.connectionInput = sm.interactable.connectionType.logic
 DropContainer.colorNormal = sm.color.new(0x00ccccff)
 DropContainer.colorHighlight = sm.color.new(0x00ffffff)
 
+g_drop_json = sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset")
+
 function DropContainer.server_onCreate(self)
 	local container = self.interactable:getContainer(0)
 	if not container then
@@ -33,8 +35,7 @@ function DropContainer.server_onCreate(self)
 	end
 
 	self.sv.drops = {}
-	local drop_json = sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset")
-	for _, part in ipairs(drop_json.partList) do
+	for _, part in ipairs(g_drop_json.partList) do
 		self.sv.drops[part.uuid] = true
 	end
 
@@ -224,7 +225,10 @@ function DropContainer.cl_n_addPickupItem(self, params)
 	if params.showRenderable then
 		local pickupItem = {}
 		pickupItem.effect = sm.effect.createEffect("ShapeRenderable")
-		pickupItem.effect:setParameter("uuid", params.shapeUuid)
+
+
+		pickupItem.effect:setParameter("uuid", cl_getEffectUuid(params.shapeUuid))
+
 		pickupItem.effect:setPosition(params.fromPosition)
 		pickupItem.effect:setRotation(params.fromRotation)
 		pickupItem.effect:setScale(sm.vec3.new(0.25, 0.25, 0.25))
@@ -282,7 +286,7 @@ function DropContainer.client_onUpdate(self, dt)
 					end
 				else
 					if not harvestItem.effect:isPlaying() and not harvestItem.enteringContainer then
-						harvestItem.effect:setParameter("uuid", slotItem.uuid)
+						harvestItem.effect:setParameter("uuid", cl_getEffectUuid(slotItem.uuid))
 						harvestItem.effect:start()
 					end
 				end
@@ -322,4 +326,16 @@ function DropContainer.calculateSlotItemOffset(self, slotIndex)
 			0.25 * (math.floor(slotIndex / width) % height))
 
 	return positionOffset, rotationOffset
+end
+
+function cl_getEffectUuid(shapeUuid)
+	local uuid = shapeUuid
+	for _, drop in ipairs(g_drop_json.partList) do
+		if drop.uuid == tostring(uuid) then
+			if drop.scripted and drop.scripted.data and drop.scripted.data.effectShape then
+				uuid = sm.uuid.new(drop.scripted.data.effectShape)
+			end
+		end
+	end
+	return uuid
 end

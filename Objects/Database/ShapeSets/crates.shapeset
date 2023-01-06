@@ -56,7 +56,7 @@
         "special": true,
         "tier": 0
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "69b869f1-03dc-4ea3-9291-fd6490f945dd"
     },
     {
@@ -109,7 +109,7 @@
         "classname": "RareLootCrate",
         "filename": "$CONTENT_DATA/Scripts/Other/Crates/RareLootCrate.lua"
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "cf48ca1b-3d7a-4b56-83e9-092e681525be"
     },
     {
@@ -162,7 +162,7 @@
         "classname": "PrestigeLootCrate",
         "filename": "$CONTENT_DATA/Scripts/Other/Crates/PrestigeLootCrate.lua"
       },
-      "stackSize": 999.0,
+      "stackSize": 65535.0,
       "uuid": "423592bc-8505-4c3b-965c-23ee394054d0"
     }
   ]

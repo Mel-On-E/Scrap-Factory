@@ -10,7 +10,7 @@ function Research:client_onCreate()
 
 	local params = {}
 	params.layout = "$CONTENT_DATA/Gui/Layouts/Research.layout"
-	Interface.cient_onCreate(self, params)
+	Interface.client_onCreate(self, params)
 
 	self.cl.tier = 1
 	self.cl.unlockIndex = 0
