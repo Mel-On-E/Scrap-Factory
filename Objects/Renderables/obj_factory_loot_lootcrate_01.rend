@@ -11,6 +11,14 @@
                   "$CONTENT_DATA/Objects/Textures/Loot/obj_factory_loot_lootcrate_01_nor.tga"
                ]
             },
+			{
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_nor.tga"
+               ]
+            },
             {
                "material" : "LightCone",
                "textureList" : [
