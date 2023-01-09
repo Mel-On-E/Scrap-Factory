@@ -172,6 +172,14 @@
                      "y" : 0,
                      "z" : 0
                   }
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Hexagon"
                }
             },
             "filename" : "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
@@ -222,6 +230,14 @@
                      "y" : 0,
                      "z" : 0
                   }
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Hexagon"
                }
             },
             "filename" : "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"

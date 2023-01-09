@@ -89,22 +89,30 @@ end
 
 function Upgrader:cl_createUpgradeEffect()
     local size, offset = self:get_size_and_offset()
-    local uuid = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f" or (self.data.effect and self.data.effect.uuid))
-    local color = sm.color.new(1, 1, 1)
+    local uuid, color
 
-    if self.data.effect then
-        if self.data.effect.uuid then
-            uuid = sm.uuid.new(self.data.effect.uuid)
-        end
+    local effect = self.data.effect
+    if effect then
+        local uid = effect.uuid
+        if uid then uuid = sm.uuid.new(uid) end
 
-        if self.data.effect.color then
-            local clr = self.data.effect.color
-            color = sm.color.new(clr.r, clr.g, clr.b)
-        end
+        local clr = effect.color
+        if clr then color = sm.color.new(clr.r, clr.g, clr.b) end
+    else
+        uuid = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
+        color = sm.color.new(1, 1, 1)
     end
 
-    self.cl.effect = sm.effect.createEffect("Upgradearea - Hexagon", self.interactable)
-    self.cl.effect:setParameter("color", sm.color.new(0, 0, 1))
+    if uuid then
+        self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
+        self.cl.effect:setParameter("uuid", uuid)
+        self.cl.effect:setScale(size)
+        self.cl.effect:setOffsetPosition(offset)
+    else
+        self.cl.effect = sm.effect.createEffect(effect.name, self.interactable)
+    end
+
+    self.cl.effect:setParameter("color", color)
     self.cl.effect:start()
 end
 
