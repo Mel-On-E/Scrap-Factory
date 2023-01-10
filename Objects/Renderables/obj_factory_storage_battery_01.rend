@@ -13,7 +13,7 @@
             },
             {
                "material" : "Dif",
-               "textureList" : [ "", "", "" ]
+               "textureList" : [ "$CONTENT_DATA/Objects/Patterns/pat_blockout_reflection.png" ]
             }
          ]
       }

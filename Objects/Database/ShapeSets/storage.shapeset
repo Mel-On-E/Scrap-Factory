@@ -3,8 +3,8 @@
       {
          "box" : {
             "x" : 4,
-            "y" : 3,
-            "z" : 4
+            "y" : 4,
+            "z" : 3
          },
          "color" : "df7f01",
          "flammable" : true,
