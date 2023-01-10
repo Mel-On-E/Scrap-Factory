@@ -16,7 +16,7 @@
             "durability" : 6,
             "friction" : 3
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_belt_01.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
          "restitution" : 0.0,
          "rotationSet" : "PropY",
          "scripted" : {
@@ -39,6 +39,14 @@
                      "z" : 0
                   },
                   "speed" : 1
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "UpgradeareaBig - Hexagon"
                },
                "power" : 3,
                "upgrade" : {
@@ -83,7 +91,7 @@
             "durability" : 6,
             "friction" : 3
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_belt_01.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
          "restitution" : 0.0,
          "rotationSet" : "PropY",
          "scripted" : {
@@ -106,6 +114,14 @@
                      "z" : 0
                   },
                   "speed" : 0.750
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "UpgradeareaBig - Random"
                },
                "power" : 10,
                "upgrade" : {
@@ -157,6 +173,14 @@
          "scripted" : {
             "classname" : "BasicUpgrader",
             "data" : {
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Hexagon"
+               },
                "power" : 5,
                "upgrade" : {
                   "box" : {
@@ -172,14 +196,6 @@
                      "y" : 0,
                      "z" : 0
                   }
-               },
-               "effect" : {
-                  "color" : {
-                     "b" : 0,
-                     "g" : 0,
-                     "r" : 1
-                  },
-                  "name" : "Upgradearea - Hexagon"
                }
             },
             "filename" : "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
@@ -215,6 +231,14 @@
          "scripted" : {
             "classname" : "RandomUpgrader",
             "data" : {
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Random"
+               },
                "power" : 15,
                "upgrade" : {
                   "box" : {
@@ -230,14 +254,6 @@
                      "y" : 0,
                      "z" : 0
                   }
-               },
-               "effect" : {
-                  "color" : {
-                     "b" : 0,
-                     "g" : 0,
-                     "r" : 1
-                  },
-                  "name" : "Upgradearea - Hexagon"
                }
             },
             "filename" : "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"
