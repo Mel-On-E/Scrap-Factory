@@ -55,13 +55,13 @@
             "z" : 2
          },
          "color" : "df7f01",
-         "name" : "obj_factory_building_collumn_01",
+         "name" : "obj_factory_building_column_01",
          "physicsMaterial" : "Rock",
          "ratings" : {
             "density" : 4,
             "durability" : 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_collumn_01.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_01.rend",
          "rotationSet" : "PropY",
          "shop" : {
             "category" : "Decor",
@@ -79,13 +79,13 @@
             "z" : 1
          },
          "color" : "df7f01",
-         "name" : "obj_factory_building_collumn_02",
+         "name" : "obj_factory_building_column_02",
          "physicsMaterial" : "Rock",
          "ratings" : {
             "density" : 4,
             "durability" : 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_collumn_02.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_02.rend",
          "rotationSet" : "PropY",
          "shop" : {
             "category" : "Decor",
