@@ -14,6 +14,9 @@ A custom game letting people build Tycoon-like factories.
 - DPP as girlboss
 - Illumina: artist girl
 - jsasasaaaaa: allrounder
-- Nate: refactoring, code, and models
 - Sheggy: code, code review
 - Tofix: code, gui, and internal tools maintainer
+- Vajdani: code
+
+## Contributors
+- Nate: refactoring, code, and models
