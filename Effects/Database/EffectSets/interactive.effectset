@@ -1,0 +1,158 @@
+{
+	"Upgradearea - Hexagon":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_01.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"UpgradeareaBig - Hexagon":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_big_01.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim_big.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"Upgradearea - Random":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_02.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"UpgradeareaBig - Random":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_big_02.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim_big.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"Furnacearea - Basic":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_furnacefield_01.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_furnacefieldrim.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"Furnacearea - Double":
+	{
+		"parameterList":
+		{
+			"minColor":[1.0, 0.4, 0.0, 0.0], 
+			"maxColor":[1.0, 0.5, 0.4, 0.7],
+
+			"tag" : "ExpandPicture"
+			
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_furnacefield_01.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_furnacefieldrim.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	}
+}

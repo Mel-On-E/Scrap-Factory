@@ -1,101 +1,97 @@
 {
-  "partList": [
-    {
-      "color": "00ff00",
-      "flammable": false,
-      "hull": {
-        "col": "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj",
-        "x": 5,
-        "y": 4,
-        "z": 2
-      },
-      "name": "obj_furnace_effect",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 2,
-        "durability": 3,
-        "friction": 2
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx",
-            "subMeshMap": {
-              "glass": {
-                "material": "GlassWave",
-                "textureList": [
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
-                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "rotationSet": "PropYZmX",
-      "showInInventory": false,
-      "stackSize": 65535.0,
-      "sticky": "+Y-Y+X-X-Z",
-      "uuid": "f74a0354-05e9-411c-a8ba-75359449f770"
-    },
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "00ff00",
-      "name": "obj_drop_radioactive_effect",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 1,
-        "density": 7,
-        "durability": 5,
-        "friction": 3
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "DifAsgNor",
-                "textureList": [
-                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_dif.tga",
-                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_nor.tga",
-                  "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_asg.tga"
-                ]
-              }
+   "partList" : [
+      {
+         "color" : "00ff00",
+         "flammable" : false,
+         "hull" : {
+            "col" : "$GAME_DATA/Objects/Collision/obj_industrial_windowglass02.obj",
+            "x" : 5,
+            "y" : 4,
+            "z" : 2
+         },
+         "name" : "obj_furnace_effect",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 2,
+            "durability" : 3,
+            "friction" : 2
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "mesh" : "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_windowglass02.fbx",
+                  "subMeshMap" : {
+                     "glass" : {
+                        "material" : "GlassWave",
+                        "textureList" : [
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_dif.tga",
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_asg.tga",
+                           "$GAME_DATA/Objects/Textures/industrial/obj_industrial_windowglass_nor.tga"
+                        ]
+                     }
+                  }
+               }
             ]
-          }
-        ]
+         },
+         "rotationSet" : "PropYZmX",
+         "showInInventory" : false,
+         "stackSize" : 65535.0,
+         "sticky" : "+Y-Y+X-X-Z",
+         "uuid" : "f74a0354-05e9-411c-a8ba-75359449f770"
       },
-      "rotationSet": "StaticYmZmXm",
-      "showInInventory": false,
-      "stackSize": 65535.0,
-      "uuid": "d7807dca-e429-4822-9a66-2efabb09118b"
-    },
-    {
-      "cylinder": {
-        "axis": "Y",
-        "depth": 1,
-        "diameter": 1,
-        "margin": 0.04
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "00ff00",
+         "name" : "obj_drop_radioactive_effect",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 1,
+            "density" : 7,
+            "durability" : 5,
+            "friction" : 3
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "includes" : [ "POSITION", "UV0", "UV1", "NORMAL", "TANGENTS" ],
+                  "mesh" : "$GAME_DATA/Mesh/cube.mesh",
+                  "subMeshList" : [
+                     {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_dif.tga",
+                           "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_nor.tga",
+                           "$CONTENT_DATA/Objects/Textures/Drops/blk_radioactive_asg.tga"
+                        ]
+                     }
+                  ]
+               }
+            ]
+         },
+         "rotationSet" : "StaticYmZmXm",
+         "showInInventory" : false,
+         "stackSize" : 65535.0,
+         "uuid" : "d7807dca-e429-4822-9a66-2efabb09118b"
       },
-      "name": "obj_skirt_effect",
-      "renderable": "$CONTENT_DATA/Effects/Skirt/skirt.rend",
-      "showInInventory": false,
-      "stackSize": 65535.0,
-      "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
-    }
-  ]
+      {
+         "cylinder" : {
+            "axis" : "Y",
+            "depth" : 1,
+            "diameter" : 1,
+            "margin" : 0.040
+         },
+         "name" : "obj_skirt_effect",
+         "physicsMaterial" : "Fabric",
+         "renderable" : "$CONTENT_DATA/Effects/Skirt/skirt.rend",
+         "rotationSet" : "Default",
+         "showInInventory" : false,
+         "stackSize" : 65535.0,
+         "uuid" : "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
+      }
+   ]
 }

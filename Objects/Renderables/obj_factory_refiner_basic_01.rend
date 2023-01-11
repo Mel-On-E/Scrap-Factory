@@ -1,0 +1,17 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_refiner_basic_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_refiner_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_refiner_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_refiner_01_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}
