@@ -6,7 +6,7 @@
             "y" : 4,
             "z" : 16
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_foundation_01",
          "physicsMaterial" : "Metal",
          "ratings" : {
@@ -30,7 +30,7 @@
             "y" : 1,
             "z" : 16
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_foundation_02",
          "physicsMaterial" : "Metal",
          "ratings" : {
@@ -54,7 +54,7 @@
             "y" : 14,
             "z" : 2
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_column_01",
          "physicsMaterial" : "Rock",
          "ratings" : {
@@ -78,7 +78,7 @@
             "y" : 14,
             "z" : 1
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_column_02",
          "physicsMaterial" : "Rock",
          "ratings" : {
@@ -102,7 +102,7 @@
             "y" : 14,
             "z" : 1
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_wall_01",
          "physicsMaterial" : "Metal",
          "ratings" : {
@@ -126,7 +126,7 @@
             "y" : 7,
             "z" : 1
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "name" : "obj_factory_building_wall_03",
          "physicsMaterial" : "Metal",
          "ratings" : {

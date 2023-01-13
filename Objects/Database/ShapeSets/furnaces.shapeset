@@ -6,7 +6,7 @@
             "y" : 1,
             "z" : 6
          },
-         "color" : "df7f01",
+         "color" : "df7f00",
          "flammable" : false,
          "name" : "obj_furnace_basic",
          "physicsMaterial" : "Metal",

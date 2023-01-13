@@ -1,159 +1,153 @@
 {
-  "partList": [
-    {
-      "box": {
-        "x": 15,
-        "y": 55,
-        "z": 20
+   "partList" : [
+      {
+         "box" : {
+            "x" : 15,
+            "y" : 55,
+            "z" : 20
+         },
+         "color" : "00ff00",
+         "flammable" : true,
+         "name" : "obj_generator_windmill",
+         "physicsMaterial" : "Wood",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : {
+            "lodList" : [
+               {
+                  "includes" : [ "POSITION", "NORMAL", "UV0", "UV1", "TANGENT" ],
+                  "maxViewDistance" : 2500,
+                  "mesh" : "$SURVIVAL_DATA/Terrain/Mesh/Hideout/env_hideout_windmill.fbx",
+                  "subMeshMap" : {
+                     "hideout_atlas" : {
+                        "custom" : {
+                           "color" : "frame"
+                        },
+                        "material" : "DifAsgNorAo",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_dif.tga",
+                           "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_asg.tga",
+                           "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_nor.tga",
+                           "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_windmill_ao.tga"
+                        ]
+                     },
+                     "sign_atlas" : {
+                        "custom" : {
+                           "color" : "frame"
+                        },
+                        "material" : "DifAsgNorAo",
+                        "textureList" : [
+                           "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_dif.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_asg.tga",
+                           "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_nor.tga",
+                           "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_windmill_ao.tga"
+                        ]
+                     }
+                  }
+               }
+            ]
+         },
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Windmill",
+            "data" : {
+               "power" : 10
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Windmill.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "150",
+            "tier" : 0
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y",
+         "uuid" : "daf6f4c4-5402-4fa3-93f4-3180243c8a3c"
       },
-      "color": "00ff00",
-      "flammable": true,
-      "name": "obj_generator_windmill",
-      "physicsMaterial": "Wood",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 5,
-        "durability": 2,
-        "friction": 5
+      {
+         "box" : {
+            "x" : 3,
+            "y" : 4,
+            "z" : 3
+         },
+         "color" : "df7f00",
+         "flammable" : false,
+         "name" : "obj_generator_solar",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_solarpanel_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Solar",
+            "data" : {
+               "power" : 25
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Solar.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "200",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "efc10452-8461-44c5-8c21-a06d5aaea16c"
       },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "NORMAL",
-              "UV0",
-              "UV1",
-              "TANGENT"
-            ],
-            "maxViewDistance": 2500,
-            "mesh": "$SURVIVAL_DATA/Terrain/Mesh/Hideout/env_hideout_windmill.fbx",
-            "subMeshMap": {
-              "hideout_atlas": {
-                "custom": {
-                  "color": "frame"
-                },
-                "material": "DifAsgNorAo",
-                "textureList": [
-                  "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_dif.tga",
-                  "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_asg.tga",
-                  "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_atlas_nor.tga",
-                  "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_windmill_ao.tga"
-                ]
-              },
-              "sign_atlas": {
-                "custom": {
-                  "color": "frame"
-                },
-                "material": "DifAsgNorAo",
-                "textureList": [
-                  "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_dif.tga",
-                  "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_asg.tga",
-                  "$SURVIVAL_DATA/Harvestables/Textures/Fillers/hvs_fillers_hideoutsigns_nor.tga",
-                  "$SURVIVAL_DATA/Terrain/Textures/Hideout/env_hideout_windmill_ao.tga"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "Windmill",
-        "data": {
-          "power": 10
-        },
-        "filename": "$CONTENT_DATA/Scripts/Generators/Windmill.lua"
-      },
-      "shop": {
-        "category": "Generators",
-        "price": "150",
-        "tier": 0
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y",
-      "uuid": "daf6f4c4-5402-4fa3-93f4-3180243c8a3c"
-    },
-    {
-      "box": {
-        "x": 3,
-        "y": 4,
-        "z": 3
-      },
-      "color": "df7f01",
-      "flammable": false,
-      "name": "obj_generator_solar",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 4,
-        "durability": 4,
-        "friction": 5
-      },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_solarpanel_01.rend",
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "Solar",
-        "data": {
-          "power": 25
-        },
-        "filename": "$CONTENT_DATA/Scripts/Generators/Solar.lua"
-      },
-      "shop": {
-        "category": "Generators",
-        "price": "200",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-X+X-Y-Z+Z",
-      "uuid": "efc10452-8461-44c5-8c21-a06d5aaea16c"
-    },
-    {
-      "box": {
-        "x": 6,
-        "y": 1,
-        "z": 6
-      },
-      "color": "696969",
-      "flammable": true,
-      "name": "obj_generator_campfire",
-      "physicsMaterial": "Wood",
-      "ratings": {
-        "buoyancy": 3,
-        "density": 3,
-        "durability": 2,
-        "friction": 4
-      },
-      "renderable": "$SURVIVAL_DATA/Terrain/Renderable/Camping/env_camping_campfire.rend",
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "Burner",
-        "data": {
-          "box": {
-            "x": 1.5,
-            "y": 0.25,
-            "z": 1.5
-          },
-          "drops": {
-            "87873e83-8270-4796-9401-6baba45ccef2": true
-          },
-          "offset": {
-            "x": -0.125,
-            "y": 0.125,
-            "z": -0.125
-          },
-          "powerFunction": "root"
-        },
-        "filename": "$CONTENT_DATA/Scripts/Generators/Burner.lua"
-      },
-      "shop": {
-        "category": "Generators",
-        "price": "500",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y",
-      "uuid": "efc1f452-8431-44c5-8c21-a06d53aed16c"
-    }
-  ]
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "696969",
+         "flammable" : true,
+         "name" : "obj_generator_campfire",
+         "physicsMaterial" : "Wood",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 3,
+            "durability" : 2,
+            "friction" : 4
+         },
+         "renderable" : "$SURVIVAL_DATA/Terrain/Renderable/Camping/env_camping_campfire.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Burner",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "drops" : {
+                  "87873e83-8270-4796-9401-6baba45ccef2" : true
+               },
+               "offset" : {
+                  "x" : -0.1250,
+                  "y" : 0.1250,
+                  "z" : -0.1250
+               },
+               "powerFunction" : "root"
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Burner.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "500",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y",
+         "uuid" : "efc1f452-8431-44c5-8c21-a06d53aed16c"
+      }
+   ]
 }
