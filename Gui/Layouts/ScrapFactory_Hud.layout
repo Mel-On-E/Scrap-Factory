@@ -7,28 +7,20 @@
             <Property key="InheritsAlpha" value="false"/>
             <Property key="Alpha" value="1"/>
             <Property key="Enabled" value="true"/>
-            <Widget type="EditBox" skin="ActiveButton" position_real="0.016155088852988692 0.038461538461538464 0.30533117932148629 0.41538461538461541">
+            <Widget type="EditBox" skin="ActiveButton" position_real="0.016155088852988692 0.038461538461538464 0.30533117932148629 0.41538461538461541" name="Research">
                 <Property key="FontName" value="SM_ItemTitle"/>
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
                 <Property key="TextColour" value="1 1 1"/>
                 <Property key="TextAlign" value="Center"/>
                 <Property key="WordWrap" value="true"/>
-                <Property key="Caption" value=""/>
+                <Property key="Caption" value="#00dddd0.69%"/>
+                <Property key="MultiLine" value="false"/>
+                <Property key="TextShadow" value="true"/>
                 <Widget type="ImageBox" skin="ImageBox" position_real="0.047619047619047616 0.18518518518518517 0.17989417989417988 0.64814814814814814" name="ResearchIcon">
                     <Property key="NeedKey" value="false"/>
                     <Property key="NeedMouse" value="false"/>
                     <Property key="ImageTexture" value="$CONTENT_1fcebf9f-612b-4e55-9b51-9bec113f9216/Gui/Images/test.png"/>
-                </Widget>
-                <Widget type="EditBox" skin="TextBox" position_real="0.25396825396825395 0.092592592592592587 0.62962962962962965 0.7407407407407407" name="Research">
-                    <Property key="FontName" value="SM_ItemTitle"/>
-                    <Property key="NeedKey" value="false"/>
-                    <Property key="NeedMouse" value="false"/>
-                    <Property key="TextColour" value="1 1 1"/>
-                    <Property key="TextAlign" value="Center"/>
-                    <Property key="WordWrap" value="true"/>
-                    <Property key="Caption" value="#00dddd0.69%"/>
-                    <Property key="TextShadow" value="true"/>
                 </Widget>
             </Widget>
             <Widget type="Widget" skin="BackgroundPopup" position_real="0.36510500807754442 0.038461538461538464 0.28271405492730212 0.88461538461538458">
@@ -59,6 +51,7 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
                 <Property key="TextShadow" value="true"/>
+                <Property key="MultiLine" value="false"/>
             </Widget>
             <Widget type="EditBox" skin="ActiveButton" position_real="0.016155088852988692 0.5 0.30533117932148629 0.41538461538461541" name="Pollution">
                 <Property key="FontName" value="SM_ItemTitle"/>
@@ -69,6 +62,7 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#ffff0042.00M (69%)"/>
                 <Property key="TextShadow" value="true"/>
+                <Property key="MultiLine" value="false"/>
             </Widget>
             <Widget type="EditBox" skin="ActiveButton" position_real="0.67366720516962841 0.5 0.30533117932148629 0.41538461538461541" name="Prestige">
                 <Property key="FontName" value="SM_ItemTitle"/>
@@ -79,6 +73,7 @@
                 <Property key="WordWrap" value="true"/>
                 <Property key="Caption" value="#dd6e00+42.0M ◊"/>
                 <Property key="TextShadow" value="true"/>
+                <Property key="MultiLine" value="false"/>
             </Widget>
         </Widget>
     </Widget>
