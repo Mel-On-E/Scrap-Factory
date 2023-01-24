@@ -128,6 +128,17 @@ obj_vehicle_bigwheel = sm.uuid.new("db66f0b1-0c50-4b74-bdc7-771374204b1f")
 obj_industrial_stairwedge = sm.uuid.new("e02620a5-371b-4d63-be35-fd8a0552eba9")
 
 ----------------------------------------
+--./Objects/Database/ShapeSets/building.shapeset
+----------------------------------------
+
+obj_factory_building_foundation_01 = sm.uuid.new("1b4711f6-b5ae-4e41-b82d-065867a9d0d3")
+obj_factory_building_foundation_02 = sm.uuid.new("6a9c7a85-b95d-4bc3-8cc8-464df810801a")
+obj_factory_building_column_01 = sm.uuid.new("9c59ddbf-9bf8-47a7-8771-067f8d96f741")
+obj_factory_building_column_02 = sm.uuid.new("d5c4fc84-ad5a-41c1-876b-591412b37b11")
+obj_factory_building_wall_01 = sm.uuid.new("b1b7dc53-d143-4241-92e7-d92be98eec1a")
+obj_factory_building_wall_03 = sm.uuid.new("4ae033f6-15b8-4cc1-89ac-db200809a2dc")
+
+----------------------------------------
 --./ScriptableObjects/ScriptableObjectSets/managers.sobset
 ----------------------------------------
 
@@ -151,10 +162,17 @@ interface_research = sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88")
 interface_prestige = sm.uuid.new("b0972d5e-f131-4aac-94d8-39ce331fe225")
 
 ----------------------------------------
---./Tools/Database/ToolSets/example.toolset
+--./Tools/Database/ToolSets/tools.toolset
 ----------------------------------------
 
 tool_hub = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
 tool_sell = sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0")
 tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
 tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
+
+----------------------------------------
+--./Tools/Database/ToolSets/vanilla.toolset
+----------------------------------------
+
+tool_paint = sm.uuid.new("c60b9627-fc2b-4319-97c5-05921cb976c6")
+tool_weld = sm.uuid.new("fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce")
