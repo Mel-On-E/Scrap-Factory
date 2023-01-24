@@ -7,9 +7,9 @@
 				{
 					"material": "PoseAnimDifAsgNor",
 					"textureList": [
-						"$CONTENT_DATA/Objects/Textures/Drops/obj_factory_dropper_basic_01_dif.tga",
-						"$CONTENT_DATA/Objects/Textures/Drops/obj_factory_dropper_basic_01_asg.tga",
-						"$CONTENT_DATA/Objects/Textures/Drops/obj_factory_dropper_basic_01_nor.tga"
+						"$CONTENT_DATA/Objects/Textures/Droppers/obj_factory_dropper_basic_01_dif.tga",
+						"$CONTENT_DATA/Objects/Textures/Droppers/obj_factory_dropper_basic_01_asg.tga",
+						"$CONTENT_DATA/Objects/Textures/Droppers/obj_factory_dropper_basic_01_nor.tga"
 					]
 				}
 			]

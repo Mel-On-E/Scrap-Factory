@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" position="0 0 600 450" name="BackPanel">
+        <Widget type="Canvas" skin="BackgroundLiftExport" position="10 10 580 430">
+            <Widget type="TextBox" skin="TextBox" position="10 10 560 75" name="title">
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_Header"/>
+                <Property key="Caption" value="name creation"/>
+            </Widget>
+            <Widget type="Button" skin="StyledButtonLarge" position="160 370 260 60" name="import">
+                <Property key="Caption" value="#{LIFT_IMPORT_BUILD}"/>
+                <Property key="FontName" value="SM_Button"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Canvas" skin="Canvas" position="15 110 250 50" name="creation"/>
+            <Widget type="Canvas" skin="GenderButton" position="279 110 286 200">
+                <Widget type="ItemBox" skin="InventoryItemBox2" position="5 5 276 190" name="inventory">
+                    <Property key="NeedKey" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="Canvas" skin="GenderButton" position="279 310 286 50">
+                <Property key="Caption" value="abcd"/>
+                <Widget type="TextBox" skin="TextBox" position="5 5 276 40" name="money">
+                    <Property key="FontName" value="SM_Header"/>
+                    <Property key="TextAlign" value="Left VCenter"/>
+                    <Property key="Caption" value="abcd"/>
+                    <Property key="FontHeight" value="15"/>
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

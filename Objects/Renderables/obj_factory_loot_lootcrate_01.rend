@@ -1,0 +1,31 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/Loot/obj_factory_loot_lootcrate_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_factory_loot_lootcrate_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_factory_loot_lootcrate_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_factory_loot_lootcrate_01_nor.tga"
+               ]
+            },
+			{
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_wood_detail_nor.tga"
+               ]
+            },
+            {
+               "material" : "LightCone",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Loot/obj_loot_lootcrate_lightcone_dif.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}

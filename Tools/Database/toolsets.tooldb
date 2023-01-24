@@ -1,6 +1,6 @@
 {
 	"toolSetList": [
-		"$CONTENT_DATA/Tools/Database/ToolSets/example.toolset",
+		"$CONTENT_DATA/Tools/Database/ToolSets/tools.toolset",
 		"$CONTENT_DATA/Tools/Database/ToolSets/vanilla.toolset"
 	]
 }
