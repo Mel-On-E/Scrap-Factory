@@ -1,0 +1,911 @@
+{
+  "partList": [
+    {
+      "box": {
+        "x": 4,
+        "y": 1,
+        "z": 7
+      },
+      "color": "3e9ffe",
+      "flammable": true,
+      "name": "obj_interactive_comfybed",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 6,
+        "density": 3,
+        "durability": 3,
+        "friction": 4
+      },
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_comfybed.rend",
+      "restrictions": {
+        "usable": true
+      },
+      "rotationSet": "PropFullMinusNegY",
+      "scripted": {
+        "classname": "Bed",
+        "data": {},
+        "filename": "$CONTENT_DATA/Scripts/Other/Bed.lua",
+        "seat": {
+          "bones": [
+            {
+              "name": "root_jnt",
+              "offset": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.3
+              }
+            },
+            {
+              "freeRotation": true,
+              "name": "LeftForeArm",
+              "offset": {
+                "x": 1.5,
+                "y": 1.1,
+                "z": 1.1
+              }
+            },
+            {
+              "freeRotation": true,
+              "name": "RightForeArm",
+              "offset": {
+                "x": -1.5,
+                "y": 1.1,
+                "z": 1.1
+              }
+            }
+          ],
+          "enterAudio": "Seat seated",
+          "exitAudio": "Seat unseated",
+          "ragdollFile": "$SURVIVAL_DATA/Character/bed_ragdoll.json"
+        }
+      },
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Z+Z-Y-X+X",
+      "uuid": "5eb8975b-0acf-43a7-ab4e-62ce661c0df7"
+    },
+    {
+      "bearing": {},
+      "color": "df7f01",
+      "cylinder": {
+        "axis": "Z",
+        "depth": 1,
+        "diameter": 1
+      },
+      "flammable": false,
+      "legacyId": 100,
+      "name": "jnt_bearing",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 0,
+        "density": 4,
+        "durability": 1,
+        "friction": 4
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_bearing.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "uuid": "4a1b886b-913e-4aad-b5b6-6e41b0db23a6"
+    },
+    {
+      "color": "df7f01",
+      "cylinder": {
+        "axis": "Z",
+        "depth": 2,
+        "diameter": 1
+      },
+      "legacyId": 101,
+      "name": "jnt_suspensionsport_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 2,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_suspensionsport01.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "spring": {
+        "defaultStiffnessLevel": 2,
+        "effect": "Suspension",
+        "length": 2,
+        "stiffnessLevels": [
+          {
+            "stiffness": 0
+          },
+          {
+            "stiffness": 7500
+          },
+          {
+            "stiffness": 20000
+          },
+          {
+            "stiffness": 37500
+          },
+          {
+            "stiffness": 60000
+          },
+          {
+            "stiffness": 87500
+          },
+          {
+            "stiffness": 120000
+          },
+          {
+            "stiffness": 157500
+          },
+          {
+            "stiffness": 200000
+          },
+          {
+            "stiffness": 247500
+          },
+          {
+            "stiffness": 300000
+          },
+          {
+            "stiffness": 357500
+          },
+          {
+            "stiffness": 420000
+          },
+          {
+            "stiffness": 487500
+          },
+          {
+            "stiffness": 560000
+          },
+          {
+            "stiffness": 637500
+          },
+          {
+            "stiffness": 720000
+          },
+          {
+            "stiffness": 807500
+          },
+          {
+            "stiffness": 900000
+          },
+          {
+            "stiffness": 997500
+          }
+        ]
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "uuid": "aa8d89eb-919b-42f4-8b58-af6f0d5856bc"
+    },
+    {
+      "color": "df7f01",
+      "cylinder": {
+        "axis": "Z",
+        "depth": 3,
+        "diameter": 1
+      },
+      "legacyId": 102,
+      "name": "jnt_suspensionoffroad_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 2,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_suspensionoffroad01.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "spring": {
+        "defaultStiffnessLevel": 2,
+        "effect": "Suspension",
+        "length": 3,
+        "stiffnessLevels": [
+          {
+            "stiffness": 0
+          },
+          {
+            "stiffness": 7500
+          },
+          {
+            "stiffness": 20000
+          },
+          {
+            "stiffness": 37500
+          },
+          {
+            "stiffness": 60000
+          },
+          {
+            "stiffness": 87500
+          },
+          {
+            "stiffness": 120000
+          },
+          {
+            "stiffness": 157500
+          },
+          {
+            "stiffness": 200000
+          },
+          {
+            "stiffness": 247500
+          },
+          {
+            "stiffness": 300000
+          },
+          {
+            "stiffness": 357500
+          },
+          {
+            "stiffness": 420000
+          },
+          {
+            "stiffness": 487500
+          },
+          {
+            "stiffness": 560000
+          },
+          {
+            "stiffness": 637500
+          },
+          {
+            "stiffness": 720000
+          },
+          {
+            "stiffness": 807500
+          },
+          {
+            "stiffness": 900000
+          },
+          {
+            "stiffness": 997500
+          }
+        ]
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "uuid": "a481138b-fae9-47c9-9bc2-91b6d2e2bf52"
+    },
+    {
+      "color": "df7f01",
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_interactive_driverseat_creative.obj",
+        "x": 4,
+        "y": 4,
+        "z": 6
+      },
+      "legacyId": 103,
+      "name": "obj_interactive_driverseat_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 4,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_driverseat01.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "steering": {
+        "bones": [
+          {
+            "name": "Hips",
+            "offset": {
+              "x": 0.0,
+              "y": -0.064,
+              "z": -0.544
+            }
+          },
+          {
+            "freeRotation": true,
+            "name": "LeftForeArm",
+            "offset": {
+              "x": 1.172,
+              "y": 0.968,
+              "z": 0.968
+            },
+            "steers": true
+          },
+          {
+            "freeRotation": true,
+            "name": "RightForeArm",
+            "offset": {
+              "x": -1.172,
+              "y": 0.968,
+              "z": 0.968
+            },
+            "steers": true
+          }
+        ],
+        "enterAudio": "Seat seated",
+        "exitAudio": "Seat unseated",
+        "ragdollFile": "$GAME_DATA/Character/seat_ragdoll.json",
+        "steerAngle": 45.0
+      },
+      "sticky": "-Y",
+      "uuid": "cf3fdcfc-a7e5-4497-b000-ffda67dd8db7"
+    },
+    {
+      "color": "df7f01",
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_interactive_driversaddle_creative.obj",
+        "x": 3,
+        "y": 4,
+        "z": 5
+      },
+      "legacyId": 120,
+      "name": "obj_interactive_driversaddle_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 4,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_driversaddle01.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "steering": {
+        "bones": [
+          {
+            "name": "Hips",
+            "offset": {
+              "x": 0.0,
+              "y": 0.384,
+              "z": -0.3
+            }
+          },
+          {
+            "freeRotation": true,
+            "name": "LeftForeArm",
+            "offset": {
+              "x": 1.2,
+              "y": 1.2,
+              "z": 1.7
+            },
+            "steers": true
+          },
+          {
+            "freeRotation": true,
+            "name": "RightForeArm",
+            "offset": {
+              "x": -1.2,
+              "y": 1.2,
+              "z": 1.7
+            },
+            "steers": true
+          }
+        ],
+        "enterAudio": "Seat seated",
+        "exitAudio": "Seat unseated",
+        "ragdollFile": "$GAME_DATA/Character/bikeseat_ragdoll.json",
+        "steerAngle": 25.0
+      },
+      "sticky": "-Y",
+      "uuid": "38ee0516-abc5-4e46-9195-c763610d7ec4"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "color": "df7f01",
+      "density": 1250.0,
+      "gasEngine": {
+        "effect": "GasEngine - Level 1",
+        "gears": [
+          {
+            "power": 0,
+            "velocity": 0
+          },
+          {
+            "power": 8,
+            "velocity": 45
+          },
+          {
+            "power": 16,
+            "velocity": 90
+          },
+          {
+            "power": 32,
+            "velocity": 180
+          },
+          {
+            "power": 64,
+            "velocity": 360
+          },
+          {
+            "power": 128,
+            "velocity": 720
+          },
+          {
+            "power": 256,
+            "velocity": 1440
+          },
+          {
+            "power": 512,
+            "velocity": 2880
+          },
+          {
+            "power": 1024,
+            "velocity": 5760
+          }
+        ]
+      },
+      "legacyId": 105,
+      "name": "obj_interactive_gasengine_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 5,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_gasengine01.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "sticky": "-Y-Z+Z+X-X",
+      "uuid": "d5e36413-b3c1-4636-8447-3410c352ec7b"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 3
+      },
+      "color": "df7f01",
+      "density": 1250.0,
+      "electricEngine": {
+        "effect": "ElectricEngine - Level 1",
+        "gears": [
+          {
+            "power": 1000,
+            "velocity": 0
+          },
+          {
+            "power": 1000,
+            "velocity": 22.5
+          },
+          {
+            "power": 1000,
+            "velocity": 45
+          },
+          {
+            "power": 1000,
+            "velocity": 90
+          },
+          {
+            "power": 1000,
+            "velocity": 180
+          },
+          {
+            "power": 1000,
+            "velocity": 360
+          },
+          {
+            "power": 1000,
+            "velocity": 720
+          },
+          {
+            "power": 1000,
+            "velocity": 1440
+          },
+          {
+            "power": 1000,
+            "velocity": 2880
+          }
+        ]
+      },
+      "legacyId": 106,
+      "name": "obj_interactive_electricengine_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 5,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_electricengine01.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "6546c293-a5aa-4442-80d5-a2819f077746"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 4
+      },
+      "color": "df7f01",
+      "density": 250.0,
+      "legacyId": 107,
+      "name": "obj_interactive_thruster_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 4,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_thruster01.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "thruster": {
+        "effect": "Thruster - Level 1",
+        "levels": [
+          {
+            "averageForce": 2222.22,
+            "forceVariation": 59.2592
+          },
+          {
+            "averageForce": 3333.33,
+            "forceVariation": 88.8889
+          },
+          {
+            "averageForce": 5000,
+            "forceVariation": 133.333
+          },
+          {
+            "averageForce": 7500,
+            "forceVariation": 200
+          },
+          {
+            "averageForce": 11250,
+            "forceVariation": 300
+          },
+          {
+            "averageForce": 16875,
+            "forceVariation": 450
+          },
+          {
+            "averageForce": 25312.5,
+            "forceVariation": 675
+          }
+        ]
+      },
+      "uuid": "5e96037a-a338-490a-a76f-6b4d820f8e46"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 1,
+        "z": 1
+      },
+      "color": "df7f01",
+      "controller": {
+        "effect": "Controller - Default"
+      },
+      "density": 250.0,
+      "legacyId": 108,
+      "name": "obj_interactive_controller_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 3,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_controller01.rend",
+      "rotationSet": "PropYZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "12862001-666c-4bdd-8326-a1f43610d28b"
+    },
+    {
+      "color": "df7f01",
+      "flammable": true,
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_interactive_switch.obj",
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "legacyId": 109,
+      "lever": {},
+      "name": "obj_interactive_switch",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 2,
+        "density": 2,
+        "durability": 3,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_switch.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y",
+      "uuid": "7cf717d7-d167-4f2d-a6e7-6b2c70aa3986"
+    },
+    {
+      "button": {},
+      "color": "df7f01",
+      "flammable": true,
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_interactive_button.obj",
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "legacyId": 110,
+      "name": "obj_interactive_button",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 2,
+        "density": 2,
+        "durability": 3,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_button.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y",
+      "uuid": "1e8d93a4-506b-470d-9ada-9c0a321e2db5"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "df7f01",
+      "density": 250.0,
+      "legacyId": 111,
+      "name": "obj_interactive_sensor_creative",
+      "physicsMaterial": "Mechanical",
+      "qualityLevel": 3,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_sensor01.rend",
+      "rotationSet": "PropZY",
+      "sensor": {
+        "offEffect": "Sensor off",
+        "onEffect": "Sensor on"
+      },
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "sticky": "+Y-Y-Z+X-X",
+      "uuid": "add3acc6-a6fd-44e8-a384-a7a16ce13c81"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "legacyId": 119,
+      "logic": {},
+      "name": "obj_interactive_logicgate",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 2,
+        "density": 2,
+        "durability": 3,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_logicgate.rend",
+      "rotationSet": "PropYZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "uuid": "9f0f56e8-2c31-4d83-996c-d00a9b296c3f"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 2,
+        "z": 1
+      },
+      "color": "df7f01",
+      "flammable": false,
+      "name": "obj_interactive_timer",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 2,
+        "durability": 3,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_timer.rend",
+      "rotationSet": "PropYmmNegYmmZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "timer": {},
+      "uuid": "8f7fd0e7-c46e-4944-a414-7ce2437bb30f"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "df7f01",
+      "name": "jnt_interactive_piston_creative",
+      "physicsMaterial": "Mechanical",
+      "piston": {
+        "defaultRange": 3,
+        "defaultSpeedLevel": 2,
+        "effect": "Piston - Default",
+        "force": 100000.0,
+        "length": 16,
+        "speedLevels": [
+          {
+            "speed": 2.0
+          },
+          {
+            "speed": 4.0
+          },
+          {
+            "speed": 6.0
+          },
+          {
+            "speed": 8.0
+          },
+          {
+            "speed": 10.0
+          },
+          {
+            "speed": 12.0
+          },
+          {
+            "speed": 14.0
+          },
+          {
+            "speed": 16.0
+          },
+          {
+            "speed": 18.0
+          },
+          {
+            "speed": 20.0
+          }
+        ]
+      },
+      "previewRotation": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "qualityLevel": 2,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_piston01.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "uuid": "260b4597-f1ac-409c-8e6b-90c998c5fe94"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "df7f01",
+      "name": "jnt_interactive_piston_creative",
+      "physicsMaterial": "Mechanical",
+      "piston": {
+        "defaultRange": 3,
+        "defaultSpeedLevel": 2,
+        "effect": "Piston - Default",
+        "force": 100000.0,
+        "length": 16,
+        "speedLevels": [
+          {
+            "speed": 2.0
+          },
+          {
+            "speed": 4.0
+          },
+          {
+            "speed": 6.0
+          },
+          {
+            "speed": 8.0
+          },
+          {
+            "speed": 10.0
+          },
+          {
+            "speed": 12.0
+          },
+          {
+            "speed": 14.0
+          },
+          {
+            "speed": 16.0
+          },
+          {
+            "speed": 18.0
+          },
+          {
+            "speed": 20.0
+          }
+        ]
+      },
+      "previewRotation": [
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1
+      ],
+      "qualityLevel": 2,
+      "ratings": {},
+      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_piston01.rend",
+      "rotationSet": "PropZ",
+      "shop": {
+        "category": "Utilities",
+        "price": "1337",
+        "tier": 0
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "sticky": "-Z",
+      "uuid": "260b4597-f1ac-409c-8e6b-90c998c5fe94"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-	"shapeSetList" : [
+	"shapeSetList": [
 		"$CONTENT_DATA/Objects/Database/ShapeSets/furnaces.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/droppers.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset",
@@ -10,7 +10,10 @@
 		"$CONTENT_DATA/Objects/Database/ShapeSets/crates.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/decor.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/interactive.shapeset",
-		"$CONTENT_DATA/Objects/Database/ShapeSets/building.shapeset",
-		"$CONTENT_DATA/Objects/Database/ShapeSets/effects.shapeset"
+		"$CONTENT_DATA/Objects/Database/ShapeSets/effects.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/blocks.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/interactive.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/others.shapeset",
+		"$CONTENT_DATA/Objects/Database/ShapeSets/building.shapeset"
 	]
 }
