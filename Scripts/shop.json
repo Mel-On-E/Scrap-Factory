@@ -1,5 +1,20 @@
 {
-  "4ae033f6-15b8-4cc1-89ac-db200809a2dc": {
+  "4a1b886b-913e-4aad-b5b6-6e41b0db23a6": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "a9ad3ebe-9c19-49fc-855c-5061ce157e4e": {
+    "tier": 1,
+    "price": "1000",
+    "category": "Utilities"
+  },
+  "f028c17e-d4ce-409b-af20-84141c880629": {
+    "tier": 1,
+    "price": "200",
+    "category": "Droppers"
+  },
+  "b1b7dc53-d143-4241-92e7-d92be98eec1a": {
     "tier": 0,
     "price": "50",
     "category": "Decor"
@@ -9,9 +24,19 @@
     "price": "200",
     "category": "Droppers"
   },
-  "e0587c21-2145-4ee1-beaa-d33ca3407c61": {
+  "3a40ff89-76bc-49ee-8b67-a0c742bdcb9b": {
     "tier": 1,
-    "price": "50000",
+    "price": "200",
+    "category": "Droppers"
+  },
+  "5eb8975b-0acf-43a7-ab4e-62ce661c0df7": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
+    "tier": 0,
+    "price": "100",
     "category": "Furnaces"
   },
   "692a5ebd-0793-49ba-b1ef-681a8fdceba7": {
@@ -19,100 +44,95 @@
     "price": "20",
     "category": "Droppers"
   },
-  "efc10452-8461-44c5-8c21-a06d5aaea16c": {
+  "a8a06b6e-4152-4527-9602-dd231c5a1cab": {
     "tier": 1,
-    "price": "200",
-    "category": "Generators"
-  },
-  "fd936bf7-33fa-4d47-88de-e7f7ba03861b": {
-    "tier": 1,
-    "price": "1000",
-    "category": "Utilities"
-  },
-  "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe": {
-    "tier": 1,
-    "price": "1000",
-    "category": "Utilities"
-  },
-  "1b4711f6-b5ae-4e41-b82d-065867a9d0d3": {
-    "tier": 0,
-    "price": "100",
-    "category": "Decor"
-  },
-  "9c59ddbf-9bf8-47a7-8771-067f8d96f741": {
-    "tier": 0,
-    "price": "100",
-    "category": "Decor"
-  },
-  "d5c4fc84-ad5a-41c1-876b-591412b37b11": {
-    "tier": 0,
-    "price": "25",
-    "category": "Decor"
-  },
-  "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
-    "tier": 1,
-    "price": "500",
+    "price": "5000",
     "category": "Upgrades"
-  },
-  "f028c17e-d4ce-409b-af20-84141c880629": {
-    "tier": 1,
-    "price": "200",
-    "category": "Droppers"
-  },
-  "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": {
-    "tier": 1,
-    "price": "69",
-    "category": "Decor"
-  },
-  "7e3df19b-2450-44ae-ad46-d2f6b5148cbf": {
-    "tier": 0,
-    "price": "100",
-    "category": "Furnaces"
   },
   "3039176f-dea8-453d-82be-2c73a68ad05f": {
     "tier": 1,
     "price": "10000",
     "category": "Furnaces"
   },
-  "a8a06b6e-4152-4527-9602-dd231c5a1cab": {
+  "efc10452-8461-44c5-8c21-a06d5aaea16c": {
     "tier": 1,
-    "price": "5000",
-    "category": "Upgrades"
-  },
-  "b1b7dc53-d143-4241-92e7-d92be98eec1a": {
-    "tier": 0,
-    "price": "50",
-    "category": "Decor"
-  },
-  "69b869f1-03dc-4ea2-9391-fd24903945d1": {
-    "tier": 0,
-    "price": "100",
-    "category": "Upgrades"
+    "price": "200",
+    "category": "Generators"
   },
   "69b857f1-07dc-4ea2-9391-fd24903945d1": {
     "tier": 1,
     "price": "10",
     "category": "Utilities"
   },
-  "daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
+  "749f69e0-56c9-488c-adf6-66c58531818f": {
     "tier": 0,
-    "price": "150",
-    "category": "Generators"
+    "price": "1337",
+    "category": "Decor"
   },
-  "efc1f452-8431-44c5-8c21-a06d53aed16c": {
-    "tier": 1,
-    "price": "500",
-    "category": "Generators"
+  "d5e36413-b3c1-4636-8447-3410c352ec7b": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "8f7fd0e7-c46e-4944-a414-7ce2437bb30f": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "260b4597-f1ac-409c-8e6b-90c998c5fe94": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "a6c6ce30-dd47-4587-b475-085d55c6a3b4": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Decor"
+  },
+  "0603b36e-0bdb-4828-b90c-ff19abcdfe34": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Decor"
+  },
+  "6546c293-a5aa-4442-80d5-a2819f077746": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
   },
   "6a9c7a85-b95d-4bc3-8cc8-464df810801a": {
     "tier": 0,
     "price": "100",
     "category": "Decor"
   },
-  "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e": {
+  "5e96037a-a338-490a-a76f-6b4d820f8e46": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "efc1f452-8431-44c5-8c21-a06d53aed16c": {
     "tier": 1,
-    "price": "15000",
-    "category": "Upgrades"
+    "price": "500",
+    "category": "Generators"
+  },
+  "09ca2713-28ee-4119-9622-e85490034758": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Decor"
+  },
+  "12862001-666c-4bdd-8326-a1f43610d28b": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "4ae033f6-15b8-4cc1-89ac-db200809a2dc": {
+    "tier": 0,
+    "price": "50",
+    "category": "Decor"
+  },
+  "38ee0516-abc5-4e46-9195-c763610d7ec4": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
   },
   "69b869f1-03dc-4ea3-9291-fd6490f945dd": {
     "tier": 0,
@@ -120,9 +140,54 @@
     "category": "Other",
     "special": true
   },
-  "a9ad3ebe-9c19-49fc-855c-5061ce157e4e": {
+  "fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "aa8d89eb-919b-42f4-8b58-af6f0d5856bc": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "e0587c21-2145-4ee1-beaa-d33ca3407c61": {
     "tier": 1,
-    "price": "1000",
+    "price": "50000",
+    "category": "Furnaces"
+  },
+  "7cf717d7-d167-4f2d-a6e7-6b2c70aa3986": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "9f0f56e8-2c31-4d83-996c-d00a9b296c3f": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "69e362c3-32aa-4cd1-adc0-dcfc47b92c0d": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "cf3fdcfc-a7e5-4497-b000-ffda67dd8db7": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "db66f0b1-0c50-4b74-bdc7-771374204b1f": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3": {
+    "tier": 1,
+    "price": "500",
+    "category": "Upgrades"
+  },
+  "1e8d93a4-506b-470d-9ada-9c0a321e2db5": {
+    "tier": 0,
+    "price": "1337",
     "category": "Utilities"
   },
   "17de8088-d5a8-45b1-80eb-1d0688a8c39a": {
@@ -130,14 +195,79 @@
     "price": "1500",
     "category": "Upgrades"
   },
+  "5f41af56-df4c-4837-9b3c-10781335757f": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Decor"
+  },
+  "69b869f1-03dc-4ea2-9391-fd24903945d1": {
+    "tier": 0,
+    "price": "100",
+    "category": "Upgrades"
+  },
+  "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e": {
+    "tier": 1,
+    "price": "15000",
+    "category": "Upgrades"
+  },
+  "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe": {
+    "tier": 1,
+    "price": "1000",
+    "category": "Utilities"
+  },
+  "a481138b-fae9-47c9-9bc2-91b6d2e2bf52": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
   "91037f2c-5230-464b-8873-ad13355539af": {
     "tier": 1,
     "price": "100",
     "category": "Generators"
   },
-  "3a40ff89-76bc-49ee-8b67-a0c742bdcb9b": {
+  "9c59ddbf-9bf8-47a7-8771-067f8d96f741": {
+    "tier": 0,
+    "price": "100",
+    "category": "Decor"
+  },
+  "c60b9627-fc2b-4319-97c5-05921cb976c6": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "1b4711f6-b5ae-4e41-b82d-065867a9d0d3": {
+    "tier": 0,
+    "price": "100",
+    "category": "Decor"
+  },
+  "daf6f4c4-5402-4fa3-93f4-3180243c8a3c": {
+    "tier": 0,
+    "price": "150",
+    "category": "Generators"
+  },
+  "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f": {
     "tier": 1,
-    "price": "200",
-    "category": "Droppers"
+    "price": "69",
+    "category": "Decor"
+  },
+  "e02620a5-371b-4d63-be35-fd8a0552eba9": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Decor"
+  },
+  "add3acc6-a6fd-44e8-a384-a7a16ce13c81": {
+    "tier": 0,
+    "price": "1337",
+    "category": "Utilities"
+  },
+  "fd936bf7-33fa-4d47-88de-e7f7ba03861b": {
+    "tier": 1,
+    "price": "1000",
+    "category": "Utilities"
+  },
+  "d5c4fc84-ad5a-41c1-876b-591412b37b11": {
+    "tier": 0,
+    "price": "25",
+    "category": "Decor"
   }
 }

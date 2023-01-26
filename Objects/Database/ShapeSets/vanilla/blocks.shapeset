@@ -1,0 +1,125 @@
+{
+  "blockList": [
+    {
+      "asg": "$GAME_DATA/Objects/Textures/Blocks/blk_concrete01_asg.tga",
+      "color": "8d8f89",
+      "dif": "$GAME_DATA/Objects/Textures/Blocks/blk_concrete01_dif.tga",
+      "flammable": false,
+      "legacyId": 1,
+      "name": "blk_concrete1",
+      "nor": "$GAME_DATA/Objects/Textures/Blocks/blk_concrete01_nor.tga",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 7,
+        "durability": 5,
+        "friction": 6
+      },
+      "shop": {
+        "category": "Decor",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "tiling": 8,
+      "uuid": "a6c6ce30-dd47-4587-b475-085d55c6a3b4"
+    },
+    {
+      "asg": "$GAME_DATA/Objects/Textures/Blocks/blk_caution01_asg.tga",
+      "color": "ce9e0c",
+      "dif": "$GAME_DATA/Objects/Textures/Blocks/blk_caution01_dif.tga",
+      "flammable": true,
+      "legacyId": 4,
+      "name": "blk_caution",
+      "nor": "$GAME_DATA/Textures/Materialtextures/normal_nor.tga",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "buoyancy": 7,
+        "density": 2,
+        "durability": 3,
+        "friction": 4
+      },
+      "shop": {
+        "category": "Decor",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "tiling": 8,
+      "uuid": "09ca2713-28ee-4119-9622-e85490034758"
+    },
+    {
+      "asg": "$GAME_DATA/Objects/Textures/Blocks/blk_bricks01_asg.tga",
+      "color": "af967b",
+      "dif": "$GAME_DATA/Objects/Textures/Blocks/blk_bricks01_dif.tga",
+      "flammable": false,
+      "legacyId": 6,
+      "name": "blk_bricks",
+      "nor": "$GAME_DATA/Objects/Textures/Blocks/blk_bricks01_nor.tga",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 7,
+        "durability": 4,
+        "friction": 6
+      },
+      "shop": {
+        "category": "Decor",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "tiling": 8,
+      "uuid": "0603b36e-0bdb-4828-b90c-ff19abcdfe34"
+    },
+    {
+      "asg": "$GAME_DATA/Objects/Textures/Blocks/blk_glass_asg.tga",
+      "color": "e4f8ff",
+      "dif": "$GAME_DATA/Objects/Textures/Blocks/blk_glass_dif.tga",
+      "flammable": false,
+      "glass": true,
+      "name": "blk_glass",
+      "nor": "$GAME_DATA/Textures/Materialtextures/normal_nor.tga",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 3,
+        "durability": 1,
+        "friction": 3
+      },
+      "shop": {
+        "category": "Decor",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "tiling": 8,
+      "uuid": "5f41af56-df4c-4837-9b3c-10781335757f"
+    },
+    {
+      "asg": "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_asg.tga",
+      "color": "c2f9ff",
+      "dif": "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_dif.tga",
+      "flammable": false,
+      "glass": true,
+      "legacyId": 7,
+      "name": "blk_glasstile",
+      "nor": "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_nor.tga",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "buoyancy": 5,
+        "density": 3,
+        "durability": 1,
+        "friction": 3
+      },
+      "shop": {
+        "category": "Decor",
+        "price": "1337",
+        "tier": 0
+      },
+      "stackSize": 65535.0,
+      "tiling": 8,
+      "uuid": "749f69e0-56c9-488c-adf6-66c58531818f"
+    }
+  ]
+}
