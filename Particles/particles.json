@@ -1,3 +1,7 @@
 {
-   "particleSystemList" : [ "pollution/p_drops_pollution.json" ]
+   "particleSystemList" : [
+      "drops/p_drops_pollution.json",
+      "sellpoints/p_sellpoints_campfire_onsell.json",
+      "sellpoints/p_sellpoints_campfire_onsell_easter_egg.json"
+   ]
 }

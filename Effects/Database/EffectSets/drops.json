@@ -1,0 +1,12 @@
+{
+   "Drops - Pollution" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_drops_pollution" ],
+            "type" : "particle"
+         }
+      ]
+   }
+}

@@ -1,0 +1,22 @@
+{
+   "Sellpoints - CampfireOnsell" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_sellpoints_campfire_onsell" ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Sellpoints - CampfireSecret" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_sellpoints_campfire_onsell_easter_egg" ],
+            "type" : "particle"
+         }
+      ]
+   }
+}
