@@ -5,6 +5,8 @@ dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 ---@class Burner: ShapeClass
 Burner = class(nil)
 
+local secretEffectChance = 0.15
+
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)
     Generator.server_onCreate(self)
@@ -36,12 +38,19 @@ function Burner:sv_onEnterDrop(shape)
     end
     power = power + 1
 
-    sm.event.sendToGame("sv_e_stonks",
-        { pos = shape:getWorldPosition(), value = tostring(power), effect = "Sellpoints - CampfireOnsell", format = "energy" })
+    sm.event.sendToGame(
+        "sv_e_stonks",
+        {
+            pos = shape.worldPosition,
+            value = tostring(power),
+            effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or "Sellpoints - CampfireOnsell",
+            format = "energy"
+        }
+    )
     PowerManager.sv_changePower(power)
 
     --create pollution drop
-    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape:getWorldRotation())
+    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
     local newPublicData = {
         value = 1,
         pollution = power,
