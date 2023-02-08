@@ -37,7 +37,7 @@ function Burner:sv_onEnterDrop(shape)
     power = power + 1
 
     sm.event.sendToGame("sv_e_stonks",
-        { pos = shape:getWorldPosition(), value = tostring(power), effect = "Fire -medium01_putout", format = "energy" })
+        { pos = shape:getWorldPosition(), value = tostring(power), effect = "Sellpoints - CampfireOnsell", format = "energy" })
     PowerManager.sv_changePower(power)
 
     --create pollution drop
