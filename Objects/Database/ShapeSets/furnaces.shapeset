@@ -106,40 +106,7 @@
             "durability" : 2,
             "friction" : 5
          },
-         "renderable" : {
-            "lodList" : [
-               {
-                  "mesh" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_off.fbx",
-                  "pose0" : "$SURVIVAL_DATA/Objects/Mesh/lights/obj_light_arealight_on.fbx",
-                  "subMeshMap" : {
-                     "arealight" : {
-                        "material" : "PoseAnimDifAsgNor",
-                        "textureList" : [
-                           "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_dif.tga",
-                           "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_asg.tga",
-                           "$SURVIVAL_DATA/Objects/Textures/lights/obj_light_arealight_nor.tga"
-                        ]
-                     },
-                     "beam" : {
-                        "material" : "PoseAnimLightCone",
-                        "textureList" : [
-                           "$GAME_DATA/Objects/Textures/lights/obj_light_headlightbeam_dif.tga",
-                           "",
-                           ""
-                        ]
-                     },
-                     "flare" : {
-                        "material" : "PoseAnimLightFlare",
-                        "textureList" : [
-                           "$GAME_DATA/Objects/Textures/lights/obj_light_headlightflare_dif.tga",
-                           "",
-                           ""
-                        ]
-                     }
-                  }
-               }
-            ]
-         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "LunarFurnace",
