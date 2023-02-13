@@ -1,0 +1,22 @@
+# Blender 3.4.1 MTL File: 'p_furnace_flask_pyramid.blend'
+# www.blender.org
+
+newmtl Fluid
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd C:/Users/User/AppData/Roaming/Axolot Games/Scrap Mechanic/User/User_76561198379446851/Mods/Scrap-Factory/Effects/Textures/simple_color_pallet.png
+map_d C:/Users/User/AppData/Roaming/Axolot Games/Scrap Mechanic/User/User_76561198379446851/Mods/Scrap-Factory/Effects/Textures/simple_color_pallet.png
+
+newmtl Glass
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd C:/Users/User/AppData/Roaming/Axolot Games/Scrap Mechanic/User/User_76561198379446851/Mods/Scrap-Factory/Effects/Textures/science/flask_pyramid_dif.tga
+map_d C:/Users/User/AppData/Roaming/Axolot Games/Scrap Mechanic/User/User_76561198379446851/Mods/Scrap-Factory/Effects/Textures/science/flask_pyramid_dif.tga

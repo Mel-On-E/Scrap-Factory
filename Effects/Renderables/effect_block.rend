@@ -1,9 +1,17 @@
 {
    "lodList" : [
       {
-         "mesh" : "$CONTENT_DATA/Effects/Meshes/part.fbx",
-         "subMeshList" : [
-            {
+         "mesh" : "$CONTENT_DATA/Effects/Meshes/part.obj",
+         "subMeshMap" : {
+            "Outline" : {
+               "material" : "Dif",
+               "textureList" : [
+                  "$GAME_DATA/Textures/black.png",
+                  "$CONTENT_DATA/Effects/Textures/Blank/blank_asg.tga",
+                  "$CONTENT_DATA/Effects/Textures/Blank/blank_nor.tga"
+               ]
+            },
+            "Paint" : {
                "material" : "DifAsgNor",
                "textureList" : [
                   "$CONTENT_DATA/Effects/Textures/Blank/blank_dif.tga",
@@ -11,7 +19,7 @@
                   "$CONTENT_DATA/Effects/Textures/Blank/blank_nor.tga"
                ]
             }
-         ]
+         }
       }
    ]
 }

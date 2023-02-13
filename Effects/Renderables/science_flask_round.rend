@@ -1,0 +1,25 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Effects/Meshes/flask_round.obj",
+         "subMeshMap" : {
+            "Glass" : {
+               "material" : "Glass",
+               "textureList" : [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_asg.tga",
+                  "$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
+               ]
+            },
+            "Liquid" : {
+               "material" : "Dif",
+               "textureList" : [
+                  "$CONTENT_DATA/Effects/Textures/simple_color_pallet.png",
+                  "$CONTENT_DATA/Effects/Textures/Blank/blank_asg.tga",
+                  "$CONTENT_DATA/Effects/Textures/Blank/blank_nor.tga"
+               ]
+            }
+         }
+      }
+   ]
+}
