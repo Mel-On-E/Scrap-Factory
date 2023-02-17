@@ -1,0 +1,13 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Effects/Meshes/p_wonk_coin.obj",
+         "subMeshList" : [
+            {
+               "material" : "Dif",
+               "textureList" : [ "$CONTENT_DATA/Effects/Textures/simple_color_pallet.png" ]
+            }
+         ]
+      }
+   ]
+}
