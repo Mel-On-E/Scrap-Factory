@@ -18,6 +18,34 @@
 			}
 		]
 	},
+	"Furnace - OnSell": {
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_sellpoints_furnace_onsell",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			}
+		]
+	},
+	"Furnace - Research Debris": {
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_sellpoints_furnace_science",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			}
+		]
+	},
 	"Nice Sound": {
 		"effectList": [
 			{

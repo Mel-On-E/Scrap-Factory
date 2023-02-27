@@ -3,6 +3,8 @@
       "drops/p_drops_pollution.json",
       "sellpoints/p_sellpoints_campfire_onsell.json",
       "sellpoints/p_sellpoints_campfire_onsell_easter_egg.json",
+	  "sellpoints/p_sellpoints_furnace_onsell.json",
+	  "sellpoints/p_sellpoints_furnace_science.json",
 	  "actions/p_action_sell.json"
    ]
 }
