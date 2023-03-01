@@ -12,7 +12,6 @@ Shop = class(Interface)
 --------------------
 
 function Shop:client_onCreate()
-
 	--Global object setup so you can call methods and set stuff
 	if not g_cl_shop then
 		g_cl_shop = self
@@ -176,7 +175,6 @@ end
 
 ---Setups the gui callbacks
 function Shop:cl_setupGui()
-
 	local changeCategoryFunc = "cl_changeCategory"
 	---Quantity
 	self.cl.gui:setButtonCallback("Buy_x1", "cl_changeQuantity")
@@ -204,7 +202,6 @@ function Shop:cl_setupGui()
 
 
 	self:gui_setupTiers()
-
 end
 
 ---Setups the tiers DropDown
@@ -277,7 +274,6 @@ function Shop:gui_render()
 
 		self.cl.renderedPages = array_reverse(self.cl.renderedPages)
 	end
-
 end
 
 ---@param page Page The page from wich the item should be removed
@@ -365,6 +361,8 @@ function Shop:sv_buy(params, player)
 
 	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
 end
+
+-- #endregion
 
 --------------------
 -- #region Types
