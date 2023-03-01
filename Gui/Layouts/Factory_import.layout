@@ -24,7 +24,6 @@
                     <Property key="FontName" value="SM_Header"/>
                     <Property key="TextAlign" value="Left VCenter"/>
                     <Property key="Caption" value="abcd"/>
-                    <Property key="FontHeight" value="15"/>
                 </Widget>
             </Widget>
         </Widget>
