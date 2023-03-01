@@ -33,8 +33,8 @@ function Shop:cl_setup()
 	self.cl.sortHighest = false
 	self.cl.category = "All"
 
-	self.cl.pages = { {} }
-	self:cl_setupDefPages()
+	self.cl.sortedItems = {}
+	self:cl_setupSortedItems()
 
 	self.cl.renderedPages = { {} }
 	self.cl.tier = -1
@@ -252,47 +252,37 @@ end
 
 ---Render all pages based on tiers, sort and category
 function Shop:gui_render()
-	self.cl.renderedPages = table.copy(self.cl.pages)
+	self.cl.renderedPages = { {} }
 
-	--Clear the blocked tier items and diffrent category items
-	for pi, page in pairs(self.cl.pages) do
-		for i, item in pairs(page) do
-			local categoryCheck = item.category == self.cl.category or self.cl.category == "All"
-			--TODO: remove -1 after we do stuff to fix tiers
-			local tierCheck = item.tier <= (ResearchManager.cl_getCurrentTier() - 1)
-			local selectTierCheck = item.tier == self.cl.tier or self.cl.tier == -1
-			if categoryCheck and tierCheck and selectTierCheck then goto continue end
+	--Clear the blocked tier items and different category items
+	local availableItems = {}
 
-			Shop.remove_item(self.cl.renderedPages[pi], item.uuid)
-			::continue::
+	for _, item in pairs(self.cl.sortedItems) do
+		local categoryCheck = item.category == self.cl.category or self.cl.category == "All"
+		--TODO: remove -1 after we do stuff to fix tiers
+		local tierCheck = item.tier <= (ResearchManager.cl_getCurrentTier() - 1)
+		local selectTierCheck = item.tier == self.cl.tier or self.cl.tier == -1
+
+		if categoryCheck and tierCheck and selectTierCheck then
+			table.insert(availableItems, item)
 		end
 	end
 
 	--Sort
 	if self.cl.sortHighest then
-		for i, page in pairs(self.cl.renderedPages) do
-			self.cl.renderedPages[i] = array_reverse(page)
-		end
-
-		self.cl.renderedPages = array_reverse(self.cl.renderedPages)
+		availableItems = array_reverse(availableItems)
 	end
 
-	for key, value in pairs(self.cl.renderedPages) do
-		print(#value)
-	end
+	--Generate pages
+	local page = 1
+	local i = 1
+	for _, item in pairs(availableItems) do
+		table.insert(self.cl.renderedPages[page], item)
 
-	for key, value in pairs(self.cl.pages) do
-		print(#value)
-	end
-end
-
----@param page Page The page from wich the item should be removed
----@param uuid Uuid The uuid of the item that it should delete
-function Shop.remove_item(page, uuid)
-	for i = 1, #page do
-		if page[i].uuid == uuid then
-			table.remove(page, i)
-			return
+		i = i + 1
+		if i % (ITEMS_PER_PAGE + 1) == 0 then
+			page = page + 1
+			table.insert(self.cl.renderedPages, {})
 		end
 	end
 end
@@ -322,33 +312,18 @@ function Shop:gui_display()
 	self.cl.gui:setText("PageNum", self.cl.curPage .. " / " .. #self.cl.renderedPages)
 end
 
----Generates the default pages
-function Shop:cl_setupDefPages()
-	local sortedShop = {}
-
+---Create a list of items sorted by price
+function Shop:cl_setupSortedItems()
 	for uuid, item in pairs(g_shop) do
 		if not item.special then
-			table.insert(sortedShop,
+			table.insert(self.cl.sortedItems,
 				{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
 		end
 	end
 
-	table.sort(sortedShop, function(a, b)
+	table.sort(self.cl.sortedItems, function(a, b)
 		return a.price > b.price
 	end)
-
-
-	local page = 1
-	local i = 1
-	for _, item in pairs(sortedShop) do
-		table.insert(self.cl.pages[page], item)
-
-		i = i + 1
-		if i % (ITEMS_PER_PAGE + 1) == 0 then
-			page = page + 1
-			table.insert(self.cl.pages, {})
-		end
-	end
 end
 
 -- #endregion
@@ -382,7 +357,7 @@ end
 ---@field curPage number Current page
 ---@field sortHighest boolean Wheater the gui should sort from highest price or the lowest
 ---@field category "All" | "Generators" | "Utilities" | "Upgrades" | "Furnaces" | "Decor" The current category
----@field pages Page[] The default pages ***DONT MODIFY***
+---@field sortedItems Item[] List containing all items sorted by price ***DONT MODIFY***
 ---@field renderedPages Page[] The rendered pages
 ---@field tier number What tier to filter to -1 == No filter
 ---@field tierText string Used for the dropdown cuz lang doesnt change ***DONT MODIFY***
