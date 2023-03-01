@@ -276,6 +276,14 @@ function Shop:gui_render()
 
 		self.cl.renderedPages = array_reverse(self.cl.renderedPages)
 	end
+
+	for key, value in pairs(self.cl.renderedPages) do
+		print(#value)
+	end
+
+	for key, value in pairs(self.cl.pages) do
+		print(#value)
+	end
 end
 
 ---@param page Page The page from wich the item should be removed
@@ -316,32 +324,31 @@ end
 
 ---Generates the default pages
 function Shop:cl_setupDefPages()
+	local sortedShop = {}
+
+	for uuid, item in pairs(g_shop) do
+		if not item.special then
+			table.insert(sortedShop,
+				{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
+		end
+	end
+
+	table.sort(sortedShop, function(a, b)
+		return a.price > b.price
+	end)
+
+
 	local page = 1
 	local i = 1
-	for uuid, item in pairs(g_shop) do
-		if item.special then
-			goto continue
-		end
-		table.insert(self.cl.pages[page],
-			{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
+	for _, item in pairs(sortedShop) do
+		table.insert(self.cl.pages[page], item)
 
 		i = i + 1
-		if i % (ITEMS_PER_PAGE + 1) ~= 0 then goto continue end
-
-		page = page + 1
-		table.insert(self.cl.pages, {})
-		::continue::
+		if i % (ITEMS_PER_PAGE + 1) == 0 then
+			page = page + 1
+			table.insert(self.cl.pages, {})
+		end
 	end
-	for _, page in pairs(self.cl.pages) do
-		table.sort(page, function(a, b)
-			return a.price > b.price
-		end)
-	end
-
-	table.sort(self.cl.pages, function(a, b)
-		---@diagnostic disable-next-line: undefined-field
-		return a[1].price > a[1].price
-	end)
 end
 
 -- #endregion
