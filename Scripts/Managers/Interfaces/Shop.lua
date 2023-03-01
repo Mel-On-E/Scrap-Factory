@@ -1,6 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
+---@type integer number of items each page of the gui can show at max
+local ITEMS_PER_PAGE = 32
 
 ---@class Shop : Interface
 ---@field cl ShopCl
@@ -196,7 +198,7 @@ function Shop:cl_setupGui()
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setButtonCallback("BuyBtn", "cl_buy")
 
-	for i = 1, 32 do
+	for i = 1, ITEMS_PER_PAGE do
 		self.cl.gui:setButtonCallback("Item_" .. i, "cl_changeItem")
 	end
 
@@ -293,7 +295,7 @@ function Shop:gui_display()
 
 	local page = self.cl.renderedPages[self.cl.curPage]
 
-	for i = 1, 32 do
+	for i = 1, ITEMS_PER_PAGE do
 		if page[i] == nil then
 			self.cl.gui:setVisible("Item_" .. tostring(i), false)
 			self.cl.gui:setVisible("ItemPrice_" .. tostring(i), false)
@@ -324,7 +326,7 @@ function Shop:cl_setupDefPages()
 			{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
 
 		i = i + 1
-		if i % 33 ~= 0 then goto continue end
+		if i % (ITEMS_PER_PAGE + 1) ~= 0 then goto continue end
 
 		page = page + 1
 		table.insert(self.cl.pages, {})
