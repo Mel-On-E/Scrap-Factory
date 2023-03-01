@@ -30,7 +30,9 @@ function Interface:cl_e_isGuiOpen()
 end
 
 function Interface:cl_close()
-	self.cl.gui:close()
+	if self ~= nil then
+		self.cl.gui:close()
+	end
 end
 
 function Interface:cl_onGuiClosed()
