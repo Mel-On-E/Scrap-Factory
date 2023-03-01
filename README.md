@@ -11,12 +11,12 @@ A custom game letting people build Tycoon-like factories.
 - Factory building
 
 ## Team:
-- DPP as girlboss
+- DPP: girlboss
 - Illumina: artist girl
-- jsasasaaaaa: allrounder
 - Sheggy: code, code review
 - Tofix: code, gui, and internal tools maintainer
 - Vajdani: code
 
 ## Contributors
 - Nate: refactoring, code, and models
+- jsasasaaaaa: being jsa :)
