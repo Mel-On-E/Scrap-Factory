@@ -4,7 +4,7 @@
         <Widget type="Canvas" skin="BackgroundLiftExport" position_real="0.016666666666666666 0.022222222222222223 0.9666666666666667 0.9555555555555556">
             <Widget type="TextBox" skin="TextBox" name="title" position_real="0.017241379310344827 0.023255813953488372 0.9655172413793104 0.1744186046511628">
                 <Property key="TextAlign" value="Center"/>
-                <Property key="FontName" value="SM_Header"/>
+                <Property key="FontName" value="SM_HeaderLarge_Medium"/>
                 <Property key="Caption" value="name creation"/>
             </Widget>
             <Widget type="Button" skin="StyledButtonLarge" name="import" position_real="0.27586206896551724 0.8604651162790697 0.4482758620689655 0.13953488372093023">
