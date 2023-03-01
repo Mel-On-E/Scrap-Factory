@@ -14,6 +14,8 @@
 		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/blocks.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/interactive.shapeset",
 		"$CONTENT_DATA/Objects/Database/ShapeSets/vanilla/others.shapeset",
-		"$CONTENT_DATA/Objects/Database/ShapeSets/building.shapeset"
+		"$CONTENT_DATA/Objects/Database/ShapeSets/building.shapeset",
+		
+		"$CONTENT_DATA/Objects/Database/ShapeSets/debug.shapeset"
 	]
 }

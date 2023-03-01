@@ -1,0 +1,21 @@
+{
+   "partList" : [
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "name" : "obj_devtool_effect",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_sensor.rend",
+         "rotationSet" : "PropZ",
+         "scripted" : {
+            "classname" : "SusEffect",
+            "filename" : "$CONTENT_DATA/Scripts/Debug/MyEffects.lua"
+         },
+         "sticky" : "-Z",
+         "uuid" : "16690034-de3f-4580-922a-1b2fd5543711"
+      }
+   ]
+}

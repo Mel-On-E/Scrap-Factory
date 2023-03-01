@@ -1,330 +1,330 @@
 {
-  "partList": [
-    {
-      "box": {
-        "x": 6,
-        "y": 1,
-        "z": 6
-      },
-      "color": "df7f01",
-      "flammable": false,
-      "name": "obj_upgrader_basic",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 4,
-        "density": 4,
-        "durability": 6,
-        "friction": 3
-      },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
-      "restitution": 0.0,
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "BasicUpgrader",
-        "data": {
-          "belt": {
-            "box": {
-              "x": 1.5,
-              "y": 0.25,
-              "z": 1.5
+   "partList" : [
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "df7f00",
+         "flammable" : false,
+         "name" : "obj_upgrader_basic",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 3
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
+         "restitution" : 0.0,
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "BasicUpgrader",
+            "data" : {
+               "belt" : {
+                  "box" : {
+                     "x" : 1.50,
+                     "y" : 0.250,
+                     "z" : 1.50
+                  },
+                  "direction" : {
+                     "at" : -0.250,
+                     "right" : -1,
+                     "up" : 0
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.1250,
+                     "z" : 0
+                  },
+                  "speed" : 1
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "UpgradeareaBig - Hexagon"
+               },
+               "power" : 3,
+               "upgrade" : {
+                  "add" : 1,
+                  "box" : {
+                     "x" : 0.250,
+                     "y" : 1.50,
+                     "z" : 1.50
+                  },
+                  "cap" : 100,
+                  "limit" : 10,
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.8750,
+                     "z" : 0
+                  }
+               }
             },
-            "direction": {
-              "at": -0.25,
-              "right": -1,
-              "up": 0
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
+         },
+         "shop" : {
+            "category" : "Upgrades",
+            "price" : "100",
+            "tier" : 0
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "69b869f1-03dc-4ea2-9391-fd24903945d1"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "ff0000",
+         "flammable" : false,
+         "name" : "obj_upgrader_random",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 3
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
+         "restitution" : 0.0,
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "RandomUpgrader",
+            "data" : {
+               "belt" : {
+                  "box" : {
+                     "x" : 1.50,
+                     "y" : 0.250,
+                     "z" : 1.50
+                  },
+                  "direction" : {
+                     "at" : -0.250,
+                     "right" : -1,
+                     "up" : 0
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.1250,
+                     "z" : 0
+                  },
+                  "speed" : 0.750
+               },
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "UpgradeareaBig - Random"
+               },
+               "power" : 10,
+               "upgrade" : {
+                  "addMax" : 5,
+                  "addMin" : 1,
+                  "box" : {
+                     "x" : 0.250,
+                     "y" : 1.50,
+                     "z" : 1.50
+                  },
+                  "cap" : 1000,
+                  "limit" : 5,
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.8750,
+                     "z" : 0
+                  }
+               }
             },
-            "offset": {
-              "x": 0,
-              "y": 0.125,
-              "z": 0
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"
+         },
+         "shop" : {
+            "category" : "Upgrades",
+            "price" : "1500",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "17de8088-d5a8-45b1-80eb-1d0688a8c39a"
+      },
+      {
+         "color" : "df7f01",
+         "cylinder" : {
+            "axis" : "Y",
+            "depth" : 1,
+            "diameter" : 1,
+            "margin" : 0.040
+         },
+         "flammable" : true,
+         "name" : "obj_upgrader_toilet",
+         "physicsMaterial" : "Default",
+         "ratings" : {
+            "buoyancy" : 2,
+            "density" : 1,
+            "durability" : 1,
+            "friction" : 3
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "BasicUpgrader",
+            "data" : {
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Hexagon"
+               },
+               "power" : 5,
+               "upgrade" : {
+                  "box" : {
+                     "x" : 0.750,
+                     "y" : 0.250,
+                     "z" : 0.1250
+                  },
+                  "cap" : 100,
+                  "limit" : 3,
+                  "multiplier" : 1.10,
+                  "offset" : {
+                     "x" : 0.3750,
+                     "y" : 0,
+                     "z" : 0
+                  }
+               }
             },
-            "speed": 1
-          },
-          "effect": {
-            "color": {
-              "b": 0,
-              "g": 0,
-              "r": 1
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
+         },
+         "shop" : {
+            "category" : "Upgrades",
+            "price" : "500",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y+Y",
+         "uuid" : "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3"
+      },
+      {
+         "color" : "ff0000",
+         "cylinder" : {
+            "axis" : "Y",
+            "depth" : 1,
+            "diameter" : 1,
+            "margin" : 0.040
+         },
+         "flammable" : true,
+         "name" : "obj_upgrader_tp_random",
+         "physicsMaterial" : "Default",
+         "ratings" : {
+            "buoyancy" : 2,
+            "density" : 1,
+            "durability" : 1,
+            "friction" : 3
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "RandomUpgrader",
+            "data" : {
+               "effect" : {
+                  "color" : {
+                     "b" : 0,
+                     "g" : 0,
+                     "r" : 1
+                  },
+                  "name" : "Upgradearea - Random"
+               },
+               "power" : 15,
+               "upgrade" : {
+                  "box" : {
+                     "x" : 0.750,
+                     "y" : 0.250,
+                     "z" : 0.1250
+                  },
+                  "cap" : 2048,
+                  "multiplierMax" : 2,
+                  "multiplierMin" : 0,
+                  "offset" : {
+                     "x" : 0.3750,
+                     "y" : 0,
+                     "z" : 0
+                  }
+               }
             },
-            "name": "UpgradeareaBig - Hexagon"
-          },
-          "power": 3,
-          "upgrade": {
-            "add": 1,
-            "box": {
-              "x": 0.25,
-              "y": 1.5,
-              "z": 1.5
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"
+         },
+         "shop" : {
+            "category" : "Upgrades",
+            "price" : "5000",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y+Y",
+         "uuid" : "a8a06b6e-4152-4527-9602-dd231c5a1cab"
+      },
+      {
+         "color" : "ff0000",
+         "cylinder" : {
+            "axis" : "Y",
+            "depth" : 2,
+            "diameter" : 1,
+            "margin" : 0.040
+         },
+         "flammable" : true,
+         "name" : "obj_upgrader_spinny",
+         "physicsMaterial" : "Default",
+         "ratings" : {
+            "buoyancy" : 2,
+            "density" : 1,
+            "durability" : 1,
+            "friction" : 3
+         },
+         "renderable" : "$GAME_DATA/Objects/Renderable/decor/obj_decor_toiletroll.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "SpinnyUpgrader",
+            "data" : {
+               "effect" : {
+                  "color" : {
+                     "b" : 0.7960,
+                     "g" : 0.7530,
+                     "r" : 1
+                  },
+                  "uuid" : "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
+               },
+               "power" : 30,
+               "upgrade" : {
+                  "cap" : 10000,
+                  "limit" : 1,
+                  "maxSpin" : 10,
+                  "multiplier" : 2,
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0,
+                     "z" : 0
+                  },
+                  "sphere" : {
+                     "x" : 1,
+                     "y" : 0,
+                     "z" : 1
+                  }
+               }
             },
-            "cap": 100,
-            "limit": 10,
-            "offset": {
-              "x": 0,
-              "y": 0.875,
-              "z": 0
-            }
-          }
-        },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
-      },
-      "shop": {
-        "category": "Upgrades",
-        "price": "100",
-        "tier": 0
-      },
-      "stackSize": 65535.0,
-      "uuid": "69b869f1-03dc-4ea2-9391-fd24903945d1"
-    },
-    {
-      "box": {
-        "x": 6,
-        "y": 1,
-        "z": 6
-      },
-      "color": "ff0000",
-      "flammable": false,
-      "name": "obj_upgrader_random",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 4,
-        "density": 4,
-        "durability": 6,
-        "friction": 3
-      },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
-      "restitution": 0.0,
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "RandomUpgrader",
-        "data": {
-          "belt": {
-            "box": {
-              "x": 1.5,
-              "y": 0.25,
-              "z": 1.5
-            },
-            "direction": {
-              "at": -0.25,
-              "right": -1,
-              "up": 0
-            },
-            "offset": {
-              "x": 0,
-              "y": 0.125,
-              "z": 0
-            },
-            "speed": 0.75
-          },
-          "effect": {
-            "color": {
-              "b": 0,
-              "g": 0,
-              "r": 1
-            },
-            "name": "UpgradeareaBig - Random"
-          },
-          "power": 10,
-          "upgrade": {
-            "addMax": 5,
-            "addMin": 1,
-            "box": {
-              "x": 0.25,
-              "y": 1.5,
-              "z": 1.5
-            },
-            "cap": 1000,
-            "limit": 5,
-            "offset": {
-              "x": 0,
-              "y": 0.875,
-              "z": 0
-            }
-          }
-        },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"
-      },
-      "shop": {
-        "category": "Upgrades",
-        "price": "1500",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "uuid": "17de8088-d5a8-45b1-80eb-1d0688a8c39a"
-    },
-    {
-      "color": "df7f01",
-      "cylinder": {
-        "axis": "Y",
-        "depth": 1,
-        "diameter": 1,
-        "margin": 0.04
-      },
-      "flammable": true,
-      "name": "obj_upgrader_toilet",
-      "physicsMaterial": "Default",
-      "ratings": {
-        "buoyancy": 2,
-        "density": 1,
-        "durability": 1,
-        "friction": 3
-      },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "BasicUpgrader",
-        "data": {
-          "effect": {
-            "color": {
-              "b": 0,
-              "g": 0,
-              "r": 1
-            },
-            "name": "Upgradearea - Hexagon"
-          },
-          "power": 5,
-          "upgrade": {
-            "box": {
-              "x": 0.75,
-              "y": 0.25,
-              "z": 0.125
-            },
-            "cap": 100,
-            "limit": 3,
-            "multiplier": 1.1,
-            "offset": {
-              "x": 0.375,
-              "y": 0,
-              "z": 0
-            }
-          }
-        },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/BasicUpgrader.lua"
-      },
-      "shop": {
-        "category": "Upgrades",
-        "price": "500",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y+Y",
-      "uuid": "e2a6970b-2bb9-4b3b-b9f2-994b534b79f3"
-    },
-    {
-      "color": "ff0000",
-      "cylinder": {
-        "axis": "Y",
-        "depth": 1,
-        "diameter": 1,
-        "margin": 0.04
-      },
-      "flammable": true,
-      "name": "obj_upgrader_tp_random",
-      "physicsMaterial": "Default",
-      "ratings": {
-        "buoyancy": 2,
-        "density": 1,
-        "durability": 1,
-        "friction": 3
-      },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "RandomUpgrader",
-        "data": {
-          "effect": {
-            "color": {
-              "b": 0,
-              "g": 0,
-              "r": 1
-            },
-            "name": "Upgradearea - Random"
-          },
-          "power": 15,
-          "upgrade": {
-            "box": {
-              "x": 0.75,
-              "y": 0.25,
-              "z": 0.125
-            },
-            "cap": 2048,
-            "multiplierMax": 2,
-            "multiplierMin": 0,
-            "offset": {
-              "x": 0.375,
-              "y": 0,
-              "z": 0
-            }
-          }
-        },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/RandomUpgrader.lua"
-      },
-      "shop": {
-        "category": "Upgrades",
-        "price": "5000",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y+Y",
-      "uuid": "a8a06b6e-4152-4527-9602-dd231c5a1cab"
-    },
-    {
-      "color": "ff0000",
-      "cylinder": {
-        "axis": "Y",
-        "depth": 2,
-        "diameter": 1,
-        "margin": 0.04
-      },
-      "flammable": true,
-      "name": "obj_upgrader_spinny",
-      "physicsMaterial": "Default",
-      "ratings": {
-        "buoyancy": 2,
-        "density": 1,
-        "durability": 1,
-        "friction": 3
-      },
-      "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_toiletroll.rend",
-      "rotationSet": "PropY",
-      "scripted": {
-        "classname": "SpinnyUpgrader",
-        "data": {
-          "effect": {
-            "color": {
-              "b": 0.796,
-              "g": 0.753,
-              "r": 1
-            },
-            "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
-          },
-          "power": 30,
-          "upgrade": {
-            "cap": 10000,
-            "limit": 1,
-            "maxSpin": 10,
-            "multiplier": 2,
-            "offset": {
-              "x": 0,
-              "y": 0,
-              "z": 0
-            },
-            "sphere": {
-              "x": 1,
-              "y": 0,
-              "z": 1
-            }
-          }
-        },
-        "filename": "$CONTENT_DATA/Scripts/Upgraders/SpinnyUpgrader.lua"
-      },
-      "shop": {
-        "category": "Upgrades",
-        "price": "15000",
-        "tier": 1
-      },
-      "stackSize": 65535.0,
-      "sticky": "-Y+Y",
-      "uuid": "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e"
-    }
-  ]
+            "filename" : "$CONTENT_DATA/Scripts/Upgraders/SpinnyUpgrader.lua"
+         },
+         "shop" : {
+            "category" : "Upgrades",
+            "price" : "15000",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y+Y",
+         "uuid" : "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e"
+      }
+   ]
 }

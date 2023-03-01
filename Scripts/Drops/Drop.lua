@@ -106,7 +106,7 @@ function Drop:client_onClientDataUpdate(data)
     self.cl.data = unpackNetworkData(data)
 
     if data.pollution and not self.cl.effects["pollution"] then
-        self:cl_createEffect({ key = "pollution", effect = "Ore Pollution" })
+        self:cl_createEffect({ key = "pollution", effect = "Drops - Pollution" })
     end
 end
 
