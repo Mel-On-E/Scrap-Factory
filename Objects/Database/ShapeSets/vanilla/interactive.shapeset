@@ -61,8 +61,8 @@
       },
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1000000",
+        "tier": 5
       },
       "stackSize": 65535.0,
       "sticky": "-Z+Z-Y-X+X",
@@ -90,8 +90,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "10000",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "sticky": "-Z",
@@ -113,8 +113,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1e5",
+        "tier": 4
       },
       "showInInventory": false,
       "spring": {
@@ -204,8 +204,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "2e5",
+        "tier": 4
       },
       "showInInventory": false,
       "spring": {
@@ -296,8 +296,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "25000",
+        "tier": 3
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -357,8 +357,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "50000",
+        "tier": 4
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -459,8 +459,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "10000",
+        "tier": 3
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -525,8 +525,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1e5",
+        "tier": 4
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -549,8 +549,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1e6",
+        "tier": 5
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -610,8 +610,8 @@
       "rotationSet": "PropYZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1e5",
+        "tier": 4
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -640,8 +640,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "100",
+        "tier": 1
       },
       "stackSize": 65535.0,
       "sticky": "-Y",
@@ -670,8 +670,8 @@
       "rotationSet": "PropY",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "100",
+        "tier": 1
       },
       "stackSize": 65535.0,
       "sticky": "-Y",
@@ -698,8 +698,8 @@
       },
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1000",
+        "tier": 2
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -728,8 +728,8 @@
       "rotationSet": "PropYZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1000",
+        "tier": 2
       },
       "stackSize": 65535.0,
       "uuid": "9f0f56e8-2c31-4d83-996c-d00a9b296c3f"
@@ -754,8 +754,8 @@
       "rotationSet": "PropYmmNegYmmZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "5000",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "timer": {},
@@ -826,81 +826,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
-      },
-      "showInInventory": false,
-      "stackSize": 65535.0,
-      "sticky": "-Z",
-      "uuid": "260b4597-f1ac-409c-8e6b-90c998c5fe94"
-    },
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
-      "color": "df7f01",
-      "name": "jnt_interactive_piston_creative",
-      "physicsMaterial": "Mechanical",
-      "piston": {
-        "defaultRange": 3,
-        "defaultSpeedLevel": 2,
-        "effect": "Piston - Default",
-        "force": 100000.0,
-        "length": 16,
-        "speedLevels": [
-          {
-            "speed": 2.0
-          },
-          {
-            "speed": 4.0
-          },
-          {
-            "speed": 6.0
-          },
-          {
-            "speed": 8.0
-          },
-          {
-            "speed": 10.0
-          },
-          {
-            "speed": 12.0
-          },
-          {
-            "speed": 14.0
-          },
-          {
-            "speed": 16.0
-          },
-          {
-            "speed": 18.0
-          },
-          {
-            "speed": 20.0
-          }
-        ]
-      },
-      "previewRotation": [
-        1,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        1
-      ],
-      "qualityLevel": 2,
-      "ratings": {},
-      "renderable": "$SURVIVAL_DATA/Objects/Renderable/interactive_upgradeable/obj_interactiveupgradeable_piston01.rend",
-      "rotationSet": "PropZ",
-      "shop": {
-        "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "50000",
+        "tier": 4
       },
       "showInInventory": false,
       "stackSize": 65535.0,

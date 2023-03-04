@@ -22,8 +22,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1000",
+        "tier": 2
       },
       "stackSize": 65535.0,
       "sticky": "-Z+Z",
@@ -51,8 +51,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "5000",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "sticky": "-Z+Z",
@@ -98,8 +98,8 @@
       "rotationSet": "PropYX",
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "10000",
+        "tier": 3
       },
       "slant": {
         "back": "-Z",
