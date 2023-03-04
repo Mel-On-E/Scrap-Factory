@@ -35,7 +35,6 @@ end
 
 function Drop:sv_init()
     self.sv = {}
-    self.sv.timeout = 0
 end
 
 function Drop:server_onFixedUpdate()
@@ -217,7 +216,6 @@ end
 --------------------
 
 ---@class DropSv
----@field timeout number
 ---@field cachedPos Vec3
 ---@field cachedPollution number
 ---@field cachedValue number
@@ -234,13 +232,10 @@ end
 
 ---@class DropCl
 ---@field data clientData
----@field effects table<string, Effect>
+---@field effects table<string, Effect> all effects that are applied to a drop
 
 ---@class clientData
 ---@field pollution number
 ---@field value number
-
----@class DropData
----@field effect string
 
 -- #endregion
