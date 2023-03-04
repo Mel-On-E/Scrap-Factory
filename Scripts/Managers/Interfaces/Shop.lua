@@ -169,6 +169,14 @@ function Shop:cl_changeQuantity(widgetName)
 	self.cl.gui:setButtonState(widgetName, true)
 end
 
+function Shop.cl_close()
+	Interface.cl_close(g_cl_shop)
+end
+
+function Shop.cl_e_isGuiOpen()
+	return Interface.cl_e_isGuiOpen(g_cl_shop)
+end
+
 -- #endregion
 
 --------------------

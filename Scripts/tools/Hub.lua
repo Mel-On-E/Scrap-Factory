@@ -193,7 +193,6 @@ function Hub.client_onUpdate(self, dt)
 
 	totalWeight = totalWeight == 0 and 1.0 or totalWeight
 	for name, animation in pairs(self.tpAnimations.animations) do
-
 		local weight = animation.weight / totalWeight
 		if name == "idle" then
 			self.tool:updateMovementAnimation(animation.time, weight)
@@ -235,19 +234,15 @@ function Hub.cl_loadAnimations(self)
 	local movementAnimations = {
 		idle = "logbook_use_idle",
 		idleRelaxed = "logbook_idle_relaxed",
-
 		runFwd = "logbook_run_fwd",
 		runBwd = "logbook_run_bwd",
 		sprint = "logbook_sprint",
-
 		jump = "logbook_jump",
 		jumpUp = "logbook_jump_up",
 		jumpDown = "logbook_jump_down",
-
 		land = "logbook_jump_land",
 		landFwd = "logbook_jump_land_fwd",
 		landBwd = "logbook_jump_land_bwd",
-
 		crouchIdle = "logbook_crouch_idle",
 		crouchFwd = "logbook_crouch_fwd",
 		crouchBwd = "logbook_crouch_bwd"
