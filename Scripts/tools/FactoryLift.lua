@@ -200,9 +200,24 @@ function FactoryLift:cl_import_createUI()
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
 
     local options = {}
+    local excludeNone = false
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
-    for k, path in pairs(creations) do
-        options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
+    print(creations)
+    if #creations == 1 then
+        excludeNone = false
+    else
+        excludeNone = true
+    end
+    if excludeNone then
+        for k, path in pairs(creations) do
+            if path == "$CONTENT_DATA/UserData/ExportedCreations/None.json" then else
+                options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
+            end
+        end
+    else
+        for k, path in pairs(creations) do
+            options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
+        end
     end
     self.importGui:createDropDown(
         "creation",
@@ -288,16 +303,18 @@ end
 function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
     local items = {}
-    for k, body in pairs(blueprint.bodies) do
-        for i, child in pairs(body.childs) do
-            local id = child.shapeId
-            if items[id] == nil then
-                items[id] = 0
-            end
+    if name == "None" then else
+        for k, body in pairs(blueprint.bodies) do
+            for i, child in pairs(body.childs) do
+                local id = child.shapeId
+                if items[id] == nil then
+                    items[id] = 0
+                end
 
-            local bounds = child.bounds
-            local amount = bounds and bounds.x * bounds.y * bounds.z or 1
-            items[id] = items[id] + amount
+                local bounds = child.bounds
+                local amount = bounds and bounds.x * bounds.y * bounds.z or 1
+                items[id] = items[id] + amount
+            end
         end
     end
 
