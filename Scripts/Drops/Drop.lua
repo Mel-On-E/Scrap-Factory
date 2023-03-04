@@ -18,7 +18,6 @@ local storedDrops = {}
 ---@param id number the shape id of the drop that was collected
 function Drop:Sv_dropStored(id)
     storedDrops[id] = true
-    print(storedDrops)
 end
 
 function Drop:server_onCreate()
