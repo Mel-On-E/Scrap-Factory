@@ -8,13 +8,15 @@ DropContainer.connectionInput = sm.interactable.connectionType.logic
 DropContainer.colorNormal = sm.color.new(0x00ccccff)
 DropContainer.colorHighlight = sm.color.new(0x00ffffff)
 
+---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
+DropContainer.removedDrops = { tick = -1 }
+
 g_drop_json = sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset")
 
 function DropContainer.server_onCreate(self)
 	local container = self.interactable:getContainer(0)
 	if not container then
 		container = self.interactable:addContainer(0, self.ContainerSize, 1)
-
 	elseif self.shape.body:isOnLift() then
 		--prevent ore duping via lift
 		self:sv_emptyContainer()
@@ -23,7 +25,8 @@ function DropContainer.server_onCreate(self)
 	self.sv = {}
 	local shapeSize = sm.item.getShapeSize(self.shape:getShapeUuid()) * 0.125
 	local size = sm.vec3.new(shapeSize.x + 0.875, shapeSize.y + 0.875, shapeSize.z + 0.875)
-	local filter = sm.areaTrigger.filter.staticBody + sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.areaTrigger
+	local filter = sm.areaTrigger.filter.staticBody + sm.areaTrigger.filter.dynamicBody +
+		sm.areaTrigger.filter.areaTrigger
 	self.sv.areaTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size, sm.vec3.zero(), sm.quat.identity(),
 		filter, { resourceCollector = self.shape })
 	self.sv.areaTrigger:bindOnEnter("trigger_onEnter")
@@ -42,12 +45,15 @@ function DropContainer.server_onCreate(self)
 	self.offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 	self.prevParentState = false
 
-	self.RemovedHarvests = {}
 	self.droppedShapes = {}
 end
 
 function DropContainer.server_onFixedUpdate(self)
-	self.RemovedHarvests = {}
+	if DropContainer.removedDrops.tick < sm.game.getCurrentTick() then
+		DropContainer.removedDrops = { tick = sm.game.getCurrentTick() }
+	end
+
+
 	for key, jank in pairs(self.droppedShapes) do
 		if jank < sm.game.getCurrentTick() then
 			self.droppedShapes[key] = nil
@@ -74,7 +80,7 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 	for _, result in ipairs(contents) do
 		if sm.exists(result) and type(result) == "Body" then
 			for _, shape in ipairs(result:getShapes()) do
-				if self.sv.drops[tostring(shape:getShapeUuid())] and not self.RemovedHarvests[shape:getId()] and
+				if self.sv.drops[tostring(shape:getShapeUuid())] and not DropContainer.removedDrops[shape:getId()] and
 					not self.droppedShapes[shape:getId()] then
 					local container = self.interactable:getContainer(0)
 					if container then
@@ -85,9 +91,14 @@ function DropContainer.trigger_onEnter(self, trigger, contents)
 							sm.container.collectToSlot(container, transactionSlot, shape:getShapeUuid(), 1, true)
 							if sm.container.endTransaction() then
 								self.network:sendToClients("cl_n_addPickupItem",
-									{ shapeUuid = shape:getShapeUuid(), fromPosition = shape.worldPosition, fromRotation = shape.worldRotation,
-										slotIndex = transactionSlot, showRenderable = true })
-								self.RemovedHarvests[shape:getId()] = true
+									{
+										shapeUuid = shape:getShapeUuid(),
+										fromPosition = shape.worldPosition,
+										fromRotation = shape.worldRotation,
+										slotIndex = transactionSlot,
+										showRenderable = true
+									})
+								DropContainer.removedDrops[shape:getId()] = true
 
 								local publicData = shape.interactable.publicData
 								publicData.uuid = shape:getShapeUuid()
@@ -127,7 +138,8 @@ function DropContainer.sv_release_drop(self)
 		sm.container.spendFromSlot(container, slotIndex, slotItem.uuid, 1, true)
 		if sm.container.endTransaction() then
 			local publicData = self.sv.saved.drops[slotIndex]
-			local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y + self.shape.up * self.offset.z
+			local offset = self.shape.right * self.offset.x + self.shape.at * self.offset.y +
+				self.shape.up * self.offset.z
 
 			local shape = sm.shape.createPart(publicData.uuid, self.sv.pos + offset, self.sv.rot)
 			self.droppedShapes[shape:getId()] = sm.game.getCurrentTick() + 1
@@ -246,10 +258,8 @@ function DropContainer.cl_n_addPickupItem(self, params)
 end
 
 function DropContainer.client_onUpdate(self, dt)
-
 	local container = self.interactable:getContainer(0)
 	if container then
-
 		-- Update pickup item effects
 		local pickupTime = 0.3
 		local remainingPickupItems = {}
