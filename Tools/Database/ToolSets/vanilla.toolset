@@ -5,24 +5,14 @@
 			"name": "tool_paint",
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_painttool_preview.rend",
 			"previewRotation": [-1, 0, 0, 0, 0, 1, 0, 1, 0],
-			"paint": {},
-			"shop": {
-				"price": "1337",
-				"category": "Utilities",
-				"tier": 0
-			}
+			"paint": {}
 		},
 		{
 			"uuid": "fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce",
 			"name": "tool_weld",
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_weldtool_preview.rend",
 			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
-			"weld": {},
-			"shop": {
-				"price": "1337",
-				"category": "Utilities",
-				"tier": 0
-			}
+			"weld": {}
 		}
 	]
 }
