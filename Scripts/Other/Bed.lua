@@ -44,7 +44,6 @@ end
 function Bed:cl_seat()
 	if not (sm.localPlayer.getPlayer()
 		and sm.localPlayer.getPlayer():getCharacter()) then
-
 		return
 	end
 
@@ -54,8 +53,8 @@ end
 
 function Bed:client_onAction(controllerAction, state)
 	if not state
-		or controllerAction ~= sm.interactable.actions.use
-		or controllerAction ~= sm.interactable.actions.jump then
+		or (controllerAction ~= sm.interactable.actions.use
+		and controllerAction ~= sm.interactable.actions.jump) then
 		return false
 	end
 
