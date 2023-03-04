@@ -17,8 +17,8 @@
       },
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "10",
+        "tier": 1
       },
       "stackSize": 65535.0,
       "tiling": 8,
@@ -41,8 +41,8 @@
       },
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "20",
+        "tier": 1
       },
       "stackSize": 65535.0,
       "tiling": 8,
@@ -65,8 +65,8 @@
       },
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "100",
+        "tier": 2
       },
       "stackSize": 65535.0,
       "tiling": 8,
@@ -89,8 +89,8 @@
       },
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "1000",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "tiling": 8,
@@ -114,8 +114,8 @@
       },
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "500",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "tiling": 8,

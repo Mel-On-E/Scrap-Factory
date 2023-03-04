@@ -22,8 +22,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "1000",
+        "tier": 2
       },
       "stackSize": 65535.0,
       "sticky": "-Z+Z",
@@ -51,8 +51,8 @@
       "rotationSet": "PropZ",
       "shop": {
         "category": "Utilities",
-        "price": "1337",
-        "tier": 0
+        "price": "5000",
+        "tier": 3
       },
       "stackSize": 65535.0,
       "sticky": "-Z+Z",
@@ -98,8 +98,8 @@
       "rotationSet": "PropYX",
       "shop": {
         "category": "Decor",
-        "price": "1337",
-        "tier": 0
+        "price": "10000",
+        "tier": 3
       },
       "slant": {
         "back": "-Z",
@@ -111,6 +111,35 @@
       "stackSize": 65535.0,
       "sticky": "-X+X-Y-Z",
       "uuid": "e02620a5-371b-4d63-be35-fd8a0552eba9"
+    },
+    {
+      "color": "ffd504",
+      "cylinder": {
+        "axis": "Y",
+        "depth": 1,
+        "diameter": 1,
+        "margin": 0.1
+      },
+      "flammable": true,
+      "legacyId": 807,
+      "name": "obj_decor_babyduck",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "buoyancy": 8,
+        "density": 2,
+        "durability": 4,
+        "friction": 5
+      },
+      "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_babyduck.rend",
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "69",
+        "tier": 1
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y",
+      "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
     }
   ]
 }
