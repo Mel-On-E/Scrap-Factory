@@ -12,6 +12,7 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
+dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
@@ -184,14 +185,14 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
 
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
-		"Gives pollutiion")
+			"Gives pollutiion")
 		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
-		"Sets pollutiion")
+			"Sets pollutiion")
 
 		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
-		"Gives prestige")
+			"Gives prestige")
 		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
-		"Sets prestige")
+			"Sets prestige")
 
 
 
@@ -334,8 +335,11 @@ function FactoryGame.cl_onChatCommand(self, params)
 
 	if params[1] == "/camera" then
 		self.network:sendToServer("sv_giveItem",
-			{ player = sm.localPlayer.getPlayer(), item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"),
-				quantity = 1 })
+			{
+				player = sm.localPlayer.getPlayer(),
+				item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"),
+				quantity = 1
+			})
 	elseif params[1] == "/god" then
 		self.network:sendToServer("sv_switchGodMode")
 	elseif params[1] == "/encrypt" then

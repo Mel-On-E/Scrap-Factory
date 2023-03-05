@@ -1,11 +1,10 @@
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
 ---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
 ---@class Burner: ShapeClass
 ---@field cl BurnerCl
----@field powerUtil PowerUtil
+---@field powerUtil PowerUtility
 Burner = class(nil)
 
 --------------------

@@ -1,7 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Other/Belt.lua")
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
 
 ---@class Upgrader : ShapeClass
+---@field powerUtil PowerUtility
 Upgrader = class()
 Upgrader.maxParentCount = 1
 Upgrader.maxChildCount = 0
@@ -26,7 +26,7 @@ function Upgrader:server_onCreate(params)
         Belt.server_onCreate(self)
         self.sv_onStay = Belt.sv_onStay
     else
-        Power.server_onCreate(self)
+        PowerUtility.sv_init(self)
     end
 
     local size, offset = self:get_size_and_offset()
@@ -34,14 +34,13 @@ function Upgrader:server_onCreate(params)
     self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
         params.filters or sm.areaTrigger.filter.dynamicBody)
     self.upgradeTrigger:bindOnEnter("sv_onEnter")
-    Power.server_onCreate(self)
 end
 
 function Upgrader:server_onFixedUpdate()
     if self.data.belt then
         Belt.server_onFixedUpdate(self)
     else
-        Power.server_onFixedUpdate(self)
+        PowerUtility.sv_fixedUpdate(self, nil)
     end
 end
 

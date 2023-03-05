@@ -1,7 +1,5 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
-
 ---@class Belt : ShapeClass
+---@field powerUtil PowerUtility
 Belt = class()
 Belt.maxParentCount = 1
 Belt.maxChildCount = 0
@@ -20,11 +18,11 @@ function Belt:server_onCreate()
         sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character)
     self.sv.trigger:bindOnStay("sv_onStay")
 
-    Power.server_onCreate(self)
+    PowerUtility.sv_init(self)
 end
 
 function Belt:server_onFixedUpdate()
-    Power.server_onFixedUpdate(self, "cl_toggleEffects")
+    PowerUtility.sv_fixedUpdate(self, "cl_toggleEffects")
     IDsUpdated = {}
 end
 
