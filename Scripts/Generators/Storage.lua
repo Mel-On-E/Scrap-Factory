@@ -14,7 +14,7 @@ function Storage:server_onCreate()
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "PowerStorageTutorial")
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Server
@@ -33,4 +33,4 @@ function Storage:client_canInteract()
     return true
 end
 
---#endregion
+-- #endregion

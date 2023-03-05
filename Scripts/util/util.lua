@@ -30,7 +30,7 @@ function isSunset()
     return time > SUNSET_START and time < SUNSET_END
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region NetworkData
@@ -78,7 +78,7 @@ function unpackNetworkData(data)
     return data and unpackData(data) or nil
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Formatting
@@ -141,7 +141,7 @@ function format_number(params)
         (params.prefix or "") .. number_suffix(params.value, (params.suffixes or metricSuffixes)) .. (params.unit or "")
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Utility Functions
@@ -198,4 +198,4 @@ function table.copy(t)
     return t2;
 end
 
---#endregion
+-- #endregion

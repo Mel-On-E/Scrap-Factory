@@ -43,7 +43,7 @@ function Generator:sv_getPower()
     return self.data.power
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Client
@@ -67,7 +67,7 @@ function Generator:client_canInteract()
     return true
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Types
@@ -83,4 +83,4 @@ end
 ---@class GeneratorCl
 ---@field power number current power output set by clientData
 
---#endregion
+-- #endregion

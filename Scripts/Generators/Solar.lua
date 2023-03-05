@@ -28,4 +28,4 @@ function Solar:sv_getPower()
     return math.floor(timeMultiplier * self.data.power)
 end
 
---#endregion
+-- #endregion

@@ -72,7 +72,7 @@ function Burner:sv_onEnterDrop(shape)
     shape:destroyPart(0)
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Client
@@ -84,7 +84,7 @@ function Burner:client_onCreate()
     self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
 
---#endregion
+-- #endregion
 
 --------------------
 -- #region Client
@@ -92,4 +92,4 @@ end
 
 ---@class BurnerCl : FurnaceCl
 
---#endregion
+-- #endregion

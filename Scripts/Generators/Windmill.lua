@@ -18,4 +18,4 @@ function Windmill:sv_getPower()
     return math.min(math.floor(heightMultiplier * self.data.power), self.data.power * 2)
 end
 
---#endregion
+-- #endregion
