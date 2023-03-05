@@ -1,11 +1,9 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
-
 ---A Furnace defines an `AreaTrigger`. Every `Drop` that enters it will be sold for money. A single Furnace can be set as a research Furnace and will sell drops for research points.
----@class Furnace : Power
+---@class Furnace : ShapeClass
 ---@field sv FurnaceSv
-Furnace = class(Power)
+---@field cl FurnaceCl
+---@field powerUtil PowerUtility
+Furnace = class()
 Furnace.maxParentCount = 1
 Furnace.maxChildCount = 0
 Furnace.connectionInput = sm.interactable.connectionType.logic
@@ -24,7 +22,7 @@ function Furnace:server_onCreate()
     --tutorial stuff
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
 
-    Power.server_onCreate(self)
+    PowerUtility.sv_init(self)
 
     --save data
     self.sv = {}
@@ -141,6 +139,10 @@ function Furnace:sv_removeResearch()
     self.network:sendToClients("cl_setSellAreaEffectColor", sm.color.new(0, 1, 0))
 end
 
+function Furnace:server_onFixedUpdate()
+    PowerUtility.sv_fixedUpdate(self, "cl_toggleEffect")
+end
+
 -- #endregion
 
 --------------------
@@ -170,10 +172,6 @@ function Furnace:client_onCreate()
     self.cl.effect:setOffsetRotation(rot1 * rot2)
 
     self.cl.effect:start()
-end
-
-function Furnace:server_onFixedUpdate()
-    Power.server_onFixedUpdate(self, "cl_toggleEffect")
 end
 
 ---toggles the effect of the sell area
@@ -239,6 +237,10 @@ end
 ---@field saved FurnaceSaveData
 ---@field trigger AreaTrigger the areaTrigger that defines the sell area
 
-
 ---@class FurnaceSaveData
 ---@field research boolean whether the furnace is a research furnace
+
+---@class FurnaceCl
+---@field effect Effect effect that visualizes the sell area
+
+-- #endregion

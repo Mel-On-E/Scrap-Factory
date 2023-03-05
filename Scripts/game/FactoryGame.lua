@@ -12,9 +12,9 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
+dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
-dofile("$CONTENT_DATA/Scripts/util/networkData.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
@@ -184,11 +184,15 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/addmoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
 
-		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
-		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets pollutiion")
+		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
+			"Gives pollutiion")
+		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
+			"Sets pollutiion")
 
-		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives prestige")
-		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets prestige")
+		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
+			"Gives prestige")
+		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
+			"Sets prestige")
 
 
 
@@ -203,7 +207,8 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/timeprogress", { { "bool", "enabled", true } }, "cl_onChatCommand",
 			"Enables or disables time progress")
 		sm.game.bindChatCommand("/day", {}, "cl_onChatCommand", "Disable time progression and set time to daytime")
-		sm.game.bindChatCommand("/spawn", { { "string", "unitName", true }, { "int", "amount", true } }, "cl_onChatCommand",
+		sm.game.bindChatCommand("/spawn", { { "string", "unitName", true }, { "int", "amount", true } },
+			"cl_onChatCommand",
 			"Spawn a unit: 'woc', 'tapebot', 'totebot', 'haybot'")
 		sm.game.bindChatCommand("/harvestable", { { "string", "harvestableName", true } }, "cl_onChatCommand",
 			"Create a harvestable: 'tree', 'stone'")
@@ -211,7 +216,8 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/sethp", { { "number", "hp", false } }, "cl_onChatCommand", "Set player hp value")
 		sm.game.bindChatCommand("/aggroall", {}, "cl_onChatCommand",
 			"All hostile units will be made aware of the player's position")
-		sm.game.bindChatCommand("/raid", { { "int", "level", false }, { "int", "wave", true }, { "number", "hours", true } },
+		sm.game.bindChatCommand("/raid",
+			{ { "int", "level", false }, { "int", "wave", true }, { "number", "hours", true } },
 			"cl_onChatCommand", "Start a level <level> raid at player position at wave <wave> in <delay> hours.")
 		sm.game.bindChatCommand("/stopraid", {}, "cl_onChatCommand", "Cancel all incoming raids")
 		sm.game.bindChatCommand("/camera", {}, "cl_onChatCommand", "Spawn a SplineCamera tool")
@@ -329,7 +335,11 @@ function FactoryGame.cl_onChatCommand(self, params)
 
 	if params[1] == "/camera" then
 		self.network:sendToServer("sv_giveItem",
-			{ player = sm.localPlayer.getPlayer(), item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"), quantity = 1 })
+			{
+				player = sm.localPlayer.getPlayer(),
+				item = sm.uuid.new("5bbe87d3-d60a-48b5-9ca9-0086c80ebf7f"),
+				quantity = 1
+			})
 	elseif params[1] == "/god" then
 		self.network:sendToServer("sv_switchGodMode")
 	elseif params[1] == "/encrypt" then
@@ -392,8 +402,12 @@ function FactoryGame.cl_onChatCommand(self, params)
 			elseif params[2] then
 				harvestableUuid = sm.uuid.new(params[2])
 			end
-			local spawnParams = { world = character:getWorld(), uuid = harvestableUuid, position = character.worldPosition,
-				quat = sm.vec3.getRotation(sm.vec3.new(0, 1, 0), sm.vec3.new(0, 0, 1)) }
+			local spawnParams = {
+				world = character:getWorld(),
+				uuid = harvestableUuid,
+				position = character.worldPosition,
+				quat = sm.vec3.getRotation(sm.vec3.new(0, 1, 0), sm.vec3.new(0, 0, 1))
+			}
 			self.network:sendToServer("sv_spawnHarvestable", spawnParams)
 		end
 	elseif params[1] == "/cleardebug" then
@@ -423,7 +437,6 @@ function FactoryGame.cl_reloadCell(self, params)
 			params.world:reloadCell(params.x + x, params.y + y, "cl_reloadCellTestCallback")
 		end
 	end
-
 end
 
 function FactoryGame.sv_giveItem(self, params)
@@ -513,7 +526,6 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PrestigeManager.sv_addPrestige(tonumber(params[2]))
 	elseif params[1] == "/setprestige" then
 		PrestigeManager.sv_setPrestige(tonumber(params[2]))
-
 	else
 		params.player = player
 		if sm.exists(player.character) then
@@ -606,7 +618,8 @@ function FactoryGame.sv_e_respawn(self, params)
 		if not sm.exists(self.sv.saved.factoryWorld) then
 			sm.world.loadWorld(self.sv.saved.factoryWorld)
 		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params.player,
+		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params
+			.player,
 			"sv_createNewPlayer")
 	end
 end

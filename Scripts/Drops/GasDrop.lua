@@ -1,11 +1,18 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
+---A GasDrop is a `Drop` that floats towards the sky and eventually dissapears after reaching a certain height
 ---@class GasDrop : Drop
 ---@field sv GasDropSv
 ---@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 GasDrop = class(Drop)
 
+--------------------
+-- #region Server
+--------------------
+
+---@type number height travelled after which the drop depsawns
 local despawnHeight = 69
+---@type number height that is near the limit of the skybox. GasDrops will dissapear before reaching this height
 local skyboxLimit = 1000
 
 function GasDrop:server_onCreate()
@@ -16,18 +23,26 @@ end
 function GasDrop:server_onFixedUpdate()
     Drop.server_onFixedUpdate(self)
 
+    --apply upwards impulse and a bit of random jitter
     local mass = self.shape:getBody().mass
     local jitter = sm.vec3.new(math.random() - 0.5, math.random() - 0.5, math.random() - 0.5)
     ---@diagnostic disable-next-line: param-type-mismatch
     sm.physics.applyImpulse(self.shape, (sm.vec3.new(0, 0, 1) * (mass / 3.4)) + jitter, true)
 
+    --destroy after travelling too far
     local height = self.shape.worldPosition.z
     if (height > skyboxLimit) or ((height - self.sv.startHeight) > despawnHeight) then
         self.shape:destroyShape(0)
     end
 end
 
---Types
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
 
 ---@class GasDropSv : DropSv
----@field startHeight number
+---@field startHeight number height at which the drop was spawned.
+
+-- #endregion

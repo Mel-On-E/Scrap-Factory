@@ -1,4 +1,4 @@
----A Drop is a shape dropped by droppers. It has a value that can be modified by upgraders and other things. It can be sold in a furnace to generate money.
+---A Drop is a shape dropped by droppers. It has a value that can be modified by upgraders and other things. It can be sold in a furnace to generate money. It disappears when touching the ground or reloading into a world.
 ---@class Drop : ShapeClass
 ---@field cl DropCl
 ---@field sv DropSv
