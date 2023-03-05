@@ -14,7 +14,7 @@ function RareLootCrate:get_loot_table()
     for uuid, item in pairs(g_shop) do
         --25% chance to include items of a higher research tier
         if (item.tier < tier) or
-            (item.tier == tier and math.random()) > 0.75 then
+            (item.tier == tier and math.random() > 0.75) then
             --items that are cheaper than 2*money earned + 5000
             if item.price <= MoneyManager.cl_moneyEarned() * 2 + 5000 then
                 itemPool[#itemPool + 1] = { price = item.price, uuid = uuid }
