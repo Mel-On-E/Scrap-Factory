@@ -25,10 +25,10 @@ function Storage:client_canInteract()
     local o2 = "</p>"
     sm.gui.setInteractionText(language_tag("PowerCapacity"),
         o1 ..
-        format_number({ format = "energy", value = PowerManager.cl_getPowerStored(), color = "#4f4f4f", unit = "J" }) ..
+        format_number({ format = "power", value = PowerManager.cl_getPowerStored(), color = "#4f4f4f", unit = "J" }) ..
         " / "
         ..
-        format_number({ format = "energy", value = PowerManager.cl_getPowerLimit(), color = "#4f4f4f", unit = "J" }) ..
+        format_number({ format = "power", value = PowerManager.cl_getPowerLimit(), color = "#4f4f4f", unit = "J" }) ..
         o2)
     return true
 end

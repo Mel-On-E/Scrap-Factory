@@ -63,7 +63,7 @@ function Generator:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
     sm.gui.setInteractionText(language_tag("PowerOutput"),
-        o1 .. format_number({ format = "energy", value = self.cl.power, color = "#4f4f4f" }) .. o2)
+        o1 .. format_number({ format = "power", value = self.cl.power, color = "#4f4f4f" }) .. o2)
     return true
 end
 

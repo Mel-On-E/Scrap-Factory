@@ -5,6 +5,7 @@ dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 ---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
 ---@class Burner: ShapeClass
 ---@field cl BurnerCl
+---@field powerUtil PowerUtil
 Burner = class(nil)
 
 --------------------
@@ -51,8 +52,8 @@ function Burner:sv_onEnterDrop(shape)
             pos = shape.worldPosition,
             value = tostring(power),
             effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
-            "Sellpoints - CampfireOnsell",
-            format = "energy"
+                "Sellpoints - CampfireOnsell",
+            format = "power"
         }
     )
     PowerManager.sv_changePower(power)

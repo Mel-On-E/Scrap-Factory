@@ -1,5 +1,4 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
-dofile("$CONTENT_DATA/Scripts/util/day.lua")
 
 ---A type of `Generator` that produces power only during daytime
 ---@class Solar : Generator
@@ -21,9 +20,9 @@ function Solar:sv_getPower()
     if isDay() then
         timeMultiplier = 1
     elseif isSunrise() then
-        timeMultiplier = (time - SunRiseStart) / (SunRiseEnd - SunRiseStart)
+        timeMultiplier = (time - SUNRISE_START) / (SUNRISE_END - SUNRISE_START)
     elseif isSunset() then
-        timeMultiplier = (SunSetEnd - time) / (SunSetEnd - SunSetStart)
+        timeMultiplier = (SUNSET_END - time) / (SUNSET_END - SUNSET_START)
     end
 
     return math.floor(timeMultiplier * self.data.power)
