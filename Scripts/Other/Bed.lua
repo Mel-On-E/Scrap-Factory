@@ -1,5 +1,27 @@
+---Sleep in a bed to set a new respawn position
 ---@class Bed : ShapeClass
 Bed = class()
+
+
+--------------------
+-- #region Server
+--------------------
+
+function Bed:server_onCreate()
+	self.loaded = true
+end
+
+function Bed:sv_activateBed(character)
+	g_respawnManager:sv_registerBed(self.shape, character)
+end
+
+function Bed:server_onFixedUpdate()
+	local prevWorld = self.currentWorld
+	self.currentWorld = self.shape.body:getWorld()
+	if prevWorld == nil and self.currentWorld == prevWorld then return end
+
+	g_respawnManager:sv_updateBed(self.shape)
+end
 
 function Bed:server_onDestroy()
 	if not self.loaded then return end
@@ -15,23 +37,11 @@ function Bed:server_onUnload()
 	self.loaded = false
 end
 
-function Bed:sv_activateBed(character)
-	g_respawnManager:sv_registerBed(self.shape, character)
-end
+-- #endregion
 
-function Bed:server_onCreate()
-	self.loaded = true
-end
-
-function Bed:server_onFixedUpdate()
-	local prevWorld = self.currentWorld
-	self.currentWorld = self.shape.body:getWorld()
-	if prevWorld == nil and self.currentWorld == prevWorld then return end
-
-	g_respawnManager:sv_updateBed(self.shape)
-end
-
--- Client
+--------------------
+-- #region Server
+--------------------
 
 function Bed:client_onInteract(character, state)
 	if not state then return end
@@ -44,7 +54,6 @@ end
 function Bed:cl_seat()
 	if not (sm.localPlayer.getPlayer()
 		and sm.localPlayer.getPlayer():getCharacter()) then
-
 		return
 	end
 
@@ -54,8 +63,8 @@ end
 
 function Bed:client_onAction(controllerAction, state)
 	if not state
-		or controllerAction ~= sm.interactable.actions.use
-		or controllerAction ~= sm.interactable.actions.jump then
+		or (controllerAction ~= sm.interactable.actions.use
+		and controllerAction ~= sm.interactable.actions.jump) then
 		return false
 	end
 
@@ -63,3 +72,5 @@ function Bed:client_onAction(controllerAction, state)
 
 	return true
 end
+
+-- #endregion

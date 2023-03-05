@@ -56,6 +56,7 @@ obj_generator_campfire = sm.uuid.new("efc1f452-8431-44c5-8c21-a06d53aed16c")
 ----------------------------------------
 
 obj_storage_battery = sm.uuid.new("91037f2c-5230-464b-8873-ad13355539af")
+obj_storage_battery2 = sm.uuid.new("43064030-ab19-4d1b-b060-3c7376b11725")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/crates.shapeset
@@ -137,6 +138,12 @@ obj_factory_building_column_01 = sm.uuid.new("9c59ddbf-9bf8-47a7-8771-067f8d96f7
 obj_factory_building_column_02 = sm.uuid.new("d5c4fc84-ad5a-41c1-876b-591412b37b11")
 obj_factory_building_wall_01 = sm.uuid.new("b1b7dc53-d143-4241-92e7-d92be98eec1a")
 obj_factory_building_wall_03 = sm.uuid.new("4ae033f6-15b8-4cc1-89ac-db200809a2dc")
+
+----------------------------------------
+--./Objects/Database/ShapeSets/debug.shapeset
+----------------------------------------
+
+obj_devtool_effect = sm.uuid.new("16690034-de3f-4580-922a-1b2fd5543711")
 
 ----------------------------------------
 --./ScriptableObjects/ScriptableObjectSets/managers.sobset

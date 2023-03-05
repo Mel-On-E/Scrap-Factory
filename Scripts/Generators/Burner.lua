@@ -1,10 +1,17 @@
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
+---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
 ---@class Burner: ShapeClass
+---@field cl BurnerCl
+---@field powerUtil PowerUtility
 Burner = class(nil)
 
+--------------------
+-- #region Server
+--------------------
+
+---chance a special effect plays when a drop is sold
 local secretEffectChance = 0.15
 
 function Burner:server_onCreate()
@@ -43,8 +50,9 @@ function Burner:sv_onEnterDrop(shape)
         {
             pos = shape.worldPosition,
             value = tostring(power),
-            effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or "Sellpoints - CampfireOnsell",
-            format = "energy"
+            effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
+                "Sellpoints - CampfireOnsell",
+            format = "power"
         }
     )
     PowerManager.sv_changePower(power)
@@ -63,8 +71,24 @@ function Burner:sv_onEnterDrop(shape)
     shape:destroyPart(0)
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function Burner:client_onCreate()
     Furnace.client_onCreate(self)
 
     self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+---@class BurnerCl : FurnaceCl
+
+-- #endregion

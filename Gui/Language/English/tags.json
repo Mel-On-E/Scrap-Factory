@@ -84,7 +84,8 @@
 
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
-	"ClearOresMessage": "You sure sis?",
+	"ClearOresMessageMale": "You sure, bro?",
+	"ClearOresMessageFemale": "You sure, sis?",
 
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",

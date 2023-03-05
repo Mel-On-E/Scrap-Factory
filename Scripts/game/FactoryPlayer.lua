@@ -94,7 +94,6 @@ end
 function FactoryPlayer.client_onClientDataUpdate(self, data)
 	BasePlayer.client_onClientDataUpdate(self, data)
 	if sm.localPlayer.getPlayer() == self.player then
-
 		if self.cl.stats == nil then self.cl.stats = data.stats end -- First time copy to avoid nil errors
 
 		if g_survivalHud then
@@ -119,7 +118,8 @@ function FactoryPlayer.cl_localPlayerUpdate(self, dt)
 		local keyBindingText = sm.gui.getKeyBinding("Use", true)
 		if self.cl.hasRevivalItem then
 			if self.cl.revivalChewCount < BaguetteSteps then
-				sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_EAT} (" .. self.cl.revivalChewCount .. "/10)")
+				sm.gui.setInteractionText("", keyBindingText,
+					"#{INTERACTION_EAT} (" .. self.cl.revivalChewCount .. "/10)")
 			else
 				sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_REVIVE}")
 			end
@@ -229,7 +229,8 @@ function FactoryPlayer.sv_takeDamage(self, damage, source)
 			if self.sv.saved.isConscious then
 				self.sv.saved.stats.hp = math.max(self.sv.saved.stats.hp - damage, 0)
 
-				print("'FactoryPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP")
+				print("'FactoryPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp,
+					"HP")
 
 				if source then
 					self.network:sendToClients("cl_n_onEvent",
@@ -264,7 +265,8 @@ function FactoryPlayer.sv_n_revive(self)
 		self.sv.saved.hasRevivalItem = false
 		self.storage:save(self.sv.saved)
 		self.network:setClientData(self.sv.saved)
-		self.network:sendToClient(self.player, "cl_n_onEffect", { name = "Eat - EatFinish", host = self.player.character })
+		self.network:sendToClient(self.player, "cl_n_onEffect",
+			{ name = "Eat - EatFinish", host = self.player.character })
 		if character then
 			character:setTumbling(false)
 			character:setDowned(false)
@@ -391,7 +393,8 @@ function FactoryPlayer.sv_restoreHealth(self, health)
 	if self.sv.saved.isConscious then
 		self.sv.saved.stats.hp = self.sv.saved.stats.hp + health
 		self.sv.saved.stats.hp = math.min(self.sv.saved.stats.hp, self.sv.saved.stats.maxhp)
-		print("'FactoryPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP")
+		print("'FactoryPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp,
+			"HP")
 	end
 end
 
@@ -443,7 +446,8 @@ function FactoryPlayer:client_onReload()
 	self.cl.confirmClearGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
 	self.cl.confirmClearGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
 	self.cl.confirmClearGui:setText("Title", language_tag("ClearOresTitle"))
-	self.cl.confirmClearGui:setText("Message", language_tag("ClearOresMessage"))
+	self.cl.confirmClearGui:setText("Message",
+		language_tag("ClearOresMessage" .. ((sm.localPlayer.getPlayer():isMale() and "Male") or "Female")))
 	self.cl.confirmClearGui:open()
 end
 
