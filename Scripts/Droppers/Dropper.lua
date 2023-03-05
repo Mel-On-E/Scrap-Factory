@@ -63,6 +63,6 @@ end
 ---@class DropData unpacked script data of the interactable
 ---@field uuid Uuid Uuid of the drop
 ---@field value string For how much the drop sells
----@field pollution number nil if the drop has no pollution, otherwise the pollution of the drop
+---@field pollution number|nil nil if the drop has no pollution, otherwise the pollution of the drop
 
 -- #endregion
