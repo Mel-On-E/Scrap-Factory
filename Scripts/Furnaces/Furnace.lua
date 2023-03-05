@@ -5,6 +5,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 ---A Furnace defines an `AreaTrigger`. Every `Drop` that enters it will be sold for money. A single Furnace can be set as a research Furnace and will sell drops for research points.
 ---@class Furnace : Power
 ---@field sv FurnaceSv
+---@field cl FurnaceCl
 Furnace = class(Power)
 Furnace.maxParentCount = 1
 Furnace.maxChildCount = 0
@@ -141,6 +142,10 @@ function Furnace:sv_removeResearch()
     self.network:sendToClients("cl_setSellAreaEffectColor", sm.color.new(0, 1, 0))
 end
 
+function Furnace:server_onFixedUpdate()
+    Power.server_onFixedUpdate(self, "cl_toggleEffect")
+end
+
 -- #endregion
 
 --------------------
@@ -170,10 +175,6 @@ function Furnace:client_onCreate()
     self.cl.effect:setOffsetRotation(rot1 * rot2)
 
     self.cl.effect:start()
-end
-
-function Furnace:server_onFixedUpdate()
-    Power.server_onFixedUpdate(self, "cl_toggleEffect")
 end
 
 ---toggles the effect of the sell area
@@ -239,6 +240,10 @@ end
 ---@field saved FurnaceSaveData
 ---@field trigger AreaTrigger the areaTrigger that defines the sell area
 
-
 ---@class FurnaceSaveData
 ---@field research boolean whether the furnace is a research furnace
+
+---@class FurnaceCl
+---@field effect Effect effect that visualizes the sell area
+
+--#endregion
