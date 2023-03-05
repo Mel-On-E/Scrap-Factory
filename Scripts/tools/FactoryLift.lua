@@ -114,8 +114,8 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
             elseif result.type == "lift" then
                 if forceBuild and not self.importGui:isActive() then
                     self:cl_import_updateItemGrid(self.importCreation, false)
+                    self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
-                    self:cl_import_createUI()
                     self.importGui:open()
                 end
             end
@@ -198,31 +198,25 @@ end
 
 function FactoryLift:cl_import_createUI()
     self.importGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_import.layout")
-    self.importGui:setText("nothing", language_tag("ImportNone"))
-    self.importGui:setVisible("nothing", false)
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
 
     local options = {}
-    local Blpr = true
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
-    if #creations == 0 then
-        Blpr = false
-        self.importGui:setVisible("creation", false)
-        self.importGui:setVisible("nothing", true)
-    else
+    local noBlueprints = #creations == 0
+    self.importGui:setVisible("creation", not noBlueprints)
+    self.importGui:setVisible("nothing", noBlueprints)
+
+    if not noBlueprints then
         for k, path in pairs(creations) do
             options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
         end
-    end
-    if Blpr then
+
         self.importGui:createDropDown(
             "creation",
             "cl_import_select",
             options
         )
     end
-
-    self.importGui:setText("title", language_tag("ImportTitle"))
 
     return options
 end
