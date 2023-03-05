@@ -4,6 +4,10 @@ dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 ---@class LunarFurnace : Furnace
 LunarFurnace = class(Furnace)
 
+--------------------
+-- #region Server
+--------------------
+
 function LunarFurnace:sv_upgrade(shape)
     local value = shape.interactable.publicData.value
 
@@ -15,3 +19,5 @@ function LunarFurnace:sv_upgrade(shape)
 
     return value
 end
+
+-- #endregion

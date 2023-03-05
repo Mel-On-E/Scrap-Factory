@@ -246,4 +246,4 @@ end
 ---@class FurnaceCl
 ---@field effect Effect effect that visualizes the sell area
 
---#endregion
+-- #endregion
