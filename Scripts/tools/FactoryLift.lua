@@ -204,6 +204,7 @@ function FactoryLift:cl_import_createUI()
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
     local noBlueprints = #creations == 0
     self.importGui:setVisible("creation", not noBlueprints)
+    self.importGui:setVisible("import", not noBlueprints)
     self.importGui:setVisible("nothing", noBlueprints)
 
     if not noBlueprints then
@@ -274,6 +275,8 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
 end
 
 function FactoryLift:cl_import_importCreation()
+    if self.importCreation == nil then return end
+
     local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.importCreation))
 
     self.network:sendToServer("sv_importCreation",
@@ -294,18 +297,16 @@ end
 function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
     local items = {}
-    if name == "None" then else
-        for k, body in pairs(blueprint.bodies) do
-            for i, child in pairs(body.childs) do
-                local id = child.shapeId
-                if items[id] == nil then
-                    items[id] = 0
-                end
-
-                local bounds = child.bounds
-                local amount = bounds and bounds.x * bounds.y * bounds.z or 1
-                items[id] = items[id] + amount
+    for k, body in pairs(blueprint.bodies) do
+        for i, child in pairs(body.childs) do
+            local id = child.shapeId
+            if items[id] == nil then
+                items[id] = 0
             end
+
+            local bounds = child.bounds
+            local amount = bounds and bounds.x * bounds.y * bounds.z or 1
+            items[id] = items[id] + amount
         end
     end
 
@@ -327,7 +328,7 @@ function FactoryLift:getImportStats(items)
         end
     end
 
-    return neededMoney == 0 or MoneyManager.cl_getMoney() >= neededMoney, neededMoney, ownedItems
+    return (neededMoney == 0 or MoneyManager.cl_getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney, ownedItems
 end
 
 function FactoryLift:getCreationPath( name )
