@@ -18,7 +18,8 @@
 	"ImportInteraction": "Import creation",
 	"ImportTitle": "Select a creation to import!",
 	"ImportedCreation": "Imported Creation!",
-	"ImportNeededMoney": "Money needed: ",
+	"ImportNone": "No Blueprints",
+	"ImportNeededMoney": "Cost: ",
 
 	//Money & Shop
 	"Sell": "Sell",
