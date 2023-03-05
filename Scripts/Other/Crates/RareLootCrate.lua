@@ -39,8 +39,6 @@ function RareLootCrate:get_loot_table()
         table.remove(itemPool, mostExpensiveItem)
     end
 
-    sortedPool[#sortedPool + 1] = sm.uuid.new("f08d772f-9851-400f-a014-d847900458a7")
-
     return sortedPool
 end
 
