@@ -2,8 +2,9 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
-
+---A Furnace defines an `AreaTrigger`. Every `Drop` that enters it will be sold for money. A single Furnace can be set as a research Furnace and will sell drops for research points.
 ---@class Furnace : Power
+---@field sv FurnaceSv
 Furnace = class(Power)
 Furnace.maxParentCount = 1
 Furnace.maxChildCount = 0
@@ -12,27 +13,36 @@ Furnace.connectionOutput = sm.interactable.connectionType.none
 Furnace.colorNormal = sm.color.new(0x8000ddff)
 Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
-local cl_research_Effect
+--------------------
+-- #region Server
+--------------------
+
+---@type Interactable|nil if not nil, the Furnace set for research
+local sv_research_furnace
 
 function Furnace:server_onCreate()
+    --tutorial stuff
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
 
     Power.server_onCreate(self)
 
+    --save data
     self.sv = {}
     self.sv.saved = self.storage:load()
     if not self.sv.saved then
         self.sv.saved = {}
     else
-        if g_research_furnace then
+        --make sure there is only one research furnace
+        if sv_research_furnace then
             self.sv.saved.research = nil
             self.storage:save(self.sv.saved)
         elseif self.sv.saved.research then
-            g_research_furnace = self.interactable
-            self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
+            sv_research_furnace = self.interactable
+            self.network:sendToClients("cl_toggle_research_effect", (sv_research_furnace and true))
         end
     end
 
+    --create areaTrigger
     local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
@@ -44,6 +54,7 @@ end
 
 function Furnace:sv_onEnter(trigger, results)
     if not self.powerUtil.active then return end
+
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
 
@@ -54,12 +65,14 @@ function Furnace:sv_onEnter(trigger, results)
             local publicData = interactable:getPublicData()
             if not publicData or not publicData.value then goto continue end
 
+            --valid drop entered
             self:sv_onEnterDrop(shape)
         end
         ::continue::
     end
 end
 
+---Called when a valid drop enters the Furnace and it has power
 function Furnace:sv_onEnterDrop(shape)
     local value = self:sv_upgrade(shape)
     local publicData = shape.interactable:getPublicData()
@@ -67,11 +80,13 @@ function Furnace:sv_onEnterDrop(shape)
 
     if not publicData.pollution then
         if self.sv.saved.research then
+            --make research points
             value = value * PerkManager.sv_getMultiplier("research")
             value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
             sm.event.sendToGame("sv_e_stonks",
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
         else
+            --make money
             sm.event.sendToGame("sv_e_stonks",
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
             MoneyManager.sv_addMoney(value)
@@ -86,6 +101,9 @@ function Furnace:sv_onEnterDrop(shape)
     shape:destroyPart(0)
 end
 
+---Called before a shape is sold, so it's value can be modified before
+---@param shape Shape shape that is to be sold by the furnace
+---@return number value new value of the drop
 function Furnace:sv_upgrade(shape)
     local value = shape.interactable.publicData.value
     if self.data.multiplier then
@@ -94,33 +112,48 @@ function Furnace:sv_upgrade(shape)
     return value
 end
 
+---Assigns this furnace for research, and unasigns old research furnace (if exists)
 function Furnace:sv_setResearch(_, player)
-    sm.event.sendToGame("sv_e_showTagMessage",
-        { tag = (self.sv.saved.research and "ResearchFurnaceRemoved") or "ResearchFurnaceSet", player = player })
-
     self.sv.saved.research = not self.sv.saved.research
     self.storage:save(self.sv.saved)
 
     if self.sv.saved.research then
+        --tutorial stuff
         sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchFurnaceSet")
 
-        if (g_research_furnace and type(g_research_furnace) == "Interactable" and sm.exists(g_research_furnace)) then
-            sm.event.sendToInteractable(g_research_furnace, "sv_removeResearch")
+        --remove old research furnace
+        if (sv_research_furnace and type(sv_research_furnace) == "Interactable" and sm.exists(sv_research_furnace)) then
+            sm.event.sendToInteractable(sv_research_furnace, "sv_removeResearch")
         end
     end
-    g_research_furnace = (self.sv.saved.research and self.interactable) or nil
+    sv_research_furnace = (self.sv.saved.research and self.interactable) or nil
 
-    self.network:sendToClients("cl_toggle_research_effect", (g_research_furnace and true))
+    --notify clients
+    self.network:sendToClients("cl_toggle_research_effect", (sv_research_furnace and true))
+    sm.event.sendToGame("sv_e_showTagMessage",
+        { tag = (self.sv.saved.research and "ResearchFurnaceSet") or "ResearchFurnaceRemoved", player = player })
 end
 
+---Unasigns this furnace for research
 function Furnace:sv_removeResearch()
     self.sv.saved.research = nil
     self.storage:save(self.sv.saved)
     self.network:sendToClients("cl_setSellAreaEffectColor", sm.color.new(0, 1, 0))
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+---@type Effect|nil effect that marks a research furnace
+local cl_research_Effect
+
 function Furnace:client_onCreate()
     self.cl = {}
+
+    --create sell area effect
     local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
@@ -130,6 +163,7 @@ function Furnace:client_onCreate()
     self.cl.effect:setScale(size / 4.5)
     self.cl.effect:setOffsetPosition(offset)
     local rot1 = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), sm.vec3.new(0, 1, 0))
+
     --really fucking weird rotation offset thingy bc epic shader doesn't work on all rotations. WTF axolot why?
     local rot2 = self.shape.xAxis.y ~= 0 and sm.vec3.getRotation(sm.vec3.new(1, 0, 0), sm.vec3.new(0, 1, 0)) or
         sm.quat.identity()
@@ -142,6 +176,7 @@ function Furnace:server_onFixedUpdate()
     Power.server_onFixedUpdate(self, "cl_toggleEffect")
 end
 
+---toggles the effect of the sell area
 function Furnace:cl_toggleEffect(active)
     if active and not self.cl.effect:isPlaying() then
         self.cl.effect:start()
@@ -150,6 +185,8 @@ function Furnace:cl_toggleEffect(active)
     end
 end
 
+---toggles the effect that marks a research furnace
+---@param active boolean whether this furnace is a research furnace or not
 function Furnace:cl_toggle_research_effect(active)
     if cl_research_Effect and sm.exists(cl_research_Effect) then
         cl_research_Effect:destroy()
@@ -169,9 +206,10 @@ function Furnace:cl_toggle_research_effect(active)
     self:cl_setSellAreaEffectColor(active and sm.color.new(0, 0, 1) or sm.color.new(0, 1, 0))
 end
 
+---Changes the color of the sell area effect
+---@param color Color the new color of the sell area effect
 function Furnace:cl_setSellAreaEffectColor(color)
     self.cl.effect:setParameter("color", color)
-
 end
 
 function Furnace:client_canInteract()
@@ -179,8 +217,10 @@ function Furnace:client_canInteract()
     return true
 end
 
+---interact with a furnace to set it to a research furnace
 function Furnace:client_onInteract(character, state)
     if state then
+        --check if feature unlocked
         if TutorialManager.cl_getTutorialStep() > 7 then
             self.network:sendToServer("sv_setResearch")
         else
@@ -188,3 +228,17 @@ function Furnace:client_onInteract(character, state)
         end
     end
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class FurnaceSv
+---@field saved FurnaceSaveData
+---@field trigger AreaTrigger the areaTrigger that defines the sell area
+
+
+---@class FurnaceSaveData
+---@field research boolean whether the furnace is a research furnace

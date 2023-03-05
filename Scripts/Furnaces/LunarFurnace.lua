@@ -1,6 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 dofile("$CONTENT_DATA/Scripts/util/day.lua")
 
+---The LunarFurnace sells drops for less during day, but for more during night.
 ---@class LunarFurnace : Furnace
 LunarFurnace = class(Furnace)
 
