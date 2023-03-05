@@ -26,11 +26,13 @@
                     <Property key="Caption" value="abcd"/>
                 </Widget>
             </Widget>
-            <Widget type="TextBox" skin="TextBox" position_real="0.025862068965517241 0.2558139534883721 0.42931034482758623 0.11627906976744186" align="Center" name="nothing">
+            <Widget type="Button" skin="PrimaryButton" position_real="0.025862068965517241 0.2558139534883721 0.42931034482758623 0.11627906976744186" align="Center" name="nothing">
                 <Property key="Caption" value="None"/>
                 <Property key="FontName" value="SM_ListItem"/>
                 <Property key="TextAlign" value="Center"/>
-                <Property key="Colour" value="1 0.780392 0.227451"/>
+                <Property key="Colour" value="1 1 1"/>
+                <Property key="NeedKey" value="false"/>
+                <Property key="NeedMouse" value="false"/>
             </Widget>
         </Widget>
     </Widget>
