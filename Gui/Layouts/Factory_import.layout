@@ -1,30 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="PanelEmpty" name="BackPanel" position_real="0 0 0.3125 0.4166666666666667">
-        <Widget type="Canvas" skin="BackgroundLiftExport" position_real="0.016666666666666666 0.022222222222222223 0.9666666666666667 0.9555555555555556">
-            <Widget type="TextBox" skin="TextBox" name="title" position_real="0.017241379310344827 0.023255813953488372 0.9655172413793104 0.1744186046511628">
+    <Widget type="Widget" skin="PanelEmpty" position_real="0 0 0.3125 0.41666666666666669" name="BackPanel">
+        <Widget type="Canvas" skin="BackgroundLiftExport" position_real="0.016666666666666666 0.022222222222222223 0.96666666666666667 0.9555555555555556">
+            <Widget type="TextBox" skin="TextBox" position_real="0.017241379310344827 0.023255813953488372 0.96551724137931039 0.1744186046511628" name="title">
                 <Property key="TextAlign" value="Center"/>
                 <Property key="FontName" value="SM_HeaderLarge_Medium"/>
                 <Property key="Caption" value="name creation"/>
             </Widget>
-            <Widget type="Button" skin="StyledButtonLarge" name="import" position_real="0.27586206896551724 0.8604651162790697 0.4482758620689655 0.13953488372093023">
+            <Widget type="Button" skin="StyledButtonLarge" position_real="0.27586206896551724 0.86046511627906974 0.44827586206896552 0.13953488372093023" name="import">
                 <Property key="Caption" value="#{LIFT_IMPORT_BUILD}"/>
                 <Property key="FontName" value="SM_Button"/>
                 <Property key="TextAlign" value="Center"/>
             </Widget>
-            <Widget type="Canvas" skin="Canvas" name="creation" position_real="0.02586206896551724 0.2558139534883721 0.43103448275862066 0.11627906976744186"/>
-            <Widget type="Canvas" skin="GenderButton" position_real="0.4810344827586207 0.2558139534883721 0.49310344827586206 0.46511627906976744">
-                <Widget type="ItemBox" skin="InventoryItemBox2" name="inventory" position_real="0.017482517482517484 0.025 0.965034965034965 0.95">
+            <Widget type="Canvas" skin="Canvas" position_real="0.025862068965517241 0.2558139534883721 0.42931034482758623 0.11627906976744186" name="creation"/>
+            <Widget type="Canvas" skin="GenderButton" position_real="0.48103448275862071 0.2558139534883721 0.49310344827586206 0.46511627906976744">
+                <Widget type="ItemBox" skin="InventoryItemBox2" position_real="0.017482517482517484 0.025000000000000001 0.965034965034965 0.94999999999999996" name="inventory">
                     <Property key="NeedKey" value="false"/>
                 </Widget>
             </Widget>
-            <Widget type="Canvas" skin="GenderButton" position_real="0.4810344827586207 0.7209302325581395 0.49310344827586206 0.11627906976744186">
+            <Widget type="Canvas" skin="GenderButton" position_real="0.48103448275862071 0.72093023255813948 0.49310344827586206 0.11627906976744186">
                 <Property key="Caption" value="abcd"/>
-                <Widget type="TextBox" skin="TextBox" name="money" position_real="0.034965034965034968 0.1 0.965034965034965 0.8">
+                <Widget type="TextBox" skin="TextBox" position_real="0.034965034965034968 0.10000000000000001 0.965034965034965 0.80000000000000004" name="money">
                     <Property key="FontName" value="SM_Header"/>
                     <Property key="TextAlign" value="Left VCenter"/>
                     <Property key="Caption" value="abcd"/>
                 </Widget>
+            </Widget>
+            <Widget type="TextBox" skin="TextBox" position_real="0.025862068965517241 0.2558139534883721 0.42931034482758623 0.11627906976744186" align="Center" name="nothing">
+                <Property key="Caption" value="None"/>
+                <Property key="FontName" value="SM_ListItem"/>
+                <Property key="TextAlign" value="Center"/>
+                <Property key="Colour" value="1 0.780392 0.227451"/>
             </Widget>
         </Widget>
     </Widget>
