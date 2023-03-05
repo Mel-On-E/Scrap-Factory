@@ -9,7 +9,7 @@ Drop = class(nil)
 local oreCount = 0
 ---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
 local storedDrops = {}
-
+---time after which not moving drops will be deleted:
 local despawnTimeout = 40 * 5 --5 seconds
 
 --------------------
@@ -44,12 +44,14 @@ function Drop:server_onFixedUpdate()
 	if sm.game.getCurrentTick() % 40 == 0 then
 		self:sv_setClientData()
 	end
-	--
+
+	--handle timeout
 	self.sv.timeout = self.shape:getVelocity():length() < 0.01 and self.sv.timeout + 1 or 0
 
 	if self.sv.timeout > despawnTimeout then
 		self.shape:destroyShape(0)
 	end
+
 	--cache server variables
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedPollution = self:getPollution()
@@ -241,6 +243,7 @@ end
 ---@field cachedValue number
 ---@field pollution number
 ---@field value number
+---@field timeout number number of ticks for how long the drop has not moved
 
 ---@class effectParam
 ---@field key string key for the effect table
