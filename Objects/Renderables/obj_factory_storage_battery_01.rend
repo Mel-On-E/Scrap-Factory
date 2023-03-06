@@ -12,8 +12,12 @@
                ]
             },
             {
-               "material" : "Dif",
-               "textureList" : [ "$CONTENT_DATA/Objects/Patterns/pat_blockout_reflection.png" ]
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_nor.tga"
+               ]
             }
          ]
       }

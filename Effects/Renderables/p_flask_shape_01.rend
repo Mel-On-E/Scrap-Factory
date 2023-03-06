@@ -1,9 +1,9 @@
 {
    "lodList" : [
       {
-         "mesh" : "$CONTENT_DATA/Effects/Meshes/p_flask_shape_01.fbx",
-         "subMeshList" : {
-            "glass" : {
+         "mesh" : "$CONTENT_DATA/Effects/Meshes/science/p_flask_shape_01.fbx",
+         "subMeshList" : [
+            {
                "material" : "Glass",
                "textureList" : [
                   "$CONTENT_DATA/Effects/Textures/science/p_flask_shared_dif.tga",
@@ -11,7 +11,7 @@
                   "$CONTENT_DATA/Effects/Textures/science/p_flask_shared_nor.tga"
                ]
             },
-            "fluid" : {
+            {
                "material" : "DifAsgNor",
                "textureList" : [
                   "$CONTENT_DATA/Effects/Textures/science/p_flask_shared_dif.tga",
@@ -19,7 +19,7 @@
                   "$CONTENT_DATA/Effects/Textures/science/p_flask_shared_nor.tga"
                ]
             }
-         }
+         ]
       }
    ]
 }
