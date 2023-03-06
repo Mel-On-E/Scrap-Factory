@@ -1,7 +1,13 @@
 dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 
----@class RandomUpgrader : Upgrader
+---An Upgrader which areaTrigger gets bigger and upgrades more as its angularVelocity increases
+---@class SpinnyUpgrader : Upgrader
+---@field data SpinnyUpgraderData
 SpinnyUpgrader = class(Upgrader)
+
+--------------------
+-- #region Server
+--------------------
 
 function SpinnyUpgrader:server_onCreate()
     Upgrader.server_onCreate(self, { filters = sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character })
@@ -57,6 +63,12 @@ function SpinnyUpgrader:sv_onEnter(trigger, results)
     Upgrader.sv_onEnter(self, trigger, results)
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function SpinnyUpgrader:client_onFixedUpdate()
     local size, offset = self:get_size_and_offset()
 
@@ -69,7 +81,25 @@ function SpinnyUpgrader:get_size_and_offset()
 
     local size = sm.vec3.new(self.data.upgrade.sphere.x, self.data.upgrade.sphere.y, self.data.upgrade.sphere.z)
     local speed = math.min(self.shape.body.angularVelocity:length() ^ 0.333, self.data.upgrade.maxSpin)
+    ---@diagnostic disable-next-line: cast-local-type
     size = size * speed + self.shape:getBoundingBox() * 4
 
     return size, offset
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class SpinnyUpgraderData : UpgraderData
+---@field upgrade SpinnyUpgraderUpgrade
+
+---@class SpinnyUpgraderUpgrade : UpgraderUpgrade
+---@field multiplier number|nil the minimum amount to be added to a drop's value
+---@field sphere table
+---@field maxSpin number the maximum angular
+
+
+-- #endregion
