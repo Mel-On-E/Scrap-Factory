@@ -19,7 +19,10 @@
       "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_loot_lootcrate_01.rend",
       "restitution": 1.0,
       "restrictions": {
-        "liftable": false
+        "buildable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
       },
       "rotationSet": "PropYNegYZ",
       "scripted": {
@@ -78,7 +81,10 @@
       },
       "restitution": 1.0,
       "restrictions": {
-        "liftable": false
+        "buildable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
       },
       "rotationSet": "PropYNegYZ",
       "scripted": {
@@ -131,7 +137,10 @@
       },
       "restitution": 1.0,
       "restrictions": {
-        "liftable": false
+        "buildable": false,
+        "erasable": false,
+        "liftable": false,
+        "paintable": false
       },
       "rotationSet": "PropYNegYZ",
       "scripted": {

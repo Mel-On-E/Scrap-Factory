@@ -1,19 +1,28 @@
----@class Power : ShapeClass
----@field powerUtil PowerUtil
+---A utility class that handles power mangement. Data is stored in `self.powerUtil`. Implement `sv_init(self)` and `sv_fixedUpdate(self, callback)` to make it work.
+---@class PowerUtility : ShapeClass
+---@field powerUtil PowerUtility
 ---@diagnostic disable-next-line: assign-type-mismatch
-Power = class(nil)
+PowerUtility = class(nil)
 
-function Power:server_onCreate()
+--------------------
+-- #region Serveer
+--------------------
+
+---initialize the power utility
+function PowerUtility.sv_init(self)
     self.data.power = tonumber(self.data.power)
 
-    self.powerUtil = {}
-    self.powerUtil.prevActive = true
-    self.powerUtil.active = false
-    self.powerUtil.powerUpdate = 1
-    self.powerUtil.hasPower = false
+    self.powerUtil = {
+        prevActive = true,
+        active = false,
+        powerUpdate = 1,
+        hasPower = false
+    }
 end
 
-function Power:server_onFixedUpdate(effect)
+---update the power utility
+---@param toggleCallback string|nil name of the client callback used to toggle things, e.g. effects, when the power changes
+function PowerUtility.sv_fixedUpdate(self, toggleCallback)
     self.powerUtil.powerUpdate = self.powerUtil.powerUpdate - 1
 
     local parent = self.interactable:getSingleParent()
@@ -36,16 +45,24 @@ function Power:server_onFixedUpdate(effect)
     self.powerUtil.active = self.powerUtil.active and self.powerUtil.hasPower
 
     if self.powerUtil.active ~= self.powerUtil.prevActive then
-        if effect and type(effect) == "string" then
-            self.network:sendToClients(effect, self.powerUtil.active)
+        if toggleCallback and type(toggleCallback) == "string" then
+            self.network:sendToClients(toggleCallback, self.powerUtil.active)
         end
     end
 
     self.powerUtil.prevActive = self.powerUtil.active
 end
 
----@class PowerUtil
----@field prevActive boolean
----@field active boolean
----@field powerUpdate number
----@field hasPower boolean
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class PowerUtility
+---@field prevActive boolean if the object was turned on during the previous tick
+---@field active boolean if the object is "turned on" and should (try) to use power
+---@field powerUpdate number ticks until the next power check
+---@field hasPower boolean whether the object still has power from the last time power was consumed
+
+-- #endregion

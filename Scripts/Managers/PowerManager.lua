@@ -30,14 +30,16 @@ function PowerManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         if self.cl.loaded and sm.game.getCurrentTick() > self.cl.loaded + 80 then
             self.sv.saved.powerStored = math.max(math.min(self.sv.powerLimit, self.sv.saved.powerStored + self.sv.power)
-                , 0)
+            , 0)
         end
 
         self.storage:save(packNetworkData(self.sv.saved))
 
-        local clientData = { power = self.sv.power,
+        local clientData = {
+            power = self.sv.power,
             powerLimit = self.sv.powerLimit,
-            powerStored = self.sv.saved.powerStored }
+            powerStored = self.sv.saved.powerStored
+        }
         self.network:setClientData(packNetworkData(clientData))
 
         self.sv.power = 0
@@ -78,7 +80,7 @@ function PowerManager:client_onFixedUpdate()
         local percentage = self.cl.data.powerStored > 0 and
             math.ceil((self.cl.data.powerStored / self.cl.data.powerLimit) * 100) or 0
         g_factoryHud:setText("Power",
-            "#dddd00" .. format_number({ format = "energy", value = power }) .. " (" .. tostring(percentage) .. "%)")
+            "#dddd00" .. format_number({ format = "power", value = power }) .. " (" .. tostring(percentage) .. "%)")
 
         if power < 0 and self.cl.data.powerStored <= 0 then
             if self.cl.loaded and sm.game.getCurrentTick() > self.cl.loaded + 80 then

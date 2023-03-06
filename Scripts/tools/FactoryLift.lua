@@ -114,6 +114,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
             elseif result.type == "lift" then
                 if forceBuild and not self.importGui:isActive() then
                     self:cl_import_updateItemGrid(self.importCreation, false)
+                    self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
                     self.importGui:open()
                 end
@@ -201,16 +202,22 @@ function FactoryLift:cl_import_createUI()
 
     local options = {}
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
-    for k, path in pairs(creations) do
-        options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
-    end
-    self.importGui:createDropDown(
-        "creation",
-        "cl_import_select",
-        options
-    )
+    local noBlueprints = #creations == 0
+    self.importGui:setVisible("creation", not noBlueprints)
+    self.importGui:setVisible("import", not noBlueprints)
+    self.importGui:setVisible("nothing", noBlueprints)
 
-    self.importGui:setText("title", language_tag("ImportTitle"))
+    if not noBlueprints then
+        for k, path in pairs(creations) do
+            options[#options + 1] = string.gsub(string.match(path, "[^/]*$"), "%.json$", "")
+        end
+
+        self.importGui:createDropDown(
+            "creation",
+            "cl_import_select",
+            options
+        )
+    end
 
     return options
 end
@@ -268,6 +275,8 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
 end
 
 function FactoryLift:cl_import_importCreation()
+    if self.importCreation == nil then return end
+
     local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.importCreation))
 
     self.network:sendToServer("sv_importCreation",
@@ -319,7 +328,7 @@ function FactoryLift:getImportStats(items)
         end
     end
 
-    return neededMoney == 0 or MoneyManager.cl_getMoney() >= neededMoney, neededMoney, ownedItems
+    return (neededMoney == 0 or MoneyManager.cl_getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney, ownedItems
 end
 
 function FactoryLift:getCreationPath( name )
