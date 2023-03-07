@@ -9,12 +9,6 @@ BasicUpgrader = class(Upgrader)
 -- #region Server
 --------------------
 
-function BasicUpgrader:server_onCreate()
-    self.data.upgrade.add = tonumber(self.data.upgrade.add)
-
-    Upgrader.server_onCreate(self, nil)
-end
-
 function BasicUpgrader:sv_onUpgrade(shape, data)
     local upgrade = self.data.upgrade
 

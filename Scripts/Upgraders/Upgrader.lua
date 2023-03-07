@@ -1,5 +1,5 @@
 dofile("$CONTENT_DATA/Scripts/Other/Belt.lua")
----An Upgrader has an areaTrigger that interacts with a `Drop` and can modify its value
+---An Upgrader has an areaTrigger that interacts with a `Drop` and can modify its value. If `self.data.belt ~= nil`, it will also create a `Belt`.
 ---@class Upgrader : ShapeClass
 ---@field cl UpgraderCl
 ---@field data UpgraderData
@@ -20,13 +20,14 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 ---@field filters number|nil filters of the areaTrigger
 ---@param params Params
 function Upgrader:server_onCreate(params)
+    PowerUtility.sv_init(self)
+
     if self.data.belt then
-        --create Belt
         Belt.server_onCreate(self)
         self.sv_onStay = Belt.sv_onStay
-    else
-        PowerUtility.sv_init(self)
     end
+
+    self.data.upgrade = unpackNetworkData(self.data.upgrade)
 
     --create areaTrigger
     params = params or {}
@@ -41,7 +42,7 @@ function Upgrader:server_onFixedUpdate()
     if self.data.belt then
         Belt.server_onFixedUpdate(self)
     else
-        PowerUtility.sv_fixedUpdate(self, nil)
+        PowerUtility.sv_fixedUpdate(self, "cl_toggleEffects")
     end
 end
 
@@ -85,10 +86,10 @@ end
 --------------------
 
 function Upgrader:client_onCreate()
+    self.cl = {}
+
     if self.data.belt then
         Belt.client_onCreate(self)
-    else
-        self.cl = {}
     end
 
     self:cl_createUpgradeEffect()
@@ -104,9 +105,9 @@ function Upgrader:cl_createUpgradeEffect()
 
     local effect = self.data.effect
     local uuid = effect and effect.uuid and sm.uuid.new(effect.uuid) or
-    sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
+        sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
     local color = effect and effect.color and sm.color.new(effect.color.r, effect.color.g, effect.color.b) or
-    sm.color.new(1, 1, 1)
+        sm.color.new(1, 1, 1)
 
     self.cl.effect = sm.effect.createEffect(uuid and "ShapeRenderable" or effect.name, self.interactable)
     self.cl.effect:setParameter("color", color)

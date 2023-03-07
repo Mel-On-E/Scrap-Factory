@@ -29,18 +29,23 @@ function SpinnyUpgrader:sv_onUpgrade(shape, data)
         data.value = data.value + (data.value * (upgrade.multiplier * upgradeFraction))
     end
 
+    Upgrader.sv_onUpgrade(self, shape, data)
+
+    --skirt effect
     sm.event.sendToInteractable(shape.interactable, "sv_e_addEffect", {
         effect = "ShapeRenderable",
         key = "skirt",
         uuid = obj_skirt_effect,
         scale = sm.vec3.new(1, 0.75, 1)
     })
-
-    Upgrader.sv_onUpgrade(self, shape, data)
 end
 
 function SpinnyUpgrader:sv_onEnter(trigger, results)
     if not self.powerUtil.active then return end
+
+    Upgrader.sv_onEnter(self, trigger, results)
+
+    --attach skirt to players when they touch the upgrader
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
         if type(result) ~= "Character" then goto continue end
@@ -59,8 +64,6 @@ function SpinnyUpgrader:sv_onEnter(trigger, results)
 
         ::continue::
     end
-
-    Upgrader.sv_onEnter(self, trigger, results)
 end
 
 -- #endregion
@@ -76,6 +79,8 @@ function SpinnyUpgrader:client_onFixedUpdate()
     self.cl.effect:setOffsetPosition(offset)
 end
 
+-- #endregion
+
 function SpinnyUpgrader:get_size_and_offset()
     local offset = sm.vec3.new(self.data.upgrade.offset.x, self.data.upgrade.offset.y, self.data.upgrade.offset.z)
 
@@ -86,8 +91,6 @@ function SpinnyUpgrader:get_size_and_offset()
 
     return size, offset
 end
-
--- #endregion
 
 --------------------
 -- #region Types
