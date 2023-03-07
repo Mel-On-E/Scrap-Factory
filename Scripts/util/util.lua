@@ -36,7 +36,7 @@ end
 -- #region NetworkData
 --------------------
 
----packs data for network usage by converting all numbers to string
+---packs data for network usage by converting all numbers to string if possible
 ---@param data table network data to pack
 ---@return table data packed network data
 function packNetworkData(data)
@@ -57,7 +57,7 @@ function packNetworkData(data)
     return data and packData(data) or nil
 end
 
----unpacks data from network usage by converting all strings to numbers
+---unpacks data from network usage by converting all strings to numbers if possible
 ---@param data table network data to unpack
 ---@return table data unpacked network data
 function unpackNetworkData(data)
