@@ -1,3 +1,4 @@
+--vanila survival
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
@@ -10,6 +11,7 @@ dofile("$SURVIVAL_DATA/Scripts/game/util/recipes.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
 dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
+--custom
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
@@ -24,11 +26,10 @@ dofile("$CONTENT_DATA/Scripts/Managers/PrestigeManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LootCrateManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PerkManager.lua")
 
-
-
+---Manages the game, world, and more stuff
 ---@class FactoryGame : GameClass
----@field sv table
----@field cl table
+---@field sv FactoryGameSv
+---@field cl FactoryGameCl
 FactoryGame = class(nil)
 FactoryGame.enableLimitedInventory = true
 FactoryGame.enableRestrictions = true
@@ -37,70 +38,339 @@ FactoryGame.enableAmmoConsumption = false
 FactoryGame.enableUpgrade = true
 FactoryGame.defaultInventorySize = 1024
 
+--------------------
+-- #region Server
+--------------------
+
+---How often client and host time is synced
 local SyncInterval = 400 -- 400 ticks | 10 seconds
-DEVMODE = true
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
+
 	self.sv = {}
+
+	self:sv_loadSavedData()
+
+	g_world = self.sv.saved.world
+	g_enableCollisionTumble = true
+
+	self:sv_initManagers()
+	self:sv_initTimeSync()
+end
+
+function FactoryGame.server_onFixedUpdate(self, timeStep)
+	self:sv_updateTimeStuff(timeStep)
+
+	g_unitManager:sv_onFixedUpdate()
+	if g_eventManager then
+		g_eventManager:sv_onFixedUpdate()
+	end
+
+	if sm.game.getCurrentTick() % 40 == 0 then
+		self:sv_updateClientData()
+	end
+end
+
+function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
+	print(player.name, "joined the game")
+
+	if newPlayer then --Player is first time joiners
+		local inventory = player:getInventory()
+
+		local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
+
+		local startingItems = {
+			tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
+			obj_generator_windmill
+		}
+
+		sm.container.beginTransaction()
+
+		for slot, item in ipairs(startingItems) do
+			sm.container.setItem(inventory, slot - 1, item, 1)
+		end
+
+		for i = #startingItems, inventory.size, 1 do
+			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
+		end
+
+		if sm.player.getAllPlayers()[1] == player then --if host
+			print(PrestigeManager.sv_getSpecialItems())
+			local i = 7
+			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
+				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
+				i = i + 1
+			end
+		end
+
+		sm.container.endTransaction()
+
+		if not sm.exists(self.sv.saved.world) then
+			sm.world.loadWorld(self.sv.saved.world)
+		end
+		self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
+			"sv_createNewPlayer")
+	end
+	g_unitManager:sv_onPlayerJoined(player)
+end
+
+--------------------
+-- #region Spawning
+--------------------
+
+function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
+	local params = { player = player, x = x, y = y }
+	sm.event.sendToWorld(self.sv.saved.world, "sv_spawnNewCharacter", params)
+end
+
+---sets the `SPAWN_POINT` for all players
+---@param pos Vec3
+function FactoryGame.sv_e_setSpawnPoint(self, pos)
+	self.sv.saved.spawn = pos
+	SPAWN_POINT = pos
+	self.storage:save(self.sv.saved)
+end
+
+function FactoryGame.sv_e_respawn(self, params)
+	if params.player.character and sm.exists(params.player.character) then
+		g_respawnManager:sv_requestRespawnCharacter(params.player)
+	else
+		if not sm.exists(self.sv.saved.world) then
+			sm.world.loadWorld(self.sv.saved.world)
+		end
+		self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params
+			.player,
+			"sv_createNewPlayer")
+	end
+end
+
+function FactoryGame.sv_loadedRespawnCell(self, world, x, y, player)
+	g_respawnManager:sv_respawnCharacter(player, world)
+end
+
+function FactoryGame.sv_e_onSpawnPlayerCharacter(self, player)
+	if player.character and sm.exists(player.character) then
+		g_respawnManager:sv_onSpawnCharacter(player)
+		g_beaconManager:sv_onSpawnCharacter(player)
+	else
+		sm.log.warning("FactoryGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
+	end
+end
+
+-- #endregion
+
+--------------------
+-- #region Commands
+--------------------
+
+function FactoryGame.sv_onChatCommand(self, params, player)
+	if params[1] == "/sethp" then
+		sm.event.sendToPlayer(player, "sv_e_debug", { hp = params[2] })
+	elseif params[1] == "/respawn" then
+		sm.event.sendToPlayer(player, "sv_e_respawn")
+	elseif params[1] == "/printglobals" then
+		print("Globals:")
+		for k, _ in pairs(_G) do
+			print(k)
+		end
+
+		--FACTORY
+	elseif params[1] == "/addmoney" then
+		MoneyManager.sv_addMoney(tonumber(params[2]))
+	elseif params[1] == "/setmoney" then
+		MoneyManager.sv_setMoney(tonumber(params[2]))
+	elseif params[1] == "/addpollution" then
+		PollutionManager.sv_addPollution(tonumber(params[2]))
+	elseif params[1] == "/setpollution" then
+		PollutionManager.sv_setPollution(tonumber(params[2]))
+	elseif params[1] == "/addprestige" then
+		PrestigeManager.sv_addPrestige(tonumber(params[2]))
+	elseif params[1] == "/setprestige" then
+		PrestigeManager.sv_setPrestige(tonumber(params[2]))
+	else
+		params.player = player
+		if sm.exists(player.character) then
+			sm.event.sendToWorld(player.character:getWorld(), "sv_e_onChatCommand", params)
+		end
+	end
+end
+
+function FactoryGame.sv_giveItem(self, params)
+	sm.container.beginTransaction()
+	sm.container.collect(params.player:getInventory(), params.item, params.quantity, false)
+	sm.container.endTransaction()
+end
+
+function FactoryGame.sv_reloadCell(self, params, player)
+	print("sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}")
+
+	self.sv.saved.world:loadCell(params.x, params.y, player)
+	self.network:sendToClients("cl_reloadCell", params)
+end
+
+function FactoryGame.sv_updateClientData(self)
+	self.network:setClientData({ time = self.sv.time }, 2)
+end
+
+function FactoryGame.sv_switchGodMode(self)
+	g_godMode = not g_godMode
+	self.network:sendToClients("cl_chatMessage", "GODMODE: " .. (g_godMode and "On" or "Off"))
+end
+
+function FactoryGame.sv_n_switchAggroMode(self, params)
+	sm.game.setEnableAggro(params.aggroMode)
+	self.network:sendToClients("cl_chatMessage", "AGGRO: " .. (params.aggroMode and "On" or "Off"))
+end
+
+function FactoryGame.sv_enableRestrictions(self, state)
+	sm.game.setEnableRestrictions(state)
+	self.network:sendToClients("cl_chatMessage", (state and "Restricted" or "Unrestricted"))
+end
+
+function FactoryGame.sv_setLimitedInventory(self, state)
+	sm.game.setLimitedInventory(state)
+	self.network:sendToClients("cl_chatMessage", (state and "Limited inventory" or "Unlimited inventory"))
+end
+
+function FactoryGame.sv_setTimeOfDay(self, timeOfDay)
+	if timeOfDay then
+		self.sv.time.timeOfDay = timeOfDay
+		---@diagnostic disable-next-line: undefined-field
+		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
+	end
+	self.network:sendToClients("cl_chatMessage", ("Time of day set to " .. self.sv.time.timeOfDay))
+end
+
+function FactoryGame.sv_setTimeProgress(self, timeProgress)
+	if timeProgress ~= nil then
+		self.sv.time.timeProgress = timeProgress
+		---@diagnostic disable-next-line: undefined-field
+		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
+	end
+	self.network:sendToClients("cl_chatMessage",
+		("Time scale set to " .. (self.sv.time.timeProgress and "on" or "off ")))
+end
+
+function FactoryGame.sv_killPlayer(self, params)
+	params.damage = 6969
+	sm.event.sendToPlayer(params.player, "sv_e_receiveDamage", params)
+end
+
+function FactoryGame.sv_spawnUnit(self, params)
+	sm.event.sendToWorld(params.world, "sv_e_spawnUnit", params)
+end
+
+function FactoryGame.sv_spawnHarvestable(self, params)
+	sm.event.sendToWorld(params.world, "sv_spawnHarvestable", params)
+end
+
+-- #endregion
+
+---cursed stuff to disable chunk unloading
+function FactoryGame.sv_loadTerrain(self, data)
+	for x = data.minX, data.maxX do
+		for y = data.minY, data.maxY do
+			data.world:loadCell(x, y, nil, "sv_empty")
+		end
+	end
+end
+
+---empty function to disable the chunk loading
+function FactoryGame.sv_empty(self)
+end
+
+---recreates the world, clears inventory too
+function FactoryGame.sv_recreateWorld(self)
+	self.sv.saved.data.seed = math.floor(math.random() * 10 ^ 9)
+
+	self.sv.saved.world:destroy()
+	self.sv.saved.world = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
+		{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
+	g_world = self.sv.saved.world
+	g_respawnManager:sv_setWorld(g_world)
+	self.storage:save(self.sv.saved)
+
+	for _, player in ipairs(sm.player.getAllPlayers()) do
+		self:server_onPlayerJoined(player, true)
+	end
+end
+
+---trigger a raid on the factory WIP
+function FactoryGame:sv_factoryRaid()
+	print("CUSTOM RAID")
+	local level = 1
+	local wave = 1
+	local hours = 12
+
+	sm.event.sendToWorld(self.sv.saved.world, "sv_raid", { level = level, wave = wave, hours = hours })
+end
+
+---show a `displayAlertText()` based on `LanguageManager.language_tag(tag)`
+---@param params table tag = language tag; player = specific player or all players if nil
+function FactoryGame:sv_e_showTagMessage(params)
+	if params.player then
+		self.network:sendToClient(params.player, "cl_localizedChatMessage", params.tag)
+	else
+		self.network:sendToClients("cl_localizedChatMessage", params.tag)
+	end
+end
+
+--TODO: explain this shit
+function FactoryGame:sv_e_stonks(params)
+	sm.event.sendToWorld(self.sv.saved.world, "sv_e_stonks", params)
+end
+
+---load saved data form self.storage.load()
+function FactoryGame:sv_loadSavedData()
 	self.sv.saved = self.storage:load()
 	print("Saved:", self.sv.saved)
+
 	if self.sv.saved == nil then
 		self.sv.saved = {}
-		SPAWN_POINT = sm.vec3.new(0, 0, 20)
 		self.sv.saved.data = self.data
-		printf("Seed: %.0f", self.sv.saved.data.seed)
-		self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
+		self.sv.saved.world = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
 			{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
-		self.storage:save(self.sv.saved)
-	else
-		SPAWN_POINT = self.sv.saved.spawn or sm.vec3.new(0, 0, 20)
+		self:sv_e_setSpawnPoint(sm.vec3.new(0, 0, 20))
+	elseif self.sv.saved.spawn then
+		SPAWN_POINT = self.sv.saved.spawn
 	end
-	self.data = nil
-	self.sv.factory = {}
-	g_world = self.sv.saved.factoryWorld
 
-	print(self.sv.saved.data)
-	if (self.sv.saved.data and self.sv.saved.data.dev) or DEVMODE then
+	self.data = nil
+
+	if (self.sv.saved.data and self.sv.saved.data.dev) then
 		g_godMode = true
 		g_survivalDev = true
 		sm.log.info("Starting FactoryGame in DEV mode")
 	end
+end
 
-	g_enableCollisionTumble = true
-	g_deletedDrops = { lastTick = {}, tick = {} }
-
+---init manager objects
+function FactoryGame:sv_initManagers()
+	--vanila
 	g_eventManager = EventManager()
 	g_eventManager:sv_onCreate()
 
 	g_respawnManager = RespawnManager()
-	g_respawnManager:sv_onCreate(self.sv.saved.factoryWorld)
+	g_respawnManager:sv_onCreate(self.sv.saved.world)
 
 	g_beaconManager = BeaconManager()
 	g_beaconManager:sv_onCreate()
 
 	g_unitManager = UnitManager()
-	g_unitManager:sv_onCreate(self.sv.saved.factoryWorld)
+	g_unitManager:sv_onCreate(self.sv.saved.world)
 
-	self.sv.time = sm.storage.load(STORAGE_CHANNEL_TIME)
-	if self.sv.time then
-		print("Loaded timeData:")
-		print(self.sv.time)
-	else
-		self.sv.time = {}
-		self.sv.time.timeOfDay = 6 / 24 -- 06:00
-		self.sv.time.timeProgress = true
-		sm.storage.save(STORAGE_CHANNEL_TIME, self.sv.time)
+	--not saved
+	local managers = {
+		"c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0", --languageManager
+		"963f193f-cce8-4ed0-a04d-530fd70b230f" --lootCrateManager
+	}
+
+	for _, uuid in ipairs(managers) do
+		sm.scriptableObject.createScriptableObject(sm.uuid.new(uuid))
 	end
-	self.network:setClientData({ dev = g_survivalDev }, 1)
-	self:sv_updateClientData()
 
-	self.sv.syncTimer = Timer()
-	self.sv.syncTimer:start(0)
-
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("c46b4d61-9f79-4f1c-b5d4-5ec4fff2c7b0")) --languageManager
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("963f193f-cce8-4ed0-a04d-530fd70b230f")) --lootCrateManager
-
+	--saved
 	local savedManagers = {
 		{ moneyManager = "e97b0595-7912-425b-8a60-ea6dbfba4b39" },
 		{ powerManager = "26ec01d5-6fc8-4088-b06b-25d30dd44309" },
@@ -126,34 +396,75 @@ function FactoryGame.server_onCreate(self)
 	end
 end
 
+---vanila time syncing stuff
+function FactoryGame:sv_initTimeSync()
+	self.sv.time = sm.storage.load(STORAGE_CHANNEL_TIME)
+	if self.sv.time then
+		print("Loaded timeData:")
+		print(self.sv.time)
+	else
+		self.sv.time = {}
+		self.sv.time.timeOfDay = 6 / 24 -- 06:00
+		self.sv.time.timeProgress = true
+		sm.storage.save(STORAGE_CHANNEL_TIME, self.sv.time)
+	end
+	self.network:setClientData({ dev = g_survivalDev }, 1)
+	self:sv_updateClientData()
+
+	self.sv.syncTimer = Timer()
+	---@diagnostic disable-next-line: undefined-field
+	self.sv.syncTimer:start(0)
+end
+
+---fixed update vanila time stuff blah blah
+function FactoryGame:sv_updateTimeStuff(timeStep)
+	local prevTime = self.sv.time.timeOfDay
+	if self.sv.time.timeProgress then
+		self.sv.time.timeOfDay = self.sv.time.timeOfDay + timeStep / DAYCYCLE_TIME
+	end
+	local newDay = self.sv.time.timeOfDay >= 1.0
+	if newDay then
+		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
+		self:sv_factoryRaid() --FACTORY
+	end
+
+	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
+		g_unitManager:sv_initNewDay()
+	end
+
+	-- Client and save sync
+	---@diagnostic disable-next-line: undefined-field
+	self.sv.syncTimer:tick()
+	---@diagnostic disable-next-line: undefined-field
+	if self.sv.syncTimer:done() then
+		---@diagnostic disable-next-line: undefined-field
+		self.sv.syncTimer:start(SyncInterval)
+		sm.storage.save(STORAGE_CHANNEL_TIME, self.sv.time)
+	end
+end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function FactoryGame.client_onCreate(self)
-	self.cl = {}
-	self.cl.time = {}
-	self.cl.time.timeOfDay = 0.0
-	self.cl.time.timeProgress = true
+	self.cl = {
+		time = {
+			timeOfDay = 0.0,
+			timeProgress = true
+		}
+	}
 
-	if not sm.isHost then
-		g_enableCollisionTumble = true
-	end
+	g_shop = unpackNetworkData(sm.json.open("$CONTENT_DATA/Scripts/shop.json"))
+	g_enableCollisionTumble = not sm.isHost or g_enableCollisionTumble
 
-	if g_respawnManager == nil then
-		assert(not sm.isHost)
-		g_respawnManager = RespawnManager()
-	end
-	g_respawnManager:cl_onCreate()
-
-	if g_beaconManager == nil then
-		assert(not sm.isHost)
-		g_beaconManager = BeaconManager()
-	end
-	g_beaconManager:cl_onCreate()
-
-	if g_unitManager == nil then
-		assert(not sm.isHost)
-		g_unitManager = UnitManager()
-	end
+	-- managers
+	g_respawnManager = g_respawnManager or RespawnManager()
+	g_beaconManager = g_beaconManager or BeaconManager()
+	g_unitManager = g_unitManager or UnitManager()
 	g_unitManager:cl_onCreate()
-
 	g_effectManager = EffectManager()
 	g_effectManager:cl_onCreate()
 
@@ -166,36 +477,27 @@ function FactoryGame.client_onCreate(self)
 	g_survivalHud:setImage("LogbookImageBox", "$CONTENT_DATA/Gui/Images/shop.png")
 	assert(g_survivalHud)
 
-	--FACTORY
+	-- Factory HUD
 	g_factoryHud = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/ScrapFactory_Hud.layout", false,
 		{ isHud = true, isInteractive = false, needsCursor = false })
 	g_factoryHud:open()
-
-	g_shop = sm.json.open("$CONTENT_DATA/Scripts/shop.json")
-	for _, item in pairs(g_shop) do
-		item.price = tonumber(item.price)
-	end
 end
 
-function FactoryGame.bindChatCommands(self)
-	local addCheats = g_survivalDev
-
-	if addCheats then
+function FactoryGame.cl_bindChatCommands(self)
+	if g_survivalDev then
+		-- custom
 		sm.game.bindChatCommand("/addmoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")
-
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
 			"Gives pollutiion")
 		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand",
 			"Sets pollutiion")
-
 		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
 			"Gives prestige")
 		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
 			"Sets prestige")
 
-
-
+		-- vanila
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
 		sm.game.bindChatCommand("/respawn", {}, "cl_onChatCommand", "Respawn at last bed (or at the crash site)")
 		sm.game.bindChatCommand("/encrypt", {}, "cl_onChatCommand", "Restrict interactions")
@@ -224,7 +526,6 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/noaggro", { { "bool", "enable", true } }, "cl_onChatCommand",
 			"Toggles the player as a target")
 		sm.game.bindChatCommand("/killall", {}, "cl_onChatCommand", "Kills all spawned units")
-
 		sm.game.bindChatCommand("/printglobals", {}, "cl_onChatCommand", "Print all global lua variables")
 	end
 end
@@ -234,51 +535,8 @@ function FactoryGame.client_onClientDataUpdate(self, clientData, channel)
 		self.cl.time = clientData.time
 	elseif channel == 1 then
 		g_survivalDev = clientData.dev
-		self:bindChatCommands()
+		self:cl_bindChatCommands()
 	end
-end
-
-function FactoryGame.server_onFixedUpdate(self, timeStep)
-	-- Update time
-	local prevTime = self.sv.time.timeOfDay
-	if self.sv.time.timeProgress then
-		self.sv.time.timeOfDay = self.sv.time.timeOfDay + timeStep / DAYCYCLE_TIME
-	end
-	local newDay = self.sv.time.timeOfDay >= 1.0
-	if newDay then
-		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
-		self:sv_factoryRaid() --FACTORY
-	end
-
-	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
-		g_unitManager:sv_initNewDay()
-	end
-
-	-- Client and save sync
-	self.sv.syncTimer:tick()
-	if self.sv.syncTimer:done() then
-		self.sv.syncTimer:start(SyncInterval)
-		sm.storage.save(STORAGE_CHANNEL_TIME, self.sv.time)
-	end
-
-	g_unitManager:sv_onFixedUpdate()
-	if g_eventManager then
-		g_eventManager:sv_onFixedUpdate()
-	end
-
-	--factory
-	if sm.game.getCurrentTick() % 40 == 0 then
-		self:sv_updateClientData()
-	end
-
-	g_deletedDrops = {
-		lastTick = g_deletedDrops.tick,
-		tick = {}
-	}
-end
-
-function FactoryGame.sv_updateClientData(self)
-	self.network:setClientData({ time = self.sv.time }, 2)
 end
 
 function FactoryGame.client_onUpdate(self, dt)
@@ -306,7 +564,10 @@ function FactoryGame.client_onUpdate(self, dt)
 	sm.render.setOutdoorLighting(light)
 end
 
-function FactoryGame.client_showMessage(self, msg)
+---show a chatMessage to a client
+---@param self FactoryGame
+---@param msg string
+function FactoryGame.cl_chatMessage(self, msg)
 	sm.gui.chatMessage(msg)
 end
 
@@ -330,8 +591,6 @@ function FactoryGame.cl_onChatCommand(self, params)
 		farmbot = unit_farmbot,
 		f = unit_farmbot,
 	}
-
-
 
 	if params[1] == "/camera" then
 		self.network:sendToServer("sv_giveItem",
@@ -423,13 +682,6 @@ function FactoryGame.cl_onChatCommand(self, params)
 	end
 end
 
-function FactoryGame.sv_reloadCell(self, params, player)
-	print("sv_reloadCell Reloading cell at {" .. params.x .. " : " .. params.y .. "}")
-
-	self.sv.saved.factoryWorld:loadCell(params.x, params.y, player)
-	self.network:sendToClients("cl_reloadCell", params)
-end
-
 function FactoryGame.cl_reloadCell(self, params)
 	print("cl_reloadCell reloading " .. params.x .. " : " .. params.y)
 	for x = -2, 2 do
@@ -439,12 +691,6 @@ function FactoryGame.cl_reloadCell(self, params)
 	end
 end
 
-function FactoryGame.sv_giveItem(self, params)
-	sm.container.beginTransaction()
-	sm.container.collect(params.player:getInventory(), params.item, params.quantity, false)
-	sm.container.endTransaction()
-end
-
 function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
 
@@ -452,270 +698,46 @@ function FactoryGame.client_onLoadingScreenLifted(self)
 	UnitManager.cl_setLoaded(g_unitManager, sm.game.getCurrentTick())
 end
 
-function FactoryGame.sv_switchGodMode(self)
-	g_godMode = not g_godMode
-	self.network:sendToClients("client_showMessage", "GODMODE: " .. (g_godMode and "On" or "Off"))
+---show a displayAlert to a client
+---@param self FactoryGame
+---@param msg string
+function FactoryGame:cl_displayAlert(msg)
+	sm.gui.displayAlertText(msg)
 end
 
-function FactoryGame.sv_n_switchAggroMode(self, params)
-	sm.game.setEnableAggro(params.aggroMode)
-	self.network:sendToClients("client_showMessage", "AGGRO: " .. (params.aggroMode and "On" or "Off"))
-end
-
-function FactoryGame.sv_enableRestrictions(self, state)
-	sm.game.setEnableRestrictions(state)
-	self.network:sendToClients("client_showMessage", (state and "Restricted" or "Unrestricted"))
-end
-
-function FactoryGame.sv_setLimitedInventory(self, state)
-	sm.game.setLimitedInventory(state)
-	self.network:sendToClients("client_showMessage", (state and "Limited inventory" or "Unlimited inventory"))
-end
-
-function FactoryGame.sv_setTimeOfDay(self, timeOfDay)
-	if timeOfDay then
-		self.sv.time.timeOfDay = timeOfDay
-		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
-	end
-	self.network:sendToClients("client_showMessage", ("Time of day set to " .. self.sv.time.timeOfDay))
-end
-
-function FactoryGame.sv_setTimeProgress(self, timeProgress)
-	if timeProgress ~= nil then
-		self.sv.time.timeProgress = timeProgress
-		self.sv.syncTimer.count = self.sv.syncTimer.ticks -- Force sync
-	end
-	self.network:sendToClients("client_showMessage",
-		("Time scale set to " .. (self.sv.time.timeProgress and "on" or "off ")))
-end
-
-function FactoryGame.sv_killPlayer(self, params)
-	params.damage = 6969
-	sm.event.sendToPlayer(params.player, "sv_e_receiveDamage", params)
-end
-
-function FactoryGame.sv_spawnUnit(self, params)
-	sm.event.sendToWorld(params.world, "sv_e_spawnUnit", params)
-end
-
-function FactoryGame.sv_spawnHarvestable(self, params)
-	sm.event.sendToWorld(params.world, "sv_spawnHarvestable", params)
-end
-
-function FactoryGame.sv_onChatCommand(self, params, player)
-	if params[1] == "/sethp" then
-		sm.event.sendToPlayer(player, "sv_e_debug", { hp = params[2] })
-	elseif params[1] == "/respawn" then
-		sm.event.sendToPlayer(player, "sv_e_respawn")
-	elseif params[1] == "/printglobals" then
-		print("Globals:")
-		for k, _ in pairs(_G) do
-			print(k)
-		end
-
-		--FACTORY
-	elseif params[1] == "/addmoney" then
-		MoneyManager.sv_addMoney(tonumber(params[2]))
-	elseif params[1] == "/setmoney" then
-		MoneyManager.sv_setMoney(tonumber(params[2]))
-	elseif params[1] == "/addpollution" then
-		PollutionManager.sv_addPollution(tonumber(params[2]))
-	elseif params[1] == "/setpollution" then
-		PollutionManager.sv_setPollution(tonumber(params[2]))
-	elseif params[1] == "/addprestige" then
-		PrestigeManager.sv_addPrestige(tonumber(params[2]))
-	elseif params[1] == "/setprestige" then
-		PrestigeManager.sv_setPrestige(tonumber(params[2]))
-	else
-		params.player = player
-		if sm.exists(player.character) then
-			sm.event.sendToWorld(player.character:getWorld(), "sv_e_onChatCommand", params)
-		end
-	end
-end
-
-function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
-	print(player.name, "joined the game")
-
-	if newPlayer then --Player is first time joiners
-		local inventory = player:getInventory()
-
-		sm.container.beginTransaction()
-		sm.container.setItem(inventory, 0, tool_hammer, 1)
-		sm.container.setItem(inventory, 1, tool_lift, 1)
-		sm.container.setItem(inventory, 2, sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf"), 1) --connect tool
-		sm.container.setItem(inventory, 3, tool_sell, 1)
-		sm.container.setItem(inventory, 4, obj_dropper_scrap_wood, 1)
-		sm.container.setItem(inventory, 5, obj_furnace_basic, 1)
-		sm.container.setItem(inventory, 6, obj_generator_windmill, 1)
-
-		for i = 7, inventory.size, 1 do
-			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
-		end
-
-		if sm.player.getAllPlayers()[1] == player then --if host
-			print(PrestigeManager.sv_getSpecialItems())
-			local i = 7
-			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
-				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
-				i = i + 1
-			end
-		end
-
-		sm.container.endTransaction()
-
-		if not sm.exists(self.sv.saved.factoryWorld) then
-			sm.world.loadWorld(self.sv.saved.factoryWorld)
-		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
-			"sv_createNewPlayer")
-	else
-		--TODO: This code might be redundant?
-		--[[
-		local inventory = player:getInventory()
-		local tool_sledgehammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
-		local sledgehammerCount = sm.container.totalQuantity(inventory, tool_sledgehammer)
-		if sledgehammerCount == 0 then
-			sm.container.beginTransaction()
-			sm.container.collect(inventory, tool_sledgehammer, 1)
-			sm.container.endTransaction()
-		elseif sledgehammerCount > 1 then
-			sm.container.beginTransaction()
-			sm.container.spend(inventory, tool_sledgehammer, sledgehammerCount - 1)
-			sm.container.endTransaction()
-		end
-		local tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
-		local liftCount = sm.container.totalQuantity(inventory, tool_lift)
-		if liftCount == 0 then
-			sm.container.beginTransaction()
-			sm.container.collect(inventory, tool_lift, 1)
-			sm.container.endTransaction()
-		elseif liftCount > 1 then
-			sm.container.beginTransaction()
-			sm.container.spend(inventory, tool_lift, liftCount - 1)
-			sm.container.endTransaction()
-		end
-		]]
-	end
-	g_unitManager:sv_onPlayerJoined(player)
-end
-
-function FactoryGame.sv_createNewPlayer(self, world, x, y, player)
-	local params = { player = player, x = x, y = y }
-	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_spawnNewCharacter", params)
-end
-
-function FactoryGame.sv_e_setSpawnPoint(self, pos)
-	self.sv.saved.spawn = pos
-	SPAWN_POINT = pos
-	self.storage:save(self.sv.saved)
-end
-
-function FactoryGame.sv_e_respawn(self, params)
-	if params.player.character and sm.exists(params.player.character) then
-		g_respawnManager:sv_requestRespawnCharacter(params.player)
-	else
-		if not sm.exists(self.sv.saved.factoryWorld) then
-			sm.world.loadWorld(self.sv.saved.factoryWorld)
-		end
-		self.sv.saved.factoryWorld:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), params
-			.player,
-			"sv_createNewPlayer")
-	end
-end
-
-function FactoryGame.sv_loadedRespawnCell(self, world, x, y, player)
-	g_respawnManager:sv_respawnCharacter(player, world)
-end
-
-function FactoryGame.sv_e_onSpawnPlayerCharacter(self, player)
-	if player.character and sm.exists(player.character) then
-		g_respawnManager:sv_onSpawnCharacter(player)
-		g_beaconManager:sv_onSpawnCharacter(player)
-	else
-		sm.log.warning("FactoryGame.sv_e_onSpawnPlayerCharacter for a character that doesn't exist")
-	end
-end
-
--- Beacons
-function FactoryGame.sv_e_createBeacon(self, params)
-	if sm.exists(params.beacon.world) then
-		sm.event.sendToWorld(params.beacon.world, "sv_e_createBeacon", params)
-	else
-		sm.log.warning("FactoryGame.sv_e_createBeacon in a world that doesn't exist")
-	end
-end
-
-function FactoryGame.sv_e_destroyBeacon(self, params)
-	if sm.exists(params.beacon.world) then
-		sm.event.sendToWorld(params.beacon.world, "sv_e_destroyBeacon", params)
-	else
-		sm.log.warning("FactoryGame.sv_e_destroyBeacon in a world that doesn't exist")
-	end
-end
-
-function FactoryGame.sv_e_unloadBeacon(self, params)
-	if sm.exists(params.beacon.world) then
-		sm.event.sendToWorld(params.beacon.world, "sv_e_unloadBeacon", params)
-	else
-		sm.log.warning("FactoryGame.sv_e_unloadBeacon in a world that doesn't exist")
-	end
-end
-
---FACTORY
-function FactoryGame.sv_recreateWorld(self)
-	self.sv.saved.data.seed = math.floor(math.random() * 10 ^ 9)
-
-	self.sv.saved.factoryWorld:destroy()
-	self.sv.saved.factoryWorld = sm.world.createWorld("$CONTENT_DATA/Scripts/game/FactoryWorld.lua", "FactoryWorld",
-		{ dev = self.sv.saved.data.dev }, self.sv.saved.data.seed)
-	g_world = self.sv.saved.factoryWorld
-	g_respawnManager:sv_setWorld(g_world)
-	self.storage:save(self.sv.saved)
-
-	for _, player in ipairs(sm.player.getAllPlayers()) do
-		self:server_onPlayerJoined(player, true)
-	end
-end
-
-function FactoryGame:sv_factoryRaid()
-	print("CUSTOM RAID")
-	local level = 1
-	local wave = 1
-	local hours = 12
-
-	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_raid", { level = level, wave = wave, hours = hours })
-end
-
----@param message string
-function FactoryGame:cl_displayAlert(message)
-	sm.gui.displayAlertText(message)
-end
-
-function FactoryGame:sv_e_showTagMessage(params)
-	if params.player then
-		self.network:sendToClient(params.player, "cl_onMessage", params.tag)
-	else
-		self.network:sendToClients("cl_onMessage", params.tag)
-	end
-end
-
-function FactoryGame:cl_onMessage(tag)
+---show a localized chatMessage to a client
+---@param self FactoryGame
+---@param tag string localization tag for `language_tag()`
+function FactoryGame:cl_localizedChatMessage(tag)
 	sm.gui.displayAlertText(language_tag(tag))
 end
 
-function FactoryGame:sv_e_stonks(params)
-	sm.event.sendToWorld(self.sv.saved.factoryWorld, "sv_e_stonks", params)
-end
+-- #endregion
 
---cursed stuff to disable chunk unloading
-function FactoryGame.sv_loadTerrain(self, data)
-	for x = data.minX, data.maxX do
-		for y = data.minY, data.maxY do
-			data.world:loadCell(x, y, nil, "sv_empty")
-		end
-	end
-end
+--------------------
+-- #region Types
+--------------------
 
-function FactoryGame.sv_empty(self)
-end
+---@class FactoryGameSv
+---@field saved FactoryGameSvSaved
+---@field time FactoryGameTime
+---@diagnostic disable-next-line: undefined-doc-name
+---@field syncTimer Timer
+
+---@class FactoryGameSvSaved
+---@field world World the game world saved
+---@field data FactoryGameSvSavedData
+---@field spawn Vec3 the saved spawnopoint
+
+---@class FactoryGameSvSavedData
+---@field dev boolean whether the game is in devmode
+---@field seed number the world seed
+
+---@class FactoryGameTime
+---@field timeOfday number
+---@field timeProgress boolean
+
+---@class FactoryGameCl
+---@field time FactoryGameTime
+
+-- #endregion
