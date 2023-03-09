@@ -247,7 +247,7 @@
                      "z": 0.1250
                   },
                   "cap": 2048,
-                  "multiplierMax": 2,
+                  "multiplierMax": 2.5,
                   "multiplierMin": 0,
                   "offset": {
                      "x": 0.3750,
