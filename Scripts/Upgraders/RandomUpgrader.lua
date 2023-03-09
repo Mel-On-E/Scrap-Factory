@@ -19,7 +19,7 @@ function RandomUpgrader:sv_onUpgrade(shape, data)
     if upgrade.multiplierMin and upgrade.multiplierMax then
         local multiplierRange = upgrade.multiplierMax - upgrade.multiplierMin
         local multiplier = upgrade.multiplierMin + math.random() * multiplierRange
-        data.value = data.value + multiplier
+        data.value = data.value * multiplier
     end
 
     Upgrader.sv_onUpgrade(self, shape, data)
