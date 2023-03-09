@@ -96,7 +96,9 @@ function Upgrader:client_onCreate()
 end
 
 function Upgrader:client_onUpdate(dt)
-    Belt.client_onUpdate(self, dt)
+    if self.data.belt then
+        Belt.client_onUpdate(self, dt)
+    end
 end
 
 ---create effect to visualize the upgrade areaTrigger
