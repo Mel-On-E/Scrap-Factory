@@ -3,7 +3,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 ---@class PowerManager : ScriptableObjectClass
 ---@field sv PowerSv
 ---@field cl PowerCl
----@field loaded boolean
+---@field loadTick boolean
 ---@diagnostic disable-next-line: assign-type-mismatch
 PowerManager = class()
 PowerManager.isSaveObject = true
@@ -28,7 +28,7 @@ end
 
 function PowerManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
-        if self.cl.loaded and sm.game.getCurrentTick() > self.cl.loaded + 80 then
+        if self.cl.loadTick and sm.game.getCurrentTick() > self.cl.loadTick + 80 then
             self.sv.saved.powerStored = math.max(math.min(self.sv.powerLimit, self.sv.saved.powerStored + self.sv.power)
             , 0)
         end
@@ -57,17 +57,18 @@ function PowerManager.sv_changePowerLimit(powerLimit)
 end
 
 function PowerManager:client_onCreate()
+    if not g_powerManager then
+        g_powerManager = self
+    end
+
     self.cl = {}
     self.cl.data = {}
     self.cl.data.power = 0
     self.cl.data.powerLimit = 0
     self.cl.data.powerStored = 0
 
-    if not g_powerManager then
-        g_powerManager = self
-    end
-
-    self.cl.loaded = false
+    self.cl.loadTick = false
+    self.cl.lastWarningPlayed = 0
 end
 
 function PowerManager:client_onClientDataUpdate(clientData)
@@ -83,16 +84,18 @@ function PowerManager:client_onFixedUpdate()
             "#dddd00" .. format_number({ format = "power", value = power }) .. " (" .. tostring(percentage) .. "%)")
 
         if power < 0 and self.cl.data.powerStored <= 0 then
-            if self.cl.loaded and sm.game.getCurrentTick() > self.cl.loaded + 80 then
+            if sm.game.getCurrentTick() - self.cl.lastWarningPlayed >= 40
+                and (self.cl.loadTick and sm.game.getCurrentTick() > self.cl.loadTick + 80) then
                 sm.gui.displayAlertText("#{INFO_OUT_OF_ENERGY}", 1)
-                sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_audio", "WeldTool - Error")
+                sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "WeldTool - Error")
+                self.cl.lastWarningPlayed = sm.game.getCurrentTick()
             end
         end
     end
 end
 
-function PowerManager.cl_setLoaded(loaded)
-    g_powerManager.cl.loaded = loaded
+function PowerManager.cl_setloadTick(loadTick)
+    g_powerManager.cl.loadTick = loadTick
 end
 
 function PowerManager.cl_getPowerStored()

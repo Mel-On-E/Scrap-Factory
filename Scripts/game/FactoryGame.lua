@@ -681,8 +681,8 @@ end
 function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
 
-	PowerManager.cl_setLoaded(sm.game.getCurrentTick())
-	UnitManager.cl_setLoaded(g_unitManager, sm.game.getCurrentTick())
+	PowerManager.cl_setloadTick(sm.game.getCurrentTick())
+	UnitManager.cl_setloadTick(g_unitManager, sm.game.getCurrentTick())
 end
 
 ---show a displayAlert to a client
