@@ -51,7 +51,7 @@ function Belt:sv_onStay(trigger, results)
                 self.shape.right * self.data.belt.direction.right +
                 self.shape.up * self.data.belt.direction.up
             local force = direction * (result.mass / 4) * self.data.belt.speed
-            local dirVelocity = self.getDirectionalVelocity(result:getVelocity(), direction)
+            local dirVelocity = Belt.getDirectionalVelocity(result:getVelocity(), direction)
 
             if dirVelocity:length() < self.data.belt.speed then
                 sm.physics.applyImpulse(result, force, true)
