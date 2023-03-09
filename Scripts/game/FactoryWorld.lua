@@ -13,6 +13,7 @@ FactoryWorld = class()
 
 FactoryWorld.terrainScript = "$GAME_DATA/Scripts/terrain/terrain_creative.lua"
 FactoryWorld.groundMaterialSet = "$GAME_DATA/Terrain/Materials/gnd_standard_materialset.json"
+FactoryWorld.isStatic = true -- this disables chunk loading
 FactoryWorld.enableSurface = true
 FactoryWorld.enableAssets = true
 FactoryWorld.enableClutter = false
@@ -147,7 +148,7 @@ function FactoryWorld.client_onUpdate(self, deltaTime)
 			g_survivalMusic:setParameter("music", 2)
 		elseif time > 0.5 and time < 0.875 then -- daynoon
 			g_survivalMusic:setParameter("music", 3)
-		else -- night
+		else                              -- night
 			g_survivalMusic:setParameter("music", 4)
 		end
 	end
@@ -186,18 +187,16 @@ function FactoryWorld.sv_e_onChatCommand(self, params)
 			sm.event.sendToUnit(unit, "sv_e_receiveTarget", { targetCharacter = params.player.character })
 		end
 		sm.gui.chatMessage("Units in overworld are aware of PLAYER" .. tostring(params.player.id) .. " position.")
-
 	elseif params[1] == "/killall" then
 		local units = sm.unit.getAllUnits()
 		for _, unit in ipairs(units) do
 			unit:destroy()
 		end
-
 	elseif params[1] == "/raid" then
 		print("Starting raid level", params[2], "in, wave", params[3] or 1, " in", params[4] or (10 / 60), "hours")
-		local position = params.player.character.worldPosition - sm.vec3.new(0, 0, params.player.character:getHeight() / 2)
+		local position = params.player.character.worldPosition -
+			sm.vec3.new(0, 0, params.player.character:getHeight() / 2)
 		g_unitManager:sv_beginRaidCountdown(self, position, params[2], params[3] or 1, (params[4] or (10 / 60)) * 60 * 40)
-
 	elseif params[1] == "/stopraid" then
 		print("Cancelling all raid")
 		g_unitManager:sv_cancelRaidCountdown(self)
@@ -227,14 +226,19 @@ function FactoryWorld.client_onCellUnloaded(self, x, y)
 end
 
 function FactoryWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, _, attacker, damage, userData, hitNormal,
-                                          target, projectileUuid)
+										  target, projectileUuid)
 	if isAnyOf(projectileUuid, g_potatoProjectiles) then
 		local units = sm.unit.getAllUnits()
 		for i, unit in ipairs(units) do
 			if InSameWorld(self.world, unit) then
 				sm.event.sendToUnit(unit, "sv_e_worldEvent",
-					{ eventName = "projectileFire", firePos = firePos, fireVelocity = fireVelocity, projectileUuid = projectileUuid,
-						attacker = attacker })
+					{
+						eventName = "projectileFire",
+						firePos = firePos,
+						fireVelocity = fireVelocity,
+						projectileUuid = projectileUuid,
+						attacker = attacker
+					})
 			end
 		end
 	end
@@ -255,8 +259,14 @@ function FactoryWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, _,
 		for i, unit in ipairs(units) do
 			if InSameWorld(self.world, unit) then
 				sm.event.sendToUnit(unit, "sv_e_worldEvent",
-					{ eventName = "projectileHit", hitPos = hitPos, hitTime = hitTime, hitVelocity = hitVelocity, attacker = attacker,
-						damage = damage })
+					{
+						eventName = "projectileHit",
+						hitPos = hitPos,
+						hitTime = hitTime,
+						hitVelocity = hitVelocity,
+						attacker = attacker,
+						damage = damage
+					})
 			end
 		end
 	end
@@ -266,7 +276,8 @@ function FactoryWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, _,
 		local randomDir = forward:rotateZ(math.random(0, 359))
 		local effectPos = hitPos
 		local success, result = sm.physics.raycast(hitPos + sm.vec3.new(0, 0, 0.1),
-			hitPos - sm.vec3.new(0, 0, PESTICIDE_SIZE.z * 0.5), nil, sm.physics.filter.static + sm.physics.filter.dynamicBody)
+			hitPos - sm.vec3.new(0, 0, PESTICIDE_SIZE.z * 0.5), nil,
+			sm.physics.filter.static + sm.physics.filter.dynamicBody)
 		if success then
 			effectPos = result.pointWorld + sm.vec3.new(0, 0, PESTICIDE_SIZE.z * 0.5)
 		end
@@ -301,8 +312,9 @@ function FactoryWorld.server_onMelee(self, hitPos, attacker, target, damage, pow
 end
 
 function FactoryWorld.server_onCollision(self, objectA, objectB, collisionPosition, objectAPointVelocity,
-                                         objectBPointVelocity, collisionNormal)
-	g_unitManager:sv_onWorldCollision(self, objectA, objectB, collisionPosition, objectAPointVelocity, objectBPointVelocity
+										 objectBPointVelocity, collisionNormal)
+	g_unitManager:sv_onWorldCollision(self, objectA, objectB, collisionPosition, objectAPointVelocity,
+		objectBPointVelocity
 		, collisionNormal)
 end
 
@@ -345,7 +357,8 @@ function FactoryWorld.sv_e_spawnRaiders(self, params)
 			spawnDirection = spawnDirection:rotateZ(math.rad(math.random(359)))
 			local unitPos = attackPos + spawnDirection * distanceFromCenter
 
-			local success, result = sm.physics.raycast(unitPos + sm.vec3.new(0, 0, 128), unitPos + sm.vec3.new(0, 0, -128), nil,
+			local success, result = sm.physics.raycast(unitPos + sm.vec3.new(0, 0, 128),
+				unitPos + sm.vec3.new(0, 0, -128), nil,
 				-1)
 			if success and (result.type == "limiter" or result.type == "terrainSurface") then
 				local direction = attackPos - unitPos
@@ -370,7 +383,7 @@ function FactoryWorld.sv_e_spawnTempUnitsOnCell(self, params)
 
 	local unitCount = 0
 	local spawnMagnitude = math.random(0, 99)
-	if spawnMagnitude > 98 then -- ( 99 - 1 )
+	if spawnMagnitude > 98 then  -- ( 99 - 1 )
 		unitCount = 3
 	elseif spawnMagnitude > 93 then -- ( 99 - 1 - 5 )
 		unitCount = 2
@@ -410,7 +423,8 @@ function FactoryWorld.sv_e_spawnTempUnitsOnCell(self, params)
 				spawnAttempts = spawnAttempts + 1
 				local subdivisions = sm.construction.constants.subdivisions
 				local subdivideRatio = sm.construction.constants.subdivideRatio
-				local spawnPosition = sm.vec3.new(math.random(xCoordMin * subdivisions, xCoordMax * subdivisions) * subdivideRatio,
+				local spawnPosition = sm.vec3.new(
+					math.random(xCoordMin * subdivisions, xCoordMax * subdivisions) * subdivideRatio,
 					math.random(yCoordMin * subdivisions, yCoordMax * subdivisions) * subdivideRatio,
 					0.0)
 

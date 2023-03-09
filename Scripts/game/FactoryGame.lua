@@ -267,19 +267,6 @@ end
 
 -- #endregion
 
----cursed stuff to disable chunk unloading
-function FactoryGame.sv_loadTerrain(self, data)
-	for x = data.minX, data.maxX do
-		for y = data.minY, data.maxY do
-			data.world:loadCell(x, y, nil, "sv_empty")
-		end
-	end
-end
-
----empty function to disable the chunk loading
-function FactoryGame.sv_empty(self)
-end
-
 ---recreates the world, clears inventory too
 function FactoryGame.sv_recreateWorld(self)
 	self.sv.saved.data.seed = math.floor(math.random() * 10 ^ 9)
