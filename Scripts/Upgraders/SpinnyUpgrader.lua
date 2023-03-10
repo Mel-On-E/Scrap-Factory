@@ -120,7 +120,7 @@ function SpinnyUpgrader:cl_updateSkirtData(skirtData)
 
         --skirtData.spin = skirtData.spin ^ 0.95 + change
         skirtData.spin = math.max(
-            0.925 * skirtData.spin ^ 0.9925 + 0.075 * math.max(math.log(skirtData.spin + 0.5, 2), 0) + change, 1)
+            0.8 * skirtData.spin + 0.2 * math.max(math.log(skirtData.spin + 0.5, 2), 0) + change, 1)
         skirtData.dir = dir
 
         local effectKey = "skirt" .. tonumber(skirtData.player.id)
