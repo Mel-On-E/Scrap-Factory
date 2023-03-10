@@ -233,7 +233,7 @@
 			},
 			{
 				"type": "audio",
-				"name": "event:/props/installations/powercore_insert",
+				"name": "event:/vehicle/triggers/trigger_sensor_on",
 				"offset": {
 					"x": 0.0,
 					"y": 0.0,
