@@ -252,10 +252,10 @@ function FactoryPlayer.client_onCreate(self)
 			g_survivalHud:setVisible("WaterBar", false)
 		end
 
-		self:cl_initSkirts()
+		--self:cl_initSkirts()
 	end
 
-	self:cl_initSkirt(self.player)
+	--self:cl_initSkirt(self.player)
 end
 
 function FactoryPlayer.client_onRefresh(self)
@@ -321,7 +321,7 @@ end
 
 function FactoryPlayer:client_onFixedUpdate()
 	if self.player == sm.localPlayer.getPlayer() then
-		self:cl_updateSkirtData()
+		--self:cl_updateSkirtData()
 	end
 end
 
@@ -349,18 +349,10 @@ end
 --------------------
 -- #region Effects
 --------------------
-local cl_effects = {}
-local cl_skirts = {}
 
 function FactoryPlayer:cl_e_playAudio(effect)
 	if sm.localPlayer.getPlayer():getCharacter() then
 		sm.audio.play(effect)
-	end
-end
-
-function FactoryPlayer:sv_e_createEffect(params)
-	for _, player in ipairs(sm.player.getAllPlayers()) do
-		self.network:sendToClient(player, "cl_e_createEffect", params)
 	end
 end
 
@@ -372,73 +364,10 @@ function FactoryPlayer:cl_e_playEffect(params)
 	sm.effect.playEffect(params.effect, params.pos or sm.localPlayer.getPlayer().character.worldPosition)
 end
 
-function FactoryPlayer:cl_e_createEffect(params)
-	local effect = sm.effect.createEffect(params.effect, params.host, params.name)
-
-	if params.effect == "ShapeRenderable" then
-		effect:setParameter("uuid", params.uuid)
-		effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
-	end
-
-	if params.start then
-		effect:start()
-	end
-
-	if cl_effects[params.id] and sm.exists(cl_effects[params.id]) then
-		cl_effects[params.id]:destroy()
-	end
-
-	cl_effects[params.id] = effect
-end
-
+---TODO
 function FactoryPlayer:cl_e_startEffect(id)
 	if cl_effects[id] and not cl_effects[id]:isPlaying() then
 		cl_effects[id]:start()
-	end
-end
-
-function FactoryPlayer:cl_e_destroyEffect(id)
-	if cl_effects[id] then
-		cl_effects[id]:destroy()
-		cl_effects[id] = nil
-	end
-end
-
----Skirts ❤ UwU
-function FactoryPlayer:cl_initSkirts()
-	for _, player in pairs(sm.player.getAllPlayers()) do
-		self:cl_initSkirt(player)
-	end
-end
-
-function FactoryPlayer:cl_initSkirt(player)
-	cl_skirts[player.id] = {
-		dir = sm.vec3.zero(),
-		spin = 1,
-		player = player
-	}
-end
-
-function FactoryPlayer:cl_updateSkirtData()
-	for id, skirtData in ipairs(cl_skirts) do
-		local character = skirtData.player.character
-		if character then
-			local dir = character.direction
-			local change = (skirtData.dir - dir):length()
-
-			skirtData.spin = skirtData.spin ^ 0.95 + change
-			skirtData.dir = dir
-
-			local effectName = "skirt" .. tonumber(id)
-			if cl_effects[effectName] and sm.exists(cl_effects[effectName]) then
-				local scale = skirtData.spin ^ 0.5
-				local skirtLength = 1.75
-				local length = skirtLength / scale
-
-				cl_effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
-				cl_effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
-			end
-		end
 	end
 end
 
@@ -470,13 +399,5 @@ end
 ---@class PlayerCl
 ---@field isConscious boolean
 ---@field confirmClearGui GuiInterface
----@field skirts table<number, skirtData>
----@field effects table<string, Effect>
-
-
----@class skirtData
----@field dir Vec3
----@field spin number
----@field player Player
 
 -- #endregion

@@ -3,6 +3,7 @@ dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 ---An Upgrader which areaTrigger gets bigger and upgrades more as its angularVelocity increases
 ---@class SpinnyUpgrader : Upgrader
 ---@field data SpinnyUpgraderData
+---@field cl SpinnyUpgraderCl
 SpinnyUpgrader = class(Upgrader)
 
 --------------------
@@ -36,7 +37,8 @@ function SpinnyUpgrader:sv_onUpgrade(shape, data)
         effect = "ShapeRenderable",
         key = "skirt",
         uuid = obj_skirt_effect,
-        scale = sm.vec3.new(1, 0.75, 1)
+        scale = sm.vec3.new(1, 0.75, 1),
+        host = shape.interactable
     })
 end
 
@@ -52,13 +54,12 @@ function SpinnyUpgrader:sv_onEnter(trigger, results)
 
         local player = result:getPlayer()
         if player then
-            sm.event.sendToPlayer(player, "sv_e_createEffect", {
-                id = "skirt" .. tostring(player.id),
+            Effects.sv_createEffect(self, {
+                key = "skirt" .. tostring(player.id),
                 effect = "ShapeRenderable",
                 host = player.character,
-                name = "jnt_hips",
-                uuid = obj_skirt_effect,
-                start = true
+                boneName = "jnt_hips",
+                uuid = obj_skirt_effect
             })
         end
 
@@ -72,11 +73,69 @@ end
 -- #region Client
 --------------------
 
+function SpinnyUpgrader:client_onCreate()
+    Upgrader.client_onCreate(self)
+
+    self.cl.skirtData = {}
+
+    Effects.cl_init(self)
+end
+
 function SpinnyUpgrader:client_onFixedUpdate()
     local size, offset = self:get_size_and_offset()
 
     self.cl.effect:setScale(size)
     self.cl.effect:setOffsetPosition(offset)
+
+    --update player skirts
+    for _, player in ipairs(sm.player.getAllPlayers()) do
+        local skirtEffect = Effects.cl_getEffect(self, "skirt" .. tostring(player.id))
+        if skirtEffect then
+            local skirtData = self.cl.skirtData[player.id] or self:cl_initSkirt(player)
+            self:cl_updateSkirtData(skirtData)
+        end
+    end
+end
+
+function SpinnyUpgrader:cl_initSkirt(player)
+    self.cl.skirtData[player.id] = {
+        dir = sm.vec3.zero(),
+        spin = 1,
+        player = player
+    }
+    return self.cl.skirtData[player.id]
+end
+
+---@param skirtData skirtData
+function SpinnyUpgrader:cl_updateSkirtData(skirtData)
+    local character = skirtData.player.character
+    if character then
+        local dir = character.direction
+        local change = (skirtData.dir - dir):length()
+
+        skirtData.spin = skirtData.spin ^ 0.95 + change
+        skirtData.dir = dir
+
+        local effectKey = "skirt" .. tonumber(skirtData.player.id)
+        local skirtEffect = Effects.cl_getEffect(self, effectKey)
+
+        if skirtEffect and sm.exists(skirtEffect) then
+            local scale = skirtData.spin ^ 0.5
+            local skirtLength = 1.75
+            local length = skirtLength / scale
+
+            skirtEffect:setScale(sm.vec3.new(scale, length, scale))
+            skirtEffect:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+        end
+    end
+end
+
+function SpinnyUpgrader:client_onDestroy()
+    Effects.cl_destroyAllEffects(self)
+end
+
+function SpinnyUpgrader:cl_createEffect(params)
+    Effects.cl_createEffect(self, params)
 end
 
 -- #endregion
@@ -102,7 +161,15 @@ end
 ---@class SpinnyUpgraderUpgrade : UpgraderUpgrade
 ---@field multiplier number|nil the minimum amount to be added to a drop's value
 ---@field sphere table
----@field maxSpin number the maximum angular
+---@field maxSpin number the maximum angular velocity
 
+
+---@class SpinnyUpgraderCl : UpgraderCl
+---@field skirtData table<number, skirtData>
+
+---@class skirtData
+---@field dir Vec3
+---@field spin number
+---@field player Player
 
 -- #endregion

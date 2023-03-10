@@ -81,8 +81,9 @@ function RadioactiveDrop:client_onCreate()
     ---@diagnostic disable-next-line:assign-type-mismatch
     self.cl.scale = sm.vec3.one() / 4
 
-    self:cl_createEffect({
+    Effects.cl_createEffect(self, {
         key = "radioactive",
+        host = self.interactable,
         effect = "ShapeRenderable",
         uuid = sm.uuid.new(self.data.effectShape),
         color = self.shape.color,
@@ -93,7 +94,7 @@ end
 function RadioactiveDrop:cl_decreaseSize()
     ---@diagnostic disable-next-line:assign-type-mismatch
     self.cl.scale = self.cl.scale * 0.5 ^ (1 / 3)
-    self.cl.effects["radioactive"]:setScale(self.cl.scale)
+    Effects.cl_getEffect(self, "radioactive"):setScale(self.cl.scale)
 end
 
 -- #endregion
