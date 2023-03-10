@@ -10,6 +10,9 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 ---The world in which a player, creations, and such exists
 ---@class FactoryWorld : WorldClass
 ---@field pesticideManager table
+---@field ambienceEffect table
+---@field birdAmbience table
+---@field birdAmbienceTimer table
 FactoryWorld = class()
 
 FactoryWorld.terrainScript = "$GAME_DATA/Scripts/terrain/terrain_creative.lua"
@@ -303,6 +306,8 @@ function FactoryWorld.server_onInteractableDestroyed(self, interactable)
 	g_unitManager:sv_onInteractableDestroyed(interactable)
 end
 
+---trigger a raid on a random part in the world
+---@param params table level, wave, hours
 function FactoryWorld:sv_raid(params)
 	local pos
 
@@ -313,7 +318,7 @@ function FactoryWorld:sv_raid(params)
 			local shapes = body:getShapes()
 			local shape = shapes[math.random(1, #shapes)]
 
-			if shape.uuid ~= obj_lootcrate then
+			if shape.uuid ~= obj_lootcrate and shape.uuid ~= obj_lootcrate_rare and shape.uuid ~= obj_lootcrate_prestige then
 				pos = shape.worldPosition
 				break
 			end
@@ -325,6 +330,8 @@ function FactoryWorld:sv_raid(params)
 	end
 end
 
+---create a new shape in the world
+---@param params ShapeCreationParams
 function FactoryWorld:sv_e_createShape(params)
 	local shape = sm.shape.createPart(params.uuid, params.pos, params.rot or sm.quat.identity())
 	if params.publicData then
@@ -350,8 +357,6 @@ function FactoryWorld.client_onCreate(self)
 	self.birdAmbienceTimer = Timer()
 	self.birdAmbienceTimer:start(40)
 	self.birdAmbience = { near = {}, far = {} }
-
-	self.cl = {}
 end
 
 function FactoryWorld.client_onDestroy(self)
@@ -412,8 +417,7 @@ function FactoryWorld.client_onUpdate(self, deltaTime)
 	local night = 1.0 - getDayCycleFraction()
 	self.ambienceEffect:setParameter("amb_day_night", night)
 
-	local player = sm.localPlayer.getPlayer()
-	local character = player:getCharacter()
+	local character = sm.localPlayer.getPlayer():getCharacter()
 	if character and character:getWorld() == self.world then
 		if not g_survivalMusic:isPlaying() then
 			g_survivalMusic:start()
@@ -470,5 +474,11 @@ end
 --------------------
 -- #region Types
 --------------------
+
+---@class ShapeCreationParams
+---@field uuid Uuid uuid of the shape to be created
+---@field pos Vec3 worldPosition where the shape will be created
+---@field rot Quat (optional) worldRotation of the shape
+---@field publicData table (optional) publicData to be set on the newly created shape
 
 -- #endregion
