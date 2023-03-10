@@ -38,7 +38,8 @@ function SpinnyUpgrader:sv_onUpgrade(shape, data)
         key = "skirt",
         uuid = obj_skirt_effect,
         scale = sm.vec3.new(1, 0.75, 1),
-        host = shape.interactable
+        host = shape.interactable,
+        color = self.shape.color
     })
 end
 
@@ -59,7 +60,8 @@ function SpinnyUpgrader:sv_onEnter(trigger, results)
                 effect = "ShapeRenderable",
                 host = player.character,
                 boneName = "jnt_hips",
-                uuid = obj_skirt_effect
+                uuid = obj_skirt_effect,
+                color = self.shape.color
             })
         end
 
@@ -86,6 +88,7 @@ function SpinnyUpgrader:client_onFixedUpdate()
 
     self.cl.effect:setScale(size)
     self.cl.effect:setOffsetPosition(offset)
+    self.cl.effect:setParameter("color", self.shape.color)
 
     --update player skirts
     for _, player in ipairs(sm.player.getAllPlayers()) do
@@ -126,6 +129,7 @@ function SpinnyUpgrader:cl_updateSkirtData(skirtData)
 
             skirtEffect:setScale(sm.vec3.new(scale, length, scale))
             skirtEffect:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
+            skirtEffect:setParameter("color", self.shape.color)
         end
     end
 end
