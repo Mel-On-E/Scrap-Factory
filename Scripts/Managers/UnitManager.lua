@@ -3,6 +3,11 @@ dofile("$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua")
 ---@class OldUnitManager : ScriptableObjectClass
 OldUnitManager = class(UnitManager)
 
+---@class UnitManager : OldUnitManager
+---@field cl UnitManagerCl
+---@field sv table
+UnitManager = class(UnitManager)
+
 --------------------
 -- #region Server
 --------------------
@@ -63,10 +68,8 @@ end
 -- #region Types
 --------------------
 
----@class UnitManager
----@field cl UnitManagerCl
-
 ---@class UnitManagerCl
 ---@field loadTick number the tick at which the game was loaded
+---@field attacks table
 
 -- #endregion
