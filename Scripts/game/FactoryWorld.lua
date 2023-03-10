@@ -306,6 +306,14 @@ function FactoryWorld.server_onInteractableDestroyed(self, interactable)
 	g_unitManager:sv_onInteractableDestroyed(interactable)
 end
 
+function FactoryWorld.server_onCellCreated(self, x, y)
+	g_unitManager:sv_onWorldCellLoaded(self, x, y)
+end
+
+function FactoryWorld.server_onCellLoaded(self, x, y)
+	g_unitManager:sv_onWorldCellReloaded(self, x, y)
+end
+
 ---trigger a raid on a random part in the world
 ---@param params table level, wave, hours
 function FactoryWorld:sv_raid(params)
