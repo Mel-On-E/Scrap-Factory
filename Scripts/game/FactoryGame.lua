@@ -304,11 +304,6 @@ function FactoryGame:sv_e_showTagMessage(params)
 	end
 end
 
---TODO: explain this shit
-function FactoryGame:sv_e_stonks(params)
-	sm.event.sendToWorld(self.sv.saved.world, "sv_e_stonks", params)
-end
-
 ---load saved data form self.storage.load()
 function FactoryGame:sv_loadSavedData()
 	self.sv.saved = self.storage:load()

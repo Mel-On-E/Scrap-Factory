@@ -46,7 +46,7 @@ function RadioactiveDrop:sv_decay(publicData)
     publicData.value = publicData.value ^ 0.5
 
     local pollution = publicData.value ^ 0.5
-    sm.event.sendToGame("sv_e_stonks",
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
         { pos = self.shape.worldPosition, value = tostring(pollution), format = "pollution", effect = "Pollution" })
     PollutionManager.sv_addPollution(pollution)
 

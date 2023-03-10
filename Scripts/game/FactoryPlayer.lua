@@ -12,6 +12,7 @@ FactoryPlayer = class(BasePlayer)
 --------------------
 -- #region Server
 --------------------
+
 local MaxHP = 100        --maximum hp a player can have
 local StatsTickRate = 40 --how frequent stats update
 
@@ -253,7 +254,10 @@ function FactoryPlayer.client_onCreate(self)
 		end
 	end
 
-	Effects.cl_init(self)
+	if sm.isHost then
+		Effects.cl_init(self)
+		self:cl_initNumberEffects()
+	end
 end
 
 function FactoryPlayer.client_onRefresh(self)
@@ -317,12 +321,6 @@ function FactoryPlayer.client_onCancel(self)
 	g_effectManager:cl_cancelAllCinematics()
 end
 
-function FactoryPlayer:client_onFixedUpdate()
-	if self.player == sm.localPlayer.getPlayer() then
-		--self:cl_updateSkirtData()
-	end
-end
-
 function FactoryPlayer:client_onReload()
 	-- clear ores pop-up
 	self.cl.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
@@ -342,11 +340,69 @@ function FactoryPlayer:cl_onClearConfirmButtonClick(name)
 	self.cl.confirmClearGui:destroy()
 end
 
+function FactoryPlayer:client_onFixedUpdate()
+	self:cl_fixedUpdateNumberEffects()
+end
+
+function FactoryPlayer:client_onUpdate(deltaTime)
+	self:cl_updateNumberEffects(deltaTime)
+end
+
 -- #endregion
 
 --------------------
 -- #region Effects
 --------------------
+
+function FactoryPlayer:cl_initNumberEffects()
+	self.cl.numberEffects = {}
+end
+
+function FactoryPlayer:cl_fixedUpdateNumberEffects()
+	for k, numberEffect in pairs(self.cl.numberEffects) do
+		if numberEffect and sm.game.getCurrentTick() > numberEffect.endTick then
+			numberEffect.gui:destroy()
+			self.cl.numberEffects[k] = nil
+		end
+	end
+end
+
+function FactoryPlayer:cl_updateNumberEffects(deltaTime)
+	for k, numberEffect in pairs(self.cl.numberEffects) do
+		---@diagnostic disable-next-line: assign-type-mismatch
+		numberEffect.pos = numberEffect.pos + sm.vec3.new(0, 0, 0.1) * deltaTime
+		numberEffect.gui:setWorldPosition(numberEffect.pos)
+	end
+end
+
+---Create an effect for all clients. This will be a "floating" text in the world that disappears after a while e.g. selling drops
+---@param params NumberEffectParams
+function FactoryPlayer:sv_e_numberEffect(params)
+	---@diagnostic disable-next-line: assign-type-mismatch
+	params.value = format_number({ format = params.format, value = tonumber(params.value), color = params.color })
+
+	self.network:sendToClients("cl_numberEffect", params)
+end
+
+---Create an effect for this client. This will be a "floating" text in the world that disappears after a while e.g. selling drops
+---@param params NumberEffectParams
+function FactoryPlayer:cl_numberEffect(params)
+	local gui = sm.gui.createNameTagGui()
+	gui:setWorldPosition(params.pos)
+	gui:open()
+	gui:setMaxRenderDistance(100)
+	gui:setText("Text", params.value)
+
+	if params.effect then
+		sm.effect.playEffect(params.effect, params.pos - sm.vec3.new(0, 0, 0.25))
+	end
+
+	self.cl.numberEffects[#self.cl.numberEffects + 1] = {
+		gui = gui,
+		endTick = sm.game.getCurrentTick() + 80,
+		pos = params.pos
+	}
+end
 
 function FactoryPlayer:sv_e_playEffect(params)
 	self.network:sendToClients("cl_e_playEffect", params)
@@ -402,5 +458,18 @@ end
 ---@class PlayerCl
 ---@field isConscious boolean
 ---@field confirmClearGui GuiInterface
+---@field numberEffects table<number, NumberEffect>
+
+---@class NumberEffectParams
+---@field value string|number the number value to be displayed
+---@field format "money"|"pollution"|"power"|"prestige" format used for displaiyng the value
+---@field color string|nil (optional) hex color of the text to be displayed
+---@field pos Vec3 worldPosition of the effect
+---@field effect string|nil (optional) name of effect to be played while the number effect is created
+
+---@class NumberEffect
+---@field gui GuiInterface nameTag gui
+---@field endTick number tick at which the effect ends
+---@field pos Vec3 world position of the effect
 
 -- #endregion

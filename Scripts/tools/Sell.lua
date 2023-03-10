@@ -29,9 +29,13 @@ sm.tool.preloadRenderables(renderablesFp)
 
 function Sell.sv_n_sell(self, params, player)
 	if params.shape and sm.exists(params.shape) then
-		sm.effect.playEffect("Action - Sell", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_stonks",
-			{ pos = params.shape.worldPosition, value = tostring(params.value * params.quantity), format = "money" })
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+			{
+				pos = params.shape.worldPosition,
+				value = tostring(params.value * params.quantity),
+				format = "money",
+				effect = "Action - Sell"
+			})
 
 		if params.quantity > 1 then
 			sm.container.beginTransaction()
@@ -129,16 +133,19 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 			local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 			local o2 = "</p>"
 
-			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
+			local quantity = math.min(self.cl.quantity,
+				sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
 
 			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
 			sm.gui.setInteractionText("", keyBindingText1,
-				language_tag("Sell") .. o1 .. format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
+				language_tag("Sell") ..
+				o1 .. format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
 				o2 .. "x" .. o1 .. tostring(quantity) .. o2 .. " [" .. keyBindingText2 .. "]")
 
 			if primaryState == sm.tool.interactState.start then
 				self:onUse()
-				self.network:sendToServer("sv_n_sell", { shape = shape, value = tostring(sellValue), quantity = quantity })
+				self.network:sendToServer("sv_n_sell",
+					{ shape = shape, value = tostring(sellValue), quantity = quantity })
 			end
 		end
 	end
@@ -159,7 +166,6 @@ end
 
 --ANIMATION STUFF BELOW
 function Sell.cl_loadAnimations(self)
-
 	self.tpAnimations = createTpAnimations(
 		self.tool,
 		{
@@ -168,26 +174,20 @@ function Sell.cl_loadAnimations(self)
 			sprint = { "fertilizer_sprint" },
 			pickup = { "fertilizer_pickup", { nextAnimation = "idle" } },
 			putdown = { "fertilizer_putdown" }
-
 		}
 	)
 	local movementAnimations = {
-
 		idle = "fertilizer_idle",
 		idleRelaxed = "fertilizer_idle_relaxed",
-
 		runFwd = "fertilizer_run_fwd",
 		runBwd = "fertilizer_run_bwd",
 		sprint = "fertilizer_sprint",
-
 		jump = "fertilizer_jump",
 		jumpUp = "fertilizer_jump_up",
 		jumpDown = "fertilizer_jump_down",
-
 		land = "fertilizer_jump_land",
 		landFwd = "fertilizer_jump_land_fwd",
 		landBwd = "fertilizer_jump_land_bwd",
-
 		crouchIdle = "fertilizer_crouch_idle",
 		crouchFwd = "fertilizer_crouch_fwd",
 		crouchBwd = "fertilizer_crouch_bwd"
@@ -202,13 +202,10 @@ function Sell.cl_loadAnimations(self)
 			self.tool,
 			{
 				idle = { "fertilizer_idle", { looping = true } },
-
 				sprintInto = { "fertilizer_sprint_into", { nextAnimation = "sprintIdle", blendNext = 0.2 } },
 				sprintIdle = { "fertilizer_sprint_idle", { looping = true } },
 				sprintExit = { "fertilizer_sprint_exit", { nextAnimation = "idle", blendNext = 0 } },
-
 				use = { "fertilizer_paint", { nextAnimation = "idle" } },
-
 				equip = { "fertilizer_pickup", { nextAnimation = "idle" } },
 				unequip = { "fertilizer_putdown" }
 			}
@@ -269,7 +266,6 @@ function Sell.cl_onUpdate(self, dt)
 				elseif animation.nextAnimation ~= "" then
 					setTpAnimation(self.tpAnimations, animation.nextAnimation, 0.001)
 				end
-
 			end
 		else
 			animation.weight = math.max(animation.weight - (self.tpAnimations.blendSpeed * dt), 0.0)
@@ -280,7 +276,6 @@ function Sell.cl_onUpdate(self, dt)
 
 	totalWeight = totalWeight == 0 and 1.0 or totalWeight
 	for name, animation in pairs(self.tpAnimations.animations) do
-
 		local weight = animation.weight / totalWeight
 		if name == "idle" then
 			self.tool:updateMovementAnimation(animation.time, weight)

@@ -83,7 +83,7 @@ function Drop:server_onDestroy()
 
 		PollutionManager.sv_addPollution(self:getPollution())
 
-		sm.event.sendToGame("sv_e_stonks", {
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 			pos = self.sv.cachedPos,
 			value = tostring(self:getPollution()),
 			format = "pollution",
