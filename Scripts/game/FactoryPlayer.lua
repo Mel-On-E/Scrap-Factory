@@ -251,11 +251,9 @@ function FactoryPlayer.client_onCreate(self)
 			g_survivalHud:setVisible("FoodBar", false)
 			g_survivalHud:setVisible("WaterBar", false)
 		end
-
-		--self:cl_initSkirts()
 	end
 
-	--self:cl_initSkirt(self.player)
+	Effects.cl_init(self)
 end
 
 function FactoryPlayer.client_onRefresh(self)
@@ -350,25 +348,30 @@ end
 -- #region Effects
 --------------------
 
+function FactoryPlayer:sv_e_playEffect(params)
+	self.network:sendToClients("cl_e_playEffect", params)
+end
+
 function FactoryPlayer:cl_e_playAudio(effect)
 	if sm.localPlayer.getPlayer():getCharacter() then
 		sm.audio.play(effect)
 	end
 end
 
-function FactoryPlayer:sv_e_playEffect(params)
-	self.network:sendToClients("cl_e_playEffect", params)
-end
-
 function FactoryPlayer:cl_e_playEffect(params)
 	sm.effect.playEffect(params.effect, params.pos or sm.localPlayer.getPlayer().character.worldPosition)
 end
 
----TODO
-function FactoryPlayer:cl_e_startEffect(id)
-	if cl_effects[id] and not cl_effects[id]:isPlaying() then
-		cl_effects[id]:start()
-	end
+function FactoryPlayer:cl_e_createEffect(params)
+	Effects.cl_createEffect(self, params)
+end
+
+function FactoryPlayer:cl_e_startEffect(key)
+	Effects.cl_startEffect(self, key)
+end
+
+function FactoryPlayer:cl_e_destroyEffect(key)
+	Effects.cl_destroyEffect(self, key)
 end
 
 -- #endregion

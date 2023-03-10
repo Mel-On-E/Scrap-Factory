@@ -38,8 +38,11 @@ function DailyRewardManager:sv_spawnRewards(params, player)
         pos.x = pos.x + (math.random() - 0.5) * 10
         pos.y = pos.y + (math.random() - 0.5) * 10
         pos.z = pos.z + 5
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = sm.uuid.new(self.rewards[self.saved.streak + 1].crate),
-            effect = "Woc - Destruct" })
+        LootCrateManager.sv_spawnCrate({
+            pos = pos,
+            uuid = sm.uuid.new(self.rewards[self.saved.streak + 1].crate),
+            effect = "Woc - Destruct"
+        })
     end
     self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
     self.saved.time = os.time()
@@ -55,7 +58,7 @@ function DailyRewardManager:client_onFixedUpdate()
     if self.gui and self.gui:isActive() and self.playEffect and sm.localPlayer.getPlayer().character then
         local player = sm.localPlayer.getPlayer()
         sm.event.sendToPlayer(player, "cl_e_createEffect",
-            { id = "DailyReward", effect = "Confetti", host = player:getCharacter() })
+            { key = "DailyReward", effect = "Confetti", host = player:getCharacter(), notStart = true })
         sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
         self.playEffect = false
     end

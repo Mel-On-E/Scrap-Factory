@@ -47,7 +47,9 @@ function Effects.cl_createEffect(self, params)
         effect:setOffsetPosition(params.offset or sm.vec3.zero())
     end
     effect:setAutoPlay(params.autoPlay)
-    effect:start()
+    if not params.notStart then
+        effect:start()
+    end
 
     self.cl.effects[params.key] = effect
 end
@@ -57,6 +59,12 @@ end
 ---@return Effect|nil effect the effect if it exist or nil
 function Effects.cl_getEffect(self, key)
     return self.cl.effects[key]
+end
+
+---starts the effect that belongs to a key
+---@param key string the key/id of the effect
+function Effects.cl_startEffect(self, key)
+    return self.cl.effects[key]:start()
 end
 
 ---destroy a specific effect
@@ -96,5 +104,6 @@ end
 ---@field host Interactable|Character the host the effect is attached to
 ---@field boneName string|nil the bone name to attach the effect to
 ---@field autoPlay boolean|nil if the effect should autoPlay
+---@field notStart boolean|nil if the effect should not start immediately
 
 -- #endregion

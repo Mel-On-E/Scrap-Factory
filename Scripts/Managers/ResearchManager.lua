@@ -39,9 +39,11 @@ end
 function ResearchManager:sv_saveDataAndSync()
     self.storage:save(packNetworkData(self.sv.saved))
 
-    local clientData = { research = self.sv.saved.research,
+    local clientData = {
+        research = self.sv.saved.research,
         tier = self.sv.saved.tier,
-        progress = self:sv_getProgress() }
+        progress = self:sv_getProgress()
+    }
     self.network:setClientData(packNetworkData(clientData))
 end
 
@@ -125,7 +127,7 @@ function ResearchManager:cl_research_done(tier)
 
     player = sm.localPlayer.getPlayer()
     sm.event.sendToPlayer(player, "cl_e_createEffect",
-        { id = "ResearchDone", effect = "ResearchDone", host = player:getCharacter() })
+        { key = "ResearchDone", effect = "ResearchDone", host = player:getCharacter(), notStart = true })
     sm.event.sendToPlayer(player, "cl_e_startEffect", "ResearchDone")
     self.cl.endEffect = sm.game.getCurrentTick() + 40 * 16
 end
