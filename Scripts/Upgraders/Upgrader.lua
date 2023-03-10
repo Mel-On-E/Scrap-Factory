@@ -77,6 +77,12 @@ function Upgrader:sv_onUpgrade(shape, data)
 
     data.upgrades[uuid] = data.upgrades[uuid] and data.upgrades[uuid] + 1 or 1
     shape.interactable:setPublicData(data)
+
+    local effectParams = {
+        effect = "Upgrade Drop",
+        pos = shape.worldPosition - self.shape.at / 3
+    }
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", effectParams)
 end
 
 -- #endregion

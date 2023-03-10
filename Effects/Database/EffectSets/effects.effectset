@@ -213,5 +213,34 @@
 				"delay": 0.0
 			}
 		]
+	},
+	"Upgrade Drop": {
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_logfile_pickup",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.35
+				},
+				"direction": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 1.0
+				},
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/props/installations/powercore_insert",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			}
+		]
 	}
 }
