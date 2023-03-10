@@ -291,8 +291,8 @@ end
 
 function FactoryPlayer.client_onInteract(self, character, state)
 	if state then
-		if TutorialManager.cl_isTutorialGuiActive() then
-			TutorialManager.cl_closeTutorialGui()
+		if TutorialManager.cl_isTutorialPopUpActive() then
+			TutorialManager.cl_closeTutorialPopUp()
 		elseif not self.cl.isConscious then
 			self.network:sendToServer("sv_n_tryRespawn")
 		end

@@ -91,7 +91,7 @@ function Sell.client_onUpdate(self, dt)
 end
 
 function Sell.client_onEquip(self)
-	self.cl.unlocked = TutorialManager.cl_getTutorialStep() >= 10
+	self.cl.unlocked = TutorialManager.cl_isTutorialEventComplete("ResearchComplete")
 
 	if self.cl.unlocked and self.tool:isLocal() then
 		self.network:sendToServer("sv_startTutorial")

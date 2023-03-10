@@ -91,7 +91,7 @@ end
 
 function Hub.client_onEquip(self)
 	if self.tool:isLocal() then
-		if TutorialManager.cl_getTutorialStep() > 5 then
+		if TutorialManager.cl_isTutorialEventCompleteOrActive("UpgraderBought") then
 			self:cl_openGui()
 		else
 			sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
