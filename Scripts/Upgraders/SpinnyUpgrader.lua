@@ -114,9 +114,13 @@ function SpinnyUpgrader:cl_updateSkirtData(skirtData)
     local character = skirtData.player.character
     if character then
         local dir = character.direction
-        local change = (skirtData.dir - dir):length()
+        dir.z = 0
 
-        skirtData.spin = skirtData.spin ^ 0.95 + change
+        local change = angle(dir, skirtData.dir) / 4
+
+        --skirtData.spin = skirtData.spin ^ 0.95 + change
+        skirtData.spin = math.max(
+            0.925 * skirtData.spin ^ 0.9925 + 0.075 * math.max(math.log(skirtData.spin + 0.5, 2), 0) + change, 1)
         skirtData.dir = dir
 
         local effectKey = "skirt" .. tonumber(skirtData.player.id)
