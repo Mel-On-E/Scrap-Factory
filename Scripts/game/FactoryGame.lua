@@ -484,6 +484,9 @@ function FactoryGame.cl_bindChatCommands(self)
 			"Gives prestige")
 		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand",
 			"Sets prestige")
+		sm.game.bindChatCommand("/give", { { "string", "uuid", false }, { "number", "quantity", true } },
+			"cl_onChatCommand",
+			"Gives an item by its uuid")
 
 		-- vanila
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
@@ -665,6 +668,13 @@ function FactoryGame.cl_onChatCommand(self, params)
 		else
 			self.network:sendToServer("sv_n_switchAggroMode", { aggroMode = not sm.game.getEnableAggro() })
 		end
+	elseif params[1] == "/give" then
+		self.network:sendToServer("sv_giveItem",
+			{
+				player = sm.localPlayer.getPlayer(),
+				item = sm.uuid.new(params[2]),
+				quantity = params[3] or 1
+			})
 	else
 		self.network:sendToServer("sv_onChatCommand", params)
 	end
