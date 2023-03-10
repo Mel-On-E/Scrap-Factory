@@ -1,24 +1,24 @@
 {
-	//Base Building
-	"1b4711f6-b5ae-4e41-b82d-065867a9d0d3": {
+    //Base Building
+    "1b4711f6-b5ae-4e41-b82d-065867a9d0d3": {
         "title": "Base Foundation"
     },
-	"6a9c7a85-b95d-4bc3-8cc8-464df810801a": {
+    "6a9c7a85-b95d-4bc3-8cc8-464df810801a": {
         "title": "Base Floor"
     },
-	"9c59ddbf-9bf8-47a7-8771-067f8d96f741": {
+    "9c59ddbf-9bf8-47a7-8771-067f8d96f741": {
         "title": "Base Pillar"
     },
-	"d5c4fc84-ad5a-41c1-876b-591412b37b11": {
+    "d5c4fc84-ad5a-41c1-876b-591412b37b11": {
         "title": "Base Pillar Quarter"
     },
-	"b1b7dc53-d143-4241-92e7-d92be98eec1a": {
+    "b1b7dc53-d143-4241-92e7-d92be98eec1a": {
         "title": "Base Wall Big"
     },
-	"3d97068e-6273-4585-9fdb-5be0ce9711dd": {
+    "3d97068e-6273-4585-9fdb-5be0ce9711dd": {
         "title": "Base Wall Long"
     },
-	"4ae033f6-15b8-4cc1-89ac-db200809a2dc": {
+    "4ae033f6-15b8-4cc1-89ac-db200809a2dc": {
         "title": "Base Wall Small"
     },
     //Furnaces
@@ -60,7 +60,7 @@
         "title": "Random Refiner",
         "description": "What else do you need to get rich? Exactly, being lucky! Multiplies ore value by 0% - 200%.\n\n#929292Upgrade Cap: #00dd00$2.04\n#929292Upgrade Limit: #ffffffNone\n#929292Power: #dddd00-15.0W"
     },
-	"819ebf4c-4b7b-4f20-ab53-724e0952b95a": {
+    "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e": {
         "title": "Spinny Upgrader",
         "description": "Twirl the skirt sisters! The upgrade area increases in diameter based on speed it spins.\n\n#929292Upgrade Cap: #00dd00$10.0?\n#929292Upgrade Limit: #ffffffNone\n#929292Power: #dddd00-30.0W"
     },
