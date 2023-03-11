@@ -26,9 +26,7 @@ function Jetpack:server_onFixedUpdate()
 		vel.z = 0
 
 		if vel:length() < speedBoostLimit then
-			if not sm.isHost then
-				sm.physics.applyImpulse(character, vel * movementSpeedBoost)
-			end
+			sm.physics.applyImpulse(character, vel * movementSpeedBoost)
 		end
 	end
 end
@@ -104,10 +102,8 @@ function Jetpack:client_onFixedUpdate()
 				local vel = character:getVelocity()
 				vel.z = 0
 
-				if vel:length() < speedBoostLimit then
-					if not sm.isHost then
-						sm.physics.applyImpulse(character, vel * movementSpeedBoost)
-					end
+				if vel:length() < speedBoostLimit and not sm.isHost then
+					sm.physics.applyImpulse(character, vel * movementSpeedBoost)
 				end
 			else
 				self:cl_toggleJetpack()
