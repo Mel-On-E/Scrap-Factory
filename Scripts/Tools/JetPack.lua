@@ -4,6 +4,11 @@
 ---@field sv JetpackSv
 Jetpack = class()
 
+---factor for the movementSpeed appplied by the Jetpack
+local movementSpeedBoost = 16
+---maximum velocity at which a player gets boosted
+local speedBoostLimit = 25
+
 --------------------
 -- #region Server
 --------------------
@@ -12,6 +17,20 @@ function Jetpack:server_onCreate()
 	self.sv = {
 		active = false
 	}
+end
+
+function Jetpack:server_onFixedUpdate()
+	if self.sv.active then
+		local character = self.tool:getOwner():getCharacter()
+		local vel = character:getVelocity()
+		vel.z = 0
+
+		if vel:length() < speedBoostLimit then
+			if not sm.isHost then
+				sm.physics.applyImpulse(character, vel * movementSpeedBoost)
+			end
+		end
+	end
 end
 
 function Jetpack:sv_toggleJetpack()
@@ -34,11 +53,6 @@ end
 --------------------
 -- #region Client
 --------------------
-
----factor for the movementSpeed appplied by the Jetpack
-local movementSpeedBoost = 16
----maximum velocity at which a player gets boosted
-local speedBostLimit = 25
 
 local maxFuel = 100
 local fuelBurnRatePerSecond = 10
@@ -90,8 +104,10 @@ function Jetpack:client_onFixedUpdate()
 				local vel = character:getVelocity()
 				vel.z = 0
 
-				if vel:length() < speedBostLimit then
-					sm.physics.applyImpulse(character, vel * movementSpeedBoost)
+				if vel:length() < speedBoostLimit then
+					if not sm.isHost then
+						sm.physics.applyImpulse(character, vel * movementSpeedBoost)
+					end
 				end
 			else
 				self:cl_toggleJetpack()
