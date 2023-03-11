@@ -118,6 +118,8 @@ function SpinnyUpgrader:cl_updateSkirtData(skirtData)
 
         local change = angle(dir, skirtData.dir) / 4
 
+        sm.physics.applyImpulse(character, sm.vec3.new(0, 0, 100) * change)
+
         --skirtData.spin = skirtData.spin ^ 0.95 + change
         skirtData.spin = math.max(
             0.8 * skirtData.spin + 0.2 * math.max(math.log(skirtData.spin + 0.5, 2), 0) + change, 1)
