@@ -46,7 +46,7 @@ function Burner:sv_onEnterDrop(shape)
     power = power + 1
 
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-        pos = shape.worldPosition,
+        pos = ( self.shape.worldPosition + sm.vec3.new( 0, 0, 1 ) ), --jank manual offset
         value = tostring(power),
         effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
             "Sellpoints - CampfireOnsell",
