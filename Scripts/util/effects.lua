@@ -10,9 +10,13 @@ Effects = class(nil)
 ---create a new effect for all clients
 ---@param params effectParam
 function Effects:sv_createEffect(params)
-    for _, player in ipairs(sm.player.getAllPlayers()) do
-        self.network:sendToClient(player, "cl_createEffect", params)
-    end
+    self.network:sendToClients("cl_createEffect", params)
+end
+
+---pauses or starts the effect for all clients that belongs to the key
+---@param key string the key/id of the effect
+function Effects:sv_toggleEffect(key)
+    self.network:sendToClients("cl_toggleEffect", key)
 end
 
 -- #endregion
@@ -65,6 +69,16 @@ end
 ---@param key string the key/id of the effect
 function Effects.cl_startEffect(self, key)
     return self.cl.effects[key]:start()
+end
+
+---pauses or starts the effect that belongs to the key
+---@param key string the key/id of the effect
+function Effects.cl_toggleEffect(self, key)
+    if self.cl.effects[key]:isPlaying() then
+        self.cl.effects[key]:stop()
+    else
+        self.cl.effects[key]:start()
+    end
 end
 
 ---destroy a specific effect
