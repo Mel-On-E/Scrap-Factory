@@ -54,7 +54,7 @@ function ResearchManager.sv_addResearch(value, shape)
     local reserachProgress = g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier]
     local goal = tier.goal * PollutionManager.getResearchMultiplier()
 
-    g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier] = math.min((reserachProgress or 0) + value, goal)
+    
 
     if goal == g_ResearchManager.sv.saved.research[g_ResearchManager.sv.saved.tier] then
         g_ResearchManager.sv.saved.tier = g_ResearchManager.sv.saved.tier + 1
@@ -69,6 +69,21 @@ end
 
 function ResearchManager:getTierProgress()
     return (self.sv and self:sv_getProgress()) or self.cl.data.progress
+end
+
+function ResearchManager.sv_setTier(self, value)
+    local tier = g_tiers[value]
+    if tier then
+        print("Tier set " .. value)
+        g_ResearchManager.sv.saved.tier = value + 1
+        g_ResearchManager.sv.notify = true
+        sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "ResearchComplete")
+        sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_saveDataAndSync")
+    end
+end
+function ResearchManager:sv_addResearchManual(value)
+    local tier = g_tiers[g_ResearchManager.sv.saved.tier]
+    g_ResearchManager.sv.saved.research = math.min(value, tier.goal)
 end
 
 function ResearchManager:sv_getProgress()

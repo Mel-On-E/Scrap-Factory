@@ -15,6 +15,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/util/networkData.lua")
+dofile("$CONTENT_DATA/Scripts/Managers/TutorialManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/PowerManager.lua")
@@ -39,6 +40,8 @@ FactoryGame.defaultInventorySize = 1024
 
 local SyncInterval = 400 -- 400 ticks | 10 seconds
 DEVMODE = true
+
+
 
 function FactoryGame.server_onCreate(self)
 	print("FactoryGame.server_onCreate")
@@ -187,9 +190,13 @@ function FactoryGame.bindChatCommands(self)
 		sm.game.bindChatCommand("/addpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives pollutiion")
 		sm.game.bindChatCommand("/setpollution", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets pollutiion")
 
-		sm.game.bindChatCommand("/addprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Gives prestige")
-		sm.game.bindChatCommand("/setprestige", { { "string", "pollutuion", false } }, "cl_onChatCommand", "Sets prestige")
+		sm.game.bindChatCommand("/addprestige", { { "string", "prestige", false } }, "cl_onChatCommand", "Gives prestige")
+		sm.game.bindChatCommand("/setprestige", { { "string", "prestige", false } }, "cl_onChatCommand", "Sets prestige")
 
+		sm.game.bindChatCommand("/addresearch", { { "string", "research", false } }, "cl_onChatCommand", "Gives research")
+		sm.game.bindChatCommand("/settier", { { "string", "tier", false } }, "cl_onChatCommand", "Sets research tier")
+
+		sm.game.bindChatCommand("/skiptutorial", {}, "cl_onChatCommand", "Skips the tutorial")
 
 
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
@@ -513,7 +520,13 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PrestigeManager.sv_addPrestige(tonumber(params[2]))
 	elseif params[1] == "/setprestige" then
 		PrestigeManager.sv_setPrestige(tonumber(params[2]))
-
+	elseif params[1] == "/settier" then
+		--Warning, setting the tier the last tier breaks shit for some reason, maybe cus the next tier doesnt exist?
+		sm.event.sendToScriptableObject(self.sv["researchManager"], "sv_setTier", tonumber(params[2]))
+	elseif params[1] == "/addresearch" then
+		sm.event.sendToScriptableObject(self.sv["researchManager"], "sv_addResearchManual", tonumber(params[2]))
+	elseif params[1] == "/skiptutorial" then
+		sm.event.sendToScriptableObject(self.sv["tutorialManager"], "sv_e_skipTutorial")
 	else
 		params.player = player
 		if sm.exists(player.character) then

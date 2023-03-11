@@ -118,6 +118,13 @@ function TutorialManager:sv_e_tryStartTutorial(tutorialName)
     end
 end
 
+
+function TutorialManager:sv_e_skipTutorial()
+    print("Skipped Tutorial")
+    self.sv.saved.tutorialStep = #tutorialSteps + 1
+    self.sv_saveAndSync(self)
+end
+
 ---@param event string
 function TutorialManager:sv_e_questEvent(event)
     if self.sv.eventsReceived[event] then return end
