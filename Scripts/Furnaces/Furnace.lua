@@ -89,6 +89,7 @@ function Furnace:sv_onEnterDrop(shape)
             sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
             MoneyManager.sv_addMoney(value)
+            sm.effect.playEffect( "Furnace - OnSell", self.shape.worldPosition )
 
             if next(publicData.upgrades) then
                 sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
