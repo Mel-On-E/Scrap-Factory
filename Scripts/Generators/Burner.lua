@@ -1,7 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
----A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
+---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will create a polluted `Drop`.
 ---@class Burner: ShapeClass
 ---@field cl BurnerCl
 ---@field powerUtil PowerUtility
@@ -12,7 +12,7 @@ Burner = class(nil)
 --------------------
 
 ---chance a special effect plays when a drop is sold
-local secretEffectChance = 0.15
+local secretEffectChance = 0.05
 
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)
