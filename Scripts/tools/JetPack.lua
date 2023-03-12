@@ -15,19 +15,21 @@ local speedBoostLimit = 25
 
 function Jetpack:server_onCreate()
 	self.sv = {
-		active = false
+		active = false,
 	}
 end
 
 function Jetpack:server_onFixedUpdate()
-	if self.sv.active then
-		local character = self.tool:getOwner():getCharacter()
-		local vel = character:getVelocity()
-		vel.z = 0
+	if not self.sv.active then
+		return
+	end
 
-		if vel:length() < speedBoostLimit then
-			sm.physics.applyImpulse(character, vel * movementSpeedBoost)
-		end
+	local character = self.tool:getOwner():getCharacter()
+	local vel = character:getVelocity()
+	vel.z = 0
+
+	if vel:length() < speedBoostLimit then
+		sm.physics.applyImpulse(character, vel * movementSpeedBoost)
 	end
 end
 
@@ -63,7 +65,7 @@ function Jetpack:client_onCreate()
 		alwaysOn = false,
 		active = false,
 		fuel = maxFuel,
-		fuelRechargeCooldown = 0
+		fuelRechargeCooldown = 0,
 	}
 
 	Effects.cl_init(self)
@@ -73,7 +75,7 @@ function Jetpack:client_onCreate()
 		effect = "Jetpack Thruster",
 		host = self.tool:getOwner():getCharacter(),
 		boneName = "jnt_hips",
-		notStart = true
+		notStart = true,
 	})
 end
 
@@ -95,36 +97,37 @@ function Jetpack:client_onEquippedUpdate(primaryState, secondaryState)
 end
 
 function Jetpack:client_onFixedUpdate()
-	if self.tool:isLocal() then
-		if self.cl.active then
-			if self.cl.fuel > 0 then
-				local character = self.tool:getOwner():getCharacter()
-				local vel = character:getVelocity()
-				vel.z = 0
+	if not self.tool:isLocal() or not self.cl.active then
+		return
+	end
+	if self.cl.fuel > 0 then
+		local character = self.tool:getOwner():getCharacter()
+		local vel = character:getVelocity()
+		vel.z = 0
 
-				if vel:length() < speedBoostLimit and not sm.isHost then
-					sm.physics.applyImpulse(character, vel * movementSpeedBoost)
-				end
-			else
-				self:cl_toggleJetpack()
-			end
+		if vel:length() < speedBoostLimit and not sm.isHost then
+			sm.physics.applyImpulse(character, vel * movementSpeedBoost)
 		end
+	else
+		self:cl_toggleJetpack()
 	end
 end
 
 function Jetpack:client_onUpdate(dt)
-	if self.tool:isLocal() then
-		self.cl.fuelRechargeCooldown = math.max(self.cl.fuelRechargeCooldown - dt, 0)
+	if not self.tool:isLocal() then
+		return
+	end
 
-		if self.cl.active then
-			self.cl.fuel = math.max(self.cl.fuel - fuelBurnRatePerSecond * dt, 0)
-		elseif self.tool:isOnGround() and self.cl.fuelRechargeCooldown == 0 then
-			self.cl.fuel = math.min(self.cl.fuel + fuelRestoreRatePerSecond * dt, maxFuel)
-		end
+	self.cl.fuelRechargeCooldown = math.max(self.cl.fuelRechargeCooldown - dt, 0)
 
-		if self.cl.fuel < maxFuel then
-			sm.gui.setProgressFraction(self.cl.fuel / maxFuel)
-		end
+	if self.cl.active then
+		self.cl.fuel = math.max(self.cl.fuel - fuelBurnRatePerSecond * dt, 0)
+	elseif self.tool:isOnGround() and self.cl.fuelRechargeCooldown == 0 then
+		self.cl.fuel = math.min(self.cl.fuel + fuelRestoreRatePerSecond * dt, maxFuel)
+	end
+
+	if self.cl.fuel < maxFuel then
+		sm.gui.setProgressFraction(self.cl.fuel / maxFuel)
 	end
 end
 
@@ -139,8 +142,7 @@ function Jetpack:cl_toggleJetpack()
 	self.network:sendToServer("sv_toggleEffect", "Jetpack" .. tostring(self.tool:getOwner().id))
 end
 
-function Jetpack:client_onEquip()
-end
+function Jetpack:client_onEquip() end
 
 function Jetpack:client_onUnequip()
 	if not self.cl.alwaysOn and self.cl.active then
