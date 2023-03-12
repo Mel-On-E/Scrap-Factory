@@ -143,6 +143,30 @@
          "stackSize" : 65535,
          "sticky" : "All",
          "uuid" : "4ae033f6-15b8-4cc1-89ac-db200809a2dc"
+      },
+      {
+         "box" : {
+            "x" : 16,
+            "y" : 2,
+            "z" : 16
+         },
+         "color" : "df7f00",
+         "name" : "obj_factory_building_catwalk_straight_01",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 4,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_catwalk_straight_01.rend",
+         "rotationSet" : "PropZ",
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 0
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "964c7fc4-103f-45fd-a1ac-fddc39314cbf"
       }
    ]
 }

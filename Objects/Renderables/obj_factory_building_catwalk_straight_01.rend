@@ -1,0 +1,17 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/Building/obj_factory_building_catwalk_straight_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_catwalk_atlas_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_catwalk_atlas_nor.tga",
+                  "$CONTENT_DATA/Objects/Textures/Building/obj_factory_building_catwalk_atlas_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}
