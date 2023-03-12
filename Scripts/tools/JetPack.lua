@@ -142,8 +142,6 @@ function Jetpack:cl_toggleJetpack()
 	self.network:sendToServer("sv_toggleEffect", "Jetpack" .. tostring(self.tool:getOwner().id))
 end
 
-function Jetpack:client_onEquip() end
-
 function Jetpack:client_onUnequip()
 	if not self.cl.alwaysOn and self.cl.active then
 		self:cl_toggleJetpack()
