@@ -8,5 +8,20 @@
             "type" : "particle"
          }
       ]
+   },
+   "Drops - PollutionCloud" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_drops_pollution_cloud" ],
+            "type" : "particle"
+         },
+         {
+            "attached" : true,
+            "name" : "event:/weapons/chemcannon/chem_cloud",
+            "type" : "audio"
+         }
+      ]
    }
 }

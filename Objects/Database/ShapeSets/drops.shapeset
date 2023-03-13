@@ -107,7 +107,7 @@
       "scripted": {
         "classname": "GasDrop",
         "data": {
-          "effect": "Pesticide - Cloud",
+          "effect": "Drops - PollutionCloud",
           "autoPlay": true
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
