@@ -23,5 +23,15 @@
             "type" : "audio"
          }
       ]
+   },
+   "Laser - Test" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_laser_test" ],
+            "type" : "particle"
+         }
+      ]
    }
 }

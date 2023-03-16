@@ -6,6 +6,7 @@
       "sellpoints/p_sellpoints_furnace_onsell.json",
       "sellpoints/p_sellpoints_furnace_science.json",
       "actions/p_action_sell.json",
-      "drops/p_drops_pollution_cloud.json"
+      "drops/p_drops_pollution_cloud.json",
+      "dev/p_laser_test.json"
    ]
 }
