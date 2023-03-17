@@ -4,8 +4,12 @@
          "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_01.fbx",
          "subMeshList" : [
             {
-               "material" : "Dif",
-               "textureList" : [ "$CONTENT_DATA/Objects/Patterns/pat_blockout_diffusespec.png" ]
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_nor.tga"
+               ]
             }
          ]
       }
