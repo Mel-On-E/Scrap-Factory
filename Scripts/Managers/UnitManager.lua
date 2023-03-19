@@ -3,9 +3,18 @@ dofile("$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua")
 ---@class OldUnitManager : ScriptableObjectClass
 OldUnitManager = class(UnitManager)
 
+---@class UnitManager : OldUnitManager
+---@field cl UnitManagerCl
+---@field sv table
+UnitManager = class(UnitManager)
+
+--------------------
+-- #region Server
+--------------------
+
 function UnitManager.sv_onWorldFixedUpdate(self, worldSelf)
 	--Inform player of incoming raids
-	if self.loadTick then
+	if self.cl.loadTick then
 		for _, player in ipairs(self.newPlayers) do
 			print("Informing player", player.id, "about incoming raids.")
 			for _, cropAttackCell in pairs(self.sv.cropAttackCells) do
@@ -28,11 +37,15 @@ function UnitManager.sv_onWorldFixedUpdate(self, worldSelf)
 	end
 end
 
+--------------------
+-- #region Client
+--------------------
+
 function UnitManager.cl_n_detected(self, msg)
-	sm.gui.displayAlertText(language_tag("RaidWarning"), 10) --FACTORY
+	sm.gui.displayAlertText(language_tag("RaidWarning"), 10)
 
+	-- #region COPIED
 
-	--COPIED
 	local gui = sm.gui.createNameTagGui()
 	gui:setWorldPosition(msg.pos + sm.vec3.new(0, 0, 0.5))
 	gui:setRequireLineOfSight(false)
@@ -41,9 +54,22 @@ function UnitManager.cl_n_detected(self, msg)
 	gui:setText("Text", "#ff0000" .. formatCountdown((msg.tick - sm.game.getServerTick()) / 40))
 
 	self.cl.attacks[#self.cl.attacks + 1] = { gui = gui, tick = msg.tick }
+	-- #endregion
 end
 
 function UnitManager:cl_setloadTick(tick)
 	--This only handles a few raid counters. May need to improve system if more raids are desired.
-	self.loadTick = tick
+	self.cl.loadTick = tick
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class UnitManagerCl
+---@field loadTick number the tick at which the game was loaded
+---@field attacks table
+
+-- #endregion

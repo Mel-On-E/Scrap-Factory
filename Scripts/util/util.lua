@@ -198,4 +198,28 @@ function table.copy(t)
     return t2;
 end
 
+---check wheter a table `t` contains element `e`
+---@param t table the table to search
+---@param e any the element to search for
+---@return boolean
+function table.contains(t, e)
+    for _, e2 in pairs(t) do
+        if e == e2 then
+            return true
+        end
+    end
+
+    return false
+end
+
+---returns the angle between two vectors in radians
+---@param v1 Vec3
+---@param v2 Vec3
+function angle(v1, v2)
+    local dot = v1:dot(v2)
+    local cos = dot / (v1:length() * v2:length())
+    acos = math.acos(cos)
+    return acos > 1e-3 and acos or 0
+end
+
 -- #endregion
