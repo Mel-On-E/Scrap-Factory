@@ -415,7 +415,11 @@ function FactoryPlayer:cl_e_playAudio(effect)
 end
 
 function FactoryPlayer:cl_e_playEffect(params)
-	sm.effect.playEffect(params.effect, params.pos or sm.localPlayer.getPlayer().character.worldPosition)
+	if params.host ~= nil then
+		sm.effect.playHostedEffect(params.effect, params.host.interactable or params.host or sm.localPlayer.getPlayer().character)
+	else
+		sm.effect.playEffect(params.effect, params.pos or sm.localPlayer.getPlayer().character.worldPosition)
+	end
 end
 
 function FactoryPlayer:cl_e_createEffect(params)

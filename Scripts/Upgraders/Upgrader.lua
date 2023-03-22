@@ -78,10 +78,14 @@ function Upgrader:sv_onUpgrade(shape, data)
     data.upgrades[uuid] = data.upgrades[uuid] and data.upgrades[uuid] + 1 or 1
     shape.interactable:setPublicData(data)
 
-    local effectParams = {
-        effect = "Upgrade Drop",
-        pos = shape.worldPosition - self.shape.at / 3
-    }
+    local effectParams = {}
+    if uuid == "17de8088-d5a8-45b1-80eb-1d0688a8c39a" then
+        effectParams = {
+            effect = "Upgraders - Random",
+            pos = shape.worldPosition,
+            host = shape
+        }
+    end
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", effectParams)
 end
 

@@ -36,22 +36,6 @@
             "filename" : "$CONTENT_DATA/Scripts/Debug/Splinetest.lua"
          },
          "uuid" : "aa9938fa-c0d1-4eab-9153-8c52c86cd541"
-      },
-      {
-         "box" : {
-            "x" : 1,
-            "y" : 1,
-            "z" : 1
-         },
-         "color" : "FCBA03",
-         "name" : "obj_devtool_splinetest_in",
-         "physicsMaterial" : "Mechanical",
-         "renderable" : "$CONTENT_DATA/Effects/Renderables/effect_block.rend",
-         "restrictions" : {
-            "paintable" : false
-         },
-         "rotationSet" : "Default",
-         "uuid" : "1b3226bb-d5e9-474e-bc73-ea26d83787d9"
       }
    ]
 }

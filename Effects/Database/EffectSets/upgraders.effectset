@@ -1,0 +1,24 @@
+{
+   "Upgraders - Random" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_upgrade_random" ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/vehicle/triggers/trigger_sensor_on",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/props/installations/powercore_insert",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   }
+}
