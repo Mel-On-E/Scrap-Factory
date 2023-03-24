@@ -8,6 +8,7 @@
       "actions/p_action_sell.json",
       "drops/p_drops_pollution_cloud.json",
       "dev/p_laser_test.json",
-      "upgraders/p_upgrade_random.json"
+      "upgraders/p_upgrade_random.json",
+      "dev/p_areaTrigger_visualiser.json"
    ]
 }

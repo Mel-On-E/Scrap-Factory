@@ -23,6 +23,10 @@
       {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/upgraders.effectset",
          "showInEditor" : true
+      },
+      {
+         "path" : "$CONTENT_DATA/Effects/Database/EffectSets/dev.effectset",
+         "showInEditor" : true
       }
    ]
 }

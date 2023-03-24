@@ -1,26 +1,21 @@
 {
-   "Drops - Pollution" : {
+   "AreaTrigger - Border" : {
       "effectList" : [
          {
             "attached" : true,
             "offset" : [ 0.0, 0.0, 0.0 ],
-            "particles" : [ "p_drops_pollution" ],
+            "particles" : [ "p_areaTrigger_visualiser" ],
             "type" : "particle"
          }
       ]
    },
-   "Drops - PollutionCloud" : {
+   "Laser - Test" : {
       "effectList" : [
          {
             "attached" : true,
             "offset" : [ 0.0, 0.0, 0.0 ],
-            "particles" : [ "p_drops_pollution_cloud" ],
+            "particles" : [ "p_laser_test" ],
             "type" : "particle"
-         },
-         {
-            "attached" : true,
-            "name" : "event:/weapons/chemcannon/chem_cloud",
-            "type" : "audio"
          }
       ]
    }
