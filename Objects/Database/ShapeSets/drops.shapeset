@@ -107,7 +107,8 @@
       "scripted": {
         "classname": "GasDrop",
         "data": {
-          "effect": "Paintcharacter - Small"
+          "effect": "Paintcharacter - Small",
+          "autoPlay": true
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
       },

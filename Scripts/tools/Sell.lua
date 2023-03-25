@@ -1,16 +1,59 @@
----@class Sell:ToolClass
-
 dofile("$GAME_DATA/Scripts/game/AnimationUtil.lua")
 dofile("$SURVIVAL_DATA/Scripts/util.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
 
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
+---The sell tool can be used to sell objects from the world and inventory
 ---@class Sell : ToolClass
+---@field fpAnimations table
+---@field tpAnimations table
+---@field blendTime number
+---@field cl SellCl
 Sell = class()
+
+--------------------
+-- #region Server
+--------------------
+
+---Sell a shape and additionally items from the players inventory
+---@param params SellSvSellParams
+function Sell.sv_n_sell(self, params, player)
+	if params.shape and sm.exists(params.shape) then
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+			{
+				pos = params.shape.worldPosition,
+				value = tostring(params.value * params.quantity),
+				format = "money",
+				effect = "Action - Sell"
+			})
+
+		if params.quantity > 1 then
+			-- sell items from inventory
+			sm.container.beginTransaction()
+			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity - 1)
+			sm.container.endTransaction()
+		end
+		params.shape:destroyShape(0)
+
+		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity, "sellTool")
+
+		self.network:sendToClients("cl_n_onUseAnimation")
+	end
+end
+
+---tries to start the tutorial explaing the tool
+function Sell:sv_startTutorial()
+	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SellTutorial")
+end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
 
 local renderables = { "$SURVIVAL_DATA/Character/Char_Tools/Char_fertilizer/char_fertilizer.rend" }
 local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_tp_fertilizer.rend",
@@ -21,34 +64,12 @@ local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 local currentRenderablesTp = {}
 local currentRenderablesFp = {}
 
-local resellValue = 0.8
+local resellValue = 0.8       --the fraction of the shop price gained back by selling
+local maxSellQuantity = 10000 --maximum amount of items to be sold at once
 
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
-
-function Sell.sv_n_sell(self, params, player)
-	if params.shape and sm.exists(params.shape) then
-		sm.effect.playEffect("Action - Sell", params.shape.worldPosition)
-		sm.event.sendToGame("sv_e_stonks",
-			{ pos = params.shape.worldPosition, value = tostring(params.value * params.quantity), format = "money" })
-
-		if params.quantity > 1 then
-			sm.container.beginTransaction()
-			sm.container.spend(player:getInventory(), params.shape.uuid, params.quantity - 1)
-			print("spend", params.quantity)
-			sm.container.endTransaction()
-		end
-		MoneyManager.sv_addMoney(tonumber(params.value) * params.quantity, "sellTool")
-
-		self.network:sendToClients("cl_n_onUse")
-		params.shape:destroyShape(0)
-	end
-end
-
-function Sell:sv_tryTutorial()
-	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SellTutorial")
-end
 
 function Sell.client_onCreate(self)
 	self:cl_init()
@@ -60,68 +81,51 @@ end
 
 function Sell.cl_init(self)
 	self:cl_loadAnimations()
-	self.cl = {}
-	self.cl.quantity = 1
+	self.cl = {
+		quantity = 1
+	}
 end
 
 function Sell.client_onUpdate(self, dt)
-	self:cl_onUpdate(dt)
+	self:cl_onUpdateAnimations(dt)
 end
 
 function Sell.client_onEquip(self)
-	self.unlocked = TutorialManager.cl_getTutorialStep() >= 10
-	if self.unlocked and self.tool:isLocal() then
-		self.network:sendToServer("sv_tryTutorial")
+	self.cl.unlocked = TutorialManager.cl_isTutorialEventComplete("ResearchComplete")
+
+	if self.cl.unlocked and self.tool:isLocal() then
+		self.network:sendToServer("sv_startTutorial")
 	elseif self.tool:isLocal() then
 		sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
 	end
-	self.wantEquipped = true
 
-	currentRenderablesTp = {}
-	currentRenderablesFp = {}
-
-	for k, v in pairs(renderablesTp) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
-	for k, v in pairs(renderablesFp) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
-	for k, v in pairs(renderables) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
-	for k, v in pairs(renderables) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
-
-	local color = sm.item.getShapeDefaultColor(obj_consumable_fertilizer)
-	self.tool:setTpRenderables(currentRenderablesTp)
-	self.tool:setTpColor(color)
-	if self.tool:isLocal() then
-		self.tool:setFpRenderables(currentRenderablesFp)
-		self.tool:setFpColor(color)
-	end
-
-	self:cl_loadAnimations()
-
-	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
-	if self.tool:isLocal() then
-		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
-	end
+	self:cl_onEquipAnimations()
 end
 
 function Sell.client_onUnequip(self)
-	self.wantEquipped = false
-	self.equipped = false
-	if sm.exists(self.tool) then
-		setTpAnimation(self.tpAnimations, "putdown")
-		if self.tool:isLocal() and self.fpAnimations.currentAnimation ~= "unequip" then
-			swapFpAnimation(self.fpAnimations, "equip", "unequip", 0.2)
-		end
-	end
+	self:cl_onUnequipAnimations()
 end
 
 function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
-	if not self.unlocked then return false, false end
-	-- Detect shape
+	if not self.cl.unlocked then
+		return false, false
+	end
+
+	-- Find shape
 	local success, result = sm.localPlayer.getRaycast(7.5)
-	if result.type == "body" then
+	if success and result.type == "body" then
 		local shape = result:getShape()
 
 		local shopItem = g_shop[tostring(shape.uuid)]
 		if shopItem then
 			local sellValue = math.floor(shopItem.price * resellValue)
+
+			--calculate blocks
+			if shape.isBlock then
+				local dim = shape:getBoundingBox() * 4
+				local blocks = dim.x * dim.y * dim.z
+				sellValue = sellValue * blocks
+			end
 
 			sm.gui.setCenterIcon("Use")
 			local keyBindingText1 = sm.gui.getKeyBinding("Create", true)
@@ -129,16 +133,20 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 			local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 			local o2 = "</p>"
 
-			local quantity = math.min(self.cl.quantity, sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
+			local quantity = math.min(self.cl.quantity,
+				sm.container.totalQuantity(sm.localPlayer.getInventory(), shape.uuid) + 1)
 
 			sm.gui.setInteractionText(sm.shape.getShapeTitle(shape.uuid))
 			sm.gui.setInteractionText("", keyBindingText1,
-				language_tag("Sell") .. o1 .. format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
+				language_tag("Sell") ..
+				o1 .. format_number({ format = "money", value = sellValue, color = "#4f4f4f" }) ..
 				o2 .. "x" .. o1 .. tostring(quantity) .. o2 .. " [" .. keyBindingText2 .. "]")
 
 			if primaryState == sm.tool.interactState.start then
-				self:onUse()
-				self.network:sendToServer("sv_n_sell", { shape = shape, value = tostring(sellValue), quantity = quantity })
+				-- sell items
+				self:onUseAnimation()
+				self.network:sendToServer("sv_n_sell",
+					{ shape = shape, value = tostring(sellValue), quantity = quantity })
 			end
 		end
 	end
@@ -147,19 +155,22 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 end
 
 function Sell:client_onToggle()
-	if self.cl.quantity == 10000 then
-		self.cl.quantity = 1
-	else
-		self.cl.quantity = math.min(self.cl.quantity * 10, 10000)
-	end
+	self.cl.quantity = self.cl.quantity == maxSellQuantity and 1
+		or math.min(self.cl.quantity * 10, maxSellQuantity)
+
 	sm.gui.displayAlertText(language_tag("NewMaxSellQuantity") .. "#fc8b19" .. tostring(self.cl.quantity))
 	sm.audio.play("ConnectTool - Rotate", sm.localPlayer.getPlayer():getCharacter():getWorldPosition())
+
 	return true
 end
 
---ANIMATION STUFF BELOW
-function Sell.cl_loadAnimations(self)
+-- #endregion
 
+--------------------
+-- #region Animation
+--------------------
+
+function Sell.cl_loadAnimations(self)
 	self.tpAnimations = createTpAnimations(
 		self.tool,
 		{
@@ -168,26 +179,20 @@ function Sell.cl_loadAnimations(self)
 			sprint = { "fertilizer_sprint" },
 			pickup = { "fertilizer_pickup", { nextAnimation = "idle" } },
 			putdown = { "fertilizer_putdown" }
-
 		}
 	)
 	local movementAnimations = {
-
 		idle = "fertilizer_idle",
 		idleRelaxed = "fertilizer_idle_relaxed",
-
 		runFwd = "fertilizer_run_fwd",
 		runBwd = "fertilizer_run_bwd",
 		sprint = "fertilizer_sprint",
-
 		jump = "fertilizer_jump",
 		jumpUp = "fertilizer_jump_up",
 		jumpDown = "fertilizer_jump_down",
-
 		land = "fertilizer_jump_land",
 		landFwd = "fertilizer_jump_land_fwd",
 		landBwd = "fertilizer_jump_land_bwd",
-
 		crouchIdle = "fertilizer_crouch_idle",
 		crouchFwd = "fertilizer_crouch_fwd",
 		crouchBwd = "fertilizer_crouch_bwd"
@@ -202,13 +207,10 @@ function Sell.cl_loadAnimations(self)
 			self.tool,
 			{
 				idle = { "fertilizer_idle", { looping = true } },
-
 				sprintInto = { "fertilizer_sprint_into", { nextAnimation = "sprintIdle", blendNext = 0.2 } },
 				sprintIdle = { "fertilizer_sprint_idle", { looping = true } },
 				sprintExit = { "fertilizer_sprint_exit", { nextAnimation = "idle", blendNext = 0 } },
-
 				use = { "fertilizer_paint", { nextAnimation = "idle" } },
-
 				equip = { "fertilizer_pickup", { nextAnimation = "idle" } },
 				unequip = { "fertilizer_putdown" }
 			}
@@ -218,7 +220,7 @@ function Sell.cl_loadAnimations(self)
 	self.blendTime = 0.2
 end
 
-function Sell.cl_onUpdate(self, dt)
+function Sell.cl_onUpdateAnimations(self, dt)
 	if not sm.exists(self.tool) then return end
 
 	-- First person animation
@@ -269,7 +271,6 @@ function Sell.cl_onUpdate(self, dt)
 				elseif animation.nextAnimation ~= "" then
 					setTpAnimation(self.tpAnimations, animation.nextAnimation, 0.001)
 				end
-
 			end
 		else
 			animation.weight = math.max(animation.weight - (self.tpAnimations.blendSpeed * dt), 0.0)
@@ -280,7 +281,6 @@ function Sell.cl_onUpdate(self, dt)
 
 	totalWeight = totalWeight == 0 and 1.0 or totalWeight
 	for name, animation in pairs(self.tpAnimations.animations) do
-
 		local weight = animation.weight / totalWeight
 		if name == "idle" then
 			self.tool:updateMovementAnimation(animation.time, weight)
@@ -293,7 +293,45 @@ function Sell.cl_onUpdate(self, dt)
 	end
 end
 
-function Sell.onUse(self)
+function Sell:cl_onEquipAnimations()
+	self.wantEquipped = true
+
+	currentRenderablesTp = {}
+	currentRenderablesFp = {}
+
+	for k, v in pairs(renderablesTp) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
+	for k, v in pairs(renderablesFp) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
+	for k, v in pairs(renderables) do currentRenderablesTp[#currentRenderablesTp + 1] = v end
+	for k, v in pairs(renderables) do currentRenderablesFp[#currentRenderablesFp + 1] = v end
+
+	local color = sm.item.getShapeDefaultColor(obj_consumable_fertilizer)
+	self.tool:setTpRenderables(currentRenderablesTp)
+	self.tool:setTpColor(color)
+	if self.tool:isLocal() then
+		self.tool:setFpRenderables(currentRenderablesFp)
+		self.tool:setFpColor(color)
+	end
+
+	self:cl_loadAnimations()
+
+	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
+	if self.tool:isLocal() then
+		swapFpAnimation(self.fpAnimations, "unequip", "equip", 0.2)
+	end
+end
+
+function Sell:cl_onUnequipAnimations()
+	self.wantEquipped = false
+	self.equipped = false
+	if sm.exists(self.tool) then
+		setTpAnimation(self.tpAnimations, "putdown")
+		if self.tool:isLocal() and self.fpAnimations.currentAnimation ~= "unequip" then
+			swapFpAnimation(self.fpAnimations, "equip", "unequip", 0.2)
+		end
+	end
+end
+
+function Sell.onUseAnimation(self)
 	if self.tool:isLocal() then
 		setFpAnimation(self.fpAnimations, "use", 0.25)
 	end
@@ -325,8 +363,25 @@ function Sell.onUse(self)
 	end
 end
 
-function Sell.cl_n_onUse(self)
+function Sell.cl_n_onUseAnimation(self)
 	if not self.tool:isLocal() and self.tool:isEquipped() then
-		self:onUse()
+		self:onUseAnimation()
 	end
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class SellSvSellParams
+---@field shape Shape the shape to be sold
+---@field value string value of each item to be sold
+---@field quantity number quantity of items to be sold
+
+---@class SellCl
+---@field quantity number the quantity (10^x) to be sold on use
+---@field unlocked boolean whether the tool is unlocked i.e. tutorial completed
+
+-- #endregion

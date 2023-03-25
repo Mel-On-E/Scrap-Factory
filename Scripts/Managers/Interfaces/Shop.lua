@@ -1,27 +1,40 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
 ---@type integer number of items each page of the gui can show at max
 local ITEMS_PER_PAGE = 32
 
+---The Shop can be used to buy new items for money. Doing research will unlock more items.
 ---@class Shop : Interface
 ---@field cl ShopCl
 ---@diagnostic disable-next-line: param-type-mismatch
 Shop = class(Interface)
 
 --------------------
+-- #region Server
+--------------------
+
+---@param params { quantity: number, item: Item }
+---@param player Player
+function Shop:sv_buy(params, player)
+	if not MoneyManager.sv_trySpendMoney(params.item.price * params.quantity) then return end
+
+	sm.event.sendToGame("sv_giveItem", { player = player, item = params.item.uuid, quantity = params.quantity })
+
+	if params.item.uuid == obj_upgrader_basic then
+		sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
+	end
+end
+
+-- #endregion
+
+--------------------
 -- #region Client
 --------------------
 
 function Shop:client_onCreate()
-	--Global object setup so you can call methods and set stuff
-	if not g_cl_shop then
-		g_cl_shop = self
-	end
+	g_cl_shop = g_cl_shop or self
 
-	local params = {}
-	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
-	Interface.client_onCreate(self, params)
+	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/shop.layout")
 
 	self:cl_setup()
 	self:cl_setupGui()
@@ -29,35 +42,47 @@ end
 
 ---Setups the self.cl table
 function Shop:cl_setup()
-	self.cl.curPage = 1
-	self.cl.sortHighest = false
-	self.cl.category = "All"
+	self.cl = {
+		curPage = 1,
+		sortHighest = false,
+		category = "All",
+		sortedItems = {},
+		renderedPages = { {} },
+		tier = -1,
+		item = 1,
+		quantity = 1,
+		gui = self.cl.gui
+	}
 
-	self.cl.sortedItems = {}
 	self:cl_setupSortedItems()
+end
 
-	self.cl.renderedPages = { {} }
-	self.cl.tier = -1
-	self.cl.item = 1
-	self.cl.quantity = 1
+---Create a list of items sorted by price in `self.cl.sortedItems`
+function Shop:cl_setupSortedItems()
+	for uuid, item in pairs(g_shop) do
+		if not item.special then
+			table.insert(self.cl.sortedItems,
+				{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
+		end
+	end
+
+	table.sort(self.cl.sortedItems, function(a, b)
+		return a.price > b.price
+	end)
 end
 
 function Shop:client_onFixedUpdate()
-	if not self.cl.clearWarning then return end
-	if not (self.cl.clearWarning <= sm.game.getCurrentTick()) then return end
+	if not (self.cl.clearWarning and (self.cl.clearWarning <= sm.game.getCurrentTick())) then return end
 
 	self.cl.clearWarning = nil
-
 	self.cl.gui:setVisible("OutOfMoney", false)
 end
 
----The open gui method
----> **Warning**\
----> You have to use the g_cl_shop global to acces values
 function Shop.cl_e_open_gui()
 	Shop.gui_setLang(g_cl_shop)
 	Shop.gui_render(g_cl_shop)
-	Shop.gui_display(g_cl_shop)
+	Shop.gui_displayPage(g_cl_shop)
+
 	Interface.cl_e_open_gui(g_cl_shop)
 end
 
@@ -67,7 +92,7 @@ function Shop:cl_changeCategory(category)
 	self.cl.category = category
 
 	self:gui_render()
-	self:gui_display()
+	self:gui_displayPage()
 end
 
 function Shop:cl_changeSort()
@@ -76,7 +101,7 @@ function Shop:cl_changeSort()
 	self.cl.gui:setText("SortText", self.cl.sortHighest and language_tag("SortHighest") or language_tag("SortLowest"))
 
 	self:gui_render()
-	self:gui_display()
+	self:gui_displayPage()
 end
 
 ---@param optionName string
@@ -85,7 +110,7 @@ function Shop:cl_tierChange(optionName)
 		self.cl.tier = -1
 
 		self:gui_render()
-		self:gui_display()
+		self:gui_displayPage()
 
 		return
 	end
@@ -96,36 +121,28 @@ function Shop:cl_tierChange(optionName)
 	self.cl.tier = tier
 
 	self:gui_render()
-	self:gui_display()
+	self:gui_displayPage()
 end
 
 ---@param widgetName string
 function Shop:cl_changePage(widgetName)
 	if widgetName == "NextPage" then
-		if self.cl.curPage == #self.cl.renderedPages then return end
-
-		self.cl.curPage = self.cl.curPage + 1
+		self.cl.curPage = math.min(self.cl.curPage + 1, #self.cl.renderedPages)
+	elseif widgetName == "LastPage" then
+		self.cl.curPage = math.max(self.cl.curPage - 1, 1)
+	else
+		return
 	end
 
-	if widgetName == "LastPage" then
-		if self.cl.curPage == 1 then return end
-
-		self.cl.curPage = self.cl.curPage - 1
-	end
-
-	self:gui_display()
+	self:gui_displayPage()
 end
 
 ---@param widgetName string
 function Shop:cl_changeItem(widgetName)
 	self.cl.gui:setButtonState("Item_" .. self.cl.item, false)
 
-
-	---@type number
 	---@diagnostic disable-next-line: assign-type-mismatch
-	local item = tonumber(widgetName:sub(6))
-
-	self.cl.item = item
+	self.cl.item = tonumber(widgetName:sub(6))
 
 	local uuid = self.cl.renderedPages[self.cl.curPage][self.cl.item].uuid
 
@@ -136,22 +153,19 @@ function Shop:cl_changeItem(widgetName)
 end
 
 function Shop:cl_buy()
-	local money = MoneyManager.cl_getMoney()
+	local money = MoneyManager.getMoney()
 	local item = self.cl.renderedPages[self.cl.curPage][self.cl.item]
 	if money < item.price * self.cl.quantity then
 		self.cl.gui:setVisible("OutOfMoney", true)
-
 		self.cl.clearWarning = sm.game.getCurrentTick() + 40 * 2.5
 
 		sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
-
 		return
 	end
 
-
 	sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playEffect", { effect = "Nice Sound", pos = sm.vec3.zero() })
 
-	self.cl.clearWarning = sm.game.getCurrentTick()
+	self.cl.clearWarning = nil
 	self.network:sendToServer("sv_buy", { quantity = self.cl.quantity, item = item })
 end
 
@@ -160,10 +174,8 @@ function Shop:cl_changeQuantity(widgetName)
 	self.cl.gui:setText("Buy_x" .. self.cl.quantity, "#ffffffx" .. self.cl.quantity)
 	self.cl.gui:setButtonState("Buy_x" .. self.cl.quantity, false)
 
-	local quantity = tonumber(widgetName:sub(6))
-
 	---@diagnostic disable-next-line: assign-type-mismatch
-	self.cl.quantity = quantity
+	self.cl.quantity = tonumber(widgetName:sub(6))
 
 	self.cl.gui:setText(widgetName, "#000000x" .. self.cl.quantity)
 	self.cl.gui:setButtonState(widgetName, true)
@@ -185,23 +197,23 @@ end
 
 ---Setups the gui callbacks
 function Shop:cl_setupGui()
-	local changeCategoryFunc = "cl_changeCategory"
+	local function setupButtons(buttonList, func)
+		for _, name in ipairs(buttonList) do
+			g_cl_shop.cl.gui:setButtonCallback(name, func)
+		end
+	end
+
 	---Quantity
-	self.cl.gui:setButtonCallback("Buy_x1", "cl_changeQuantity")
-	self.cl.gui:setButtonCallback("Buy_x10", "cl_changeQuantity")
-	self.cl.gui:setButtonCallback("Buy_x100", "cl_changeQuantity")
-	self.cl.gui:setButtonCallback("Buy_x999", "cl_changeQuantity")
+	local quantityButtons = { "Buy_x1", "Buy_x10", "Buy_x100", "Buy_x999" }
+	setupButtons(quantityButtons, "cl_changeQuantity")
+
 	---Categories
-	self.cl.gui:setButtonCallback("AllTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("DroppersTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("UpgradesTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("FurnacesTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("GeneratorsTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("UtilitiesTab", changeCategoryFunc)
-	self.cl.gui:setButtonCallback("DecorTab", changeCategoryFunc)
+	local categoryButtons = { "AllTab", "DroppersTab", "UpgradesTab", "FurnacesTab", "GeneratorsTab", "UtilitiesTab",
+		"DecorTab" }
+	setupButtons(categoryButtons, "cl_changeCategory")
+
 	---Other
-	self.cl.gui:setButtonCallback("NextPage", "cl_changePage")
-	self.cl.gui:setButtonCallback("LastPage", "cl_changePage")
+	setupButtons({ "NextPage", "LastPage" }, "cl_changePage")
 	self.cl.gui:setButtonCallback("SortBtn", "cl_changeSort")
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setButtonCallback("BuyBtn", "cl_buy")
@@ -209,7 +221,6 @@ function Shop:cl_setupGui()
 	for i = 1, ITEMS_PER_PAGE do
 		self.cl.gui:setButtonCallback("Item_" .. i, "cl_changeItem")
 	end
-
 
 	self:gui_setupTiers()
 end
@@ -229,33 +240,33 @@ function Shop:gui_setupTiers()
 	self.cl.gui:createDropDown("DropDown", "cl_tierChange", tiers)
 end
 
----Setups the language for every element needed translation
----> **Warning**\
----> You have to use the g_cl_shop global to acces values
+---Setups the language for every element that needs translation
 function Shop:gui_setLang()
-	--Categories
+	local function setGuiTexts(widgets)
+		for _, widget in ipairs(widgets) do
+			self.cl.gui:setText(widget[1], language_tag(widget[#widget == 1 and 1 or 2]))
+		end
+	end
+
+	local widgets = {
+		{ "title",        "ShopTitle" },
+		{ "BuyBtn",       "Buy" },
+		{ "AllTab" },
+		{ "UpgradesTab" },
+		{ "FurnacesTab" },
+		{ "DroppersTab" },
+		{ "GeneratorsTab" },
+		{ "UtilitiesTab" },
+		{ "DecorTab" },
+		{ "Shop",         "ShopTitle" },
+		{ "SortText",     self.cl.sortHighest and "SortHighest" or "SortLowest" },
+		{ "OutOfMoney" },
+		{ "Description" }
+	}
+
+	setGuiTexts(widgets)
+
 	self.cl.gui:setVisible("OutOfMoney", false)
-	self.cl.gui:setText("title", language_tag("ShopTitle"))
-	self.cl.gui:setText("BuyBtn", language_tag("Buy"))
-	self.cl.gui:setText("OutOfMoney", language_tag("OutOfMoney"))
-	self.cl.gui:setText("AllTab", language_tag("AllTab"))
-	self.cl.gui:setText("UpgradesTab", language_tag("UpgradesTab"))
-	self.cl.gui:setText("FurnacesTab", language_tag("FurnacesTab"))
-	self.cl.gui:setText("DroppersTab", language_tag("DroppersTab"))
-	self.cl.gui:setText("GeneratorsTab", language_tag("GeneratorsTab"))
-	self.cl.gui:setText("UtilitiesTab", language_tag("UtilitiesTab"))
-	self.cl.gui:setText("DecorTab", language_tag("DecorTab"))
-	self.cl.gui:setText("DecorTab", language_tag("DecorTab"))
-	--Buttons
-	self.cl.gui:setText("Prestige", language_tag("Prestige"))
-	self.cl.gui:setText("Research", language_tag("Research"))
-	self.cl.gui:setText("BuyBtn", language_tag("Buy"))
-	--Other
-	self.cl.gui:setText("Shop", language_tag("ShopTitle"))
-	self.cl.gui:setText("SortText",
-		self.cl.sortHighest and language_tag("SortHighest") or language_tag("SortLowest"))
-	self.cl.gui:setText("OutOfMoney", language_tag("OutOfMoney"))
-	self.cl.gui:setText("Description", language_tag("Description"))
 end
 
 ---Render all pages based on tiers, sort and category
@@ -288,14 +299,14 @@ function Shop:gui_render()
 		table.insert(self.cl.renderedPages[page], item)
 
 		i = i + 1
-		if i % (ITEMS_PER_PAGE + 1) == 0 then
+		if i % (ITEMS_PER_PAGE + 1) == 0 then --new page
 			page = page + 1
 			table.insert(self.cl.renderedPages, {})
 		end
 	end
 end
 
-function Shop:gui_display()
+function Shop:gui_displayPage()
 	self:cl_changeItem("Item_1")
 	self:cl_changeQuantity("Buy_x1")
 
@@ -320,40 +331,6 @@ function Shop:gui_display()
 	self.cl.gui:setText("PageNum", self.cl.curPage .. " / " .. #self.cl.renderedPages)
 end
 
----Create a list of items sorted by price
-function Shop:cl_setupSortedItems()
-	for uuid, item in pairs(g_shop) do
-		if not item.special then
-			table.insert(self.cl.sortedItems,
-				{ category = item.category, price = tonumber(item.price), tier = item.tier, uuid = sm.uuid.new(uuid) })
-		end
-	end
-
-	table.sort(self.cl.sortedItems, function(a, b)
-		return a.price > b.price
-	end)
-end
-
--- #endregion
-
-
-
---------------------
--- #region Server
---------------------
-
----@param params { quantity: number, item: Item}
----@param player Player
-function Shop:sv_buy(params, player)
-	if not MoneyManager.sv_spendMoney(params.item.price * params.quantity) then return end
-
-	sm.event.sendToGame("sv_giveItem", { player = player, item = params.item.uuid, quantity = params.quantity })
-
-	if params.item.uuid ~= obj_upgrader_basic then return end
-
-	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
-end
-
 -- #endregion
 
 --------------------
@@ -371,7 +348,7 @@ end
 ---@field tierText string Used for the dropdown cuz lang doesnt change ***DONT MODIFY***
 ---@field filterByText string Used for dropdown cuz lang doesnt change ***DONT MODIFY***
 ---@field item number The item selected
----@field clearWarning number? The tick on wich the OutOfMoney text should be hidden
+---@field clearWarning number? The tick on which the OutOfMoney text should be hidden
 ---@field quantity number The amount of items you buy at once
 
 ---@class ShopDb

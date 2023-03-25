@@ -36,7 +36,7 @@ end
 -- #region NetworkData
 --------------------
 
----packs data for network usage by converting all numbers to string
+---packs data for network usage by converting all numbers in the table to string if possible
 ---@param data table network data to pack
 ---@return table data packed network data
 function packNetworkData(data)
@@ -57,7 +57,7 @@ function packNetworkData(data)
     return data and packData(data) or nil
 end
 
----unpacks data from network usage by converting all strings to numbers
+---unpacks data from network usage by converting all strings in the table to numbers if possible
 ---@param data table network data to unpack
 ---@return table data unpacked network data
 function unpackNetworkData(data)
@@ -196,6 +196,41 @@ function table.copy(t)
         end
     end
     return t2;
+end
+
+---check wheter a table `t` contains element `e`
+---@param t table the table to search
+---@param e any the element to search for
+---@return boolean
+function table.contains(t, e)
+    for _, e2 in pairs(t) do
+        if e == e2 then
+            return true
+        end
+    end
+
+    return false
+end
+
+---returns the angle between two vectors in radians
+---@param v1 Vec3
+---@param v2 Vec3
+function angle(v1, v2)
+    local dot = v1:dot(v2)
+    local cos = dot / (v1:length() * v2:length())
+    acos = math.acos(cos)
+    return acos > 1e-3 and acos or 0
+end
+
+---***CUSTOM*** Returns a value that doesn't exceed the max or is lower than the min
+---@param min number minimum value
+---@param v number value to minMax
+---@param max number maximum value
+---@return number result the minMaxed value
+function math.minMax(min, v, max)
+    v = math.max(v, max)
+    v = math.min(v, min)
+    return v
 end
 
 -- #endregion

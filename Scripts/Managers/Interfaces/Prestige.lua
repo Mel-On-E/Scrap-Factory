@@ -5,7 +5,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Perks.lua")
 Prestige = class(Perks)
 
 function Prestige:sv_prestige()
-	PrestigeManager.sv_prestige()
+	PrestigeManager.sv_startPrestige()
 end
 
 function Prestige:client_onCreate()
@@ -13,9 +13,7 @@ function Prestige:client_onCreate()
 		g_cl_prestige = self
 	end
 
-	local params = {}
-	params.layout = "$CONTENT_DATA/Gui/Layouts/Prestige.layout"
-	Interface.client_onCreate(self, params)
+	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Prestige.layout")
 
 	self.cl.gui:setButtonCallback("Reset", "cl_prestige")
 	self.cl.gui:setButtonCallback("Perks", "cl_perks")
@@ -37,7 +35,8 @@ function Prestige:update_gui()
 	self.cl.gui:setText("PrestigeGain",
 		format_number({ format = "prestige", value = prestigeGain, prefix = "+ " }) .. "\n" ..
 		"#ffffff(" ..
-		format_number({ format = "prestige", value = newPrestige, color = "#ffffff", unit = " #dd6e00◊#ffffff" }) .. ")")
+		format_number({ format = "prestige", value = newPrestige, color = "#ffffff", unit = " #dd6e00◊#ffffff" }) ..
+		")")
 end
 
 function Prestige.cl_e_open_gui()

@@ -55,8 +55,8 @@ obj_generator_campfire = sm.uuid.new("efc1f452-8431-44c5-8c21-a06d53aed16c")
 --./Objects/Database/ShapeSets/storage.shapeset
 ----------------------------------------
 
-obj_storage_battery = sm.uuid.new("91037f2c-5230-464b-8873-ad13355539af")
-obj_storage_battery2 = sm.uuid.new("43064030-ab19-4d1b-b060-3c7376b11725")
+obj_storage_battery_01 = sm.uuid.new("91037f2c-5230-464b-8873-ad13355539af")
+obj_storage_battery_02 = sm.uuid.new("43064030-ab19-4d1b-b060-3c7376b11725")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/crates.shapeset
@@ -65,12 +65,6 @@ obj_storage_battery2 = sm.uuid.new("43064030-ab19-4d1b-b060-3c7376b11725")
 obj_lootcrate = sm.uuid.new("69b869f1-03dc-4ea3-9291-fd6490f945dd")
 obj_lootcrate_rare = sm.uuid.new("cf48ca1b-3d7a-4b56-83e9-092e681525be")
 obj_lootcrate_prestige = sm.uuid.new("423592bc-8505-4c3b-965c-23ee394054d0")
-
-----------------------------------------
---./Objects/Database/ShapeSets/decor.shapeset
-----------------------------------------
-
-obj_decor_babyduck = sm.uuid.new("80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/interactive.shapeset
@@ -86,7 +80,7 @@ obj_chest = sm.uuid.new("4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe")
 
 obj_furnace_effect = sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770")
 obj_drop_radioactive_effect = sm.uuid.new("d7807dca-e429-4822-9a66-2efabb09118b")
-obj_skirt_effect = sm.uuid.new("819ebf4c-4b7b-4f20-ab53-724e0952b95a")
+obj_skirt_effect = sm.uuid.new("9a95da31-cfdd-4e51-97c5-4c9f6b6b2116")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/vanilla/blocks.shapeset
@@ -118,7 +112,6 @@ obj_interactive_sensor_creative = sm.uuid.new("add3acc6-a6fd-44e8-a384-a7a16ce13
 obj_interactive_logicgate = sm.uuid.new("9f0f56e8-2c31-4d83-996c-d00a9b296c3f")
 obj_interactive_timer = sm.uuid.new("8f7fd0e7-c46e-4944-a414-7ce2437bb30f")
 jnt_interactive_piston_creative = sm.uuid.new("260b4597-f1ac-409c-8e6b-90c998c5fe94")
-jnt_interactive_piston_creative = sm.uuid.new("260b4597-f1ac-409c-8e6b-90c998c5fe94")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/vanilla/others.shapeset
@@ -127,6 +120,7 @@ jnt_interactive_piston_creative = sm.uuid.new("260b4597-f1ac-409c-8e6b-90c998c5f
 obj_vehicle_smallwheel = sm.uuid.new("69e362c3-32aa-4cd1-adc0-dcfc47b92c0d")
 obj_vehicle_bigwheel = sm.uuid.new("db66f0b1-0c50-4b74-bdc7-771374204b1f")
 obj_industrial_stairwedge = sm.uuid.new("e02620a5-371b-4d63-be35-fd8a0552eba9")
+obj_decor_babyduck = sm.uuid.new("80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/building.shapeset

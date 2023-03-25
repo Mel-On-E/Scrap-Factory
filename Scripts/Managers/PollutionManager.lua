@@ -1,25 +1,25 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
+---Pollution slows down research and triggers stronger raids. It can be produced by polluted drops. It is permanent and can only be reset via a prestige.
 ---@class PollutionManager : ScriptableObjectClass
----@field saved PollutionSaved
----@field cl PollutionCl
+---@field sv PollutionManagerSv
+---@field cl PollutionManagerCl
 ---@diagnostic disable-next-line: assign-type-mismatch
 PollutionManager = class()
 PollutionManager.isSaveObject = true
 
-function PollutionManager:server_onCreate()
-    self.sv = {}
-    self.sv.saved = self.storage:load()
+--------------------
+-- #region Server
+--------------------
 
+function PollutionManager:server_onCreate()
+    g_pollutionManager = g_pollutionManager or self
+
+    self.sv = {}
+
+    self.sv.saved = self.storage:load()
     if self.sv.saved == nil then
-        self.sv.saved = {}
-        self.sv.saved.pollution = 0
+        self.sv.saved = { pollution = 0 }
     else
         self.sv.saved = unpackNetworkData(self.sv.saved)
-    end
-
-    if not g_pollutionManager then
-        g_pollutionManager = self
     end
 end
 
@@ -43,14 +43,18 @@ function PollutionManager.sv_getPollution()
     return g_pollutionManager.sv.saved.pollution
 end
 
-function PollutionManager:client_onCreate()
-    self.cl = {}
-    self.cl.data = {}
-    self.cl.data.pollution = 0
+-- #endregion
 
-    if not g_pollutionManager then
-        g_pollutionManager = self
-    end
+--------------------
+-- #region Client
+--------------------
+
+function PollutionManager:client_onCreate()
+    g_pollutionManager = g_pollutionManager or self
+
+    self.cl = {
+        data = { pollution = 0 }
+    }
 end
 
 function PollutionManager:client_onClientDataUpdate(clientData, channel)
@@ -69,28 +73,43 @@ end
 
 function PollutionManager:updateHud()
     if g_factoryHud then
-        local pollution = self.cl_getPollution()
+        local pollution = self.getPollution()
         if pollution then
             g_factoryHud:setText("Pollution", format_number({ format = "pollution", value = pollution }))
         end
     end
 end
 
-function PollutionManager.cl_getPollution()
-    return g_pollutionManager.sv and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.data.pollution
-end
+-- #endregion
 
+---Returns the multiplier by which research goals are increased due to pollution
+---@return number multiplier the multiplier by which research goals are increased
 function PollutionManager.getResearchMultiplier()
-    if g_pollutionManager.cl_getPollution() > 0 then
-        return math.max(2 ^ math.log(g_pollutionManager.cl_getPollution(), 10) *
+    if g_pollutionManager.getPollution() > 0 then
+        return math.max(2 ^ math.log(g_pollutionManager.getPollution(), 10) *
             PerkManager.sv_getMultiplier("pollution"), 1)
     end
     return 1
 end
 
---Types
----@class PollutionCl
----@field pollution number
+function PollutionManager.getPollution()
+    return g_pollutionManager.sv and g_pollutionManager.sv.saved.pollution or g_pollutionManager.cl.data.pollution
+end
 
----@class PollutionSaved
----@field pollution number
+--------------------
+-- #region Types
+--------------------
+
+---@class PollutionManagerSv
+---@field saved PollutionManagerSvSaved
+
+---@class PollutionManagerSvSaved
+---@field pollution number pollution created in the world
+
+---@class PollutionManagerCl
+---@field data PollutionManagerClData
+
+---@class PollutionManagerClData
+---@field pollution number pollution created in the world
+
+-- #endregion

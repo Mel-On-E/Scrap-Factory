@@ -81,12 +81,18 @@ function Furnace:sv_onEnterDrop(shape)
             --make research points
             value = value * PerkManager.sv_getMultiplier("research")
             value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-            sm.event.sendToGame("sv_e_stonks",
-                { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd" })
+            sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+                {
+                    pos = shape:getWorldPosition(),
+                    value = tostring(value),
+                    format = "research",
+                    color = "#00dddd",
+                    effect = "Furnace - Sell"
+                })
         else
             --make money
-            sm.event.sendToGame("sv_e_stonks",
-                { pos = shape:getWorldPosition(), value = tostring(value), format = "money" })
+            sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+                { pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
             MoneyManager.sv_addMoney(value)
 
             if next(publicData.upgrades) then
@@ -219,7 +225,7 @@ end
 function Furnace:client_onInteract(character, state)
     if state then
         --check if feature unlocked
-        if TutorialManager.cl_getTutorialStep() > 7 then
+        if TutorialManager.cl_isTutorialEventCompleteOrActive("ResearchFurnaceSet") then
             self.network:sendToServer("sv_setResearch")
         else
             sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))

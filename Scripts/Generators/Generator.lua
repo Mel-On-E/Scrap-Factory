@@ -16,16 +16,16 @@ function Generator:server_onCreate()
         self.data.power = tonumber(self.data.power)
     end
 
-    if self.data.powerLimit then
+    if self.data.powerStorage then
         ---@diagnostic disable-next-line: assign-type-mismatch
-        self.data.powerLimit = tonumber(self.data.powerLimit)
-        PowerManager.sv_changePowerLimit(self.data.powerLimit)
+        self.data.powerStorage = tonumber(self.data.powerStorage)
+        PowerManager.sv_changePowerStorage(self.data.powerStorage)
     end
 end
 
 function Generator:server_onDestroy()
-    if self.data.powerLimit then
-        PowerManager.sv_changePowerLimit(-self.data.powerLimit)
+    if self.data.powerStorage then
+        PowerManager.sv_changePowerStorage(-self.data.powerStorage)
     end
 end
 
@@ -78,7 +78,7 @@ end
 
 ---@class GeneratorData
 ---@field power number how much power is produced by default
----@field powerLimit number the power storage capacity of the Generator
+---@field powerStorage number the power storage capacity of the Generator
 
 ---@class GeneratorCl
 ---@field power number current power output set by clientData

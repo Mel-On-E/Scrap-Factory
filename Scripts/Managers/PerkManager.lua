@@ -1,25 +1,25 @@
+---Perks can be bought with prestige points. They are permanent upgrades to help players get even more prestige points!
 ---@class PerkManager : ScriptableObjectClass
----@field cl PerkCl
----@field sv PerkSv
+---@field cl PerkManagerCl
+---@field sv PerkManagerSv
 PerkManager = class()
 PerkManager.isSaveObject = true
 
+--------------------
+-- #region Server
+--------------------
+
 function PerkManager:server_onCreate()
-    self.sv = {}
-    self.sv.saved = self.storage:load()
-    self.sv.multipliers = {
-        research = 1,
-        pollution = 1
+    g_perkManager = g_perkManager or self
+
+    self.sv = {
+        saved = self.storage:load(),
+        multipliers = {
+            research = 1,
+            pollution = 1
+        }
     }
-
-    if self.sv.saved == nil then
-        self.sv.saved = {}
-        self.sv.saved.perks = {}
-    end
-
-    if not g_perkManager then
-        g_perkManager = self
-    end
+    self.sv.saved = self.sv.saved or { perks = {} }
 
     local perks = sm.json.open("$CONTENT_DATA/Scripts/perks.json")
     for name, _ in pairs(self.sv.saved.perks) do
@@ -29,7 +29,7 @@ function PerkManager:server_onCreate()
     end
 
     self:sv_saveDataAndSync()
-    self.init = true
+    self.sv.init = true
 end
 
 function PerkManager:sv_saveDataAndSync()
@@ -37,8 +37,8 @@ function PerkManager:sv_saveDataAndSync()
     self.network:setClientData({ perks = self.sv.saved.perks })
 end
 
+---activates a perk and saves it
 function PerkManager.sv_addPerk(perk)
-    print(perk)
     g_perkManager.sv.saved.perks[perk.name] = true
 
     for effect, params in pairs(perk.effects) do
@@ -49,43 +49,62 @@ function PerkManager.sv_addPerk(perk)
         end
     end
 
-    if g_perkManager.init then
+    if g_perkManager.sv.init then
         sm.event.sendToScriptableObject(g_perkManager.scriptableObject, "sv_saveDataAndSync")
     end
 end
 
-function PerkManager.sv_getMultiplier(multiplier)
-    return g_perkManager.sv.multipliers[multiplier] or 1
+---returns a prestige multiplier
+---@param name string name of the multiplier
+---@return number multiplier prestige multiplier
+function PerkManager.sv_getMultiplier(name)
+    return g_perkManager.sv.multipliers[name] or 1
 end
 
-function PerkManager:client_onCreate()
-    self.cl = {}
-    self.cl.data = {}
-    self.cl.data.perks = {}
+-- #endregion
 
-    if not g_perkManager then
-        g_perkManager = self
-    end
+--------------------
+-- #region Client
+--------------------
+
+function PerkManager:client_onCreate()
+    g_perkManager = g_perkManager or self
+
+    self.cl = {
+        data = {
+            perks = {}
+        }
+    }
 end
 
 function PerkManager:client_onClientDataUpdate(clientData, channel)
     self.cl.data = clientData
 end
 
+-- #endregion
+
+---Check if a perk is already owned
+---@param perk string
+---@return boolean owned whether the perk is already owned
 function PerkManager.isPerkOwned(perk)
     return (g_perkManager.sv and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.data.perks[perk]
 end
 
---Types
----@class PerkSv
----@field saved PerkSvSaved
+--------------------
+-- #region Types
+--------------------
 
----@class PerkSvSaved
----@field perks table
+---@class PerkManagerSv
+---@field saved PerkManagerSvSaved
+---@field multipliers PerkManagerSvMultipliers
+---@field init boolean whether the manager has been initialized
 
----@class PerkSvMultipliers
+---@class PerkManagerSvSaved
+---@field perks table<string, boolean> table of owned perks
+
+---@class PerkManagerSvMultipliers prestige multipliers
 ---@field research number
 ---@field pollution number
 
----@class PerkCl
----@field perks table
+---@class PerkManagerCl
+---@field perks table<string, boolean> table of owned perks

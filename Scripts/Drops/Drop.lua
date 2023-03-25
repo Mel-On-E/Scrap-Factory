@@ -65,6 +65,12 @@ function Drop:server_onCollision(other, position, selfPointVelocity, otherPointV
 	end
 end
 
+---add an effect to a drop
+---@param params effectParam
+function Drop:sv_e_addEffect(params)
+	Effects.sv_createEffect(self, params)
+end
+
 function Drop:server_onDestroy()
 	self:sv_changeOreCount(-1)
 
@@ -77,7 +83,7 @@ function Drop:server_onDestroy()
 
 		PollutionManager.sv_addPollution(self:getPollution())
 
-		sm.event.sendToGame("sv_e_stonks", {
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 			pos = self.sv.cachedPos,
 			value = tostring(self:getPollution()),
 			format = "pollution",
@@ -110,12 +116,6 @@ function Drop:sv_setClientData()
 	end
 end
 
----add an effect to a drop
----@param params effectParam
-function Drop:sv_e_addEffect(params)
-	self.network:sendToClients("cl_createEffect", params)
-end
-
 -- #endregion
 
 --------------------
@@ -127,35 +127,32 @@ function Drop:client_onCreate()
 
 	--create default effect
 	if self.data and self.data.effect then
-		self:cl_createEffect({ key = "default", effect = self.data.effect })
+		Effects.cl_createEffect(self,
+			{ key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
 	end
 end
 
 function Drop:cl_init()
-	self.cl = {}
+	self.cl = {
+		data = {
+			value = 0
+		}
+	}
 
-	self.cl.data = {}
-	self.cl.data.value = 0
-
-	self.cl.effects = {}
+	Effects.cl_init(self)
 end
 
 function Drop:client_onClientDataUpdate(data)
 	self.cl.data = unpackNetworkData(data)
 
 	--create default effect for pulluted ores
-	if data.pollution and not self.cl.effects["pollution"] then
-		self:cl_createEffect({ key = "pollution", effect = "Drops - Pollution" })
+	if data.pollution and not Effects.cl_getEffect(self, "pollution") then
+		Effects.cl_createEffect(self, { key = "pollution", effect = "Drops - Pollution", host = self.interactable })
 	end
 end
 
 function Drop:client_onDestroy()
-	--destroy all effects
-	for _, effect in pairs(self.cl.effects) do
-		if sm.exists(effect) then
-			effect:destroy()
-		end
-	end
+	Effects.cl_destroyAllEffects(self)
 end
 
 function Drop:client_canInteract()
@@ -180,21 +177,8 @@ function Drop:client_canInteract()
 	return true
 end
 
----@param params effectParam
 function Drop:cl_createEffect(params)
-	local effect = sm.effect.createEffect(params.effect, self.interactable)
-
-	if params.effect == "ShapeRenderable" then
-		effect:setParameter("uuid", params.uuid)
-		effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
-	end
-
-	effect:setScale(params.scale or sm.vec3.one())
-	effect:setOffsetPosition(params.offset or sm.vec3.zero())
-	effect:setAutoPlay(true)
-	effect:start()
-
-	self.cl.effects[params.key] = effect
+	Effects.cl_createEffect(self, params)
 end
 
 -- #endregion
@@ -244,18 +228,14 @@ end
 ---@field pollution number
 ---@field value number
 ---@field timeout number number of ticks for how long the drop has not moved
+---@field data DropData
 
----@class effectParam
----@field key string key for the effect table
----@field effect string name of the effect
----@field uuid Uuid for ShapeRenderable
----@field color Color for ShapeRenderable
----@field scale Vec3 for ShapeRenderable
----@field offset Vec3 offsetPosition (defaults to sm.vec3.zero())
+---@class DropData
+---@field effect string the name of the default drop effect
+---@field autoPlay boolean whether the effect should auto play
 
 ---@class DropCl
 ---@field data clientData
----@field effects table<string, Effect> all effects that are applied to a drop
 
 ---@class clientData
 ---@field pollution number
