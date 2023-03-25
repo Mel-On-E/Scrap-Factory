@@ -53,7 +53,7 @@ function FactoryLift:sv_importCreation(args, caller)
     end
     sm.container.endTransaction()
 
-    MoneyManager.sv_spendMoney(args.money)
+    MoneyManager.sv_trySpendMoney(args.money)
 
     local bodies = sm.creation.importFromFile(
         caller.character:getWorld(),
@@ -328,7 +328,7 @@ function FactoryLift:getImportStats(items)
         end
     end
 
-    return (neededMoney == 0 or MoneyManager.cl_getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney, ownedItems
+    return (neededMoney == 0 or MoneyManager.getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney, ownedItems
 end
 
 function FactoryLift:getCreationPath( name )

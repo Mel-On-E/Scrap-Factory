@@ -159,7 +159,7 @@ end
 ---Returns how much prestige can be gained after doing a prestige rn based on current money.
 ---@return number prestige prestige points to be gained
 function PrestigeManager.getPrestigeGain()
-    local money = MoneyManager.cl_getMoney()
+    local money = MoneyManager.getMoney()
     local minMoney = 1e9
     money = money - minMoney
 

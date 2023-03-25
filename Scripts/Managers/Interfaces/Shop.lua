@@ -136,7 +136,7 @@ function Shop:cl_changeItem(widgetName)
 end
 
 function Shop:cl_buy()
-	local money = MoneyManager.cl_getMoney()
+	local money = MoneyManager.getMoney()
 	local item = self.cl.renderedPages[self.cl.curPage][self.cl.item]
 	if money < item.price * self.cl.quantity then
 		self.cl.gui:setVisible("OutOfMoney", true)
@@ -345,7 +345,7 @@ end
 ---@param params { quantity: number, item: Item}
 ---@param player Player
 function Shop:sv_buy(params, player)
-	if not MoneyManager.sv_spendMoney(params.item.price * params.quantity) then return end
+	if not MoneyManager.sv_trySpendMoney(params.item.price * params.quantity) then return end
 
 	sm.event.sendToGame("sv_giveItem", { player = player, item = params.item.uuid, quantity = params.quantity })
 
