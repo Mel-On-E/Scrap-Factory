@@ -21,9 +21,9 @@ end
 -- #endregion
 
 local animSpeeds = {
-    Propeller = 10,
-    Idle_R = 10,
-    Idle_L = 10
+    Propeller = 20,
+    Idle_R = 20,
+    Idle_L = 20
 }
 function Windmill:client_onCreate()
     self.interactable:setAnimEnabled("Idle_R", false)
