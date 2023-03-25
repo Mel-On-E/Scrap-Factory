@@ -9,9 +9,7 @@ function Prestige:sv_prestige()
 end
 
 function Prestige:client_onCreate()
-	if not g_cl_prestige then
-		g_cl_prestige = self
-	end
+	g_cl_prestige = g_cl_prestige or self
 
 	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Prestige.layout")
 

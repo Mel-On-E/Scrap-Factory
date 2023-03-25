@@ -5,6 +5,8 @@
 PerkManager = class()
 PerkManager.isSaveObject = true
 
+local perksJson = unpackNetworkData(sm.json.open("$CONTENT_DATA/Scripts/perks.json"))
+
 --------------------
 -- #region Server
 --------------------
@@ -88,6 +90,18 @@ end
 ---@return boolean owned whether the perk is already owned
 function PerkManager.isPerkOwned(perk)
     return (g_perkManager.sv and g_perkManager.sv.saved.perks[perk]) or g_perkManager.cl.data.perks[perk]
+end
+
+---Check if a perk is unlocked
+---@param perk string
+---@return boolean unlocked whether the perk is unlocked
+function PerkManager.isPerkUnlocked(perk)
+    for _, requirement in ipairs(perksJson[perk].requires) do
+        if not PerkManager.isPerkOwned(requirement) then
+            return false
+        end
+    end
+    return true
 end
 
 --------------------
