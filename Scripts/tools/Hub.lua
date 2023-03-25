@@ -15,6 +15,7 @@ sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
 
+---The HubTool replaces the logbook. When opened it can show various interfaces such as the shop, research, prestige or perk menu.
 ---@class Hub : ToolClass
 ---@field cl HubCl
 ---@field tpAnimations any?

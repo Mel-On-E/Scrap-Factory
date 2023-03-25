@@ -3,6 +3,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 ---@type integer number of items each page of the gui can show at max
 local ITEMS_PER_PAGE = 32
 
+---The Shop can be used to buy new items for money. Doing research will unlock more items.
 ---@class Shop : Interface
 ---@field cl ShopCl
 ---@diagnostic disable-next-line: param-type-mismatch
