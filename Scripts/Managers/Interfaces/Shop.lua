@@ -19,9 +19,7 @@ function Shop:client_onCreate()
 		g_cl_shop = self
 	end
 
-	local params = {}
-	params.layout = "$CONTENT_DATA/Gui/Layouts/shop.layout"
-	Interface.client_onCreate(self, params)
+	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/shop.layout")
 
 	self:cl_setup()
 	self:cl_setupGui()

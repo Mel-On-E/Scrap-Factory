@@ -13,9 +13,7 @@ function Prestige:client_onCreate()
 		g_cl_prestige = self
 	end
 
-	local params = {}
-	params.layout = "$CONTENT_DATA/Gui/Layouts/Prestige.layout"
-	Interface.client_onCreate(self, params)
+	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Prestige.layout")
 
 	self.cl.gui:setButtonCallback("Reset", "cl_prestige")
 	self.cl.gui:setButtonCallback("Perks", "cl_perks")

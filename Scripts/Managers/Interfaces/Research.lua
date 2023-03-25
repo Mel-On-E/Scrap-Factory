@@ -8,9 +8,7 @@ function Research:client_onCreate()
 		g_cl_research = self
 	end
 
-	local params = {}
-	params.layout = "$CONTENT_DATA/Gui/Layouts/Research.layout"
-	Interface.client_onCreate(self, params)
+	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Research.layout")
 
 	self.cl.tier = 1
 	self.cl.unlockIndex = 0
