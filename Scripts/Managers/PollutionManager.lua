@@ -1,3 +1,4 @@
+---Pollution slows down research and triggers stronger raids. It can be produced by polluted drops. It is permanent and can only be reset via a prestige.
 ---@class PollutionManager : ScriptableObjectClass
 ---@field sv PollutionManagerSv
 ---@field cl PollutionManagerCl
