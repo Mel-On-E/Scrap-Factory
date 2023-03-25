@@ -19,3 +19,42 @@ function Windmill:sv_getPower()
 end
 
 -- #endregion
+
+local animSpeeds = {
+    Propeller = 10,
+    Idle_R = 10,
+    Idle_L = 10
+}
+function Windmill:client_onCreate()
+    self.interactable:setAnimEnabled("Idle_R", false)
+    --self.interactable:setAnimEnabled("Idle_L", false)
+    self:cl_setAnim("Propeller")
+end
+
+function Windmill:cl_setAnim(anim)
+    if self.activeAnim then
+        self.interactable:setAnimEnabled(self.activeAnim, false)
+    end
+
+    self.activeAnim = anim
+    self.interactable:setAnimEnabled(anim, true)
+    self.animDuration = self.interactable:getAnimDuration(anim)
+    self.animProgress = 0
+end
+
+function Windmill:client_onUpdate(dt)
+    self.animProgress = self.animProgress + dt * animSpeeds[self.activeAnim]
+    local progress = self.animProgress/self.animDuration
+    self.interactable:setAnimProgress(self.activeAnim, progress)
+
+    if progress >= 1 then
+        local anim
+        if math.random() < 0.75 then
+            anim = "Propeller"
+        else
+            anim = "Idle_R" --"Idle"..(math.random() < 0.5 and "R" or "L")
+        end
+
+        self:cl_setAnim(anim)
+    end
+end
