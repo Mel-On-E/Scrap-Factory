@@ -28,7 +28,7 @@ function Storage:client_canInteract()
         format_number({ format = "power", value = PowerManager.cl_getPowerStored(), color = "#4f4f4f", unit = "J" }) ..
         " / "
         ..
-        format_number({ format = "power", value = PowerManager.cl_getPowerLimit(), color = "#4f4f4f", unit = "J" }) ..
+        format_number({ format = "power", value = PowerManager.cl_getPowerStorage(), color = "#4f4f4f", unit = "J" }) ..
         o2)
     return true
 end
