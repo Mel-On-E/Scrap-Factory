@@ -213,5 +213,119 @@
 				"delay": 0.0
 			}
 		]
+	},
+	"Upgrade Drop": {
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_logfile_pickup",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.35
+				},
+				"direction": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 1.0
+				},
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/vehicle/triggers/trigger_sensor_on",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			}
+		]
+	},
+	"Jetpack Thruster": {
+		"parameterList": {
+			"velocity": 0.0,
+			"power": 0.0,
+			"color": "007fff",
+			"radius": 1.5,
+			"intensity": 0.01
+		},
+		"effectList": [
+			{
+				"type": "audio",
+				"name": "event:/vehicle/thrusters/thruster05",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.5
+				},
+				"parameters": [
+					"velocity",
+					"power"
+				],
+				"delay": 0.0
+			},
+			{
+				"type": "pointLight",
+				"name": "",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.375
+				},
+				"parameters": [
+					"color",
+					"radius",
+					"intensity"
+				],
+				"delay": 0.0
+			},
+			{
+				"type": "particle",
+				"name": "5_thruster_afterburner_BurstThrust_lvl5",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.125
+				},
+				"direction": {
+					"x": 0.0,
+					"y": -1.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			},
+			{
+				"type": "particle",
+				"name": "5_thruster_afterburner_startup_lvl5",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"direction": {
+					"x": 0.0,
+					"y": -1.0,
+					"z": 0.0
+				},
+				"delay": 0.25
+			},
+			{
+				"type": "particle",
+				"name": "5_thruster_afterburner_lvl5",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"direction": {
+					"x": 0.0,
+					"y": -1.0,
+					"z": 0.0
+				},
+				"delay": 0.425
+			}
+		]
 	}
 }

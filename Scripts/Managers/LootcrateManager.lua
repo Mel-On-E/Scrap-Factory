@@ -1,21 +1,24 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
+---The LootCrateManager spawns lootcrates. Randomly or manually.
 ---@class LootCrateManager : ScriptableObjectClass
 LootCrateManager = class()
 
 local dropInterval = 40 * 30 --ticks
 local lootTable = {
     { chance = 95, uuid = obj_lootcrate },
-    { chance = 5, uuid = obj_lootcrate_rare }
+    { chance = 5,  uuid = obj_lootcrate_rare }
 }
 
 function LootCrateManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % dropInterval == 0 and g_world then
         local pos = sm.vec3.new(math.random(-(15 * 64), 15 * 64), math.random(-(15 * 64), 15 * 64), 100)
-        self.sv_spawnCrate({ pos = pos, uuid = self:sv_pickCrate() })
+        self.sv_spawnCrate({ pos = pos, uuid = self:sv_pickRandomCrate() })
     end
 end
 
+---@class SpawnCrateParams : ShapeCreationParams
+---@field effect string|nil name of effect to be played on spawn
+---Spawn a lootCrate
+---@param params SpawnCrateParams
 function LootCrateManager.sv_spawnCrate(params)
     sm.event.sendToWorld(g_world, "sv_e_createShape", params)
     if params.effect then
@@ -23,7 +26,9 @@ function LootCrateManager.sv_spawnCrate(params)
     end
 end
 
-function LootCrateManager:sv_pickCrate()
+---picks a random crate uuid from the lootTable
+---@return Uuid crateUuid uuid of the crate
+function LootCrateManager:sv_pickRandomCrate()
     local sum = 0
     for _, crate in pairs(lootTable) do
         sum = sum + crate.chance
@@ -35,5 +40,6 @@ function LootCrateManager:sv_pickCrate()
         if random <= 0 then
             return crate.uuid
         end
+        ---@diagnostic disable-next-line: missing-return
     end
 end

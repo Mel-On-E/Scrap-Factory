@@ -97,7 +97,8 @@
       "rotationSet": "Default",
       "showInInventory": false,
       "stackSize": 65535.0,
-      "uuid": "819ebf4c-4b7b-4f20-ab53-724e0952b95a"
+      "uuid": "9a95da31-cfdd-4e51-97c5-4c9f6b6b2116",
+      "color": "00ff00"
     }
   ]
 }

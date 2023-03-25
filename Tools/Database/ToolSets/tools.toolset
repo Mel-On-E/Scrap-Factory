@@ -40,6 +40,17 @@
 			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_sledgehammer_preview.rend",
 			"previewRotation": [-1, 0, 0, 0, 0, 1, 0, 1, 0],
 			"sledgehammer": {}
+		},
+		{
+			"name": "tool_jetpack",
+			"uuid": "17599d84-b159-45e8-a72f-82c6ead699f5",
+			"previewRenderable": "$GAME_DATA/Character/Char_Tools/char_spudgun_preview.rend",
+			"previewRotation": [1, 0, 0, 0, 0, -1, 0, 1, 0],
+			"script": {
+				"file": "$CONTENT_DATA/Scripts/tools/JetPack.lua",
+				"class": "Jetpack",
+				"data": {}
+			}
 		}
 	]
 }

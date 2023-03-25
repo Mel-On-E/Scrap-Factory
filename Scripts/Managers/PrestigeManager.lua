@@ -1,24 +1,27 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
+---Prestige is a currency gained by resetting the some of your progress. It can be used to unlock stuff to gain even more prestige.
 ---@class PrestigeManager : ScriptableObjectClass
+---@field sv PrestigeManagerSv
+---@field cl PrestigeManagerCl
 PrestigeManager = class()
 PrestigeManager.isSaveObject = true
 
+--------------------
+-- #region Server
+--------------------
+
 function PrestigeManager:server_onCreate()
+    g_prestigeManager = g_prestigeManager or self
+
     self.sv = {}
     self.sv.saved = self.storage:load()
-
     if self.sv.saved == nil then
-        self.sv.saved = {}
-        self.sv.saved.prestige = 0
-        self.sv.saved.lastPrestigeGain = 0
-        self.sv.saved.specialItems = {}
+        self.sv.saved = {
+            prestige = 0,
+            lastPrestigeGain = 0,
+            specialItems = {}
+        }
     else
         self.sv.saved = unpackNetworkData(self.sv.saved)
-    end
-
-    if not g_prestigeManager then
-        g_prestigeManager = self
     end
 end
 
@@ -29,19 +32,22 @@ function PrestigeManager:server_onFixedUpdate()
         self:sv_saveData()
     end
 
-    if self.doPrestige and self.doPrestige < tick then
-        self.doPrestige = nil
+    if self.sv.doPrestige and self.sv.doPrestige < tick then
+        self.sv.doPrestige = nil
         if g_prestigeManager.getPrestigeGain() > 0 then
-            self.spawnCrate = tick + 40 * 3
+            self.sv.doSpawnCrate = tick + 40 * 3
         end
         self:sv_doPrestige()
     end
 
-    if self.spawnCrate and self.spawnCrate < tick then
-        self.spawnCrate = nil
+    if self.sv.doSpawnCrate and self.sv.doSpawnCrate < tick then
+        self.sv.doSpawnCrate = nil
         local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(), math.random(), 10)
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = obj_lootcrate_prestige,
-            effect = "Woc - Destruct" })
+        LootCrateManager.sv_spawnCrate({
+            pos = pos,
+            uuid = obj_lootcrate_prestige,
+            effect = "Woc - Destruct"
+        })
     end
 end
 
@@ -63,7 +69,9 @@ function PrestigeManager.sv_setPrestige(prestige)
     g_prestigeManager.sv.saved.prestige = prestige
 end
 
-function PrestigeManager.sv_spendPrestige(prestige)
+---@param prestige number amount of prestige points to be used
+---@return boolean success whether the amount of prestige points could be spent
+function PrestigeManager.sv_trySpendPrestige(prestige)
     if g_prestigeManager.sv.saved.prestige - prestige > 0 then
         g_prestigeManager.sv.saved.prestige = g_prestigeManager.sv.saved.prestige - prestige
         sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
@@ -72,10 +80,11 @@ function PrestigeManager.sv_spendPrestige(prestige)
     return false
 end
 
+---add a special item so it won't be lost after a prestige
+---@param uuid Uuid Uuid of the item to be kept
 function PrestigeManager.sv_addSpecialItem(uuid)
-    local uuid = tostring(uuid)
-    local quantity = g_prestigeManager.sv.saved.specialItems[uuid] or 0
-    g_prestigeManager.sv.saved.specialItems[uuid] = math.min(quantity + 1, 65535)
+    local quantity = g_prestigeManager.sv.saved.specialItems[tostring(uuid)] or 0
+    g_prestigeManager.sv.saved.specialItems[tostring(uuid)] = math.min(quantity + 1, 65535)
     sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
 end
 
@@ -83,11 +92,11 @@ function PrestigeManager.sv_getSpecialItems()
     return (g_prestigeManager and g_prestigeManager.sv.saved.specialItems) or {}
 end
 
-function PrestigeManager.sv_prestige()
+function PrestigeManager.sv_startPrestige()
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_fadeToBlack", { duration = 1, timeout = 5 })
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", { effect = "Prestige" })
 
-    g_prestigeManager.doPrestige = sm.game.getCurrentTick() + 40
+    g_prestigeManager.sv.doPrestige = sm.game.getCurrentTick() + 40
 end
 
 function PrestigeManager:sv_doPrestige()
@@ -100,18 +109,24 @@ function PrestigeManager:sv_doPrestige()
 
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
-    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearch")
+    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearchProgress")
 end
 
-function PrestigeManager:client_onCreate()
-    self.cl = {}
-    self.cl.data = {}
-    self.cl.data.prestige = 0
-    self.cl.data.lastPrestigeGain = 0
+-- #endregion
 
-    if not g_prestigeManager then
-        g_prestigeManager = self
-    end
+--------------------
+-- #region Client
+--------------------
+
+function PrestigeManager:client_onCreate()
+    g_prestigeManager = g_prestigeManager or self
+
+    self.cl = {
+        data = {
+            prestige = 0,
+            lastPrestigeGain = 0
+        }
+    }
 end
 
 function PrestigeManager:client_onClientDataUpdate(clientData)
@@ -131,8 +146,20 @@ function PrestigeManager:updateHud()
     end
 end
 
+function PrestigeManager.cl_e_getLastPrestigeGain()
+    return g_prestigeManager.cl.data.lastPrestigeGain
+end
+
+function PrestigeManager.cl_getPrestige()
+    return g_prestigeManager.sv and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
+end
+
+-- #endregion
+
+---Returns how much prestige can be gained after doing a prestige rn based on current money.
+---@return number prestige prestige points to be gained
 function PrestigeManager.getPrestigeGain()
-    local money = MoneyManager.cl_getMoney()
+    local money = MoneyManager.getMoney()
     local minMoney = 1e9
     money = money - minMoney
 
@@ -142,10 +169,25 @@ function PrestigeManager.getPrestigeGain()
     return 0
 end
 
-function PrestigeManager.cl_e_getLastPrestigeGain()
-    return g_prestigeManager.cl.data.lastPrestigeGain
-end
+--------------------
+-- #region Types
+--------------------
 
-function PrestigeManager.cl_getPrestige()
-    return g_prestigeManager.sv and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
-end
+---@class PrestigeManagerSv
+---@field saved PrestigeManagerSvSaved
+---@field doPrestige integer|nil tick at which the next prestige should be done
+---@field doSpawnCrate integer|nil tick at which the next prestige crate should be spawned
+
+---@class PrestigeManagerSvSaved
+---@field prestige number available prestige points
+---@field lastPrestigeGain number prestige points gained via the last prestige
+---@field specialItems table<string, integer> table of items to be kept after a prestige <uuid, amount>
+
+---@class PrestigeManagerCl
+---@field data PrestigeManagerClData
+
+---@class PrestigeManagerClData
+---@field prestige number available prestige points
+---@field lastPrestigeGain number prestige points gained via the last prestige
+
+-- #endregion

@@ -1,69 +1,93 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
----@class DailyRewardManager:ScriptableObjectClass
+---Manages the daily rewards
+---@class DailyRewardManager : ScriptableObjectClass
+---@field sv DailyRewardManagerSv
+---@field cl DailyRewardManagerCl
 DailyRewardManager = class()
 DailyRewardManager.isSaveObject = true
 
-local DAY = 60 * 60 * 20 --20 Hours
+---daily rewards.json
+local RewardTable = sm.json.open("$CONTENT_DATA/Scripts/daily rewards.json")
+
+--------------------
+-- #region Server
+--------------------
+
+---The minimum amoutn of time passed to claim another daily reward:
+local MinRewardInterval = 60 * 60 * 20 --20 Hours
+---Maximum amount of time to keep up the reward streak
+local MaxStreakTime = MinRewardInterval * 2
 
 function DailyRewardManager:server_onCreate()
-    self.saved = self.storage:load()
+    self.sv = {}
+    self.sv.saved = self.storage:load() or {
+        time = os.time() - MinRewardInterval,
+        streak = 0
+    }
+    self.storage:save(self.sv.saved)
 
-    if self.saved == nil then
-        self.saved = {}
-        self.saved.time = os.time() - DAY
-        self.saved.streak = 0
-        self.storage:save(self.saved)
+    --check if streak still valid
+    if os.time() - self.sv.saved.time >= MaxStreakTime then
+        self.sv.saved.streak = 0
     end
 
-    if os.time() - self.saved.time >= DAY * 2 then
-        self.saved.streak = 0
-    end
-
-    if os.time() - self.saved.time >= DAY then
+    --check for daily reward
+    if os.time() - self.sv.saved.time >= MinRewardInterval then
         self.network:sendToClients("cl_openGui")
-        self.playEffect = true
     end
 
-    self.rewards = sm.json.open("$CONTENT_DATA/Scripts/daily rewards.json")
-
-    self.network:setClientData({ day = self.saved.streak + 1 })
+    self.network:setClientData({ day = self.sv.saved.streak + 1 })
 end
 
-function DailyRewardManager:sv_spawnRewards(params, player)
+---spawns the current daily reward aroudn the player and saves streak
+function DailyRewardManager:sv_spawnRewards(_, player)
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "DailyRewardClaimed")
 
-    for i = 1, self.rewards[self.saved.streak + 1].quantity, 1 do
+    for i = 1, RewardTable[self.sv.saved.streak + 1].quantity, 1 do
         local pos = player:getCharacter():getWorldPosition()
         pos.x = pos.x + (math.random() - 0.5) * 10
         pos.y = pos.y + (math.random() - 0.5) * 10
         pos.z = pos.z + 5
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = sm.uuid.new(self.rewards[self.saved.streak + 1].crate),
-            effect = "Woc - Destruct" })
+
+        LootCrateManager.sv_spawnCrate({
+            pos = pos,
+            uuid = sm.uuid.new(RewardTable[self.sv.saved.streak + 1].crate),
+            effect = "Woc - Destruct"
+        })
     end
-    self.saved.streak = math.min(self.saved.streak + 1, #self.rewards - 1)
-    self.saved.time = os.time()
-    self.storage:save(self.saved)
+
+    self.sv.saved.streak = math.min(self.sv.saved.streak + 1, #RewardTable - 1)
+    self.sv.saved.time = os.time()
+    self.storage:save(self.sv.saved)
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function DailyRewardManager:client_onCreate()
-    self.cl = {}
-    self.cl.day = 1
+    self.cl = {
+        day = 1,
+        claimed = false
+    }
 end
 
 function DailyRewardManager:client_onFixedUpdate()
-    if self.gui and self.gui:isActive() and self.playEffect and sm.localPlayer.getPlayer().character then
-        local player = sm.localPlayer.getPlayer()
-        sm.event.sendToPlayer(player, "cl_e_createEffect",
-            { id = "DailyReward", effect = "Confetti", host = player:getCharacter() })
-        sm.event.sendToPlayer(player, "cl_e_startEffect", "DailyReward")
-        self.playEffect = false
+    local player = sm.localPlayer.getPlayer()
+    if player:getCharacter() and self.cl.gui and self.cl.gui:isActive() and self.cl.playEffect then
+        sm.event.sendToPlayer(player, "cl_e_createEffect", {
+            key = "DailyReward",
+            effect = "Confetti",
+            host = player:getCharacter()
+        })
+        self.cl.playEffect = nil
     end
 end
 
 function DailyRewardManager:client_onClientDataUpdate(data)
-    self.cl.day = data.day
-    self.cl.currentDay = data.day
+    self.cl.guiDayIndex = data.day
+    self.cl.currentRewardDay = data.day
 end
 
 function DailyRewardManager:cl_openGui()
@@ -71,52 +95,75 @@ function DailyRewardManager:cl_openGui()
         return
     end
 
-    if not self.claimed then
-        self.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/DailyReward.layout")
-        self.gui:setOnCloseCallback("cl_openGui")
-        self.gui:setButtonCallback("Claim Reward", "cl_claimReward")
-        self.gui:setButtonCallback("DayUp", "cl_dayUp")
-        self.gui:setButtonCallback("DayDown", "cl_dayDown")
+    if not self.cl.claimed then
+        self.cl.gui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/DailyReward.layout")
+        self.cl.gui:setOnCloseCallback("cl_openGui")
+        self.cl.gui:setButtonCallback("Claim Reward", "cl_claimReward")
+        self.cl.gui:setButtonCallback("DayUp", "cl_dayIndexUp")
+        self.cl.gui:setButtonCallback("DayDown", "cl_dayIndexDown")
 
-        self.gui:setText("title", language_tag("DailyRewardTitle"))
-        self.gui:setText("ClaimRewardText", language_tag("ClaimDailyReward"))
+        self.cl.gui:setText("title", language_tag("DailyRewardTitle"))
+        self.cl.gui:setText("ClaimRewardText", language_tag("ClaimDailyReward"))
 
-        generateDays(self)
-        self.gui:open()
+        self:cl_updateDisplayedRewards()
+        self.cl.gui:open()
+        self.cl.playEffect = true
     end
 end
 
-function generateDays(self)
-    local offset = math.min(self.cl.day - 1, #self.rewards - 5)
-    for i = 1, 5, 1 do
-        local rewardDay = self.cl.currentDay == i + offset
+---update the daily rewards shown in the gui
+function DailyRewardManager:cl_updateDisplayedRewards()
+    local dayOffset = math.min(self.cl.guiDayIndex - 1, #RewardTable - 5)
+
+    for i = 1, 5 do
+        local rewardDay = self.cl.currentRewardDay == i + dayOffset
         local color = rewardDay and "#dddd00" or "#aaaaaa"
 
-        self.gui:setButtonState("Reward_" .. tostring(i), rewardDay)
+        self.cl.gui:setButtonState("Reward_" .. tostring(i), rewardDay)
 
-        self.gui:setText("RewardText_" .. tostring(i),
-            color .. language_tag("DailyRewardDay"):format(tostring(i + offset)))
-        local uuid = sm.uuid.new(self.rewards[i + offset].crate)
-        self.gui:setIconImage("RewardPic_" .. tostring(i), uuid)
-        self.gui:setText("RewardCount_" .. tostring(i), tostring(self.rewards[i + offset].quantity))
+        self.cl.gui:setText("RewardText_" .. tostring(i),
+            color .. language_tag("DailyRewardDay"):format(tostring(i + dayOffset)))
+        local uuid = sm.uuid.new(RewardTable[i + dayOffset].crate)
+        self.cl.gui:setIconImage("RewardPic_" .. tostring(i), uuid)
+        self.cl.gui:setText("RewardCount_" .. tostring(i), tostring(RewardTable[i + dayOffset].quantity))
     end
 end
 
-function DailyRewardManager:cl_dayUp()
-    self.cl.day = math.min(self.cl.day + 1, #self.rewards)
-    generateDays(self)
+function DailyRewardManager:cl_dayIndexUp()
+    self.cl.guiDayIndex = math.min(self.cl.guiDayIndex + 1, #RewardTable)
+    self:cl_updateDisplayedRewards()
 end
 
-function DailyRewardManager:cl_dayDown()
-    self.cl.day = math.max(self.cl.day - 1, 1)
-    generateDays(self)
+function DailyRewardManager:cl_dayIndexDown()
+    self.cl.guiDayIndex = math.max(self.cl.guiDayIndex - 1, 1)
+    self:cl_updateDisplayedRewards()
 end
 
 function DailyRewardManager:cl_claimReward()
-    self.gui:close()
-    self.gui:destroy()
-    self.gui = nil
-    self.claimed = true
+    self.cl.gui:close()
+    self.cl.gui:destroy()
+    self.cl.gui = nil
+    self.cl.claimed = true
     self.network:sendToServer("sv_spawnRewards")
     sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_destroyEffect", "DailyReward")
 end
+
+--------------------
+-- #region Server
+--------------------
+
+---@class DailyRewardManagerSv
+---@field saved DailyRewardManagerSvSaved
+
+---@class DailyRewardManagerSvSaved
+---@field time number when the last reward was claimed
+---@field streak number the reward streak so far
+
+---@class DailyRewardManagerCl
+---@field guiDayIndex number the index of the day "selected" in the gui
+---@field currentRewardDay number the day of the current daily reward
+---@field gui GuiInterface daily reward gui
+---@field playEffect boolean wether the daily reward effects should be started
+---@field claimed boolean whether the daily reward has been claimed
+
+-- #endregion

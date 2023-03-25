@@ -4,50 +4,35 @@ dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/util/Timer.lua")
 dofile("$SURVIVAL_DATA/Scripts/util.lua")
 
---FACTORY
-dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
-
+---A player that plays this amazing custom game mode. Handles stuff like health, and eh effects?
 ---@class FactoryPlayer : PlayerClass
+---@field sv PlayerSv
 ---@field cl PlayerCl
 FactoryPlayer = class(BasePlayer)
+--------------------
+-- #region Server
+--------------------
 
-
-local StatsTickRate = 40
-local PerMinute = StatsTickRate / (40 * 60)
-
-local HpRecovery = 50 * PerMinute
+local MaxHP = 100        --maximum hp a player can have
+local StatsTickRate = 40 --how frequent stats update
 
 local RespawnTimeout = 60 * 40
-
 local RespawnFadeDuration = 0.45
 local RespawnEndFadeDuration = 0.45
-
 local RespawnFadeTimeout = 5.0
 local RespawnDelay = RespawnFadeDuration * 40
 local RespawnEndDelay = 1.0 * 40
 
-local BaguetteSteps = 9
-
-local cl_effects = {}
-local cl_skirts = {}
-
 function FactoryPlayer.server_onCreate(self)
 	self.sv = {}
-	self.sv.saved = self.storage:load()
-	self.sv.saved = self.sv.saved or {}
-	self.sv.saved.stats = self.sv.saved.stats or {
-		hp = 100, maxhp = 100
-	}
-	if self.sv.saved.isConscious == nil then self.sv.saved.isConscious = true end
-	if self.sv.saved.hasRevivalItem == nil then self.sv.saved.hasRevivalItem = false end
-	if self.sv.saved.isNewPlayer == nil then self.sv.saved.isNewPlayer = true end
+
+	self.sv.saved = self.storage:load() or {}
+	self.sv.saved.stats = self.sv.saved.stats or { hp = MaxHP, maxhp = MaxHP }
+	self.sv.saved.isConscious = (self.sv.saved.isConscious == nil) or self.sv.saved.isConscious
+	self.sv.saved.isNewPlayer = (self.sv.saved.isNewPlayer == nil) or self.sv.saved.isNewPlayer
+
 	self.storage:save(self.sv.saved)
 
-	self:sv_init()
-	self.network:setClientData(self.sv.saved)
-end
-
-function FactoryPlayer.server_onRefresh(self)
 	self:sv_init()
 	self.network:setClientData(self.sv.saved)
 end
@@ -58,112 +43,16 @@ function FactoryPlayer.sv_init(self)
 	self.sv.statsTimer = Timer()
 	self.sv.statsTimer:start(StatsTickRate)
 
-	self.sv.spawnparams = {}
+	self.sv.respawn = false
 end
 
-function FactoryPlayer.client_onCreate(self)
-	BasePlayer.client_onCreate(self)
-	self.cl = self.cl or {}
-	if self.player == sm.localPlayer.getPlayer() then
-		if g_survivalHud then
-			g_survivalHud:open()
-			g_survivalHud:setVisible("FoodBar", false)
-			g_survivalHud:setVisible("WaterBar", false)
-		end
-
-		self:cl_initSkirts()
-	end
-
-	self:cl_initSkirt(self.player)
-
-	self:cl_init()
-end
-
-function FactoryPlayer.client_onRefresh(self)
-	self:cl_init()
-
-	sm.gui.hideGui(false)
-	sm.camera.setCameraState(sm.camera.state.default)
-	sm.localPlayer.setLockedControls(false)
-end
-
-function FactoryPlayer.cl_init(self)
-	self.cl.revivalChewCount = 0
-end
-
-function FactoryPlayer.client_onClientDataUpdate(self, data)
-	BasePlayer.client_onClientDataUpdate(self, data)
-	if sm.localPlayer.getPlayer() == self.player then
-
-		if self.cl.stats == nil then self.cl.stats = data.stats end -- First time copy to avoid nil errors
-
-		if g_survivalHud then
-			g_survivalHud:setSliderData("Health", data.stats.maxhp * 10 + 1, data.stats.hp * 10)
-		end
-
-		if self.cl.hasRevivalItem ~= data.hasRevivalItem then
-			self.cl.revivalChewCount = 0
-		end
-
-		self.cl.stats = data.stats
-		self.cl.isConscious = data.isConscious
-		self.cl.hasRevivalItem = data.hasRevivalItem
-	end
-end
-
-function FactoryPlayer.cl_localPlayerUpdate(self, dt)
-	BasePlayer.cl_localPlayerUpdate(self, dt)
-
-	local character = self.player:getCharacter()
-	if character and not self.cl.isConscious then
-		local keyBindingText = sm.gui.getKeyBinding("Use", true)
-		if self.cl.hasRevivalItem then
-			if self.cl.revivalChewCount < BaguetteSteps then
-				sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_EAT} (" .. self.cl.revivalChewCount .. "/10)")
-			else
-				sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_REVIVE}")
-			end
-		else
-			sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_RESPAWN}")
-		end
-	end
-end
-
-function FactoryPlayer.client_onInteract(self, character, state)
-	if state == true then
-		if TutorialManager.cl_isTutorialGuiActive() then
-			TutorialManager.cl_closeTutorialGui()
-		end
-
-		if not self.cl.isConscious then
-			if self.cl.hasRevivalItem then
-				if self.cl.revivalChewCount >= BaguetteSteps then
-					self.network:sendToServer("sv_n_revive")
-				end
-				self.cl.revivalChewCount = self.cl.revivalChewCount + 1
-				self.network:sendToServer("sv_onEvent", { type = "character", data = "chew" })
-			else
-				self.network:sendToServer("sv_n_tryRespawn")
-			end
-		end
-	end
+function FactoryPlayer.server_onRefresh(self)
+	self:sv_init()
+	self.network:setClientData(self.sv.saved)
 end
 
 function FactoryPlayer.server_onFixedUpdate(self, dt)
 	BasePlayer.server_onFixedUpdate(self, dt)
-
-	if g_survivalDev and not self.sv.saved.isConscious and not self.sv.saved.hasRevivalItem then
-		if sm.container.canSpend(self.player:getInventory(), obj_consumable_longsandwich, 1) then
-			if sm.container.beginTransaction() then
-				sm.container.spend(self.player:getInventory(), obj_consumable_longsandwich, 1, true)
-				if sm.container.endTransaction() then
-					self.sv.saved.hasRevivalItem = true
-					self.player:sendCharacterEvent("baguette")
-					self.network:setClientData(self.sv.saved)
-				end
-			end
-		end
-	end
 
 	-- Delays the respawn so clients have time to fade to black
 	if self.sv.respawnDelayTimer then
@@ -191,15 +80,14 @@ function FactoryPlayer.server_onFixedUpdate(self, dt)
 		end
 	end
 
-	local character = self.player:getCharacter()
-
-	if character and self.sv.saved.isConscious and not g_godMode then
+	if self.player:getCharacter() and self.sv.saved.isConscious then
 		self.sv.statsTimer:tick()
+
 		if self.sv.statsTimer:done() then
 			self.sv.statsTimer:start(StatsTickRate)
 
-			-- Normal recovery
-			local recoverableHp = math.min(self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, HpRecovery)
+			local maxHpRecovery = 50 * StatsTickRate / (40 * 60)
+			local recoverableHp = math.min(self.sv.saved.stats.maxhp - self.sv.saved.stats.hp, maxHpRecovery)
 			self.sv.saved.stats.hp = math.min(self.sv.saved.stats.hp + recoverableHp, self.sv.saved.stats.maxhp)
 
 			self.storage:save(self.sv.saved)
@@ -212,14 +100,12 @@ function FactoryPlayer.server_onInventoryChanges(self, container, changes)
 	self.network:sendToClient(self.player, "cl_n_onInventoryChanges", { container = container, changes = changes })
 end
 
-function FactoryPlayer.sv_e_staminaSpend(self, stamina)
-	return
-end
-
 function FactoryPlayer.sv_takeDamage(self, damage, source)
 	if damage > 0 then
+		---@diagnostic disable-next-line: undefined-global
 		damage = damage * GetDifficultySettings().playerTakeDamageMultiplier
 		local character = self.player:getCharacter()
+
 		local lockingInteractable = character:getLockingInteractable()
 		if lockingInteractable and lockingInteractable:hasSeat() then
 			lockingInteractable:setSeatCharacter(character)
@@ -229,7 +115,8 @@ function FactoryPlayer.sv_takeDamage(self, damage, source)
 			if self.sv.saved.isConscious then
 				self.sv.saved.stats.hp = math.max(self.sv.saved.stats.hp - damage, 0)
 
-				print("'FactoryPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP")
+				print("'FactoryPlayer' took:", damage, "damage.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp,
+					"HP")
 
 				if source then
 					self.network:sendToClients("cl_n_onEvent",
@@ -249,45 +136,22 @@ function FactoryPlayer.sv_takeDamage(self, damage, source)
 				self.storage:save(self.sv.saved)
 				self.network:setClientData(self.sv.saved)
 			end
-		else
-			--print("'FactoryPlayer' resisted", damage, "damage")
 		end
-	end
-end
-
-function FactoryPlayer.sv_n_revive(self)
-	local character = self.player:getCharacter()
-	if not self.sv.saved.isConscious and self.sv.saved.hasRevivalItem and not self.sv.spawnparams.respawn then
-		print("FactoryPlayer", self.player.id, "revived")
-		self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
-		self.sv.saved.isConscious = true
-		self.sv.saved.hasRevivalItem = false
-		self.storage:save(self.sv.saved)
-		self.network:setClientData(self.sv.saved)
-		self.network:sendToClient(self.player, "cl_n_onEffect", { name = "Eat - EatFinish", host = self.player.character })
-		if character then
-			character:setTumbling(false)
-			character:setDowned(false)
-		end
-		self.sv.damageCooldown:start(40)
-		self.player:sendCharacterEvent("revive")
 	end
 end
 
 function FactoryPlayer.sv_e_respawn(self)
-	if self.sv.spawnparams.respawn then
+	if self.sv.respawn then
 		if not self.sv.respawnTimeoutTimer then
 			self.sv.respawnTimeoutTimer = Timer()
 			self.sv.respawnTimeoutTimer:start(RespawnTimeout)
 		end
 		return
 	end
-	if not self.sv.saved.isConscious then
-		self.sv.spawnparams.respawn = true
 
+	if not self.sv.saved.isConscious then
+		self.sv.respawn = true
 		sm.event.sendToGame("sv_e_respawn", { player = self.player })
-	else
-		print("FactoryPlayer must be unconscious to respawn")
 	end
 end
 
@@ -304,12 +168,9 @@ function FactoryPlayer.sv_n_tryRespawn(self)
 end
 
 function FactoryPlayer.sv_e_onSpawnCharacter(self)
-	if self.sv.saved.isNewPlayer then
-
-	elseif self.sv.spawnparams.respawn then
+	if self.sv.respawn and not self.sv.saved.isNewPlayer then
 		local playerBed = g_respawnManager:sv_getPlayerBed(self.player)
-		if playerBed and playerBed.shape and sm.exists(playerBed.shape) and
-			playerBed.shape.body:getWorld() == self.player.character:getWorld() then
+		if playerBed and playerBed.shape and sm.exists(playerBed.shape) then
 			-- Attempt to seat the respawned character in a bed
 			self.network:sendToClient(self.player, "cl_seatCharacter", { shape = playerBed.shape })
 		end
@@ -318,16 +179,14 @@ function FactoryPlayer.sv_e_onSpawnCharacter(self)
 		self.sv.respawnEndTimer:start(RespawnEndDelay)
 	end
 
-	if self.sv.saved.isNewPlayer or self.sv.spawnparams.respawn then
+	if self.sv.saved.isNewPlayer or self.sv.respawn then
 		print("FactoryPlayer", self.player.id, "spawned")
-		if self.sv.saved.isNewPlayer then
-			self.sv.saved.stats.hp = self.sv.saved.stats.maxhp
-		else
-			self.sv.saved.stats.hp = 30
-		end
+		self.sv.saved.stats.hp = self.sv.saved.isNewPlayer and self.sv.saved.stats.maxhp
+			or self.sv.saved.stats.maxhp * 0.3
+
 		self.sv.saved.isConscious = true
-		self.sv.saved.hasRevivalItem = false
 		self.sv.saved.isNewPlayer = false
+
 		self.storage:save(self.sv.saved)
 		self.network:setClientData(self.sv.saved)
 
@@ -345,74 +204,20 @@ function FactoryPlayer.sv_e_onSpawnCharacter(self)
 	self.sv.respawnInteractionAttempted = false
 	self.sv.respawnDelayTimer = nil
 	self.sv.respawnTimeoutTimer = nil
-	self.sv.spawnparams = {}
+	self.sv.respawn = false
 
 	sm.event.sendToGame("sv_e_onSpawnPlayerCharacter", self.player)
 end
 
-function FactoryPlayer.cl_n_onInventoryChanges(self, params)
-	if params.container == sm.localPlayer.getInventory() then
-		for i, item in ipairs(params.changes) do
-			if item.difference > 0 then
-				g_survivalHud:addToPickupDisplay(item.uuid, item.difference)
-			end
-		end
-	end
-end
-
-function FactoryPlayer.cl_seatCharacter(self, params)
-	if sm.exists(params.shape) then
-		params.shape.interactable:setSeatCharacter(self.player.character)
-	end
-end
-
-function FactoryPlayer.sv_e_eat(self, edibleParams)
-	if edibleParams.hpGain then
-		self:sv_restoreHealth(edibleParams.hpGain)
-	end
-	self.storage:save(self.sv.saved)
-	self.network:setClientData(self.sv.saved)
-end
-
-function FactoryPlayer.sv_e_feed(self, params)
-	if not self.sv.saved.isConscious and not self.sv.saved.hasRevivalItem then
-		if sm.container.beginTransaction() then
-			sm.container.spend(params.playerInventory, params.foodUuid, 1, true)
-			if sm.container.endTransaction() then
-				self.sv.saved.hasRevivalItem = true
-				self.player:sendCharacterEvent("baguette")
-				self.network:setClientData(self.sv.saved)
-			end
-		end
-	end
-end
-
-function FactoryPlayer.sv_restoreHealth(self, health)
-	if self.sv.saved.isConscious then
-		self.sv.saved.stats.hp = self.sv.saved.stats.hp + health
-		self.sv.saved.stats.hp = math.min(self.sv.saved.stats.hp, self.sv.saved.stats.maxhp)
-		print("'FactoryPlayer' restored:", health, "health.", self.sv.saved.stats.hp, "/", self.sv.saved.stats.maxhp, "HP")
-	end
-end
-
-function FactoryPlayer.client_onCancel(self)
-	BasePlayer.client_onCancel(self)
-	g_effectManager:cl_cancelAllCinematics()
-end
-
---FACTORY
-function FactoryPlayer:client_onFixedUpdate()
-	if self.player == sm.localPlayer.getPlayer() then
-		self:cl_updateSkirtData()
-	end
-end
-
+---Make all clients fade to black
+---@param params table { timeout, duration }
 function FactoryPlayer:sv_e_fadeToBlack(params)
 	self.network:sendToClients("cl_n_startFadeToBlack",
 		{ duration = params.duration or RespawnFadeDuration, timeout = params.timeout or RespawnFadeTimeout })
 end
 
-function FactoryPlayer:sv_destroyOre()
+---destroy all drops in the world
+function FactoryPlayer:sv_destroyAllDrops()
 	for _, body in ipairs(sm.body.getAllBodies()) do
 		for _, shape in ipairs(body:getShapes()) do
 			local interactable = shape.interactable
@@ -431,39 +236,182 @@ function FactoryPlayer:sv_e_takeDamage(params)
 	self:sv_takeDamage(params.damage, params.source)
 end
 
-function FactoryPlayer:cl_e_audio(effect)
-	if sm.localPlayer.getPlayer():getCharacter() and (not self.lastPlay or sm.game.getCurrentTick() > self.lastPlay + 40) then
-		sm.audio.play(effect)
-		self.lastPlay = sm.game.getCurrentTick()
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+function FactoryPlayer.client_onCreate(self)
+	BasePlayer.client_onCreate(self)
+	self.cl = self.cl or {}
+
+	if self.player == sm.localPlayer.getPlayer() then
+		if g_survivalHud then
+			g_survivalHud:open()
+			g_survivalHud:setVisible("FoodBar", false)
+			g_survivalHud:setVisible("WaterBar", false)
+		end
+	end
+
+	if sm.isHost then
+		Effects.cl_init(self)
+		self:cl_initNumberEffects()
 	end
 end
 
+function FactoryPlayer.client_onRefresh(self)
+	sm.gui.hideGui(false)
+	sm.camera.setCameraState(sm.camera.state.default)
+	sm.localPlayer.setLockedControls(false)
+end
+
+function FactoryPlayer.client_onClientDataUpdate(self, data)
+	BasePlayer.client_onClientDataUpdate(self, data)
+	if sm.localPlayer.getPlayer() == self.player then
+		if self.cl.stats == nil then self.cl.stats = data.stats end -- First time copy to avoid nil errors
+
+		if g_survivalHud then
+			g_survivalHud:setSliderData("Health", data.stats.maxhp * 10 + 1, data.stats.hp * 10)
+		end
+
+		self.cl.stats = data.stats
+		self.cl.isConscious = data.isConscious
+	end
+end
+
+function FactoryPlayer.cl_localPlayerUpdate(self, dt)
+	BasePlayer.cl_localPlayerUpdate(self, dt)
+
+	if self.player:getCharacter() and not self.cl.isConscious then
+		local keyBindingText = sm.gui.getKeyBinding("Use", true)
+		sm.gui.setInteractionText("", keyBindingText, "#{INTERACTION_RESPAWN}")
+	end
+end
+
+function FactoryPlayer.client_onInteract(self, character, state)
+	if state then
+		if TutorialManager.cl_isTutorialPopUpActive() then
+			TutorialManager.cl_closeTutorialPopUp()
+		elseif not self.cl.isConscious then
+			self.network:sendToServer("sv_n_tryRespawn")
+		end
+	end
+end
+
+function FactoryPlayer.cl_n_onInventoryChanges(self, params)
+	if params.container == sm.localPlayer.getInventory() then
+		for i, item in ipairs(params.changes) do
+			if item.difference > 0 then
+				---@diagnostic disable-next-line: undefined-field
+				g_survivalHud:addToPickupDisplay(item.uuid, item.difference)
+			end
+		end
+	end
+end
+
+function FactoryPlayer.cl_seatCharacter(self, params)
+	if sm.exists(params.shape) then
+		params.shape.interactable:setSeatCharacter(self.player.character)
+	end
+end
+
+function FactoryPlayer.client_onCancel(self)
+	BasePlayer.client_onCancel(self)
+	g_effectManager:cl_cancelAllCinematics()
+end
+
 function FactoryPlayer:client_onReload()
+	-- clear ores pop-up
 	self.cl.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
 	self.cl.confirmClearGui:setButtonCallback("Yes", "cl_onClearConfirmButtonClick")
 	self.cl.confirmClearGui:setButtonCallback("No", "cl_onClearConfirmButtonClick")
 	self.cl.confirmClearGui:setText("Title", language_tag("ClearOresTitle"))
-	self.cl.confirmClearGui:setText("Message", language_tag("ClearOresMessage"))
+	self.cl.confirmClearGui:setText("Message",
+		language_tag("ClearOresMessage" .. ((sm.localPlayer.getPlayer():isMale() and "Male") or "Female")))
 	self.cl.confirmClearGui:open()
 end
 
 function FactoryPlayer:cl_onClearConfirmButtonClick(name)
 	if name == "Yes" then
-		self.network:sendToServer("sv_destroyOre")
+		self.network:sendToServer("sv_destroyAllDrops")
 	end
 	self.cl.confirmClearGui:close()
 	self.cl.confirmClearGui:destroy()
 end
 
---Effects
-function FactoryPlayer:sv_e_createEffect(params)
-	for _, player in ipairs(sm.player.getAllPlayers()) do
-		self.network:sendToClient(player, "cl_e_createEffect", params)
+function FactoryPlayer:client_onFixedUpdate()
+	self:cl_fixedUpdateNumberEffects()
+end
+
+function FactoryPlayer:client_onUpdate(deltaTime)
+	self:cl_updateNumberEffects(deltaTime)
+end
+
+-- #endregion
+
+--------------------
+-- #region Effects
+--------------------
+
+function FactoryPlayer:cl_initNumberEffects()
+	self.cl.numberEffects = {}
+end
+
+function FactoryPlayer:cl_fixedUpdateNumberEffects()
+	for k, numberEffect in pairs(self.cl.numberEffects) do
+		if numberEffect and sm.game.getCurrentTick() > numberEffect.endTick then
+			numberEffect.gui:destroy()
+			self.cl.numberEffects[k] = nil
+		end
 	end
+end
+
+function FactoryPlayer:cl_updateNumberEffects(deltaTime)
+	for k, numberEffect in pairs(self.cl.numberEffects) do
+		---@diagnostic disable-next-line: assign-type-mismatch
+		numberEffect.pos = numberEffect.pos + sm.vec3.new(0, 0, 0.1) * deltaTime
+		numberEffect.gui:setWorldPosition(numberEffect.pos)
+	end
+end
+
+---Create an effect for all clients. This will be a "floating" text in the world that disappears after a while e.g. selling drops
+---@param params NumberEffectParams
+function FactoryPlayer:sv_e_numberEffect(params)
+	---@diagnostic disable-next-line: assign-type-mismatch
+	params.value = format_number({ format = params.format, value = tonumber(params.value), color = params.color })
+
+	self.network:sendToClients("cl_numberEffect", params)
+end
+
+---Create an effect for this client. This will be a "floating" text in the world that disappears after a while e.g. selling drops
+---@param params NumberEffectParams
+function FactoryPlayer:cl_numberEffect(params)
+	local gui = sm.gui.createNameTagGui()
+	gui:setWorldPosition(params.pos)
+	gui:open()
+	gui:setMaxRenderDistance(100)
+	gui:setText("Text", params.value)
+
+	if params.effect then
+		sm.effect.playEffect(params.effect, params.pos - sm.vec3.new(0, 0, 0.25))
+	end
+
+	self.cl.numberEffects[#self.cl.numberEffects + 1] = {
+		gui = gui,
+		endTick = sm.game.getCurrentTick() + 80,
+		pos = params.pos
+	}
 end
 
 function FactoryPlayer:sv_e_playEffect(params)
 	self.network:sendToClients("cl_e_playEffect", params)
+end
+
+function FactoryPlayer:cl_e_playAudio(effect)
+	if sm.localPlayer.getPlayer():getCharacter() then
+		sm.audio.play(effect)
+	end
 end
 
 function FactoryPlayer:cl_e_playEffect(params)
@@ -471,85 +419,57 @@ function FactoryPlayer:cl_e_playEffect(params)
 end
 
 function FactoryPlayer:cl_e_createEffect(params)
-	local effect = sm.effect.createEffect(params.effect, params.host, params.name)
-
-	if params.effect == "ShapeRenderable" then
-		effect:setParameter("uuid", params.uuid)
-		effect:setParameter("color", params.color or sm.color.new(1, 1, 1))
-	end
-
-	if params.start then
-		effect:start()
-	end
-
-	if cl_effects[params.id] and sm.exists(cl_effects[params.id]) then
-		cl_effects[params.id]:destroy()
-	end
-
-	cl_effects[params.id] = effect
+	Effects.cl_createEffect(self, params)
 end
 
-function FactoryPlayer:cl_e_startEffect(id)
-	if cl_effects[id] and not cl_effects[id]:isPlaying() then
-		cl_effects[id]:start()
-	end
+function FactoryPlayer:cl_e_startEffect(key)
+	Effects.cl_startEffect(self, key)
 end
 
-function FactoryPlayer:cl_e_destroyEffect(id)
-	if cl_effects[id] then
-		cl_effects[id]:destroy()
-		cl_effects[id] = nil
-	end
+function FactoryPlayer:cl_e_destroyEffect(key)
+	Effects.cl_destroyEffect(self, key)
 end
 
-function FactoryPlayer:cl_e_playAudio(name)
-	sm.audio.play(name)
-end
+-- #endregion
 
----Skirts ❤ UwU
-function FactoryPlayer:cl_initSkirts()
-	for _, player in pairs(sm.player.getAllPlayers()) do
-		self:cl_initSkirt(player)
-	end
-end
+--------------------
+-- #region Types
+--------------------
 
-function FactoryPlayer:cl_initSkirt(player)
-	cl_skirts[player.id] = {
-		dir = sm.vec3.zero(),
-		spin = 1,
-		player = player
-	}
-end
+---@class PlayerSv
+---@field saved PlayerSvSaved
+---@field respawnDelayTimer table
+---@field respawnEndTimer table
+---@field respawnTimeoutTimer table
+---@field statsTimer table
+---@field damageCooldown table
+---@field respawn boolean
+---@field respawnInteractionAttempted boolean
 
-function FactoryPlayer:cl_updateSkirtData()
-	for id, skirtData in ipairs(cl_skirts) do
-		local character = skirtData.player.character
-		if character then
-			local dir = character.direction
-			local change = (skirtData.dir - dir):length()
+---@class PlayerSvSaved
+---@field stats PlayerSvSavedStats
+---@field isConscious boolean
+---@field isNewPlayer boolean
 
-			skirtData.spin = skirtData.spin ^ 0.95 + change
-			skirtData.dir = dir
-
-			local effectName = "skirt" .. tonumber(id)
-			if cl_effects[effectName] and sm.exists(cl_effects[effectName]) then
-				local scale = skirtData.spin ^ 0.5
-				local skirtLength = 1.75
-				local length = skirtLength / scale
-
-				cl_effects[effectName]:setScale(sm.vec3.new(scale, length, scale))
-				cl_effects[effectName]:setOffsetPosition(sm.vec3.new(0, -0.075 + (skirtLength - length) * 0.075, 0.025))
-			end
-		end
-	end
-end
+---@class PlayerSvSavedStats
+---@field hp number current hp of a player
+---@field maxhp number maximum hp a player can have
 
 ---@class PlayerCl
----@field skirts table<number, skirtData>
----@field effects table<string, Effect>
+---@field isConscious boolean
+---@field confirmClearGui GuiInterface
+---@field numberEffects table<number, NumberEffect>
 
+---@class NumberEffectParams
+---@field value string|number the number value to be displayed
+---@field format "money"|"pollution"|"power"|"prestige" format used for displaiyng the value
+---@field color string|nil (optional) hex color of the text to be displayed
+---@field pos Vec3 worldPosition of the effect
+---@field effect string|nil (optional) name of effect to be played while the number effect is created
 
----@class skirtData
----@field dir Vec3
----@field spin number
----@field player Player
+---@class NumberEffect
+---@field gui GuiInterface nameTag gui
+---@field endTick number tick at which the effect ends
+---@field pos Vec3 world position of the effect
+
+-- #endregion

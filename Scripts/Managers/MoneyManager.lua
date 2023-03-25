@@ -1,33 +1,33 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
-
+---Money is used to buy new items or exchange it for prestige points. It can be gained by selling items or drops.
 ---@class MoneyManager : ScriptableObjectClass
----@field sv MoneySv
----@field cl MoneyCl
+---@field sv MoneyManagerSv
+---@field cl MoneyManagerCl
 ---@diagnostic disable-next-line: assign-type-mismatch
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
+--------------------
+-- #region Server
+--------------------
+
 local moneyCacheInterval = 60 --seconds
 
 function MoneyManager:server_onCreate()
-    self.sv = {}
-    self.sv.moneyEarned = 0
-    self.sv.moneyEarnedCache = {}
-    self.sv.saved = self.storage:load()
+    g_moneyManager = g_moneyManager or self
+
+    self.sv = {
+        moneyEarnedSinceUpdate = 0,
+        moneyEarnedCache = {},
+        saved = self.storage:load()
+    }
 
     if self.sv.saved == nil then
-        self.sv.saved = {}
-        self.sv.saved.money = 0
-        self.sv.saved.moneyEarned = 0
+        self.sv.saved = {
+            money = 0,
+            moneyEarned = 0
+        }
     else
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        self.sv.saved.money = tonumber(self.sv.saved.money)
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        self.sv.saved.moneyEarned = tonumber(self.sv.saved.moneyEarned)
-    end
-
-    if not g_moneyManager then
-        g_moneyManager = self
+        self.sv.saved = unpackNetworkData(self.sv.saved)
     end
 end
 
@@ -35,33 +35,34 @@ function MoneyManager:server_onFixedUpdate()
     if sm.game.getCurrentTick() % 40 == 0 then
         self.storage:save(packNetworkData(self.sv.saved))
 
-        self.sv.moneyEarnedCache[#self.sv.moneyEarnedCache + 1] = self.sv.moneyEarned
-        local newCache = {}
         local syncOffset = 3
-        local resizeCache = (#self.sv.moneyEarnedCache > moneyCacheInterval + syncOffset and 1) or 0
-        local moneyPerInterval = 0
-        for k, money in ipairs(self.sv.moneyEarnedCache) do
-            if #newCache < moneyCacheInterval + syncOffset then
-                newCache[#newCache + 1] = self.sv.moneyEarnedCache[k + resizeCache]
-                moneyPerInterval = moneyPerInterval + money
-            end
-        end
-        self.sv.moneyEarnedCache = newCache
+        self.sv.moneyEarnedCache[math.floor(sm.game.getCurrentTick() / 40) % (moneyCacheInterval + syncOffset)] =
+            self.sv.moneyEarnedSinceUpdate
+        self.sv.moneyEarnedSinceUpdate = 0
 
-        local clientData = { money = self.sv.saved.money,
+        local moneyPerInterval = 0
+        for k, money in pairs(self.sv.moneyEarnedCache) do
+            moneyPerInterval = moneyPerInterval + money
+        end
+
+        local clientData = {
+            money = self.sv.saved.money,
             moneyEarned = self.sv.saved.moneyEarned,
-            moneyPerInterval = moneyPerInterval }
+            moneyPerInterval = moneyPerInterval
+        }
         self.network:setClientData(packNetworkData(clientData))
-        self.sv.moneyEarned = 0
     end
 end
 
+---Adds money
+---@param money number amount of money to add
+---@param source "sellTool"|nil source that generated the money
 function MoneyManager.sv_addMoney(money, source)
     g_moneyManager.sv.saved.money = g_moneyManager.sv.saved.money + money
     g_moneyManager.sv.saved.moneyEarned = g_moneyManager.sv.saved.moneyEarned + money
 
     if money > 0 and source ~= "sellTool" then
-        g_moneyManager.sv.moneyEarned = g_moneyManager.sv.moneyEarned + money
+        g_moneyManager.sv.moneyEarnedSinceUpdate = g_moneyManager.sv.moneyEarnedSinceUpdate + money
         sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "MoneyMade")
     end
 
@@ -79,7 +80,10 @@ function MoneyManager.sv_setMoney(money)
     g_moneyManager:sv_resetMoneyCache()
 end
 
-function MoneyManager.sv_spendMoney(price)
+---Try to spend money
+---@param price number amount of money to spend
+---@return boolean spent wheter the amount of money could be spent or not
+function MoneyManager.sv_trySpendMoney(price)
     if price > g_moneyManager.sv.saved.money then
         return false
     else
@@ -89,21 +93,26 @@ function MoneyManager.sv_spendMoney(price)
 end
 
 function MoneyManager:sv_resetMoneyCache()
-    self.sv.oldMoneyEarned = nil
-    self.sv.moneyEarned = 0
+    self.sv.moneyEarnedSinceUpdate = 0
     self.sv.moneyEarnedCache = {}
 end
 
-function MoneyManager:client_onCreate()
-    self.cl = {}
-    self.cl.data = {}
-    self.cl.data.money = 0
-    self.cl.data.moneyEarned = 0
-    self.cl.data.moneyPerInterval = 0
+-- #endregion
 
-    if not g_moneyManager then
-        g_moneyManager = self
-    end
+--------------------
+-- #region Client
+--------------------
+
+function MoneyManager:client_onCreate()
+    g_moneyManager = g_moneyManager or self
+
+    self.cl = {
+        data = {
+            money = 0,
+            moneyEarned = 0,
+            moneyPerInterval = 0
+        }
+    }
 end
 
 function MoneyManager:client_onClientDataUpdate(clientData, channel)
@@ -116,7 +125,7 @@ end
 
 function MoneyManager:updateHud()
     if g_factoryHud then
-        local money = self.cl_getMoney()
+        local money = self.getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
             g_factoryHud:setText("Money/s",
@@ -125,25 +134,33 @@ function MoneyManager:updateHud()
     end
 end
 
-function MoneyManager.cl_getMoney()
-    return g_moneyManager.sv and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
-end
-
 function MoneyManager.cl_moneyEarned()
     return g_moneyManager.cl.data.moneyEarned
 end
 
+-- #endregion
+
+function MoneyManager.getMoney()
+    return g_moneyManager.sv and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
+end
+
+--------------------
+-- #region Types
+--------------------
+
 --Types
----@class MoneySv
----@field moneyEarned number
----@field moneyEarnedCache table
----@field saved MoneySvSaved
+---@class MoneyManagerSv
+---@field moneyEarnedSinceUpdate number money earned since last money update
+---@field moneyEarnedCache table<integer, number> table of money earned per ticks
+---@field saved MoneyManagerSvSaved
 
----@class MoneyCl
----@field money number
----@field moneyEarned number
----@field moneyPerInterval number
+---@class MoneyManagerSvSaved
+---@field money number available money
+---@field moneyEarned number total amount of money earned
 
----@class MoneySvSaved
----@field money number
----@field moneyEarned number
+---@class MoneyManagerCl
+---@field money number available money
+---@field moneyEarned number total amount of money earned
+---@field moneyPerInterval number money earned per interval (used in HUD)
+
+-- #endregion
