@@ -222,4 +222,15 @@ function angle(v1, v2)
     return acos > 1e-3 and acos or 0
 end
 
+---***CUSTOM*** Returns a value that doesn't exceed the max or is lower than the min
+---@param min number minimum value
+---@param v number value to minMax
+---@param max number maximum value
+---@return number result the minMaxed value
+function math.minMax(min, v, max)
+    v = math.max(v, max)
+    v = math.min(v, min)
+    return v
+end
+
 -- #endregion

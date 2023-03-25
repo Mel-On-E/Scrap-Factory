@@ -1,17 +1,27 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
+---Research interface that shows detailed info about each tier such as the Research goal and progress as well as the items that can be unlocked.
 ---@class Research : Interface
+---@field cl ResearchCl
 Research = class(Interface)
 
+--------------------
+-- #region Client
+--------------------
+
+---amount of unlock items showns per tier
+local unlockSlots = 6
+
 function Research:client_onCreate()
-	if not g_cl_research then
-		g_cl_research = self
-	end
+	g_cl_research = g_cl_research or self
 
 	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Research.layout")
 
-	self.cl.tier = 1
-	self.cl.unlockIndex = 0
+	self.cl = {
+		tier = 1,
+		unlockIndex = 0,
+		gui = self.cl.gui
+	}
 	self.cl.gui:setButtonCallback("NextTier", "cl_tier_next")
 	self.cl.gui:setButtonCallback("PrevTier", "cl_tier_prev")
 	self.cl.gui:setButtonCallback("UnlocksNext", "cl_unlocks_next")
@@ -43,8 +53,8 @@ function Research:update_gui()
 
 
 	local unlocks = ResearchManager.cl_getTierUnlocks(self.cl.tier)
-	for i = 1, 6, 1 do
-		local uuid = unlocks[i + self.cl.unlockIndex] or "00000000-0000-0000-0000-000000000000"
+	for i = 1, unlockSlots, 1 do
+		local uuid = unlocks[i + self.cl.unlockIndex] or tostring(sm.uuid.getNil())
 		self.cl.gui:setIconImage("IconUnlock_" .. tostring(i), sm.uuid.new(uuid))
 	end
 end
@@ -70,8 +80,8 @@ function Research:cl_tier_prev()
 end
 
 function Research:change_tier(change)
-	self.cl.tier = self.cl.tier + change
-	self.cl.tier = math.max(math.min(self.cl.tier, ResearchManager.cl_getTierCount()), 1)
+	self.cl.tier = math.minMax(1, self.cl.tier + change, ResearchManager.cl_getTierCount())
+
 	self.cl.unlockIndex = 0
 	self:update_gui()
 end
@@ -88,11 +98,23 @@ function Research:change_unlock_index(change)
 	self.cl.unlockIndex = self.cl.unlockIndex + change
 
 	local unlocks = #ResearchManager.cl_getTierUnlocks(self.cl.tier)
-	local max = math.max(0, unlocks - 6)
-	self.cl.unlockIndex = math.min(self.cl.unlockIndex, max)
-	self.cl.unlockIndex = math.max(self.cl.unlockIndex, 0)
+	local max = math.max(0, unlocks - unlockSlots)
+	self.cl.unlockIndex = math.minMax(0, self.cl.unlockIndex + change, max)
 end
 
 function Research.cl_close()
 	Interface.cl_close(g_cl_research)
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class ResearchCl
+---@field gui GuiInterface
+---@field tier integer current tier selected in the interface
+---@field unlockIndex integer currently selected unlock Item
+
+-- #endregion
