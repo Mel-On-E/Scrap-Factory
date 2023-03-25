@@ -40,8 +40,11 @@ function PrestigeManager:server_onFixedUpdate()
     if self.spawnCrate and self.spawnCrate < tick then
         self.spawnCrate = nil
         local pos = sm.player.getAllPlayers()[1].character.worldPosition + sm.vec3.new(math.random(), math.random(), 10)
-        LootCrateManager.sv_spawnCrate({ pos = pos, uuid = obj_lootcrate_prestige,
-            effect = "Woc - Destruct" })
+        LootCrateManager.sv_spawnCrate({
+            pos = pos,
+            uuid = obj_lootcrate_prestige,
+            effect = "Woc - Destruct"
+        })
     end
 end
 
@@ -100,7 +103,7 @@ function PrestigeManager:sv_doPrestige()
 
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
-    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearch")
+    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearchProgress")
 end
 
 function PrestigeManager:client_onCreate()

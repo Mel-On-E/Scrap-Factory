@@ -34,7 +34,7 @@ function Research:update_gui()
 	self.cl.gui:setText("ResearchDesc", "#ffffff" .. language_tag("DescTier" .. tostring(self.cl.tier)))
 
 
-	local progress, goal = ResearchManager.cl_getTierProgress(self.cl.tier)
+	local progress, goal = ResearchManager.cl_getTierProgressInfo(self.cl.tier)
 	if self.cl.tier < ResearchManager.cl_getCurrentTier() then
 		goal = progress
 	end

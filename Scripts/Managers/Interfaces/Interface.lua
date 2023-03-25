@@ -43,3 +43,9 @@ function Interface:cl_onGuiClosed()
 		self[sob.classname] = false
 	end
 end
+
+function Interface.cl_closeAllInterfaces()
+	for _, sob in ipairs(g_sobSet.scriptableObjectList) do
+		_G[sob.classname].cl_close()
+	end
+end
