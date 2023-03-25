@@ -15,75 +15,69 @@ sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
 
----@class page
----@field uuid string
----@field price number
----@field category string
-
----@class client;
----@field gui GuiInterface
----@field filteredPages page[][]
----@field itemPages page[][]
----amount of pages
----@field pageNum number
----current page
----@field curPage number
----current item
----@field curItem number
----current quantity
----@field quantity number
-
-
 ---@class Hub : ToolClass
----@field cl client
+---@field cl HubCl
+---@field tpAnimations any?
+---@field fpAnimations any?
 Hub = class()
 
+--------------------
+-- #region Server
+--------------------
+
+local interfacesInitialized = false
+
 function Hub:server_onCreate()
-	if SOBsInit then return end
+	if interfacesInitialized then return end
 
 	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
 		sm.scriptableObject.createScriptableObject(sm.uuid.new(sob.uuid), self.tool)
 	end
-	SOBsInit = true
+	interfacesInitialized = true
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function Hub:client_onCreate()
-	self.cl = {}
-	self.cl.currentInterface = "Shop"
-	self.cl.unequipTicks = 0
+	self.cl = {
+		currentInterface = "Shop",
+		unequipTicks = 0
+	}
 
 	self:client_onRefresh()
 end
 
 function Hub:client_onFixedUpdate()
 	if self.tool:isLocal() and self.cl.currentInterface then
-		local active = false
+		local guiActive = false
 
 		for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
 			if _G[sob.classname].cl_e_isGuiOpen() then
 				self.cl.currentInterface = sob.classname
-				active = true
+				guiActive = true
 				self.cl.unequipTicks = 0
 			end
 		end
 
-		if not active and self.tool:isEquipped() then
+		if not guiActive and self.tool:isEquipped() then
 			if self.cl.unequipTicks > 1 then
 				self:cl_onGuiClosed()
 			else
 				self.cl.unequipTicks = self.cl.unequipTicks + 1
 			end
-		elseif active and not self.tool:isEquipped() then
+		elseif guiActive and not self.tool:isEquipped() then
 			sm.tool.forceTool(self.tool)
 		end
 	end
 end
 
 function Hub:cl_openGui()
-	local interface = self.cl.currentInterface
-
 	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
-		if sob.classname == interface then
+		if sob.classname == self.cl.currentInterface then
 			_G[sob.classname]:cl_e_open_gui()
 		end
 	end
@@ -114,7 +108,12 @@ function Hub.cl_onGuiClosed(self)
 	self.cl.seatedEquiped = false
 end
 
---ANIMATION STUFF BELOW
+-- #endregion
+
+--------------------
+-- #region Animations
+--------------------
+
 function Hub:client_onEquipAnimations()
 	self.cl.wantsEquip = true
 	self.cl.seatedEquiped = false
@@ -133,7 +132,6 @@ function Hub:client_onEquipAnimations()
 		self.tool:setFpRenderables(currentRenderablesFp)
 	end
 
-	--TODO disable animations bc they are funny when broken haha lol xd OMG ROFL LMAO
 	self:cl_loadAnimations()
 	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
 
@@ -269,3 +267,16 @@ function Hub.cl_loadAnimations(self)
 	setTpAnimation(self.tpAnimations, "idle", 5.0)
 	self.cl.blendTime = 0.2
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class HubCl
+---@field currentInterface string name of the current interface that is open
+---@field unequipTicks integer number of ticks since the tool has been unequiped
+---@field blendTime number some animation stuff idk
+
+-- #endregion
