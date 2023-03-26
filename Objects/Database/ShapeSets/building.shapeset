@@ -1,148 +1,148 @@
 {
-   "partList" : [
+   "partList": [
       {
-         "box" : {
-            "x" : 16,
-            "y" : 4,
-            "z" : 16
+         "box": {
+            "x": 16,
+            "y": 4,
+            "z": 16
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_foundation_01",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "density" : 4,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_foundation_01",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "density": 4,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_foundation_01.rend",
-         "rotationSet" : "PropYZX",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "100",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_foundation_01.rend",
+         "rotationSet": "PropYZX",
+         "shop": {
+            "category": "Decor",
+            "price": "100",
+            "tier": 1
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "1b4711f6-b5ae-4e41-b82d-065867a9d0d3"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "1b4711f6-b5ae-4e41-b82d-065867a9d0d3"
       },
       {
-         "box" : {
-            "x" : 16,
-            "y" : 1,
-            "z" : 16
+         "box": {
+            "x": 16,
+            "y": 1,
+            "z": 16
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_foundation_02",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "density" : 4,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_foundation_02",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "density": 4,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_foundation_02.rend",
-         "rotationSet" : "PropYZX",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "100",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_foundation_02.rend",
+         "rotationSet": "PropYZX",
+         "shop": {
+            "category": "Decor",
+            "price": "100",
+            "tier": 1
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "6a9c7a85-b95d-4bc3-8cc8-464df810801a"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "6a9c7a85-b95d-4bc3-8cc8-464df810801a"
       },
       {
-         "box" : {
-            "x" : 2,
-            "y" : 14,
-            "z" : 2
+         "box": {
+            "x": 2,
+            "y": 14,
+            "z": 2
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_column_01",
-         "physicsMaterial" : "Rock",
-         "ratings" : {
-            "density" : 4,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_column_01",
+         "physicsMaterial": "Rock",
+         "ratings": {
+            "density": 4,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_01.rend",
-         "rotationSet" : "PropY",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "100",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_01.rend",
+         "rotationSet": "PropY",
+         "shop": {
+            "category": "Decor",
+            "price": "100",
+            "tier": 2
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "9c59ddbf-9bf8-47a7-8771-067f8d96f741"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "9c59ddbf-9bf8-47a7-8771-067f8d96f741"
       },
       {
-         "box" : {
-            "x" : 1,
-            "y" : 14,
-            "z" : 1
+         "box": {
+            "x": 1,
+            "y": 14,
+            "z": 1
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_column_02",
-         "physicsMaterial" : "Rock",
-         "ratings" : {
-            "density" : 4,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_column_02",
+         "physicsMaterial": "Rock",
+         "ratings": {
+            "density": 4,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_02.rend",
-         "rotationSet" : "PropY",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "25",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_column_02.rend",
+         "rotationSet": "PropY",
+         "shop": {
+            "category": "Decor",
+            "price": "25",
+            "tier": 2
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "d5c4fc84-ad5a-41c1-876b-591412b37b11"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "d5c4fc84-ad5a-41c1-876b-591412b37b11"
       },
       {
-         "box" : {
-            "x" : 14,
-            "y" : 14,
-            "z" : 1
+         "box": {
+            "x": 14,
+            "y": 14,
+            "z": 1
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_wall_01",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "density" : 6,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_wall_01",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "density": 6,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_01.rend",
-         "rotationSet" : "PropY",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "50",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_01.rend",
+         "rotationSet": "PropY",
+         "shop": {
+            "category": "Decor",
+            "price": "50",
+            "tier": 2
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "b1b7dc53-d143-4241-92e7-d92be98eec1a"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "b1b7dc53-d143-4241-92e7-d92be98eec1a"
       },
       {
-         "box" : {
-            "x" : 7,
-            "y" : 7,
-            "z" : 1
+         "box": {
+            "x": 7,
+            "y": 7,
+            "z": 1
          },
-         "color" : "df7f00",
-         "name" : "obj_factory_building_wall_03",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "density" : 4,
-            "durability" : 4
+         "color": "df7f00",
+         "name": "obj_factory_building_wall_03",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "density": 4,
+            "durability": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_03.rend",
-         "rotationSet" : "PropY",
-         "shop" : {
-            "category" : "Decor",
-            "price" : "50",
-            "tier" : 0
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_building_wall_03.rend",
+         "rotationSet": "PropY",
+         "shop": {
+            "category": "Decor",
+            "price": "50",
+            "tier": 2
          },
-         "stackSize" : 65535,
-         "sticky" : "All",
-         "uuid" : "4ae033f6-15b8-4cc1-89ac-db200809a2dc"
+         "stackSize": 65535,
+         "sticky": "All",
+         "uuid": "4ae033f6-15b8-4cc1-89ac-db200809a2dc"
       }
    ]
 }

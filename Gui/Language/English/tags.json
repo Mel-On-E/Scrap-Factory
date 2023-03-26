@@ -20,6 +20,9 @@
 	"ImportedCreation": "Imported Creation!",
 	"ImportNone": "No Blueprints",
 	"ImportNeededMoney": "Cost: ",
+	"ImportCantBuyItems": "Unaffordable",
+	"ImportDeleteCreation": "Delete",
+	"ImportDeleteCreationConfirmation": "Are you sure you want to DELETE '%s'?",
 
 	//Money & Shop
 	"Sell": "Sell",

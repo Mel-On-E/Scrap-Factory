@@ -107,7 +107,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
         Lift.client_interact(self, primaryState, secondaryState, result)
 
         if hit then
-            if result.type == "body" then
+            if result.type == "body" and result:getBody():isLiftable() then
                 --export gui
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
                 if forceBuild and not self.cl.exportGui:isActive() then
@@ -121,6 +121,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
                     self:cl_import_updateItemGrid(self.cl.importCreation, false)
                     self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
+                    self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
                     self.importGui:open()
                 end
             end
@@ -178,8 +179,10 @@ function FactoryLift:cl_export_confirm(widget, override)
         return
     end
 
+    local path = self:getCreationPath(self.cl.exportName)
+
     if not override and
-        sm.json.fileExists(self:getCreationPath(self.cl.exportName)) then
+        sm.json.fileExists(path) and sm.json.open(path) then
         self.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
         self.confirmClearGui:setButtonCallback("Yes", "cl_export_overwriteButtonClick")
         self.confirmClearGui:setButtonCallback("No", "cl_export_overwriteButtonClick")
@@ -198,6 +201,48 @@ function FactoryLift:cl_export_confirm(widget, override)
     sm.audio.play("Blueprint - Save")
 end
 
+function FactoryLift:cl_deleteImportCreation()
+    self.confirmDeletionGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
+    self.confirmDeletionGui:setButtonCallback("Yes", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setButtonCallback("No", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
+    self.confirmDeletionGui:setText("Message",
+        language_tag("ImportDeleteCreationConfirmation"):format(self.cl.importCreation))
+
+    self.importGui:close()
+    self.confirmDeletionGui:open()
+end
+
+function FactoryLift:cl_importDeleteCreationConfirmation(name)
+    if name == "Yes" then
+        self:cl_deleteCreation(self.cl.importCreation)
+
+        sm.audio.play("Blueprint - Delete")
+    end
+
+    self.confirmDeletionGui:close()
+    self.confirmDeletionGui:destroy()
+    self.confirmDeletionGui = nil
+end
+
+---delete a creation in the json files
+---@param name string name of the creation to be deleted
+function FactoryLift:cl_deleteCreation(name)
+    local path = self:getCreationPath(name)
+    --make the json file empty bc we can't delete files
+    sm.json.save({}, path)
+
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    for k, v in pairs(creations) do
+        if v == path then
+            creations[k] = nil
+        end
+    end
+    sm.json.save(creations, exportedCreations)
+
+    self:cl_resetImportOptions()
+end
+
 function FactoryLift:cl_export_overwriteButtonClick(name)
     if name == "Yes" then
         self.confirmClearGui:close()
@@ -214,6 +259,7 @@ end
 function FactoryLift:cl_import_createUI()
     self.importGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_import.layout")
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
+    self.importGui:setButtonCallback("DeleteCreationButton", "cl_deleteImportCreation")
 
     local options = {}
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
@@ -246,6 +292,8 @@ function FactoryLift:cl_import_select(option)
         self:cl_import_updateItemGrid(option)
         ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
+        self.importGui:setText("title", language_tag("ImportTitle"))
+        self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
         self.importGui:open()
     end
 end
@@ -285,16 +333,21 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
         count = count + 1
     end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(items)
-    self.importGui:setVisible("import", canImport)
-    self.importGui:setText("money",
-        language_tag("ImportNeededMoney") .. format_number({ format = "money", value = missingMoney }))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(items)
+    self.importGui:setVisible("import", canAfford)
+    if missingMoney then
+        self.importGui:setText("money",
+            language_tag("ImportNeededMoney") ..
+            format_number({ format = "money", value = missingMoney, color = (not canAfford) and "#dd0000" or nil }))
+    else
+        self.importGui:setText("money", "#dd0000" .. language_tag("ImportCantBuyItems"))
+    end
 end
 
 function FactoryLift:cl_import_importCreation()
     if self.cl.importCreation == nil then return end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.cl.importCreation))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.cl.importCreation))
 
     self.network:sendToServer("sv_importCreation",
         {
@@ -332,7 +385,7 @@ end
 ---returns info about the creation to be imported
 ---@param items table<string, integer> uuid, amount
 ---@return boolean canAfford whehter enough money is available to import
----@return integer price price to pay to "buy" the missing items
+---@return integer|nil price price to pay to "buy" the missing items
 ---@return table<string, integer> items items provided by the inventory for import
 function FactoryLift:getImportStats(items)
     local ownedItems = {}
@@ -345,6 +398,11 @@ function FactoryLift:getImportStats(items)
 
         if owned < amount then
             local shopItem = g_shop[uuid]
+
+            if shopItem.special then
+                --can't buy a special item
+                return false, nil, {}
+            end
             neededMoney = neededMoney + (shopItem and tonumber(shopItem.price) or 1) * (amount - owned)
         end
     end
