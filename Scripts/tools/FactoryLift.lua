@@ -121,6 +121,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
                     self:cl_import_updateItemGrid(self.cl.importCreation, false)
                     self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
+                    self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
                     self.importGui:open()
                 end
             end
@@ -178,8 +179,10 @@ function FactoryLift:cl_export_confirm(widget, override)
         return
     end
 
+    local path = self:getCreationPath(self.cl.exportName)
+
     if not override and
-        sm.json.fileExists(self:getCreationPath(self.cl.exportName)) then
+        sm.json.fileExists(path) and sm.json.open(path) then
         self.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
         self.confirmClearGui:setButtonCallback("Yes", "cl_export_overwriteButtonClick")
         self.confirmClearGui:setButtonCallback("No", "cl_export_overwriteButtonClick")
@@ -198,6 +201,48 @@ function FactoryLift:cl_export_confirm(widget, override)
     sm.audio.play("Blueprint - Save")
 end
 
+function FactoryLift:cl_deleteImportCreation()
+    self.confirmDeletionGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
+    self.confirmDeletionGui:setButtonCallback("Yes", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setButtonCallback("No", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
+    self.confirmDeletionGui:setText("Message",
+        language_tag("ImportDeleteCreationConfirmation"):format(self.cl.importCreation))
+
+    self.importGui:close()
+    self.confirmDeletionGui:open()
+end
+
+function FactoryLift:cl_importDeleteCreationConfirmation(name)
+    if name == "Yes" then
+        self:cl_deleteCreation(self.cl.importCreation)
+
+        sm.audio.play("Blueprint - Delete")
+    end
+
+    self.confirmDeletionGui:close()
+    self.confirmDeletionGui:destroy()
+    self.confirmDeletionGui = nil
+end
+
+---delete a creation in the json files
+---@param name string name of the creation to be deleted
+function FactoryLift:cl_deleteCreation(name)
+    local path = self:getCreationPath(name)
+    --make the json file empty bc we can't delete files
+    sm.json.save({}, path)
+
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    for k, v in pairs(creations) do
+        if v == path then
+            creations[k] = nil
+        end
+    end
+    sm.json.save(creations, exportedCreations)
+
+    self:cl_resetImportOptions()
+end
+
 function FactoryLift:cl_export_overwriteButtonClick(name)
     if name == "Yes" then
         self.confirmClearGui:close()
@@ -214,6 +259,7 @@ end
 function FactoryLift:cl_import_createUI()
     self.importGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_import.layout")
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
+    self.importGui:setButtonCallback("DeleteCreationButton", "cl_deleteImportCreation")
 
     local options = {}
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
@@ -247,6 +293,7 @@ function FactoryLift:cl_import_select(option)
         ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
         self.importGui:setText("title", language_tag("ImportTitle"))
+        self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
         self.importGui:open()
     end
 end

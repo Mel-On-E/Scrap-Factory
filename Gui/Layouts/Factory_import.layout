@@ -34,6 +34,18 @@
                 <Property key="NeedKey" value="false"/>
                 <Property key="NeedMouse" value="false"/>
             </Widget>
+            <Widget type="Button" skin="ActiveButton" position_real="0.025862068965517241 0.72093023255813948 0.42931034482758623 0.11627906976744186" name="DeleteCreationButton">
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_Button"/>
+                <Widget type="TextBox" skin="TextBox" position_real="0 0 0.9821428571428571 1" name="DeleteCreation">
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="Delete"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="TextColour" value="1 1 1"/>
+                    <Property key="FontName" value="SM_Button"/>
+                    <Property key="NeedKey" value="false"/>
+                </Widget>
+            </Widget>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>
