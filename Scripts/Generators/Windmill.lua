@@ -23,24 +23,21 @@ end
 local animSpeeds = {
     Propeller = 20,
     Idle_R = 20,
-    Idle_L = 20
+    --Idle_L = 20
 }
 function Windmill:client_onCreate()
     Generator.client_onCreate(self)
 
-    self.interactable:setAnimEnabled("Propeller", false)
-    self.interactable:setAnimEnabled("Idle_R", false)
-    --self.interactable:setAnimEnabled("Idle_L", false)
     self:cl_setAnim("Propeller")
 end
 
 function Windmill:cl_setAnim(anim)
-    if self.activeAnim then
-        self.interactable:setAnimEnabled(self.activeAnim, false)
+    for _anim, v in pairs(animSpeeds) do
+        self.interactable:setAnimEnabled(_anim, _anim == anim)
+        self.interactable:setAnimProgress(_anim, 0)
     end
 
     self.activeAnim = anim
-    self.interactable:setAnimEnabled(anim, true)
     self.animDuration = self.interactable:getAnimDuration(anim)
     self.animProgress = 0
 end
