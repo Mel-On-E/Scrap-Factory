@@ -26,6 +26,8 @@ local animSpeeds = {
     Idle_L = 20
 }
 function Windmill:client_onCreate()
+    Generator.client_onCreate(self)
+    self.interactable:setAnimEnabled("Propeller", false)
     self.interactable:setAnimEnabled("Idle_R", false)
     --self.interactable:setAnimEnabled("Idle_L", false)
     self:cl_setAnim("Propeller")
