@@ -165,7 +165,7 @@
          "ratings": {
             "buoyancy": 2,
             "density": 1,
-            "durability": 1,
+            "durability": 3,
             "friction": 3
          },
          "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
@@ -223,7 +223,7 @@
          "ratings": {
             "buoyancy": 2,
             "density": 1,
-            "durability": 1,
+            "durability": 3,
             "friction": 3
          },
          "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_refiner_basic_01.rend",
@@ -281,7 +281,7 @@
          "ratings": {
             "buoyancy": 2,
             "density": 1,
-            "durability": 1,
+            "durability": 3,
             "friction": 3
          },
          "renderable": "$GAME_DATA/Objects/Renderable/decor/obj_decor_toiletroll.rend",
