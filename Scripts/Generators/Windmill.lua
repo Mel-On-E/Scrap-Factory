@@ -27,6 +27,7 @@ local animSpeeds = {
 }
 function Windmill:client_onCreate()
     Generator.client_onCreate(self)
+
     self.interactable:setAnimEnabled("Propeller", false)
     self.interactable:setAnimEnabled("Idle_R", false)
     --self.interactable:setAnimEnabled("Idle_L", false)
@@ -51,10 +52,10 @@ function Windmill:client_onUpdate(dt)
 
     if progress >= 1 then
         local anim
-        if math.random() < 0.75 then
+        if math.random() < 0.85 then
             anim = "Propeller"
         else
-            anim = "Idle_R" --"Idle"..(math.random() < 0.5 and "R" or "L")
+            anim = "Idle_R" --"Idle_"..(math.random() < 0.5 and "R" or "L")
         end
 
         self:cl_setAnim(anim)
