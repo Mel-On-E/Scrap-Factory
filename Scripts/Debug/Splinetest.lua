@@ -1,18 +1,10 @@
 Spline = class( nil )
 
---[[Takes 2 positions and a fraction value and returns a table of positions along a spline between given points, amount of points along the spline is determined by farction value
-local function create_spline(p0, p1, fraction)
-    local spline = {}
-    local cycles = fraction - 1
+--------------------
+-- #region Old function but still really good and looks visually different so keep it
+--------------------
 
-    for i = 0, cycles do
-        spline[#spline + 1] = sm.vec3.lerp( p0, p1, i / cycles )
-    end
-
-    return spline
-end]]
-
-local function create_arch(p0, p1, fraction)
+--[[local function create_arch(p0, p1, fraction)
     local spline = {}
     local cycles = fraction - 1
 
@@ -36,7 +28,37 @@ local function create_arch(p0, p1, fraction)
     end
 
     return spline
+end]]
+
+-- #endregion
+
+--------------------
+-- #region Custom functions
+--------------------
+
+--Takes 2 positions and a fraction value and returns a table of positions along a spline between given points, amount of points along the spline is determined by farction value
+local function create_arch(p0, p1, fraction)
+    local distance = (p1 - p0):length()
+    local multiplier = distance * 0.3
+    local step = 1 / fraction
+    local spline = {}
+
+    for i = 0, fraction do
+        local t = step * i
+        local x = p0.x + (p1.x - p0.x) * t
+        local y = p0.y + (p1.y - p0.y) * t
+        local z = p0.z + (p1.z - p0.z) * t + math.sin(t * math.pi) * multiplier
+        spline[#spline + 1] = sm.vec3.new(x, y, z)
+    end
+
+    return spline
 end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
 
 function Spline.client_onCreate( self )
     self.areaTrigger = sm.areaTrigger.createAttachedSphere( self.interactable, 5, sm.vec3.zero(), sm.quat.identity(), 1 )
@@ -59,3 +81,5 @@ function Spline.client_onUpdate( self, dt )
         end
     end
 end
+
+-- #endregion
