@@ -120,7 +120,7 @@ function Perks:cl_changeItem(widgetName)
 	self.cl.perkGui:setVisible("BuyButton", item and true)
 
 	if not item then
-		self.cl.perkGui:setImage("Preview", IMAGE_PATH .. "none.png")
+		self.cl.perkGui:setVisible("Preview", false)
 		self.cl.perkGui:setText("ItemName", "")
 		self.cl.perkGui:setText("ItemDesc", "")
 		self.cl.perkGui:setText("Requires", "")
@@ -128,6 +128,7 @@ function Perks:cl_changeItem(widgetName)
 	end
 
 	self.cl.perkGui:setButtonState(widgetName, true)
+	self.cl.perkGui:setVisible("Preview", true)
 	self.cl.perkGui:setImage("Preview", IMAGE_PATH .. item.name .. ".png")
 	self.cl.perkGui:setText("ItemName", language_tag(item.name .. "Name"))
 	self.cl.perkGui:setText("ItemDesc", language_tag(item.name .. "Desc"))
