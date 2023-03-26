@@ -20,6 +20,7 @@
 	"ImportedCreation": "Imported Creation!",
 	"ImportNone": "No Blueprints",
 	"ImportNeededMoney": "Cost: ",
+	"ImportCantBuyItems": "Unaffordable",
 
 	//Money & Shop
 	"Sell": "Sell",

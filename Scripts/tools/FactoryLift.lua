@@ -246,6 +246,7 @@ function FactoryLift:cl_import_select(option)
         self:cl_import_updateItemGrid(option)
         ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
+        self.importGui:setText("title", language_tag("ImportTitle"))
         self.importGui:open()
     end
 end
@@ -285,16 +286,21 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
         count = count + 1
     end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(items)
-    self.importGui:setVisible("import", canImport)
-    self.importGui:setText("money",
-        language_tag("ImportNeededMoney") .. format_number({ format = "money", value = missingMoney }))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(items)
+    self.importGui:setVisible("import", canAfford)
+    if missingMoney then
+        self.importGui:setText("money",
+            language_tag("ImportNeededMoney") ..
+            format_number({ format = "money", value = missingMoney, color = (not canAfford) and "#dd0000" or nil }))
+    else
+        self.importGui:setText("money", "#dd0000" .. language_tag("ImportCantBuyItems"))
+    end
 end
 
 function FactoryLift:cl_import_importCreation()
     if self.cl.importCreation == nil then return end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.cl.importCreation))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.cl.importCreation))
 
     self.network:sendToServer("sv_importCreation",
         {
@@ -332,7 +338,7 @@ end
 ---returns info about the creation to be imported
 ---@param items table<string, integer> uuid, amount
 ---@return boolean canAfford whehter enough money is available to import
----@return integer price price to pay to "buy" the missing items
+---@return integer|nil price price to pay to "buy" the missing items
 ---@return table<string, integer> items items provided by the inventory for import
 function FactoryLift:getImportStats(items)
     local ownedItems = {}
@@ -345,6 +351,11 @@ function FactoryLift:getImportStats(items)
 
         if owned < amount then
             local shopItem = g_shop[uuid]
+
+            if shopItem.special then
+                --can't buy a special item
+                return false, nil, {}
+            end
             neededMoney = neededMoney + (shopItem and tonumber(shopItem.price) or 1) * (amount - owned)
         end
     end
