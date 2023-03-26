@@ -144,12 +144,21 @@ function Shop:cl_changeItem(widgetName)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.item = tonumber(widgetName:sub(6))
 
-	local uuid = self.cl.renderedPages[self.cl.curPage][self.cl.item].uuid
+	local item = self.cl.renderedPages[self.cl.curPage][self.cl.item]
+
+	self.cl.gui:setVisible("Preview", item and true)
+	if not item then
+		self.cl.gui:setVisible("Preview", false)
+		self.cl.gui:setText("ItemName", "")
+		self.cl.gui:setText("ItemDesc", "")
+		return
+	end
 
 	self.cl.gui:setButtonState(widgetName, true)
-	self.cl.gui:setMeshPreview("Preview", uuid)
-	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
-	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
+	self.cl.gui:setVisible("Preview", true)
+	self.cl.gui:setMeshPreview("Preview", item.uuid)
+	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(item.uuid))
+	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(item.uuid))
 end
 
 function Shop:cl_buy()

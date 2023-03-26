@@ -86,8 +86,8 @@ end
 
 ---@class FormatNumberParams
 ---@field format "power" | "pollution" | "prestige" | "money" standard formatting options
----@field color string A hex color (#rrggbb) that will be the text color
----@field unit string The symbol after the number (postfix)
+---@field color string|nil A hex color (#rrggbb) that will be the text color
+---@field unit string|nil The symbol after the number (postfix)
 ---@field suffixes string[] The suffixes of the numbers for each 3 orders of magnitude
 ---@field value number The number to format
 

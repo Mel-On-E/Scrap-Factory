@@ -118,9 +118,9 @@ function Perks:cl_changeItem(widgetName)
 
 	local item = self.cl.renderedPages[self.cl.curPage][self.cl.curItem]
 	self.cl.perkGui:setVisible("BuyButton", item and true)
+	self.cl.perkGui:setVisible("Preview", item and true)
 
 	if not item then
-		self.cl.perkGui:setImage("Preview", IMAGE_PATH .. "none.png")
 		self.cl.perkGui:setText("ItemName", "")
 		self.cl.perkGui:setText("ItemDesc", "")
 		self.cl.perkGui:setText("Requires", "")

@@ -13,6 +13,12 @@ local despawnTime = 10
 
 function LootCrate:server_onCreate()
     self.sv = { timeout = 0 }
+
+    local body = self.shape.body
+    body:setLiftable(false)
+    body:setErasable(false)
+    body:setBuildable(false)
+    body:setPaintable(false)
 end
 
 function LootCrate:server_onFixedUpdate()
