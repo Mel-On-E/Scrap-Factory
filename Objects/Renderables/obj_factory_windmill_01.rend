@@ -1,7 +1,7 @@
 {
    "lodList": [
       {
-         "mesh": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_01.fbx",
+         "mesh": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
          "subMeshList": [
             {
                "material": "SkelAnimDifAsgNor",
@@ -14,13 +14,13 @@
          ],
          "animationList": [
             {
-               "name": "Propeller",
-               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_01.fbx",
+               "name": "Prop_R",
+               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
                "looping": true
             },
             {
                "name": "Idle_R",
-               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_01.fbx",
+               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
                "looping": false
             }
          ]

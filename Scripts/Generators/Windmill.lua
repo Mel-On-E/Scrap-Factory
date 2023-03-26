@@ -21,14 +21,14 @@ end
 -- #endregion
 
 local animSpeeds = {
-    Propeller = 20,
+    Prop_R = 20,
     Idle_R = 20,
     --Idle_L = 20
 }
 function Windmill:client_onCreate()
     Generator.client_onCreate(self)
 
-    self:cl_setAnim("Propeller")
+    self:cl_setAnim("Prop_R")
 end
 
 function Windmill:cl_setAnim(anim)
@@ -50,7 +50,7 @@ function Windmill:client_onUpdate(dt)
     if progress >= 1 then
         local anim
         if math.random() < 0.85 then
-            anim = "Propeller"
+            anim = "Prop_R"
         else
             anim = "Idle_R" --"Idle_"..(math.random() < 0.5 and "R" or "L")
         end
