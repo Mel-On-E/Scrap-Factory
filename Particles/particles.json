@@ -9,6 +9,7 @@
       "drops/p_drops_pollution_cloud.json",
       "dev/p_laser_test.json",
       "upgraders/p_upgrade_random.json",
-      "dev/p_areaTrigger_visualiser.json"
+      "dev/p_areaTrigger_visualiser.json",
+      "upgraders/p_upgrade_drop.json"
    ]
 }

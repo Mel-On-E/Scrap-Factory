@@ -87,8 +87,9 @@ function Upgrader:sv_onUpgrade(shape, data)
         }
     else
         effectParams = {
-            effect = "Upgrade Drop",
-            pos = shape.worldPosition
+            effect = "Upgraders - Basic",
+            pos = shape.worldPosition,
+            host = shape
         }
     end
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", effectParams)
