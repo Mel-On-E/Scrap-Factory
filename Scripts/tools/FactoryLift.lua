@@ -107,7 +107,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
         Lift.client_interact(self, primaryState, secondaryState, result)
 
         if hit then
-            if result.type == "body" then
+            if result.type == "body" and result:getBody():isLiftable() then
                 --export gui
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
                 if forceBuild and not self.cl.exportGui:isActive() then

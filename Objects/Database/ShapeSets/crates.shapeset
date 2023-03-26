@@ -18,12 +18,6 @@
       },
       "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_loot_lootcrate_01.rend",
       "restitution": 1.333,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "LootCrate",
@@ -80,12 +74,6 @@
         ]
       },
       "restitution": 1.333,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "RareLootCrate",
@@ -136,12 +124,6 @@
         ]
       },
       "restitution": 1.333,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "PrestigeLootCrate",
