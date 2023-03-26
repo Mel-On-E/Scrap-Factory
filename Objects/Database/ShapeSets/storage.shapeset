@@ -1,88 +1,88 @@
 {
-   "partList" : [
+   "partList": [
       {
          "box": {
-				"x": 2,
-				"y": 2,
-				"z": 2
-			},
-         "color" : "696969",
-         "flammable" : true,
-         "name" : "obj_storage_battery_01",
+            "x": 2,
+            "y": 2,
+            "z": 2
+         },
+         "color": "696969",
+         "flammable": true,
+         "name": "obj_storage_battery_01",
          "rotationSet": "PropY",
-			"sticky": "-Y+Y",
-			"physicsMaterial": "Plastic",
-         "ratings" : {
-            "buoyancy" : 7,
-            "density" : 2,
-            "durability" : 2,
-            "friction" : 4
+         "sticky": "-Y+Y",
+         "physicsMaterial": "Plastic",
+         "ratings": {
+            "buoyancy": 7,
+            "density": 2,
+            "durability": 2,
+            "friction": 4
          },
          "renderable": {
-				"lodList": [
-					{
-						"subMeshList": [
-							{
-								"textureList": [
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_dif.tga",
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_asg.tga",
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_nor.tga"
-								],
-								"material": "DifAsgNor"
-							}
-						],
-						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_battery.fbx"
-					}
-				]
-			},
-         "scripted" : {
-            "classname" : "Storage",
-            "data" : {
-               "powerLimit" : 100
+            "lodList": [
+               {
+                  "subMeshList": [
+                     {
+                        "textureList": [
+                           "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_battery_nor.tga"
+                        ],
+                        "material": "DifAsgNor"
+                     }
+                  ],
+                  "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_battery.fbx"
+               }
+            ]
+         },
+         "scripted": {
+            "classname": "Storage",
+            "data": {
+               "powerStorage": 100
             },
-            "filename" : "$CONTENT_DATA/Scripts/Generators/Storage.lua"
+            "filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua"
          },
-         "shop" : {
-            "category" : "Generators",
-            "price" : "100",
-            "tier" : 1
+         "shop": {
+            "category": "Generators",
+            "price": "100",
+            "tier": 1
          },
-         "stackSize" : 65535.0,
-         "uuid" : "91037f2c-5230-464b-8873-ad13355539af"
+         "stackSize": 65535.0,
+         "uuid": "91037f2c-5230-464b-8873-ad13355539af"
       },
       {
-         "box" : {
-            "x" : 4,
-            "y" : 4,
-            "z" : 3
+         "box": {
+            "x": 4,
+            "y": 4,
+            "z": 3
          },
-         "color" : "df7f00",
-         "flammable" : true,
-         "name" : "obj_storage_battery_02",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "buoyancy" : 3,
-            "density" : 4,
-            "durability" : 3,
-            "friction" : 4
+         "color": "df7f00",
+         "flammable": true,
+         "name": "obj_storage_battery_02",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 3,
+            "density": 4,
+            "durability": 3,
+            "friction": 4
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_storage_battery_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "Storage",
-            "data" : {
-               "powerLimit" : 1000
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_storage_battery_01.rend",
+         "rotationSet": "PropY",
+         "scripted": {
+            "classname": "Storage",
+            "data": {
+               "powerStorage": 1000
             },
-            "filename" : "$CONTENT_DATA/Scripts/Generators/Storage.lua"
+            "filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua"
          },
-         "shop" : {
-            "category" : "Generators",
-            "price" : "2000",
-            "tier" : 2
+         "shop": {
+            "category": "Generators",
+            "price": "2000",
+            "tier": 2
          },
-         "stackSize" : 65535.0,
-         "sticky" : "-Y+Y",
-         "uuid" : "43064030-ab19-4d1b-b060-3c7376b11725"
+         "stackSize": 65535.0,
+         "sticky": "-Y+Y",
+         "uuid": "43064030-ab19-4d1b-b060-3c7376b11725"
       }
    ]
 }

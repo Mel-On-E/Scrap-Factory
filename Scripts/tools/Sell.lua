@@ -120,6 +120,13 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 		if shopItem then
 			local sellValue = math.floor(shopItem.price * resellValue)
 
+			--calculate blocks
+			if shape.isBlock then
+				local dim = shape:getBoundingBox() * 4
+				local blocks = dim.x * dim.y * dim.z
+				sellValue = sellValue * blocks
+			end
+
 			sm.gui.setCenterIcon("Use")
 			local keyBindingText1 = sm.gui.getKeyBinding("Create", true)
 			local keyBindingText2 = sm.gui.getKeyBinding("NextCreateRotation")
