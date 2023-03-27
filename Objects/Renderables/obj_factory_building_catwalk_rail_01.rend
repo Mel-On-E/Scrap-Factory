@@ -1,7 +1,7 @@
 {
    "lodList" : [
       {
-         "mesh" : "$CONTENT_DATA/Objects/Mesh/Building/obj_factory_building_catwalk_straight_01.fbx",
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/Building/obj_factory_building_catwalk_railing_01.fbx",
          "subMeshList" : [
             {
                "material" : "DifAsgNor",
