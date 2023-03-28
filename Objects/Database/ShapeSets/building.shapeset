@@ -191,6 +191,48 @@
          "stackSize" : 65535,
          "sticky" : "All",
          "uuid" : "612701ee-ab1a-4766-80f9-0b3e8d08e576"
+      },
+      {
+         "color" : "df7f00",
+         "name" : "obj_factory_building_ramp_01",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 4,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_ramp_01.rend",
+         "rotationSet" : "PropYZ",
+         "slant" : {
+            "back" : "-Z",
+            "bottom" : "-Y",
+            "x" : 14,
+            "y" : 4,
+            "z" : 6
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "259bbaa6-e6b3-4f08-a3ad-5ac7e7940f6b"
+      },
+      {
+         "color" : "df7f00",
+         "name" : "obj_factory_building_ramp_02",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "density" : 4,
+            "durability" : 4
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_building_ramp_02.rend",
+         "rotationSet" : "PropY",
+         "slant" : {
+            "back" : "-Z",
+            "bottom" : "-Y",
+            "x" : 14,
+            "y" : 15,
+            "z" : 30
+         },
+         "stackSize" : 65535,
+         "sticky" : "All",
+         "uuid" : "61ba9ae1-7328-4932-8a0a-0f0a7cdadb57"
       }
    ]
 }
