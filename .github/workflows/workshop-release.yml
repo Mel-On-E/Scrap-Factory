@@ -1,0 +1,24 @@
+name: Create Archive
+on:
+  push:
+    tags:
+    - "v[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@master
+    - name: Archive release
+      uses: thedoctor0/zip-release@main
+      with:
+        type: 'zip'
+        filename: 'workshop-release.zip'
+        exclusions: '*.git* *.exe'
+    - name: Upload release
+      uses: ncipollo/release-action@main
+      with:
+        artifacts: "workshop-release.zip"
+        draft: true
+        body: "**Release draft. Generate release notes within the GH release edit form!**"
