@@ -1,17 +1,27 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Perks.lua")
 
+---Interfaces opened via the hub tool. Can be used to see prestige gain, do a prestige, or access to the perk shop.
 ---@class Prestige : Perks
+---@field cl PrestigeCl
 Prestige = class(Perks)
+
+--------------------
+-- #region Server
+--------------------
 
 function Prestige:sv_prestige()
 	PrestigeManager.sv_startPrestige()
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function Prestige:client_onCreate()
-	if not g_cl_prestige then
-		g_cl_prestige = self
-	end
+	g_cl_prestige = g_cl_prestige or self
 
 	Interface.client_onCreate(self, "$CONTENT_DATA/Gui/Layouts/Prestige.layout")
 
@@ -80,3 +90,15 @@ function Prestige:cl_perks()
 
 	Perks.cl_openPerkGui(self)
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class PrestigeCl
+---@field gui GuiInterface
+---@field confirmPrestigeGui GuiInterface confirmation GUI for doing a prestige
+
+-- #endregion

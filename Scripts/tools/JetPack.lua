@@ -55,6 +55,7 @@ end
 --------------------
 
 local maxFuel = 100
+local fuel = maxFuel
 local fuelBurnRatePerSecond = 10
 local fuelRestoreRatePerSecond = 25
 ---timet to wait before fuel can recharge
@@ -64,7 +65,6 @@ function Jetpack:client_onCreate()
 	self.cl = {
 		alwaysOn = false,
 		active = false,
-		fuel = maxFuel,
 		fuelRechargeCooldown = 0,
 	}
 
@@ -82,7 +82,7 @@ end
 function Jetpack:client_onEquippedUpdate(primaryState, secondaryState)
 	if self.tool:isLocal() then
 		if primaryState == sm.tool.interactState.start then
-			if not (not self.cl.active and self.cl.fuel == 0) then
+			if not (not self.cl.active and fuel == 0) then
 				self:cl_toggleJetpack()
 			end
 		end
@@ -100,7 +100,7 @@ function Jetpack:client_onFixedUpdate()
 	if not self.tool:isLocal() or not self.cl.active then
 		return
 	end
-	if self.cl.fuel > 0 then
+	if fuel > 0 then
 		local character = self.tool:getOwner():getCharacter()
 		local vel = character:getVelocity()
 		vel.z = 0
@@ -119,24 +119,34 @@ function Jetpack:client_onUpdate(dt)
 	end
 
 	self.cl.fuelRechargeCooldown = math.max(self.cl.fuelRechargeCooldown - dt, 0)
-
-	if self.cl.active then
-		self.cl.fuel = math.max(self.cl.fuel - fuelBurnRatePerSecond * dt, 0)
-	elseif self.tool:isOnGround() and self.cl.fuelRechargeCooldown == 0 then
-		self.cl.fuel = math.min(self.cl.fuel + fuelRestoreRatePerSecond * dt, maxFuel)
+	---@diagnostic disable-next-line: missing-parameter
+	local isSwimming = self.tool:getOwner():getCharacter():isSwimming()
+	if isSwimming then
+		self.cl.fuelRechargeCooldown = fuelRechargeCooldown
 	end
 
-	if self.cl.fuel < maxFuel then
-		sm.gui.setProgressFraction(self.cl.fuel / maxFuel)
+	if self.cl.active then
+		fuel = math.max(fuel - fuelBurnRatePerSecond * dt, 0)
+	elseif self.tool:isOnGround() and not isSwimming and self.cl.fuelRechargeCooldown == 0 and self.tool:isEquipped() then
+		fuel = math.min(fuel + fuelRestoreRatePerSecond * dt, maxFuel)
+	end
+
+	if fuel < maxFuel then
+		sm.gui.setProgressFraction(fuel / maxFuel)
 	end
 end
 
 function Jetpack:cl_toggleJetpack()
-	--remove some fuel to prevent bugs and limit spamming
-	self.cl.fuel = math.max(self.cl.fuel - fuelBurnRatePerSecond * 0.5, 0)
-	self.cl.fuelRechargeCooldown = fuelRechargeCooldown
-
+	---@diagnostic disable-next-line: missing-parameter
+	if not self.cl.active and self.tool:getOwner():getCharacter():isSwimming() then
+		-- only one Jetpack can be used at a time
+		return
+	end
 	self.cl.active = not self.cl.active
+
+	--remove some fuel to prevent bugs and limit spamming
+	fuel = math.max(fuel - fuelBurnRatePerSecond * 0.5, 0)
+
 	self.network:sendToServer("sv_toggleJetpack")
 
 	self.network:sendToServer("sv_toggleEffect", "Jetpack" .. tostring(self.tool:getOwner().id))

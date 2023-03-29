@@ -80,7 +80,7 @@ function Research:cl_tier_prev()
 end
 
 function Research:change_tier(change)
-	self.cl.tier = math.minMax(1, self.cl.tier + change, ResearchManager.cl_getTierCount())
+	self.cl.tier = sm.util.clamp(self.cl.tier + change, 1, ResearchManager.cl_getTierCount())
 
 	self.cl.unlockIndex = 0
 	self:update_gui()
@@ -99,7 +99,7 @@ function Research:change_unlock_index(change)
 
 	local unlocks = #ResearchManager.cl_getTierUnlocks(self.cl.tier)
 	local max = math.max(0, unlocks - unlockSlots)
-	self.cl.unlockIndex = math.minMax(0, self.cl.unlockIndex + change, max)
+	self.cl.unlockIndex = sm.util.clamp(self.cl.unlockIndex + change, 0, max)
 end
 
 function Research.cl_close()

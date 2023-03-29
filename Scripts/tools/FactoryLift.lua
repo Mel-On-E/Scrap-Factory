@@ -1,59 +1,39 @@
-dofile "$GAME_DATA/Scripts/game/Lift.lua"
-dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/MoneyManager.lua")
-dofile "$SURVIVAL_DATA/Scripts/util.lua"
+dofile("$GAME_DATA/Scripts/game/Lift.lua")
 
+---A modified Lift that can export and import entire factories!
 ---@class FactoryLift : ToolClass
+---@field cl FactoryLiftCl
+---@field selectedBodies table<integer, Body> Lift.lua
+---@field liftPos Vec3 Lift.lua
 FactoryLift = class(Lift)
 
-local specialCharacters = {
-    "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
-    "+", "=", "{", "}", "[", "]", "|", "\\", "/", ":", ";", '"',
-    "'", "<", ">", ",", ".", "?"
-}
 local exportedCreations = "$CONTENT_DATA/UserData/ExportedCreations.json"
 
+--------------------
+-- #region Server
+--------------------
+
+---@param args {name: string, creation: Body}
 function FactoryLift:sv_exportCreation(args, caller)
     args.creation = sm.creation.exportToTable(args.creation, false, true)
     self.network:sendToClient(caller, "cl_exportCreation", args)
 end
 
-function FactoryLift:cl_exportCreation( args )
-    local path = self:getCreationPath( args.name )
-    sm.json.save(
-        args.creation,
-        path
-    )
-
-    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
-    if not isAnyOf(path, creations) then
-        creations[#creations + 1] = path
-        sm.json.save(creations, exportedCreations)
-    end
-
-    local options = self:cl_import_createUI()
-    local option = options[1]
-    self.importCreation = option
-    self:cl_import_updateItemGrid(option)
-end
-
-
 ---@class ImportArgs
----@field items table
----@field money number
----@field name string
----@field pos Vec3
-
+---@field items table<string, integer> items to be spent for the import
+---@field money number price of the import
+---@field name string name of the imported creation
+---@field pos Vec3 spawn position of the creation
 ---@param args ImportArgs
 function FactoryLift:sv_importCreation(args, caller)
+    if not MoneyManager.sv_trySpendMoney(args.money) then return end
+
     local inv = caller:getInventory()
     sm.container.beginTransaction()
     for uuid, amount in pairs(args.items) do
         sm.container.spend(inv, sm.uuid.new(uuid), amount)
     end
     sm.container.endTransaction()
-
-    MoneyManager.sv_trySpendMoney(args.money)
 
     local bodies = sm.creation.importFromFile(
         caller.character:getWorld(),
@@ -69,53 +49,79 @@ function FactoryLift:sv_importCreation(args, caller)
     end
 end
 
+-- #endregion
 
+--------------------
+-- #region Client
+--------------------
+
+--characters to be avoided during export
+local specialCharacters = {
+    "~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
+    "+", "=", "{", "}", "[", "]", "|", "\\", "/", ":", ";", '"',
+    "'", "<", ">", ",", ".", "?"
+}
 
 function FactoryLift:client_onCreate()
-    self:client_init()
+    Lift.client_init(self)
 
-    self.isLocal = self.tool:isLocal()
-    if not self.isLocal then return end
+    if not self.tool:isLocal() then return end
 
-    self.exportGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_export.layout")
-    self.exportGui:setTextChangedCallback("name", "cl_export_setName")
-    self.exportGui:setButtonCallback("cancel", "cl_export_cancel")
-    self.exportGui:setButtonCallback("ok", "cl_export_ok")
-    self.exportGui:setOnCloseCallback("cl_export_cancel")
-    self.exportName = ""
-    self.exportCreation = nil
+    self.cl = {}
+    self.cl.exportGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_export.layout")
+    self.cl.exportGui:setTextChangedCallback("name", "cl_export_setName")
+    self.cl.exportGui:setButtonCallback("cancel", "cl_export_cancel")
+    self.cl.exportGui:setButtonCallback("ok", "cl_export_confirm")
+    self.cl.exportGui:setOnCloseCallback("cl_export_cancel")
 
-    self.importCreation = nil
-    local options = self:cl_import_createUI()
-    if #options > 0 then
-        local option = options[1]
-        self.importCreation = option
-        self:cl_import_updateItemGrid(option)
-    end
+    self.cl.exportName = ""
+    self.cl.exportCreation = nil
+    self.cl.importCreation = nil
+
+    self:cl_resetImportOptions()
 end
 
-function FactoryLift:cl_setSelectedBodies( bodies )
+---@param args {name: string, creation: table}
+function FactoryLift:cl_exportCreation(args)
+    local path = self:getCreationPath(args.name)
+    sm.json.save(args.creation, path)
+
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    if not isAnyOf(path, creations) then
+        creations[#creations + 1] = path
+        sm.json.save(creations, exportedCreations)
+    end
+
+    self:cl_resetImportOptions()
+end
+
+---place a creation on the lift tool thingy
+---@param bodies table<integer, Body>
+function FactoryLift:cl_setSelectedBodies(bodies)
     self.selectedBodies = bodies
 end
 
 function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, forceBuild)
-    if self.isLocal then
+    if self.tool:isLocal() then
         local hit, result = sm.localPlayer.getRaycast(7.5)
-        self:client_interact(primaryState, secondaryState, result)
+        Lift.client_interact(self, primaryState, secondaryState, result)
 
         if hit then
-            if result.type == "body" then
+            if result.type == "body" and result:getBody():isLiftable() then
+                --export gui
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
-                if forceBuild and not self.exportGui:isActive() then
-                    self.exportCreation = result:getBody()
-                    self.exportGui:setText("title", language_tag("ExportTitle"))
-                    self.exportGui:open()
+                if forceBuild and not self.cl.exportGui:isActive() then
+                    self.cl.exportCreation = result:getBody()
+                    self.cl.exportGui:setText("title", language_tag("ExportTitle"))
+                    self.cl.exportGui:open()
                 end
             elseif result.type == "lift" then
+                --import gui
                 if forceBuild and not self.importGui:isActive() then
-                    self:cl_import_updateItemGrid(self.importCreation, false)
+                    self:cl_import_updateItemGrid(self.cl.importCreation, false)
                     self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
+                    self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
                     self.importGui:open()
                 end
             end
@@ -127,12 +133,21 @@ end
 
 function FactoryLift:client_onUpdate()
     --Dont know why, but the use interaction doesnt appear, so I made it myself
-    if not self.isLocal then return end
+    if not self.tool:isLocal() then return end
 
     local hit, result = sm.localPlayer.getRaycast(7.5)
     if hit and result.type == "lift" then
-        local import = sm.localPlayer.getActiveItem() == tool_lift and "\t" .. sm.gui.getKeyBinding("ForceBuild", true) .. language_tag("ImportInteraction") or ""
+        local import = sm.localPlayer.getActiveItem() == tool_lift and
+            "\t" .. sm.gui.getKeyBinding("ForceBuild", true) .. language_tag("ImportInteraction") or ""
         sm.gui.setInteractionText(sm.gui.getKeyBinding("Use", true) .. "#{INTERACTION_USE}", import, "")
+    end
+end
+
+function FactoryLift:cl_resetImportOptions()
+    local options = self:cl_import_createUI()
+    if #options > 0 then
+        self.cl.importCreation = options[1]
+        self:cl_import_updateItemGrid(options[1])
     end
 end
 
@@ -142,54 +157,99 @@ function FactoryLift:cl_export_setName(widget, text)
         stripped = stripped:gsub("%" .. v, "")
     end
 
-    self.exportGui:setText("name", stripped)
-    self.exportName = stripped
+    self.cl.exportGui:setText("name", stripped)
+    self.cl.exportName = stripped
 end
 
 function FactoryLift:cl_export_cancel()
-    self.exportGui:close()
-    self.exportGui:setText("name", "")
+    self.cl.exportGui:close()
+    self.cl.exportGui:setText("name", "")
 
-    --we do a little jank
+    --we do a little jank (in case of confirmClearGui we want to hold on to these dear variables a little longer)
     if self.confirmClearGui then return end
-    self.exportName = ""
-    self.exportCreation = nil
+    self.cl.exportName = ""
+    self.cl.exportCreation = nil
 end
 
-function FactoryLift:cl_export_ok(widget, override)
-    if self.exportName == "" then
+---@param override boolean if true will override existing creatons
+function FactoryLift:cl_export_confirm(widget, override)
+    if self.cl.exportName == "" then
         sm.gui.chatMessage("#ff0000" .. language_tag("InvalidName"))
         sm.audio.play("RaftShark")
         return
     end
 
+    local path = self:getCreationPath(self.cl.exportName)
+
     if not override and
-        sm.json.fileExists(self:getCreationPath(self.exportName)) then
+        sm.json.fileExists(path) and sm.json.open(path) then
         self.confirmClearGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
         self.confirmClearGui:setButtonCallback("Yes", "cl_export_overwriteButtonClick")
         self.confirmClearGui:setButtonCallback("No", "cl_export_overwriteButtonClick")
         self.confirmClearGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
-        self.confirmClearGui:setText("Message", language_tag("ExportBlueprintExists"):format(self.exportName))
+        self.confirmClearGui:setText("Message", language_tag("ExportBlueprintExists"):format(self.cl.exportName))
 
-        self.exportGui:close()
+        self.cl.exportGui:close()
         self.confirmClearGui:open()
 
         return
     end
 
-    self.network:sendToServer("sv_exportCreation", { name = self.exportName, creation = self.exportCreation })
+    self.network:sendToServer("sv_exportCreation", { name = self.cl.exportName, creation = self.cl.exportCreation })
     self:cl_export_cancel()
     sm.gui.displayAlertText(language_tag("ExportedCreation"))
     sm.audio.play("Blueprint - Save")
 end
 
+function FactoryLift:cl_deleteImportCreation()
+    self.confirmDeletionGui = sm.gui.createGuiFromLayout("$GAME_DATA/Gui/Layouts/PopUp/PopUp_YN.layout")
+    self.confirmDeletionGui:setButtonCallback("Yes", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setButtonCallback("No", "cl_importDeleteCreationConfirmation")
+    self.confirmDeletionGui:setText("Title", "#{MENU_YN_TITLE_ARE_YOU_SURE}")
+    self.confirmDeletionGui:setText("Message",
+        language_tag("ImportDeleteCreationConfirmation"):format(self.cl.importCreation))
+
+    self.importGui:close()
+    self.confirmDeletionGui:open()
+end
+
+function FactoryLift:cl_importDeleteCreationConfirmation(name)
+    if name == "Yes" then
+        self:cl_deleteCreation(self.cl.importCreation)
+
+        sm.audio.play("Blueprint - Delete")
+    end
+
+    self.confirmDeletionGui:close()
+    self.confirmDeletionGui:destroy()
+    self.confirmDeletionGui = nil
+end
+
+---delete a creation in the json files
+---@param name string name of the creation to be deleted
+function FactoryLift:cl_deleteCreation(name)
+    local path = self:getCreationPath(name)
+    --make the json file empty bc we can't delete files
+    sm.json.save({}, path)
+
+    local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
+    for k, v in pairs(creations) do
+        if v == path then
+            creations[k] = nil
+        end
+    end
+    sm.json.save(creations, exportedCreations)
+
+    self:cl_resetImportOptions()
+end
+
 function FactoryLift:cl_export_overwriteButtonClick(name)
     if name == "Yes" then
         self.confirmClearGui:close()
-        self:cl_export_ok("", true)
+        self:cl_export_confirm("", true)
     elseif name == "No" then
         self.confirmClearGui:close()
-        self.exportGui:open()
+        self.cl.exportGui:open()
     end
 
     self.confirmClearGui:destroy()
@@ -199,6 +259,7 @@ end
 function FactoryLift:cl_import_createUI()
     self.importGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/Factory_import.layout")
     self.importGui:setButtonCallback("import", "cl_import_importCreation")
+    self.importGui:setButtonCallback("DeleteCreationButton", "cl_deleteImportCreation")
 
     local options = {}
     local creations = sm.json.fileExists(exportedCreations) and sm.json.open(exportedCreations) or {}
@@ -223,13 +284,16 @@ function FactoryLift:cl_import_createUI()
 end
 
 function FactoryLift:cl_import_select(option)
-    if self.importCreation ~= option then
-        self.importCreation = option
+    if self.cl.importCreation ~= option then
+        self.cl.importCreation = option
         self.importGui:close()
 
         self:cl_import_createUI()
         self:cl_import_updateItemGrid(option)
+        ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
+        self.importGui:setText("title", language_tag("ImportTitle"))
+        self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
         self.importGui:open()
     end
 end
@@ -255,11 +319,11 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
         end
     end
 
-    local count = 1
+    local count = 0
     for uuid, amount in pairs(items) do
         self.importGui:setGridItem(
             "inventory",
-            count - 1,
+            count,
             {
                 itemId = uuid,
                 quantity = amount,
@@ -269,20 +333,26 @@ function FactoryLift:cl_import_updateItemGrid(name, createGrid)
         count = count + 1
     end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(items)
-    self.importGui:setVisible("import", canImport)
-    self.importGui:setText("money", language_tag("ImportNeededMoney") .. format_number({ format = "money", value = missingMoney }))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(items)
+    self.importGui:setVisible("import", canAfford)
+    if missingMoney then
+        self.importGui:setText("money",
+            language_tag("ImportNeededMoney") ..
+            format_number({ format = "money", value = missingMoney, color = (not canAfford) and "#dd0000" or nil }))
+    else
+        self.importGui:setText("money", "#dd0000" .. language_tag("ImportCantBuyItems"))
+    end
 end
 
 function FactoryLift:cl_import_importCreation()
-    if self.importCreation == nil then return end
+    if self.cl.importCreation == nil then return end
 
-    local canImport, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.importCreation))
+    local canAfford, missingMoney, ownedItems = self:getImportStats(self:getBlueprintItems(self.cl.importCreation))
 
     self.network:sendToServer("sv_importCreation",
         {
-            name = self.importCreation,
-            pos = self.liftPos, --sm.localPlayer.getOwnedLift():getWorldPosition(),
+            name = self.cl.importCreation,
+            pos = self.liftPos,
             items = ownedItems,
             money = missingMoney
         }
@@ -292,8 +362,7 @@ function FactoryLift:cl_import_importCreation()
     self.importGui:close()
 end
 
-
-
+---@return table<string?, integer>
 function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
     local items = {}
@@ -313,6 +382,11 @@ function FactoryLift:getBlueprintItems(name)
     return items
 end
 
+---returns info about the creation to be imported
+---@param items table<string, integer> uuid, amount
+---@return boolean canAfford whehter enough money is available to import
+---@return integer|nil price price to pay to "buy" the missing items
+---@return table<string, integer> items items provided by the inventory for import
 function FactoryLift:getImportStats(items)
     local ownedItems = {}
     local neededMoney = 0
@@ -324,19 +398,20 @@ function FactoryLift:getImportStats(items)
 
         if owned < amount then
             local shopItem = g_shop[uuid]
+
+            if shopItem.special then
+                --can't buy a special item
+                return false, nil, {}
+            end
             neededMoney = neededMoney + (shopItem and tonumber(shopItem.price) or 1) * (amount - owned)
         end
     end
 
-    return (neededMoney == 0 or MoneyManager.getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney, ownedItems
+    return (neededMoney == 0 or MoneyManager.getMoney() >= neededMoney) and GetActualLength(items) > 0, neededMoney,
+        ownedItems
 end
 
-function FactoryLift:getCreationPath( name )
-    return string.format("$CONTENT_DATA/UserData/ExportedCreations/%s.json", name)
-end
-
-
-
+---returns the number of items in a table
 function GetActualLength(table)
     local count = 0
     for k, v in pairs(table) do
@@ -345,3 +420,22 @@ function GetActualLength(table)
 
     return count
 end
+
+-- #endregion
+
+---returns the path to a json file for a creation with that `name`
+function FactoryLift:getCreationPath(name)
+    return string.format("$CONTENT_DATA/UserData/ExportedCreations/%s.json", name)
+end
+
+--------------------
+-- #region Types
+--------------------
+
+---@class FactoryLiftCl
+---@field exportGui GuiInterface gui for exporting creations
+---@field exportName string name of the creation to be exported
+---@field exportCreation Body creation to be exported when looking at it via the lift
+---@field importCreation string name of the creation to be imported via the lift
+
+-- #endregion

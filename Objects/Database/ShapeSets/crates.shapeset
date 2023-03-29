@@ -14,16 +14,10 @@
         "buoyancy": 4,
         "density": 1,
         "durability": 6,
-        "friction": 3
+        "friction": 5
       },
       "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_loot_lootcrate_01.rend",
-      "restitution": 1.0,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
+      "restitution": 1.333,
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "LootCrate",
@@ -52,7 +46,7 @@
         "buoyancy": 4,
         "density": 1,
         "durability": 6,
-        "friction": 3
+        "friction": 5
       },
       "renderable": {
         "lodList": [
@@ -79,13 +73,7 @@
           }
         ]
       },
-      "restitution": 1.0,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
+      "restitution": 1.333,
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "RareLootCrate",
@@ -108,7 +96,7 @@
         "buoyancy": 4,
         "density": 1,
         "durability": 6,
-        "friction": 3
+        "friction": 5
       },
       "renderable": {
         "lodList": [
@@ -135,13 +123,7 @@
           }
         ]
       },
-      "restitution": 1.0,
-      "restrictions": {
-        "buildable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
+      "restitution": 1.333,
       "rotationSet": "PropYNegYZ",
       "scripted": {
         "classname": "PrestigeLootCrate",

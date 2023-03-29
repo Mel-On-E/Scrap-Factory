@@ -1,13 +1,13 @@
 ---Interface for every screen that can be opened via the `Hub` tool
 ---@class Interface : ScriptableObjectClass
+---@field cl {gui : GuiInterface}
 Interface = class()
 
 ---Create new interface. Automatically creates functions for each button named after another interface to open it.
 ---@param layout string path to the layout file of the gui used by the interface
 function Interface:client_onCreate(layout)
-	self.cl = {
-		gui = sm.gui.createGuiFromLayout(layout)
-	}
+	self.cl = self.cl or {}
+	self.cl.gui = sm.gui.createGuiFromLayout(layout)
 
 	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
 		self.cl.gui:setButtonCallback(string.lower(sob.classname), "cl_open" .. sob.classname)
@@ -33,7 +33,7 @@ end
 
 ---@return boolean open whether this interface is open
 function Interface:cl_e_isGuiOpen()
-	return self and self.cl.gui:isActive() or false
+	return self and self.cl.gui and self.cl.gui:isActive() or false
 end
 
 ---closes the gui of the interface
@@ -57,5 +57,14 @@ end
 function Interface.cl_closeAllInterfaces()
 	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
 		_G[sob.classname].cl_close()
+	end
+end
+
+---setup button callbacks
+---@param buttonList table<integer, string> list of widgetNames
+---@param func string name of callback function
+function Interface.setupButtons(gui, buttonList, func)
+	for _, name in ipairs(buttonList) do
+		gui:setButtonCallback(name, func)
 	end
 end

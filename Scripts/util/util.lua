@@ -86,8 +86,8 @@ end
 
 ---@class FormatNumberParams
 ---@field format "power" | "pollution" | "prestige" | "money" standard formatting options
----@field color string A hex color (#rrggbb) that will be the text color
----@field unit string The symbol after the number (postfix)
+---@field color string|nil A hex color (#rrggbb) that will be the text color
+---@field unit string|nil The symbol after the number (postfix)
 ---@field suffixes string[] The suffixes of the numbers for each 3 orders of magnitude
 ---@field value number The number to format
 
@@ -220,17 +220,6 @@ function angle(v1, v2)
     local cos = dot / (v1:length() * v2:length())
     acos = math.acos(cos)
     return acos > 1e-3 and acos or 0
-end
-
----***CUSTOM*** Returns a value that doesn't exceed the max or is lower than the min
----@param min number minimum value
----@param v number value to minMax
----@param max number maximum value
----@return number result the minMaxed value
-function math.minMax(min, v, max)
-    v = math.max(v, max)
-    v = math.min(v, min)
-    return v
 end
 
 -- #endregion

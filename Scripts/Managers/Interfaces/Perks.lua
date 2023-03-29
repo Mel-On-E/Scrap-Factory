@@ -1,39 +1,64 @@
 dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Interface.lua")
 
----@class Perks
+---The perksshop is a submenu of the Prestige interface. Which really makes it kinda cursed. But eh, just ignore it.
+---@class Perks : Interface
+---@field cl PerksCl
 Perks = class(Interface)
 
+--------------------
+-- #region Server
+--------------------
+
+function Perks:sv_buyPerk(perk, player)
+	if PrestigeManager.sv_trySpendPrestige(perk.price) then
+		PerkManager.sv_addPerk(perk)
+		self.network:sendToClient(player, "cl_openPerkGui")
+	end
+end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+---@type integer number of items each page of the gui can show at max
+local ITEMS_PER_PAGE = 32
 local IMAGE_PATH = "$CONTENT_DATA/Gui/Images/Perks/"
 
 function Perks:client_onCreate()
-	self.cl.perkGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/PerkShop.layout")
-
-	self.cl.perkGui:setButtonCallback("NextPage", "changePage")
-	self.cl.perkGui:setButtonCallback("LastPage", "changePage")
-	self.cl.perkGui:setButtonCallback("SortBtn", "changeSort")
-	self.cl.perkGui:setButtonCallback("BuyButton", "buyPerk")
-
-	self.cl.perkGui:setButtonCallback("AllTab", "changeCategory")
-	self.cl.perkGui:setButtonCallback("OwnedTab", "changeCategory")
-	self.cl.perkGui:setButtonCallback("UnlockedTab", "changeCategory")
-	self.cl.perkGui:setButtonCallback("LockedTab", "changeCategory")
-
-	for i = 1, 32 do
-		self.cl.perkGui:setButtonCallback("Item_" .. i, "changeItem")
-	end
-
 	self.cl.curPage = 1
 	self.cl.curItem = 1
 	self.cl.category = "All"
-	self.cl.sortLowest = true
+	self.cl.sortHighest = false
+	self.cl.sortedPerks = {}
+	self.cl.renderedPages = {}
+	self.cl.perkGui = sm.gui.createGuiFromLayout("$CONTENT_DATA/Gui/Layouts/PerkShop.layout")
+	self:cl_setupSortedPerks()
 
-	self.perks = sm.json.open("$CONTENT_DATA/Scripts/perks.json")
-	for k, perk in pairs(self.perks) do
-		perk.price = tonumber(perk.price)
+	local tabs = { "AllTab", "OwnedTab", "UnlockedTab", "LockedTab" }
+	Interface.setupButtons(self.cl.perkGui, tabs, "cl_changeCategory")
+	Interface.setupButtons(self.cl.perkGui, { "NextPage", "LastPage" }, "cl_changePage")
+
+	self.cl.perkGui:setButtonCallback("SortBtn", "changeSort")
+	self.cl.perkGui:setButtonCallback("BuyButton", "cl_buyPerk")
+
+	for i = 1, ITEMS_PER_PAGE do
+		self.cl.perkGui:setButtonCallback("Item_" .. i, "cl_changeItem")
+	end
+end
+
+---Create a list of perks sorted by price in `self.cl.sortedPerks`
+function Perks:cl_setupSortedPerks()
+	local perksJson = unpackNetworkData(sm.json.open("$CONTENT_DATA/Scripts/perks.json"))
+	for name, perk in pairs(perksJson) do
+		perk.name = name
+		table.insert(self.cl.sortedPerks, perk)
 	end
 
-	self.cl.pageNum = math.floor(#self.perks / 32) == 0 and 1 or
-		math.floor(#self.perks / 32)
+	table.sort(self.cl.sortedPerks, function(a, b)
+		return a.price > b.price
+	end)
 end
 
 function Perks:client_onFixedUpdate()
@@ -43,6 +68,7 @@ function Perks:client_onFixedUpdate()
 end
 
 function Perks:cl_openPerkGui()
+	---language stuff
 	self.cl.perkGui:setText("Title", language_tag("Perks"))
 	self.cl.perkGui:setText("AllTab", language_tag("AllTab"))
 	self.cl.perkGui:setText("OwnedTab", language_tag("PerksOwned"))
@@ -51,9 +77,9 @@ function Perks:cl_openPerkGui()
 	self.cl.perkGui:setText("Requirements", language_tag("PerkRequirements"))
 	self.cl.perkGui:setText("BuyButton", language_tag("Buy"))
 
-	self:sort()
-
 	Perks.update_gui(self)
+	self:gui_renderPages()
+	self:gui_displayPage()
 
 	self.cl.perkGui:open()
 end
@@ -61,199 +87,83 @@ end
 function Perks:update_gui()
 	self.cl.perkGui:setText("Balance", language_tag("PerksBalance") ..
 		format_number({ format = "prestige", value = PrestigeManager.cl_getPrestige() }))
-	self.cl.perkGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(self.cl.pageNum))
+	self.cl.perkGui:setText("PageNum", tostring(self.cl.curPage) .. "/" .. tostring(#self.cl.renderedPages))
 end
 
-function Perks:gen_page(num)
-	local pageLen = #self.cl.filteredPages[num]
-	for i = 1, 32 do
-		self.cl.perkGui:setVisible("Item_" .. tostring(i), true)
-		self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), true)
-	end
-	for i, v in pairs(self.cl.filteredPages[num]) do
-		self.cl.perkGui:setImage("ItemPic_" .. tostring(i),
-		IMAGE_PATH .. v.image .. ((PerkManager.isPerkOwned(v.name) and "") or "_locked") .. ".png")
-		self.cl.perkGui:setText("ItemPrice_" .. tostring(i), format_number({ format = "prestige", value = v.price }))
-		self.cl.perkGui:setVisible("ItemLock_" .. tostring(i), not self.isUnlocked(v))
-	end
-	if pageLen == 32 then return end
-	for i = pageLen + 1, 32 do
-		self.cl.perkGui:setVisible("Item_" .. tostring(i), false)
-		self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), false)
-	end
-end
-
-function Perks:gui_filter(category)
-	--TODO use a table with functions for each filter instead of duplication here
-	self.cl.filteredPages = { {} }
-	local page = 1
-	if category == "All" then
-		for i, v in pairs(self.cl.itemPages) do
-			for _, v in pairs(v) do
-				table.insert(self.cl.filteredPages[page], v)
-			end
-			if i % 32 then
-				page = page + 1
-			end
-		end
-		return
-	elseif category == "Owned" then
-		for i, v in pairs(self.cl.itemPages) do
-			for _, v in pairs(v) do
-				if PerkManager.isPerkOwned(v.name) then
-					table.insert(self.cl.filteredPages[page], v)
-				end
-			end
-			if i % 32 then
-				page = page + 1
-			end
-		end
-		return
-	elseif category == "Unlocked" then
-		for i, v in pairs(self.cl.itemPages) do
-			for _, v in pairs(v) do
-				if self.isUnlocked(v) and not PerkManager.isPerkOwned(v.name) then
-					table.insert(self.cl.filteredPages[page], v)
-				end
-			end
-			if i % 32 then
-				page = page + 1
-			end
-		end
-		return
-	elseif category == "Locked" then
-		for i, v in pairs(self.cl.itemPages) do
-			for _, v in pairs(v) do
-				if not self.isUnlocked(v) then
-					table.insert(self.cl.filteredPages[page], v)
-				end
-			end
-			if i % 32 then
-				page = page + 1
-			end
-		end
+function Perks:cl_changePage(widgetName)
+	if widgetName == "NextPage" then
+		self.cl.curPage = math.min(self.cl.curPage + 1, #self.cl.renderedPages)
+	elseif widgetName == "LastPage" then
+		self.cl.curPage = math.max(self.cl.curPage - 1, 1)
+	else
 		return
 	end
 
-
-	for i, v in pairs(self.cl.itemPages) do
-		for _, v in pairs(v) do
-			if (v.category == category) and (tier == 0 and true or (v.tier == tier)) then
-				table.insert(self.cl.filteredPages[page], v)
-			end
-		end
-		if i % 32 then
-			page = page + 1
-		end
-	end
+	self:gui_displayPage()
 end
 
-function Perks.isUnlocked(perk)
-	local unlocked = true
-	for _, requirement in ipairs(perk.requires) do
-		if not PerkManager.isPerkOwned(requirement) then
-			unlocked = false
-		end
-	end
-	return unlocked
-end
-
-function Perks:changePage(wigetName)
-	if wigetName == "NextPage" then
-		if self.cl.curPage == self.cl.pageNum then
-			return
-		end
-		self.cl.curPage = self.cl.curPage + 1
-	elseif wigetName == "LastPage" then
-		if self.cl.curPage == 1 then
-			return
-		end
-		self.cl.curPage = self.cl.curPage - 1
-	end
-	self.cl.curItem = 1
-	self:gen_page(self.cl.curPage)
-	self:changeItem("Item_1")
-end
-
-function Perks:changeCategory(categoryName)
+function Perks:cl_changeCategory(categoryName)
 	local category = string.sub(categoryName, 1, -4)
-	self:gui_filter(category)
 	self.cl.category = category
 
-	self.cl.curPage = 1
-	self:changeItem("Item_1")
-	self:gen_page(self.cl.curPage)
+	self:gui_renderPages()
+	self:gui_displayPage()
 end
 
-function Perks:changeItem(itemName)
-	if #self.cl.filteredPages[self.cl.curPage] > 0 then
-		self.cl.perkGui:setButtonState("Item_" .. self.cl.curItem, false)
-		---@diagnostic disable-next-line: assign-type-mismatch
-		self.cl.curItem = tonumber(string.reverse(string.sub(string.reverse(itemName), 1, #itemName - 5)))
+function Perks:cl_changeItem(widgetName)
+	self.cl.perkGui:setButtonState("Item_" .. self.cl.curItem, false)
 
-		local item = self.cl.filteredPages[self.cl.curPage][self.cl.curItem]
-		--print(item)
+	---@diagnostic disable-next-line: assign-type-mismatch
+	self.cl.curItem = tonumber(widgetName:sub(6))
 
-		self.cl.perkGui:setButtonState(itemName, true)
-		self.cl.perkGui:setImage("Preview", IMAGE_PATH .. item.image .. ".png")
-		self.cl.perkGui:setText("ItemName", language_tag(item.name .. "Name"))
-		self.cl.perkGui:setText("ItemDesc", language_tag(item.name .. "Desc"))
-		local requirements = ""
-		for _, requirement in ipairs(item.requires) do
-			local color = (PerkManager.isPerkOwned(requirement) and "#00aa00") or "#aa0000"
-			requirements = requirements .. color .. "- " .. language_tag(requirement .. "Name") .. "\n"
-		end
-		self.cl.perkGui:setText("Requires", requirements)
+	local item = self.cl.renderedPages[self.cl.curPage][self.cl.curItem]
+	self.cl.perkGui:setVisible("BuyButton", item and true)
+	self.cl.perkGui:setVisible("Preview", item and true)
 
-		local buyText = "Buy"
-		if PerkManager.isPerkOwned(item.name) then
-			buyText = "PerksOwned"
-		elseif not self.isUnlocked(item) then
-			buyText = "PerksLocked"
-		end
-
-		self.cl.perkGui:setText("BuyButton", language_tag(buyText))
+	if not item then
+		self.cl.perkGui:setText("ItemName", "")
+		self.cl.perkGui:setText("ItemDesc", "")
+		self.cl.perkGui:setText("Requires", "")
+		return
 	end
+
+	self.cl.perkGui:setButtonState(widgetName, true)
+	self.cl.perkGui:setImage("Preview", IMAGE_PATH .. item.name .. ".png")
+	self.cl.perkGui:setText("ItemName", language_tag(item.name .. "Name"))
+	self.cl.perkGui:setText("ItemDesc", language_tag(item.name .. "Desc"))
+	local requirements = ""
+	for _, requirement in ipairs(item.requires) do
+		local color = (PerkManager.isPerkOwned(requirement) and "#00aa00") or "#aa0000"
+		requirements = requirements .. color .. "- " .. language_tag(requirement .. "Name") .. "\n"
+	end
+	self.cl.perkGui:setText("Requires", requirements)
+
+	local buyText = "Buy"
+	if PerkManager.isPerkOwned(item.name) then
+		buyText = "PerksOwned"
+	elseif not PerkManager.isPerkUnlocked(item.name) then
+		buyText = "PerksLocked"
+	end
+
+	self.cl.perkGui:setText("BuyButton", language_tag(buyText))
 end
 
 function Perks:changeSort()
-	self.cl.sortLowest = not self.cl.sortLowest
+	self.cl.sortHighest = not self.cl.sortHighest
 
-	self:sort()
+	self.cl.perkGui:setText("SortText",
+		not self.cl.sortHighest and language_tag("SortHighest") or language_tag("SortLowest"))
+
+	self:gui_renderPages()
+	self:gui_displayPage()
 end
 
-function Perks:sort()
-	local pages = {}
-	self.cl.itemPages = { {} }
-	for k, v in pairs(self.perks) do
-		table.insert(pages, { name = k, price = v.price, image = v.image, requires = v.requires, effects = v.effects })
-	end
-	table.sort(pages, function(a, b)
-		if self.cl.sortLowest then
-			return a.price < b.price
-		end
-		return a.price > b.price
-	end)
-	local page = 1;
-	for i, v in pairs(pages) do
-		table.insert(self.cl.itemPages[page], v)
-		if i % 32 == 0 then
-			page = page + 1
-		end
-	end
+function Perks:cl_buyPerk()
+	local item = self.cl.renderedPages[self.cl.curPage][self.cl.curItem]
 
-	self.cl.perkGui:setText("SortText", language_tag(self.cl.sortLowest and "SortLowest" or "SortHighest"))
-
-	self:gui_filter(self.cl.category)
-	self:gen_page(self.cl.curPage)
-	self:changeItem("Item_1")
-end
-
-function Perks:buyPerk()
-	local item = self.cl.filteredPages[self.cl.curPage][self.cl.curItem]
 	if PerkManager.isPerkOwned(item.name) then
 		return
-	elseif not self.isUnlocked(item) then
+	elseif not PerkManager.isPerkUnlocked(item.name) then
 		return
 	end
 
@@ -264,9 +174,97 @@ function Perks:buyPerk()
 	end
 end
 
-function Perks:sv_buyPerk(perk, player)
-	if PrestigeManager.sv_trySpendPrestige(perk.price) then
-		PerkManager.sv_addPerk(perk)
-		self.network:sendToClient(player, "sort")
+-- #endregion
+
+---Render all pages based on tiers, sort and category
+function Perks:gui_renderPages()
+	self.cl.curPage = 1
+
+	self.cl.renderedPages = { {} }
+
+	--Clear the blocked tier items and different category items
+	local availablePerks = {}
+
+	for _, perk in pairs(self.cl.sortedPerks) do
+		local check = true
+
+		if self.cl.category == "Owned" then
+			check = PerkManager.isPerkOwned(perk.name)
+		elseif self.cl.category == "Locked" then
+			check = not PerkManager.isPerkUnlocked(perk.name)
+		elseif self.cl.category == "Unlocked" then
+			check = PerkManager.isPerkUnlocked(perk.name) and not PerkManager.isPerkOwned(perk.name)
+		end
+
+		if check then
+			table.insert(availablePerks, perk)
+		end
+	end
+
+	--Sort
+	if not self.cl.sortHighest then
+		availablePerks = array_reverse(availablePerks)
+	end
+
+	--Generate pages
+	local page = 1
+	local i = 1
+	for _, perk in pairs(availablePerks) do
+		table.insert(self.cl.renderedPages[page], perk)
+
+		i = i + 1
+		if i % (ITEMS_PER_PAGE + 1) == 0 then --new page
+			page = page + 1
+			table.insert(self.cl.renderedPages, {})
+		end
 	end
 end
+
+function Perks:gui_displayPage()
+	self:cl_changeItem("Item_1")
+
+	local page = self.cl.renderedPages[self.cl.curPage]
+
+	for i = 1, ITEMS_PER_PAGE do
+		if page[i] == nil then
+			self.cl.perkGui:setVisible("Item_" .. tostring(i), false)
+			self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), false)
+			self.cl.perkGui:setVisible("ItemLock_" .. tostring(i), false)
+
+			goto continue
+		end
+		self.cl.perkGui:setVisible("Item_" .. tostring(i), true)
+		self.cl.perkGui:setVisible("ItemPrice_" .. tostring(i), true)
+
+		local perk = page[i]
+		self.cl.perkGui:setImage("ItemPic_" .. tostring(i),
+			IMAGE_PATH .. perk.name .. ((PerkManager.isPerkOwned(perk.name) and "") or "_locked") .. ".png")
+		self.cl.perkGui:setText("ItemPrice_" .. tostring(i), format_number({ format = "prestige", value = perk.price }))
+		self.cl.perkGui:setVisible("ItemLock_" .. tostring(i), not PerkManager.isPerkUnlocked(perk.name))
+
+		::continue::
+	end
+
+	self.cl.perkGui:setText("PageNum", self.cl.curPage .. " / " .. #self.cl.renderedPages)
+end
+
+--------------------
+-- #region Types
+--------------------
+
+---@class PerksCl
+---@field curPage integer current page
+---@field curItem integer the currently selected item in the perk shop
+---@field category "All"|"Owned"|"Unlocked"|"Locked" current category of the perk shop
+---@field sortHighest boolean wheter the shop is sorted ascending or descending
+---@field perkGui GuiInterface the gui that shows the perk shop
+---@field sortedPerks table<integer, PerkData> perks sorted by price descending
+---@field renderedPages PerkData[] The rendered pages
+
+---@class PerkData
+---@field name string name of the perk
+---@field price number price of the perk
+---@field requires table<integer, string> array of perk names required
+---@field effects table effects of the effect
+
+-- #endregion

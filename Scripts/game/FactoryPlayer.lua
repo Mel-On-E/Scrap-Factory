@@ -346,6 +346,15 @@ end
 
 function FactoryPlayer:client_onUpdate(deltaTime)
 	self:cl_updateNumberEffects(deltaTime)
+
+	--force TP camera while tumbling
+	local character = self.player:getCharacter()
+
+	---@diagnostic disable-next-line: missing-parameter
+	if character and character:isTumbling() then
+		local stand, seat = sm.camera.getCameraPullback()
+		sm.camera.setCameraPullback(math.max(stand, 3), math.max(seat, 3))
+	end
 end
 
 -- #endregion

@@ -144,12 +144,21 @@ function Shop:cl_changeItem(widgetName)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.item = tonumber(widgetName:sub(6))
 
-	local uuid = self.cl.renderedPages[self.cl.curPage][self.cl.item].uuid
+	local item = self.cl.renderedPages[self.cl.curPage][self.cl.item]
+
+	self.cl.gui:setVisible("Preview", item and true)
+	if not item then
+		self.cl.gui:setVisible("Preview", false)
+		self.cl.gui:setText("ItemName", "")
+		self.cl.gui:setText("ItemDesc", "")
+		return
+	end
 
 	self.cl.gui:setButtonState(widgetName, true)
-	self.cl.gui:setMeshPreview("Preview", uuid)
-	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(uuid))
-	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(uuid))
+	self.cl.gui:setVisible("Preview", true)
+	self.cl.gui:setMeshPreview("Preview", item.uuid)
+	self.cl.gui:setText("ItemName", sm.shape.getShapeTitle(item.uuid))
+	self.cl.gui:setText("ItemDesc", sm.shape.getShapeDescription(item.uuid))
 end
 
 function Shop:cl_buy()
@@ -197,23 +206,17 @@ end
 
 ---Setups the gui callbacks
 function Shop:cl_setupGui()
-	local function setupButtons(buttonList, func)
-		for _, name in ipairs(buttonList) do
-			g_cl_shop.cl.gui:setButtonCallback(name, func)
-		end
-	end
-
 	---Quantity
 	local quantityButtons = { "Buy_x1", "Buy_x10", "Buy_x100", "Buy_x999" }
-	setupButtons(quantityButtons, "cl_changeQuantity")
+	Interface.setupButtons(self.cl.gui, quantityButtons, "cl_changeQuantity")
 
 	---Categories
 	local categoryButtons = { "AllTab", "DroppersTab", "UpgradesTab", "FurnacesTab", "GeneratorsTab", "UtilitiesTab",
 		"DecorTab" }
-	setupButtons(categoryButtons, "cl_changeCategory")
+	Interface.setupButtons(self.cl.gui, categoryButtons, "cl_changeCategory")
 
 	---Other
-	setupButtons({ "NextPage", "LastPage" }, "cl_changePage")
+	Interface.setupButtons(self.cl.gui, { "NextPage", "LastPage" }, "cl_changePage")
 	self.cl.gui:setButtonCallback("SortBtn", "cl_changeSort")
 	self.cl.gui:setVisible("OutOfMoney", false)
 	self.cl.gui:setButtonCallback("BuyBtn", "cl_buy")
