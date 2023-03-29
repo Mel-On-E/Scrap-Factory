@@ -6,14 +6,14 @@
             "y" : 55,
             "z" : 14
          },
-         "color" : "00ff00",
+         "color" : "df7f01",
          "flammable" : true,
          "name" : "obj_generator_windmill",
-         "physicsMaterial" : "Wood",
+         "physicsMaterial" : "Mechanical",
          "ratings" : {
             "buoyancy" : 3,
             "density" : 5,
-            "durability" : 2,
+            "durability" : 4,
             "friction" : 5
          },
          "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_windmill_01.rend",

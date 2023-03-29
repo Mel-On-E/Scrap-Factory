@@ -1,0 +1,14 @@
+{
+   "blockList" : [
+      {
+         "asg" : "$CONTENT_DATA/Objects/Textures/Blocks/blk_factory_building_frame_asg.tga",
+         "color" : "df7f01",
+         "dif" : "$CONTENT_DATA/Objects/Textures/Blocks/blk_factory_building_frame_dif.tga",
+         "name" : "blk_factory_building_frame",
+         "nor" : "$CONTENT_DATA/Objects/Textures/Blocks/blk_factory_building_frame_nor.tga",
+         "physicsMaterial" : "Metal",
+         "tiling" : 8,
+         "uuid" : "90c0ca05-bce1-45e1-bbd0-694ba9d5a138"
+      }
+   ]
+}
