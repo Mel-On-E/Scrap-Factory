@@ -21,4 +21,4 @@ jobs:
       with:
         artifacts: "workshop-release.zip"
         draft: true
-        body: "Test release"
+        body: "**Release draft. Generate release notes within the GH release edit form!**"
