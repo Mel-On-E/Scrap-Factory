@@ -66,9 +66,6 @@ function DropContainer.server_onFixedUpdate(self)
 	end
 
 	--check if parent is active
-	local container = self.interactable:getContainer(0)
-	self.interactable:setActive(not container:isEmpty())
-
 	local parent = self.interactable:getSingleParent()
 
 	if parent then
@@ -77,6 +74,15 @@ function DropContainer.server_onFixedUpdate(self)
 		end
 		self.prevParentState = parent.active
 	end
+
+	--logic output (true if full)
+	local container = self.interactable:getContainer(0)
+	local isFull = true
+	for i = 0, container.size - 1, 1 do
+		local item = container:getItem(i)
+		isFull = isFull and item.uuid ~= sm.uuid.getNil()
+	end
+	self.interactable:setActive(isFull)
 
 	--cache data
 	self.sv.cachedPos = self.shape.worldPosition
