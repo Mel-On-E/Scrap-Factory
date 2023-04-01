@@ -170,7 +170,8 @@ function DropContainer:sv_release_drop()
 				self.shape.up * self.sv.droppingOffset.z
 
 			---@diagnostic disable-next-line:param-type-mismatch
-			local shape = sm.shape.createPart(publicData.uuid, self.sv.cachedPos + offset, self.sv.cachedRot)
+			local shape = sm.shape.createPart(publicData.uuid, (self.sv.cachedPos or self.shape.worldPosition) + offset,
+				self.sv.cachedRot)
 			self.sv.droppedShapes[shape.id] = sm.game.getCurrentTick() + 1
 
 			publicData.uuid = nil
