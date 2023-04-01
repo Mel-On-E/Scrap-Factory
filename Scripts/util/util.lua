@@ -1,5 +1,3 @@
----@diagnostic disable: lowercase-global
-
 --------------------
 -- #region Daytime
 --------------------
