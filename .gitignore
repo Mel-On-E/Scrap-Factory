@@ -1,6 +1,5 @@
 # Folders
 Cache/
-.vscode/
 .idea/
 
 # Compiled Lua sources
