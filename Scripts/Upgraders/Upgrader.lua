@@ -59,6 +59,8 @@ function Upgrader:sv_onEnter(trigger, results)
         for k, shape in ipairs(result:getShapes()) do
             local interactable = shape:getInteractable()
             if not interactable then return end
+            if interactable.type ~= "scripted" then goto continue end
+
             local data = interactable:getPublicData()
             if not data or not data.value then return end
 

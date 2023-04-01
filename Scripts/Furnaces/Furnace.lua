@@ -18,7 +18,12 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 ---@type Interactable|nil if not nil, the Furnace set for research
 local sv_research_furnace
 
-function Furnace:server_onCreate()
+---@class FurnaceParams
+---@field filters number|nil filters of the areaTrigger
+---@param params FurnaceParams
+function Furnace:server_onCreate(params)
+    params = params or {}
+
     --tutorial stuff
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
 
@@ -46,7 +51,7 @@ function Furnace:server_onCreate()
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        sm.areaTrigger.filter.dynamicBody)
+        params.filters or sm.areaTrigger.filter.dynamicBody)
     self.sv.trigger:bindOnEnter("sv_onEnter")
     self.sv.trigger:bindOnStay("sv_onEnter")
 end
@@ -60,6 +65,7 @@ function Furnace:sv_onEnter(trigger, results)
         for k, shape in pairs(result:getShapes()) do
             local interactable = shape:getInteractable()
             if not interactable then goto continue end
+            if interactable.type ~= "scripted" then goto continue end
 
             local publicData = interactable:getPublicData()
             if not publicData or not publicData.value then goto continue end
