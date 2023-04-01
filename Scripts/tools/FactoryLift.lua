@@ -267,6 +267,7 @@ function FactoryLift:cl_import_createUI()
     self.importGui:setVisible("creation", not noBlueprints)
     self.importGui:setVisible("import", not noBlueprints)
     self.importGui:setVisible("nothing", noBlueprints)
+    self.importGui:setVisible("DeleteCreationButton", not noBlueprints)
 
     if not noBlueprints then
         for k, path in pairs(creations) do
