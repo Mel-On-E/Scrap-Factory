@@ -22,6 +22,7 @@ function Furnace:server_onCreate()
     --tutorial stuff
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
 
+    ---@diagnostic disable-next-line: param-type-mismatch
     PowerUtility.sv_init(self)
 
     --save data
@@ -146,6 +147,7 @@ function Furnace:sv_removeResearch()
 end
 
 function Furnace:server_onFixedUpdate()
+    ---@diagnostic disable-next-line: param-type-mismatch
     PowerUtility.sv_fixedUpdate(self, "cl_toggleEffect")
 end
 
