@@ -106,6 +106,30 @@
          "stackSize" : 65535.0,
          "sticky" : "-Y",
          "uuid" : "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe"
+      },
+      {
+		   "box": {
+		      "x": 1,
+            "y": 1,
+            "z": 1
+         },
+         "color": "595959",
+         "flammable": false,
+         "name": "obj_interactive_value_detector",
+         "physicsMaterial": "Mechanical",
+         "ratings": {
+            "buoyancy": 2,
+            "density": 2,
+            "durability": 3,
+            "friction": 5
+         },
+         "renderable": "$GAME_DATA/Objects/Renderable/Interactive/obj_interactive_logicgate.rend",
+         "rotationSet": "PropY",
+         "scripted": {
+            "classname": "ValueDetector",
+            "filename": "$CONTENT_DATA/Scripts/Other/ValueDetector.lua"
+         },
+         "uuid": "613d3fbc-eb9e-41c7-8fb4-67f697c89f77"
       }
    ]
 }
