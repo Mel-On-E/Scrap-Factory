@@ -14,7 +14,7 @@ function Generator:server_onCreate()
     if self.data.power then
         ---@diagnostic disable-next-line: assign-type-mismatch
         self.data.power = tonumber(self.data.power)
-    end
+    else self.data.power = 0 end
 
     if self.data.powerStorage then
         ---@diagnostic disable-next-line: assign-type-mismatch
@@ -77,7 +77,7 @@ end
 ---@field data GeneratorData
 
 ---@class GeneratorData
----@field power number how much power is produced by default
+---@field power number default result for sv_getPower
 ---@field powerStorage number the power storage capacity of the Generator
 
 ---@class GeneratorCl
