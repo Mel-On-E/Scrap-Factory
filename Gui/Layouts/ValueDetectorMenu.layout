@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundPromptWide" position_real="0.29999999999999999 0.20000000000000001 0.40000000000000002 0.5">
+        <Widget type="TextBox" skin="TextBox" position_real="0.083333333333333329 0.057407407407407407 0.83463541666666663 0.16851851851851851">
+            <Property key="Caption" value="VALUE DETECTOR"/>
+            <Property key="FontHeight" value="48"/>
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position_real="0.16927083333333334 0.28703703703703703 0.1171875 0.07407407407407407">
+            <Property key="Caption" value="Mode:"/>
+            <Property key="FontHeight" value="32"/>
+            <Property key="TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="Widget" skin="PanelEmpty" position_real="0.2890625 0.28703703703703703 0.1171875 0.07407407407407407" name="ModeDropdown"/>
+        <Widget type="TextBox" skin="TextBox" position_real="0.16927083333333334 0.42592592592592593 0.2734375 0.07407407407407407">
+            <Property key="Caption" value="Compare Value:"/>
+            <Property key="FontHeight" value="32"/>
+            <Property key="TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="Widget" skin="BeaconIconBorder" position_real="0.44921875 0.42592592592592593 0.17578125 0.07407407407407407">
+            <Widget type="EditBox" skin="EditBoxEmpty" position_real="0 0 1 1" name="ValueEdit">
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontHeight" value="20"/>
+            </Widget>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
