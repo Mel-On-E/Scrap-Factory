@@ -42,6 +42,7 @@ obj_upgrader_spinny = sm.uuid.new("43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e")
 ----------------------------------------
 
 obj_belt1_straight = sm.uuid.new("69b857f1-07dc-4ea2-9391-fd24903945d1")
+obj_belt_straight_small = sm.uuid.new("6e4d00c3-8310-439c-ad08-77c11e66b519")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/generators.shapeset
@@ -73,6 +74,7 @@ obj_lootcrate_prestige = sm.uuid.new("423592bc-8505-4c3b-965c-23ee394054d0")
 obj_dropcontainer = sm.uuid.new("fd936bf7-33fa-4d47-88de-e7f7ba03861b")
 obj_interactive_day_sensor = sm.uuid.new("a9ad3ebe-9c19-49fc-855c-5061ce157e4e")
 obj_chest = sm.uuid.new("4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe")
+obj_valuedetector = sm.uuid.new("3da3d636-d263-4443-bdc5-37a8facd73c5")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/effects.shapeset
