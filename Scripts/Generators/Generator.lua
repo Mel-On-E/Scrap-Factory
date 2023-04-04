@@ -1,6 +1,6 @@
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
----A Generator produces power. Additionally it can also provide power storage capacity.
+---A Generator produces power. Additionally it can also store power.
 ---@class Generator : ShapeClass
 ---@field data GeneratorData script data from the json file
 ---@field cl GeneratorCl
@@ -78,7 +78,7 @@ end
 
 ---@class GeneratorData
 ---@field power number how much power is produced by default
----@field powerStorage number the power storage capacity of the Generator
+---@field powerStorage number if it is a Battery class, the max capacity
 
 ---@class GeneratorCl
 ---@field power number current power output set by clientData
