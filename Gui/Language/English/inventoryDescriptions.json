@@ -104,6 +104,10 @@
         "title": "Chest",
         "description": "A chest to store extra items. When your inventory gets too full. Don't worry, everything inside the chest won't get lost. And if it does, it's definitely not my fault..."
     },
+    "3da3d636-d263-4443-bdc5-37a8facd73c5": {
+        "title": "Value Detector",
+        "description": "Compare the value of a passing drop to a value.\n\n#929292Power: #dddd00-8.00W"
+    },
     //Tools
     "8f190ce2-3a59-423e-8483-a7aa67bd5bc0": {
         "title": "Sell Tool",
