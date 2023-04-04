@@ -19,8 +19,8 @@ function ValueDetector:server_onCreate()
     self.options = self.storage:load()
     if self.options == nil then
         self.options = {
-            mode = '>',
-            value = 0
+            mode = 'Great',
+            value = 1
         }
     end
     self.network:setClientData(self.options)
@@ -52,8 +52,8 @@ end
 
 function ValueDetector:sv_evalDrop(val)
     local active = false
-    if self.options.mode == '<' then active = val < self.options.value
-    elseif self.options.mode == '>' then active = val > self.options.value end
+    if self.options.mode == 'Less' then active = val < self.options.value
+    elseif self.options.mode == 'Great' then active = val > self.options.value end
     self.interactable:setActive(active)
 end
 
@@ -68,13 +68,14 @@ end
 function ValueDetector:client_onCreate()
     Belt.client_onCreate(self)
     self.gui = sm.gui.createGuiFromLayout('$CONTENT_DATA/Gui/Layouts/ValueDetectorMenu.layout')
-    self.gui:createDropDown('ModeDropdown', 'cl_onModeChange', {'<', '>'})
+    self.gui:setButtonCallback('Less', 'cl_onModeChange')
+    self.gui:setButtonCallback('Great', 'cl_onModeChange')
     self.gui:setTextAcceptedCallback('ValueEdit', 'cl_onValueChange')
 end
 function ValueDetector:client_onClientDataUpdate(data)
     self.options = data
     self.gui:setText('ValueEdit', tostring(self.options.value))
-    self.gui:setSelectedDropDownItem('ModeDropdown', self.options.mode)
+    self:cl_onModeChange(data.mode, true)
 end
 
 function ValueDetector:client_onInteract(_, state)
@@ -88,9 +89,13 @@ function ValueDetector:cl_onValueChange(_, val)
     self.options.value = n
     self.network:sendToServer('sv_onDataChange', { value = n })
 end
-function ValueDetector:cl_onModeChange(val)
+function ValueDetector:cl_onModeChange(val, dont_send)
+    self.gui:setButtonState('Less', val == 'Less')
+    self.gui:setButtonState('Great', val == 'Great')
     self.options.mode = val
-    self.network:sendToServer('sv_onDataChange', { mode = val })
+    if not dont_send then
+        self.network:sendToServer('sv_onDataChange', { mode = val })
+    end
 end
 
 
