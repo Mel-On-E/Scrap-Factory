@@ -145,5 +145,9 @@
 	//Tools
 	"ON": "On",
 	"OFF": "Off",
-	"JetpackAlwaysOn": "Always active: "
+	"JetpackAlwaysOn": "Always active: ",
+
+	//Interactive
+	"ValueDetectorCompareMode": "Mode:",
+	"ValueDetectorCompareValue": "Compare Value:"
 }

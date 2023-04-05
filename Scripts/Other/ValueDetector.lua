@@ -77,8 +77,13 @@ end
 
 function ValueDetector:client_onInteract(_, state)
     if not state then return end
-    self.cl.gui:open()
+
+    self.cl.gui:setText("Title", sm.shape.getShapeTitle(self.shape.uuid))
+    self.cl.gui:setText("CompareModeTitle", language_tag("ValueDetectorCompareMode"))
+    self.cl.gui:setText("ValueTitle", language_tag("ValueDetectorCompareValue"))
+
     self:cl_highlightButtons()
+    self.cl.gui:open()
 end
 
 function ValueDetector:cl_onValueChange(_, val)
