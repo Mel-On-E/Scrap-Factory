@@ -74,6 +74,10 @@ function DailyRewardManager:client_onCreate()
 end
 
 function DailyRewardManager:client_onFixedUpdate()
+    if not self.cl.claimed and self.cl.gui and not self.cl.gui:isActive() then
+        self.cl.gui:open()
+    end
+
     local player = sm.localPlayer.getPlayer()
     if player:getCharacter() and self.cl.gui and self.cl.gui:isActive() and self.cl.playEffect then
         sm.event.sendToPlayer(player, "cl_e_createEffect", {
