@@ -1,116 +1,122 @@
-dofile("$CONTENT_DATA/Scripts/Other/Belt.lua")
+dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 
----@class ValueDetector : Belt
----@field data ValueDetectorData
----@field powerUtil PowerUtility
-ValueDetector = class(Belt)
+---@class ValueDetector : Upgrader
+---@field cl ValueDetectorCl
+---@field sv ValueDetectorSv
+---@diagnostic disable-next-line: param-type-mismatch
+ValueDetector = class(Upgrader)
 
 ValueDetector.connectionInput = sm.interactable.connectionType.logic
 ValueDetector.connectionOutput = sm.interactable.connectionType.logic
 ValueDetector.maxParentCount = 1
 ValueDetector.maxChildCount = -1
-ValueDetector.colorNormal = sm.color.new( "#8fe625" )
-ValueDetector.colorHighlight = sm.color.new( "#96f522" )
+ValueDetector.colorNormal = sm.color.new("#8fe625")
+ValueDetector.colorHighlight = sm.color.new("#96f522")
 
--- Server
+--------------------
+-- #region Server
+--------------------
 
 function ValueDetector:server_onCreate()
-    Belt.server_onCreate(self)
-    self.options = self.storage:load()
-    if self.options == nil then
-        self.options = {
-            mode = 'Great',
+    Upgrader.server_onCreate(self)
+
+    self.sv = self.sv or {}
+    self.sv.options = self.storage:load()
+    if not self.sv.options then
+        self.sv.options = {
+            mode = 'greater',
             value = 1
         }
     end
-    self.network:setClientData(self.options)
-
-    local size,offset = self:get_size_and_offset()
-
-    self.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(), sm.areaTrigger.filter.dynamicBody)
-    self.trigger:bindOnEnter("sv_onEnter")
+    self.network:setClientData(self.sv.options)
 end
 
-function ValueDetector:sv_onEnter(_, results)
-    if not self.powerUtil.active then return end
-    for _, result in ipairs(results) do
-        if not sm.exists(result) then goto continue end
-        if type(result) ~= "Body" then goto continue end
+function ValueDetector:sv_onUpgrade(shape, data)
+    local active = false
+    if self.sv.options.mode == 'lesser' then
+        active = data.value < self.sv.options.value
+    elseif self.sv.options.mode == 'greater' then
+        active = data.value > self.sv.options.value
+    end
 
-        for k, shape in ipairs(result:getShapes()) do
-            local interactable = shape:getInteractable()
-            if not interactable then return end
-            local data = interactable:getPublicData()
-            if not data or not data.value then return end
-
-            --valid drop
-            self:sv_evalDrop(data.value)
-        end
-        ::continue::
+    if self.interactable.active ~= active then
+        self.interactable:setActive(active)
+        self.network:sendToClients("cl_playSound", "Sensor " .. (active and "on" or "off"))
     end
 end
 
-function ValueDetector:sv_evalDrop(val)
-    local active = false
-    if self.options.mode == 'Less' then active = val < self.options.value
-    elseif self.options.mode == 'Great' then active = val > self.options.value end
-    self.interactable:setActive(active)
+function ValueDetector:sv_onOptionsChange(data)
+    if data.value then
+        self.sv.options.value = data.value
+    elseif data.mode then
+        self.sv.options.mode = data.mode
+    end
+    self.storage:save(self.sv.options)
+
+    self.interactable:setActive(false)
 end
 
-function ValueDetector:sv_onDataChange(data)
-    if data.value then self.options.value = data.value
-    elseif data.mode then self.options.mode = data.mode end
-    self.storage:save(self.options)
-end
-
--- Client
+--------------------
+-- #region Client
+--------------------
 
 function ValueDetector:client_onCreate()
-    Belt.client_onCreate(self)
-    self.gui = sm.gui.createGuiFromLayout('$CONTENT_DATA/Gui/Layouts/ValueDetectorMenu.layout')
-    self.gui:setButtonCallback('Less', 'cl_onModeChange')
-    self.gui:setButtonCallback('Great', 'cl_onModeChange')
-    self.gui:setTextAcceptedCallback('ValueEdit', 'cl_onValueChange')
+    Upgrader.client_onCreate(self)
+
+    self.cl.gui = sm.gui.createGuiFromLayout('$CONTENT_DATA/Gui/Layouts/ValueDetectorMenu.layout')
+    self.cl.gui:setButtonCallback('lesser', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('greater', 'cl_onModeChange')
+    self.cl.gui:setTextAcceptedCallback('ValueEdit', 'cl_onValueChange')
 end
+
 function ValueDetector:client_onClientDataUpdate(data)
-    self.options = data
-    self.gui:setText('ValueEdit', tostring(self.options.value))
-    self:cl_onModeChange(data.mode, true)
+    self.cl.options = data
+    self.cl.gui:setText('ValueEdit', tostring(self.sv.options.value))
+    self:cl_highlightButtons()
 end
 
 function ValueDetector:client_onInteract(_, state)
     if not state then return end
-    self.gui:open()
+    self.cl.gui:open()
+    self:cl_highlightButtons()
 end
 
 function ValueDetector:cl_onValueChange(_, val)
-    local n = tonumber(val)
-    if n == nil then return end
-    self.options.value = n
-    self.network:sendToServer('sv_onDataChange', { value = n })
-end
-function ValueDetector:cl_onModeChange(val, dont_send)
-    self.gui:setButtonState('Less', val == 'Less')
-    self.gui:setButtonState('Great', val == 'Great')
-    self.options.mode = val
-    if not dont_send then
-        self.network:sendToServer('sv_onDataChange', { mode = val })
-    end
+    val = tonumber(val)
+    if val == nil then return end
+
+    self.network:sendToServer('sv_onOptionsChange', { value = val })
 end
 
+function ValueDetector:cl_onModeChange(buttonName)
+    self.cl.options.mode = buttonName
+    self:cl_highlightButtons()
 
----get the size and offset for the areaTrigger based on the script data
----@return Vec3 size
----@return Vec3 offset
-function ValueDetector:get_size_and_offset()
-    local size = sm.vec3.new(self.data.detect.box.x, self.data.detect.box.y, self.data.detect.box.z)
-    local offset = sm.vec3.new(self.data.detect.offset.x, self.data.detect.offset.y, self.data.detect.offset.z)
-    return size, offset
+    self.network:sendToServer('sv_onOptionsChange', { mode = buttonName })
 end
 
----@class ValueDetectorData : BeltData
----@field detect ValueDetectorDetection
+function ValueDetector:cl_highlightButtons()
+    self.cl.gui:setButtonState('lesser', self.cl.options.mode == 'lesser')
+    self.cl.gui:setButtonState('greater', self.cl.options.mode == 'greater')
+end
 
----@class ValueDetectorDetection
----@field box table<string, number> dimensions x, y, z for the areaTrigger
----@field offset table<string, number> offset x, y, z for the areaTrigger
+function ValueDetector:cl_playSound(soundName)
+    sm.audio.play(soundName)
+end
+
+--------------------
+-- #region Types
+--------------------
+
+---@class ValueDetectorSv
+---@field options ValueDetectorOptions
+
+---@class ValueDetectorCl
+---@field gui GuiInterface gui to change the options
+---@field options ValueDetectorOptions
+
+---@class ValueDetectorOptions
+---@field mode "lesser"|"greater" how the detector compares the value of a drop
+---@field value number the number to compare the value of a drop to
+
+-- #endregion
