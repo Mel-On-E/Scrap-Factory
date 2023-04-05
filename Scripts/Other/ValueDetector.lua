@@ -52,6 +52,7 @@ function ValueDetector:sv_onOptionsChange(data)
         self.sv.options.mode = data.mode
     end
     self.storage:save(self.sv.options)
+    self.network:setClientData(self.sv.options)
 
     self.interactable:setActive(false)
 end
