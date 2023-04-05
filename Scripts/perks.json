@@ -74,7 +74,8 @@
 	},
 	"LiftLv1": {
 		"price": "1",
-		"requires": []
+		"requires": [],
+		"effects": {}
 	},
 	"PaintToolLv1": {
 		"price": "100",
