@@ -18,7 +18,7 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 
 ---@class Params
 ---@field filters number|nil filters of the areaTrigger
----@param params Params
+---@param params Params?
 function Upgrader:server_onCreate(params)
     PowerUtility.sv_init(self)
 
@@ -136,7 +136,6 @@ function Upgrader:cl_createUpgradeEffect()
     self.cl.effect:setParameter("color", color)
     self.cl.effect:start()
 end
-
 
 ---toggle the effects depending on the current power state
 function Upgrader:cl_toggleEffects(active)
