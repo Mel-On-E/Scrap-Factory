@@ -1,5 +1,6 @@
 dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 
+---A value detector has a belt and trigger. Once drops enter the trigger it will output a logic signal based on the value of the drop. It has a gui which can be used to control when a logic output is triggered.
 ---@class ValueDetector : Upgrader
 ---@field cl ValueDetectorCl
 ---@field sv ValueDetectorSv
