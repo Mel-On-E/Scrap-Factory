@@ -96,9 +96,16 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
 		end
 
+		local i = #startingItems
+
+		--perk items
+		for _, item in ipairs(g_perkManager.sv.items) do
+			sm.container.setItem(inventory, i, item, 1)
+			i = i + 1
+		end
+
+		--special items for host only
 		if sm.player.getAllPlayers()[1] == player then --if host
-			print(PrestigeManager.sv_getSpecialItems())
-			local i = 7
 			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
 				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
 				i = i + 1

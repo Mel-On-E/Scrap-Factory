@@ -19,7 +19,8 @@ function PerkManager:server_onCreate()
         multipliers = {
             research = 1,
             pollution = 1
-        }
+        },
+        items = {}
     }
     self.sv.saved = self.sv.saved or { perks = {} }
 
@@ -47,6 +48,19 @@ function PerkManager.sv_addPerk(perk)
         if effect == "multiplier" then
             for key, multiplier in pairs(params) do
                 g_perkManager.sv.multipliers[key] = multiplier * g_perkManager.sv.multipliers[key]
+            end
+        end
+
+        if effect == "items" then
+            for key, uuid in pairs(params) do
+                g_perkManager.sv.items[#g_perkManager.sv.items + 1] = sm.uuid.new(uuid)
+
+                if g_perkManager.sv.init then
+                    --give item to all players when perk first bought
+                    for _, player in ipairs(sm.player.getAllPlayers()) do
+                        sm.event.sendToGame("sv_giveItem", { player = player, item = sm.uuid.new(uuid), quantity = 1 })
+                    end
+                end
             end
         end
     end
@@ -112,13 +126,14 @@ end
 ---@field saved PerkManagerSvSaved
 ---@field multipliers PerkManagerSvMultipliers
 ---@field init boolean whether the manager has been initialized
+---@field items table<integer, Uuid> list of items that have been unlocked via perks (and should be in the player's inventory)
 
 ---@class PerkManagerSvSaved
 ---@field perks table<string, boolean> table of owned perks
 
 ---@class PerkManagerSvMultipliers prestige multipliers
----@field research number
----@field pollution number
+---@field research number how research points are boosted
+---@field pollution number how much polluton affects research
 
 ---@class PerkManagerCl
 ---@field perks table<string, boolean> table of owned perks
