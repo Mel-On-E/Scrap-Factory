@@ -148,6 +148,9 @@
 	"JetpackAlwaysOn": "Always active: ",
 
 	//Interactive
-	"ValueDetectorCompareMode": "Mode:",
-	"ValueDetectorCompareValue": "Compare Value:"
+	"ValueDetectorCompareMode": "Compare Mode:",
+	"ValueDetectorCompareValue": "Compare Value:",
+	"ValueDetectorOutputMode": "Output Mode:",
+	"ValueDetectorOutputMode_switch": "Switch",
+	"ValueDetectorOutputMode_button": "Button"
 }
