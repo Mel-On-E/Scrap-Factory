@@ -196,6 +196,8 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PrestigeManager.sv_addPrestige(tonumber(params[2]))
 	elseif params[1] == "/setprestige" then
 		PrestigeManager.sv_setPrestige(tonumber(params[2]))
+	elseif params[1] == "/settier" then
+		ResearchManager.sv_setResearchTier(params[2])
 	else
 		params.player = player
 		if sm.exists(player.character) then
@@ -489,6 +491,8 @@ function FactoryGame.cl_bindChatCommands(self)
 		sm.game.bindChatCommand("/give", { { "string", "uuid", false }, { "number", "quantity", true } },
 			"cl_onChatCommand",
 			"Gives an item by its uuid")
+		sm.game.bindChatCommand("/settier", { { "int", "tier", false } }, "cl_onChatCommand",
+			"Sets the research tier to this level")
 
 		-- vanila
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
