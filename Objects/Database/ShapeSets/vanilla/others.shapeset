@@ -140,6 +140,186 @@
       "stackSize": 65535.0,
       "sticky": "-Y",
       "uuid": "80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f"
+    },
+    {
+      "color": "1c8687",
+      "cylinder": {
+        "axis": "Y",
+        "depth": 1,
+        "diameter": 1,
+        "margin": 0.04
+      },
+      "flammable": false,
+      "legacyId": 511,
+      "name": "obj_fittings_pipe",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 3,
+        "density": 4,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/fittings/obj_fittings_pipe.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_dif.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_asg.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "1000",
+        "tier": 2
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y+Y",
+      "uuid": "bbc5cc77-443d-4aa7-a175-ebdeb09c2df3"
+    },
+    {
+      "color": "1c8687",
+      "cylinder": {
+        "axis": "Y",
+        "depth": 3,
+        "diameter": 1,
+        "margin": 0.04
+      },
+      "flammable": false,
+      "legacyId": 512,
+      "name": "obj_fittings_pipelong",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 3,
+        "density": 4,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/fittings/obj_fittings_pipelong.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_dif.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_asg.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "3000",
+        "tier": 2
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y+Y",
+      "uuid": "07232236-22eb-4912-8774-ab185f368bb9"
+    },
+    {
+      "color": "565656",
+      "flammable": false,
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_fittings_pipebend.obj",
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "legacyId": 513,
+      "name": "obj_fittings_pipebend",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 3,
+        "density": 4,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/fittings/obj_fittings_pipebend.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_dif.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_asg.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "PropY",
+      "shop": {
+        "category": "Decor",
+        "price": "1500",
+        "tier": 2
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y-Z",
+      "uuid": "4f1c0036-389b-432e-81de-8261cb9f9d57"
+    },
+    {
+      "color": "1c8687",
+      "flammable": false,
+      "hull": {
+        "col": "$GAME_DATA/Objects/Collision/obj_fittings_pipebigsplit.obj",
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "legacyId": 514,
+      "name": "obj_fittings_pipesplit",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 3,
+        "density": 4,
+        "durability": 5,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/fittings/obj_fittings_pipesplit.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_dif.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_asg.tga",
+                  "$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "PropYZm",
+      "shop": {
+        "category": "Decor",
+        "price": "1500",
+        "tier": 2
+      },
+      "stackSize": 65535.0,
+      "sticky": "-Y+Y-Z",
+      "uuid": "9f37d9e9-be8d-49c8-a7ac-e59c67786083"
     }
   ]
 }
