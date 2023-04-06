@@ -99,9 +99,11 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		local i = #startingItems
 
 		--perk items
-		for _, item in ipairs(g_perkManager.sv.items) do
-			sm.container.setItem(inventory, i, item, 1)
-			i = i + 1
+		if g_perkManager then
+			for _, item in ipairs(g_perkManager.sv.items) do
+				sm.container.setItem(inventory, i, item, 1)
+				i = i + 1
+			end
 		end
 
 		--special items for host only
