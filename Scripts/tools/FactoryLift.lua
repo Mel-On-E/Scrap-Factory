@@ -106,7 +106,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
         local hit, result = sm.localPlayer.getRaycast(7.5)
         Lift.client_interact(self, primaryState, secondaryState, result)
 
-        if hit then
+        if hit and PerkManager.isPerkOwned("LiftLv1") then
             if result.type == "body" and result:getBody():isLiftable() then
                 --export gui
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
@@ -139,6 +139,7 @@ function FactoryLift:client_onUpdate()
     if hit and result.type == "lift" then
         local import = sm.localPlayer.getActiveItem() == tool_lift and
             "\t" .. sm.gui.getKeyBinding("ForceBuild", true) .. language_tag("ImportInteraction") or ""
+        import = PerkManager.isPerkOwned("LiftLv1") and import or ""
         sm.gui.setInteractionText(sm.gui.getKeyBinding("Use", true) .. "#{INTERACTION_USE}", import, "")
     end
 end

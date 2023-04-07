@@ -1,11 +1,13 @@
 dofile("$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua")
 
 ---@class OldUnitManager : ScriptableObjectClass
+---@diagnostic disable-next-line: param-type-mismatch
 OldUnitManager = class(UnitManager)
 
 ---@class UnitManager : OldUnitManager
 ---@field cl UnitManagerCl
 ---@field sv table
+---@diagnostic disable-next-line: param-type-mismatch
 UnitManager = class(UnitManager)
 
 --------------------
