@@ -404,7 +404,7 @@
                   },
                   "speed" : 2
                },
-               "power" : 1
+               "power" : 10
             },
             "filename" : "$CONTENT_DATA/Scripts/Other/Belt.lua"
          },
@@ -456,7 +456,7 @@
                   },
                   "speed" : 2
                },
-               "power" : 1
+               "power" : 50
             },
             "filename" : "$CONTENT_DATA/Scripts/Other/Belt.lua"
          },
