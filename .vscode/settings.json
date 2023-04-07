@@ -42,7 +42,8 @@
         "isAnyOf",
         "getDayCycleFraction",
         "Lift",
-        "formatCountdown"
+        "formatCountdown",
+        "SpawnLoot"
     ],
     "Lua.diagnostics.disable": [
         "lowercase-global"
