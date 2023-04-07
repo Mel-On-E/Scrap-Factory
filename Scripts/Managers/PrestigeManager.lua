@@ -16,7 +16,7 @@ function PrestigeManager:server_onCreate()
     self.sv.saved = self.storage:load()
     if self.sv.saved == nil then
         self.sv.saved = {
-            prestige = 0,
+            prestigePoints = 0,
             lastPrestigeGain = 0,
             specialItems = {}
         }
@@ -55,25 +55,25 @@ function PrestigeManager:sv_saveData()
     self.storage:save(packNetworkData(self.sv.saved))
 
     local clientData = {
-        prestige = self.sv.saved.prestige,
+        prestigePoints = self.sv.saved.prestigePoints,
         lastPrestigeGain = self.sv.saved.lastPrestigeGain
     }
     self.network:setClientData(packNetworkData(clientData))
 end
 
-function PrestigeManager.sv_addPrestige(prestige)
-    g_prestigeManager.sv.saved.prestige = g_prestigeManager.sv.saved.prestige + prestige
+function PrestigeManager.sv_addPrestige(prestigePoints)
+    g_prestigeManager.sv.saved.prestigePoints = g_prestigeManager.sv.saved.prestigePoints + prestigePoints
 end
 
-function PrestigeManager.sv_setPrestige(prestige)
-    g_prestigeManager.sv.saved.prestige = prestige
+function PrestigeManager.sv_setPrestige(prestigePoints)
+    g_prestigeManager.sv.saved.prestigePoints = prestigePoints
 end
 
----@param prestige number amount of prestige points to be used
+---@param prestigePoints number amount of prestige points to be used
 ---@return boolean success whether the amount of prestige points could be spent
-function PrestigeManager.sv_trySpendPrestige(prestige)
-    if g_prestigeManager.sv.saved.prestige - prestige > 0 then
-        g_prestigeManager.sv.saved.prestige = g_prestigeManager.sv.saved.prestige - prestige
+function PrestigeManager.sv_trySpendPrestige(prestigePoints)
+    if g_prestigeManager.sv.saved.prestigePoints - prestigePoints > 0 then
+        g_prestigeManager.sv.saved.prestigePoints = g_prestigeManager.sv.saved.prestigePoints - prestigePoints
         sm.event.sendToScriptableObject(g_prestigeManager.scriptableObject, "sv_saveData")
         return true
     end
@@ -123,7 +123,7 @@ function PrestigeManager:client_onCreate()
 
     self.cl = {
         data = {
-            prestige = 0,
+            prestigePoints = 0,
             lastPrestigeGain = 0
         }
     }
@@ -151,7 +151,8 @@ function PrestigeManager.cl_e_getLastPrestigeGain()
 end
 
 function PrestigeManager.cl_getPrestige()
-    return g_prestigeManager.sv and g_prestigeManager.sv.saved.prestige or g_prestigeManager.cl.data.prestige
+    return (g_prestigeManager.sv and g_prestigeManager.sv.saved.prestigePoints) or
+    g_prestigeManager.cl.data.prestigePoints
 end
 
 -- #endregion
@@ -179,7 +180,7 @@ end
 ---@field doSpawnCrate integer|nil tick at which the next prestige crate should be spawned
 
 ---@class PrestigeManagerSvSaved
----@field prestige number available prestige points
+---@field prestigePoints number available prestige points
 ---@field lastPrestigeGain number prestige points gained via the last prestige
 ---@field specialItems table<string, integer> table of items to be kept after a prestige <uuid, amount>
 
@@ -187,7 +188,7 @@ end
 ---@field data PrestigeManagerClData
 
 ---@class PrestigeManagerClData
----@field prestige number available prestige points
+---@field prestigePoints number available prestige points
 ---@field lastPrestigeGain number prestige points gained via the last prestige
 
 -- #endregion

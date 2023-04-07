@@ -27,9 +27,13 @@ function FactoryPlayer.server_onCreate(self)
 	self.sv = {}
 
 	self.sv.saved = self.storage:load() or {}
-	self.sv.saved.stats = self.sv.saved.stats or { hp = MaxHP, maxhp = MaxHP }
-	self.sv.saved.isConscious = (self.sv.saved.isConscious == nil) or self.sv.saved.isConscious
-	self.sv.saved.isNewPlayer = (self.sv.saved.isNewPlayer == nil) or self.sv.saved.isNewPlayer
+	if not self.sv.saved then
+		self.sv.saved = {
+			stats = { hp = MaxHP, maxhp = MaxHP },
+			isConscious = true,
+			isNewPlayer = true,
+		}
+	end
 
 	self.storage:save(self.sv.saved)
 
