@@ -246,6 +246,8 @@ function FactoryPlayer:sv_e_checkPlayerPrestigeLevel()
 	if self.sv.saved.prestigeLevel ~= PrestigeManager.Sv_getPrestigeLevel() then
 		sm.event.sendToGame("sv_resetPlayer", self.player)
 		self:sv_setPrestigeLevelToCurrent()
+	elseif #sm.player.getAllPlayers() > 1 then
+		sm.event.sendToScriptableObject(g_perkManager.scriptableObject, "sv_giveItemsLeftToCollect", player)
 	end
 end
 

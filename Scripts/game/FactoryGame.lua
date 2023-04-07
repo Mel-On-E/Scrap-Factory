@@ -80,9 +80,6 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 		self:sv_resetPlayer(player)
 	else
 		sm.event.sendToPlayer(player, "sv_e_checkPlayerPrestigeLevel")
-		if #sm.player.getAllPlayers() > 1 then
-			sm.event.sendToScriptableObject(g_perkManager.scriptableObject, "sv_giveItemsLeftToCollect", player)
-		end
 	end
 
 	g_unitManager:sv_onPlayerJoined(player)
