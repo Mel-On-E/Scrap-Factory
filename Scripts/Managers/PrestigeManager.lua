@@ -114,6 +114,7 @@ function PrestigeManager:sv_doPrestige()
 
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
+    PerkManager.Sv_clearItemsToCollect()
     sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearchProgress")
 end
 
