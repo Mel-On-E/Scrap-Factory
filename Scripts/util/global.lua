@@ -62,3 +62,6 @@ g_powerManager = {}
 
 ---@type TutorialManager
 g_tutorialManager = {}
+
+---@type PrestigeManager
+g_prestigeManager = {}

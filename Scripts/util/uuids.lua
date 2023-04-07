@@ -120,6 +120,10 @@ obj_vehicle_smallwheel = sm.uuid.new("69e362c3-32aa-4cd1-adc0-dcfc47b92c0d")
 obj_vehicle_bigwheel = sm.uuid.new("db66f0b1-0c50-4b74-bdc7-771374204b1f")
 obj_industrial_stairwedge = sm.uuid.new("e02620a5-371b-4d63-be35-fd8a0552eba9")
 obj_decor_babyduck = sm.uuid.new("80bc2b9f-98a9-44e4-9cb8-d4ec7e95b40f")
+obj_fittings_pipe = sm.uuid.new("bbc5cc77-443d-4aa7-a175-ebdeb09c2df3")
+obj_fittings_pipelong = sm.uuid.new("07232236-22eb-4912-8774-ab185f368bb9")
+obj_fittings_pipebend = sm.uuid.new("4f1c0036-389b-432e-81de-8261cb9f9d57")
+obj_fittings_pipesplit = sm.uuid.new("9f37d9e9-be8d-49c8-a7ac-e59c67786083")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/building.shapeset
@@ -131,6 +135,10 @@ obj_factory_building_column_01 = sm.uuid.new("9c59ddbf-9bf8-47a7-8771-067f8d96f7
 obj_factory_building_column_02 = sm.uuid.new("d5c4fc84-ad5a-41c1-876b-591412b37b11")
 obj_factory_building_wall_01 = sm.uuid.new("b1b7dc53-d143-4241-92e7-d92be98eec1a")
 obj_factory_building_wall_03 = sm.uuid.new("4ae033f6-15b8-4cc1-89ac-db200809a2dc")
+obj_factory_building_catwalk_straight_01 = sm.uuid.new("964c7fc4-103f-45fd-a1ac-fddc39314cbf")
+obj_factory_building_catwalk_railing_01 = sm.uuid.new("612701ee-ab1a-4766-80f9-0b3e8d08e576")
+obj_factory_building_ramp_01 = sm.uuid.new("259bbaa6-e6b3-4f08-a3ad-5ac7e7940f6b")
+obj_factory_building_ramp_02 = sm.uuid.new("61ba9ae1-7328-4932-8a0a-0f0a7cdadb57")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/debug.shapeset
@@ -169,6 +177,7 @@ tool_hub = sm.uuid.new("a6113860-f4d4-42df-b8f9-129efdbaf777")
 tool_sell = sm.uuid.new("8f190ce2-3a59-423e-8483-a7aa67bd5bc0")
 tool_lift = sm.uuid.new("5cc12f03-275e-4c8e-b013-79fc0f913e1b")
 tool_hammer = sm.uuid.new("ed185725-ea12-43fc-9cd7-4295d0dbf88b")
+tool_jetpack = sm.uuid.new("17599d84-b159-45e8-a72f-82c6ead699f5")
 
 ----------------------------------------
 --./Tools/Database/ToolSets/vanilla.toolset

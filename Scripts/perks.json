@@ -1,6 +1,6 @@
 {
 	"ResearchLv1": {
-		"price": "1",
+		"price": "10",
 		"requires": [],
 		"effects": {
 			"multiplier": {
@@ -9,7 +9,7 @@
 		}
 	},
 	"ResearchLv2": {
-		"price": "10",
+		"price": "100",
 		"requires": [
 			"ResearchLv1"
 		],
@@ -20,7 +20,7 @@
 		}
 	},
 	"ResearchLv3": {
-		"price": "100",
+		"price": "1000",
 		"requires": [
 			"ResearchLv2"
 		],
@@ -31,7 +31,7 @@
 		}
 	},
 	"PollutionLv1": {
-		"price": "1",
+		"price": "10",
 		"requires": [],
 		"effects": {
 			"multiplier": {
@@ -40,7 +40,7 @@
 		}
 	},
 	"PollutionLv2": {
-		"price": "10",
+		"price": "100",
 		"requires": [
 			"PollutionLv1"
 		],
@@ -51,7 +51,7 @@
 		}
 	},
 	"PollutionLv3": {
-		"price": "100",
+		"price": "1000",
 		"requires": [
 			"PollutionLv2"
 		],
@@ -59,6 +59,44 @@
 			"multiplier": {
 				"pollution": 0.98
 			}
+		}
+	},
+	"JetpackLv1": {
+		"price": "10000",
+		"requires": [
+			"ResearchLv2"
+		],
+		"effects": {
+			"items": [
+				"17599d84-b159-45e8-a72f-82c6ead699f5"
+			]
+		}
+	},
+	"LiftLv1": {
+		"price": "1",
+		"requires": [],
+		"effects": {}
+	},
+	"PaintToolLv1": {
+		"price": "100",
+		"requires": [
+			"PollutionLv1"
+		],
+		"effects": {
+			"items": [
+				"c60b9627-fc2b-4319-97c5-05921cb976c6"
+			]
+		}
+	},
+	"WeldToolLv1": {
+		"price": "100",
+		"requires": [
+			"ResearchLv1"
+		],
+		"effects": {
+			"items": [
+				"fdb8b8be-96e7-4de0-85c7-d2f42e4f33ce"
+			]
 		}
 	}
 }
