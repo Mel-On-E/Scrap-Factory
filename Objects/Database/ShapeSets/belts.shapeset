@@ -415,6 +415,58 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "fc0f5c5d-111a-436e-9f04-e438b022e65a"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "00c400",
+         "flammable" : false,
+         "name" : "obj_belt_sticky",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 4,
+            "density" : 4,
+            "durability" : 6,
+            "friction" : 3
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_belt_01.rend",
+         "restitution" : 0.0,
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Belt",
+            "data" : {
+               "belt" : {
+                  "box" : {
+                     "x" : 1.50,
+                     "y" : 0.250,
+                     "z" : 1.50
+                  },
+                  "direction" : {
+                     "at" : -1.0,
+                     "right" : -1,
+                     "up" : 0
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.1250,
+                     "z" : 0
+                  },
+                  "speed" : 2
+               },
+               "power" : 1
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Other/Belt.lua"
+         },
+         "shop" : {
+            "category" : "Utilities",
+            "price" : "1000",
+            "special" : true
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "baa13741-ec77-46e6-ad90-2fb7ff6205e5"
       }
    ]
 }
