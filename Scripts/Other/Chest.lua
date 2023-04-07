@@ -62,16 +62,17 @@ end
 --------------------
 
 function Chest:client_onCreate()
-	self.cl = { container = self.shape.interactable:getContainer(0) }
+	self.cl = {}
 end
 
 function Chest.client_onInteract(self, character, state)
 	if state == true then
-		if self.cl.container then
+		local container = self.shape.interactable:getContainer(0)
+		if container then
 			self.cl.containerGui = sm.gui.createContainerGui(true)
 			self.cl.containerGui:setText("UpperName", "#{CONTAINER_TITLE_GENERIC}")
 			self.cl.containerGui:setVisible("TakeAll", true)
-			self.cl.containerGui:setContainer("UpperGrid", self.shape.interactable:getContainer(0));
+			self.cl.containerGui:setContainer("UpperGrid", container);
 			self.cl.containerGui:setText("LowerName", "#{INVENTORY_TITLE}")
 			self.cl.containerGui:setContainer("LowerGrid", sm.localPlayer.getInventory())
 			self.cl.containerGui:open()
