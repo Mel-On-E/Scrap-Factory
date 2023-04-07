@@ -77,43 +77,60 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 	print(player.name, "joined the game")
 
 	if newPlayer then --Player is first time joiners
-		local inventory = player:getInventory()
-
-		local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
-
-		local startingItems = {
-			tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
-			obj_generator_windmill
-		}
-
-		sm.container.beginTransaction()
-
-		for slot, item in ipairs(startingItems) do
-			sm.container.setItem(inventory, slot - 1, item, 1)
-		end
-
-		for i = #startingItems, inventory.size, 1 do
-			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
-		end
-
-		if sm.player.getAllPlayers()[1] == player then --if host
-			print(PrestigeManager.sv_getSpecialItems())
-			local i = 7
-			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
-				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
-				i = i + 1
-			end
-		end
-
-		sm.container.endTransaction()
-
-		if not sm.exists(self.sv.saved.world) then
-			sm.world.loadWorld(self.sv.saved.world)
-		end
-		self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
-			"sv_createNewPlayer")
+		self:sv_resetPlayer(player)
+	else
+		sm.event.sendToPlayer(player, "sv_e_checkPlayerPrestigeLevel")
 	end
+
 	g_unitManager:sv_onPlayerJoined(player)
+end
+
+---reset a player's inventory and character
+function FactoryGame:sv_resetPlayer(player)
+	local inventory = player:getInventory()
+
+	local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
+
+	local startingItems = {
+		tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
+		obj_generator_windmill
+	}
+
+	sm.container.beginTransaction()
+
+	for slot, item in ipairs(startingItems) do
+		sm.container.setItem(inventory, slot - 1, item, 1)
+	end
+
+	for i = #startingItems, inventory.size, 1 do
+		sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
+	end
+
+	local i = #startingItems
+
+	--perk items
+	if g_perkManager then
+		for _, item in ipairs(g_perkManager.sv.items) do
+			sm.container.setItem(inventory, i, item, 1)
+			i = i + 1
+		end
+	end
+
+	--special items for host only
+	if sm.player.getAllPlayers()[1] == player then --if host
+		for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
+			sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
+			i = i + 1
+		end
+	end
+
+	sm.container.endTransaction()
+
+	if not sm.exists(self.sv.saved.world) then
+		sm.world.loadWorld(self.sv.saved.world)
+	end
+	self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
+		"sv_createNewPlayer")
 end
 
 --------------------
@@ -190,6 +207,10 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PrestigeManager.sv_addPrestige(tonumber(params[2]))
 	elseif params[1] == "/setprestige" then
 		PrestigeManager.sv_setPrestige(tonumber(params[2]))
+	elseif params[1] == "/settier" then
+		ResearchManager.sv_setResearchTier(params[2])
+	elseif params[1] == "/skiptutorial" then
+		TutorialManager.sv_skipTutorial()
 	else
 		params.player = player
 		if sm.exists(player.character) then
@@ -483,6 +504,10 @@ function FactoryGame.cl_bindChatCommands(self)
 		sm.game.bindChatCommand("/give", { { "string", "uuid", false }, { "number", "quantity", true } },
 			"cl_onChatCommand",
 			"Gives an item by its uuid")
+		sm.game.bindChatCommand("/settier", { { "int", "tier", false } }, "cl_onChatCommand",
+			"Sets the research tier to this level")
+		sm.game.bindChatCommand("/skiptutorial", {}, "cl_onChatCommand",
+			"Skip the tutorial")
 
 		-- vanila
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")

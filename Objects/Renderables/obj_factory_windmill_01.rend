@@ -1,11 +1,27 @@
 {
-   "lodList" : [
+   "lodList": [
       {
-         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_01.fbx",
-         "subMeshList" : [
+         "mesh": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
+         "subMeshList": [
             {
-               "material" : "Dif",
-               "textureList" : [ "$CONTENT_DATA/Objects/Patterns/pat_blockout_diffusespec.png" ]
+               "material": "SkelAnimDifAsgNor",
+               "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Generators/obj_factory_windmill_01_nor.tga"
+               ]
+            }
+         ],
+         "animationList": [
+            {
+               "name": "Prop_R",
+               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
+               "looping": true
+            },
+            {
+               "name": "Idle_R",
+               "file": "$CONTENT_DATA/Objects/Mesh/obj_factory_windmill_anim.fbx",
+               "looping": false
             }
          ]
       }

@@ -153,6 +153,12 @@ function TutorialManager:sv_e_questEvent(event)
     self:sv_saveAndSync()
 end
 
+---**DEBUG** skip the tutorial
+function TutorialManager.sv_skipTutorial()
+    g_tutorialManager.sv.saved.tutorialStep = #tutorialSteps
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_saveDataAndSync")
+end
+
 -- #endregion
 
 --------------------

@@ -96,6 +96,12 @@ function ResearchManager:sv_resetResearchProgress()
     self:sv_saveDataAndSync()
 end
 
+---**DEBUG** set the research tier
+function ResearchManager.sv_setResearchTier(tier)
+    g_ResearchManager.sv.saved.tier = math.min(#tiersJson - 1, tier)
+    sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_researchDone")
+end
+
 -- #endregion
 
 function ResearchManager:getTierProgress()

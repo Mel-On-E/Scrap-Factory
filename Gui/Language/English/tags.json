@@ -86,6 +86,18 @@
 	"PollutionLv3Name": "Pollution Lvl.3",
 	"PollutionLv3Desc": "The only solution is pollution! Let's pump some chemtrails into the air to make the public even more dumb. This should shae off another 2%!",
 
+	"JetpackLv1Name": "Jetpack!",
+	"JetpackLv1Desc": "Unlock a cool and epic jetpack that allows you to fly too the moon! Well at least if you would not have to keep an eye on fuel. Good thing you can recharge it with earthly magic when touching the ground.",
+	
+	"LiftLv1Name": "Lift++",
+	"LiftLv1Desc": "Upgrade your lift! This will allow you to export and import entire factories! It will even automatically buy the parts you need!",
+
+	"PaintToolLv1Name": "Paint Tool",
+	"PaintToolLv1Desc": "The paint tool allows you to color your creations! Customize your factories and have show them monochromes who's boss! (paint not included)",
+
+	"WeldToolLv1Name": "Weld Tool",
+	"WeldToolLv1Desc": "The weld tool allows you to make one out of two! It is quite incredible indeed.",
+
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
 	"ClearOresMessageMale": "You sure, bro?",
