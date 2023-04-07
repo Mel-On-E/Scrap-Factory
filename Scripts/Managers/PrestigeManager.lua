@@ -18,7 +18,8 @@ function PrestigeManager:server_onCreate()
         self.sv.saved = {
             prestigePoints = 0,
             lastPrestigeGain = 0,
-            specialItems = {}
+            specialItems = {},
+            prestigeLevel = 0
         }
     else
         self.sv.saved = unpackNetworkData(self.sv.saved)
@@ -102,14 +103,22 @@ end
 function PrestigeManager:sv_doPrestige()
     self.sv_addPrestige(self.getPrestigeGain())
     self.sv.saved.lastPrestigeGain = self.getPrestigeGain()
+    self.sv.saved.prestigeLevel = self.sv.saved.prestigeLevel + 1
 
     self:sv_saveData()
 
     sm.event.sendToGame("sv_recreateWorld")
+    for _, player in ipairs(sm.player.getAllPlayers()) do
+        sm.event.sendToPlayer(player, "sv_setPrestigeLevelToCurrent")
+    end
 
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
     sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearchProgress")
+end
+
+function PrestigeManager.Sv_getPrestigeLevel()
+    return g_prestigeManager.sv.saved.prestigeLevel
 end
 
 -- #endregion
@@ -152,7 +161,7 @@ end
 
 function PrestigeManager.cl_getPrestige()
     return (g_prestigeManager.sv and g_prestigeManager.sv.saved.prestigePoints) or
-    g_prestigeManager.cl.data.prestigePoints
+        g_prestigeManager.cl.data.prestigePoints
 end
 
 -- #endregion
@@ -183,6 +192,7 @@ end
 ---@field prestigePoints number available prestige points
 ---@field lastPrestigeGain number prestige points gained via the last prestige
 ---@field specialItems table<string, integer> table of items to be kept after a prestige <uuid, amount>
+---@field prestigeLevel integer how often a prestige has been done
 
 ---@class PrestigeManagerCl
 ---@field data PrestigeManagerClData

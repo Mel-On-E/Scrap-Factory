@@ -26,12 +26,13 @@ local RespawnEndDelay = 1.0 * 40
 function FactoryPlayer.server_onCreate(self)
 	self.sv = {}
 
-	self.sv.saved = self.storage:load() or {}
+	self.sv.saved = self.storage:load()
 	if not self.sv.saved then
 		self.sv.saved = {
 			stats = { hp = MaxHP, maxhp = MaxHP },
 			isConscious = true,
 			isNewPlayer = true,
+			prestigeLevel = 0
 		}
 	end
 
@@ -238,6 +239,19 @@ end
 
 function FactoryPlayer:sv_e_takeDamage(params)
 	self:sv_takeDamage(params.damage, params.source)
+end
+
+---check if a player is on the current prestigeLevel. If not, reset their inventory.
+function FactoryPlayer:sv_e_checkPlayerPrestigeLevel()
+	if self.sv.saved.prestigeLevel ~= PrestigeManager.Sv_getPrestigeLevel() then
+		sm.event.sendToGame("sv_resetPlayer", self.player)
+		self:sv_setPrestigeLevelToCurrent()
+	end
+end
+
+function FactoryPlayer:sv_setPrestigeLevelToCurrent()
+	self.sv.saved.prestigeLevel = PrestigeManager.Sv_getPrestigeLevel()
+	self.storage:save(self.sv.saved)
 end
 
 -- #endregion
@@ -463,6 +477,7 @@ end
 ---@field stats PlayerSvSavedStats
 ---@field isConscious boolean
 ---@field isNewPlayer boolean
+---@field prestigeLevel integer the prestige level the player is at
 
 ---@class PlayerSvSavedStats
 ---@field hp number current hp of a player
