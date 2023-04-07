@@ -195,6 +195,7 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 
 		--FACTORY
 	elseif params[1] == "/addmoney" then
+		---@diagnostic disable-next-line: param-type-mismatch
 		MoneyManager.sv_addMoney(tonumber(params[2]))
 	elseif params[1] == "/setmoney" then
 		MoneyManager.sv_setMoney(tonumber(params[2]))

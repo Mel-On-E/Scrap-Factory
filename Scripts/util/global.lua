@@ -1,5 +1,3 @@
----@diagnostic disable: lowercase-global
-
 ---@type Vec3 the spawnpoint in the world for all players
 SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
