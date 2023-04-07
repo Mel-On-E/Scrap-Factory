@@ -15,8 +15,7 @@ function Windmill:server_onCreate()
 end
 
 function Windmill:sv_getPower()
-    local heightMultiplier = math.max(self.shape.worldPosition.z / 100 + 1, 1)
-    return math.min(math.floor(heightMultiplier * self.data.power), self.data.power * 2)
+    return math.floor(self.data.power * self:get_height_multiplier())
 end
 
 -- #endregion
@@ -48,7 +47,7 @@ function Windmill:cl_setAnim(anim)
 end
 
 function Windmill:client_onUpdate(dt)
-    self.cl.animProgress = self.cl.animProgress + dt * animSpeeds[self.cl.activeAnim]
+    self.cl.animProgress = self.cl.animProgress + dt * animSpeeds[self.cl.activeAnim] * self:get_height_multiplier()
     local progress = self.cl.animProgress / self.cl.animDuration
     self.interactable:setAnimProgress(self.cl.activeAnim, progress)
 
@@ -65,6 +64,10 @@ function Windmill:client_onUpdate(dt)
 end
 
 -- #endregion
+
+function Windmill:get_height_multiplier()
+    return sm.util.clamp(self.shape.worldPosition.z / 100 + 1, 1, 2)
+end
 
 --------------------
 -- #region Types
