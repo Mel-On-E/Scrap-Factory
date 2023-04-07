@@ -1,0 +1,37 @@
+{
+   "Action - Chest Close" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "event:/ui/openclose/chest_close",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Action - Chest Open" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "event:/ui/openclose/chest_open",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Action - Sell" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "p_action_sell",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/ui/upgrade_part",
+            "type" : "audio"
+         }
+      ]
+   }
+}

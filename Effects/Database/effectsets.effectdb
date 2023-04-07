@@ -27,6 +27,10 @@
       {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/dev.effectset",
          "showInEditor" : true
+      },
+      {
+         "path" : "$CONTENT_DATA/Effects/Database/EffectSets/actions.effectset",
+         "showInEditor" : true
       }
    ]
 }

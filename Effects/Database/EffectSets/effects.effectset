@@ -1,331 +1,200 @@
 {
-	"Furnace - Sell": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_lootbox_projectile_pickedup",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.25
-				},
-				"delay": 0.0
-			},
-			{
-				"type": "audio",
-				"name": "event:/ui/item_spawn",
-				"delay": 0.0
-			}
-		]
-	},
-	"Furnace - OnSell": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_sellpoints_furnace_onsell",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			}
-		]
-	},
-	"Furnace - Research Debris": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_sellpoints_furnace_science",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			}
-		]
-	},
-	"Nice Sound": {
-		"effectList": [
-			{
-				"type": "audio",
-				"name": "event:/ui/item_pickup",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			}
-		]
-	},
-	"ResearchDone": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_challengemode_confetti",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"direction": {
-					"x": 0.0,
-					"y": 1.0,
-					"z": 0.0
-				}
-			},
-			{
-				"type": "audio",
-				"name": "event:/char/npc/bots/confettibot",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				}
-			}
-		]
-	},
-	"Confetti": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_challengemode_confetti",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"direction": {
-					"x": 0.0,
-					"y": 1.0,
-					"z": 0.0
-				}
-			}
-		]
-	},
-	"Pollution": {
-		"parameterList": {
-			"velocity": 0.5
-		},
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_projectile_checmical_trail",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.25
-				},
-				"attached": true,
-				"delay": 0.0
-			},
-			{
-				"type": "audio",
-				"name": "WeldTool - Sparks",
-				"delay": 0.0
-			}
-		]
-	},
-	"Ore Pollution": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_plants_fertilizer",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			}
-		]
-	},
-	"Prestige": {
-		"effectList": [
-			{
-				"delay": 0.5,
-				"name": "event:/ui/challenge/complete_collect",
-				"type": "audio"
-			}
-		]
-	},
-	"Uranium Glow": {
-		"parameterList": {
-			"Color": [
-				0,
-				1,
-				0,
-				1
-			],
-			"radius": 12.5,
-			"intensity": 1.25,
-			"color": "00ff00"
-		},
-		"effectList": [
-			{
-				"type": "pointLight",
-				"name": "",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"parameters": [
-					"color",
-					"radius",
-					"intensity"
-				],
-				"duration": -1.0,
-				"delay": 0.0
-			}
-		]
-	},
-	"Skirt": {
-		"effectList": [
-			{
-				"type": "renderable",
-				"name": "$CONTENT_DATA/Effects/Skirt/skirt.rend",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				}
-			}
-		]
-	},
-	"Action - Sell": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_action_sell",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			},
-			{
-				"type": "audio",
-				"name": "event:/ui/upgrade_part",
-				"delay": 0.0
-			}
-		]
-	},
-	"Upgrade Drop": {
-		"effectList": [
-			{
-				"type": "particle",
-				"name": "p_logfile_pickup",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.35
-				},
-				"direction": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 1.0
-				},
-				"delay": 0.0
-			},
-			{
-				"type": "audio",
-				"name": "event:/vehicle/triggers/trigger_sensor_on",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			}
-		]
-	},
-	"Jetpack Thruster": {
-		"parameterList": {
-			"velocity": 0.0,
-			"power": 0.0,
-			"color": "007fff",
-			"radius": 1.5,
-			"intensity": 0.01
-		},
-		"effectList": [
-			{
-				"type": "audio",
-				"name": "event:/vehicle/thrusters/thruster05",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.5
-				},
-				"parameters": [
-					"velocity",
-					"power"
-				],
-				"delay": 0.0
-			},
-			{
-				"type": "pointLight",
-				"name": "",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.375
-				},
-				"parameters": [
-					"color",
-					"radius",
-					"intensity"
-				],
-				"delay": 0.0
-			},
-			{
-				"type": "particle",
-				"name": "5_thruster_afterburner_BurstThrust_lvl5",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.125
-				},
-				"direction": {
-					"x": 0.0,
-					"y": -1.0,
-					"z": 0.0
-				},
-				"delay": 0.0
-			},
-			{
-				"type": "particle",
-				"name": "5_thruster_afterburner_startup_lvl5",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"direction": {
-					"x": 0.0,
-					"y": -1.0,
-					"z": 0.0
-				},
-				"delay": 0.25
-			},
-			{
-				"type": "particle",
-				"name": "5_thruster_afterburner_lvl5",
-				"offset": {
-					"x": 0.0,
-					"y": 0.0,
-					"z": 0.0
-				},
-				"direction": {
-					"x": 0.0,
-					"y": -1.0,
-					"z": 0.0
-				},
-				"delay": 0.425
-			}
-		]
-	}
+   "Confetti" : {
+      "effectList" : [
+         {
+            "direction" : [ 0.0, 1.0, 0.0 ],
+            "name" : "p_challengemode_confetti",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Furnace - OnSell" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "p_sellpoints_furnace_onsell",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Furnace - Research Debris" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "p_sellpoints_furnace_science",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Furnace - Sell" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "p_lootbox_projectile_pickedup",
+            "offset" : [ 0.0, 0.0, 0.250 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/ui/item_spawn",
+            "type" : "audio"
+         }
+      ]
+   },
+   "Jetpack Thruster" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "event:/vehicle/thrusters/thruster05",
+            "offset" : [ 0.0, 0.0, 0.50 ],
+            "parameters" : [ "velocity", "power" ],
+            "type" : "audio"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "",
+            "offset" : [ 0.0, 0.0, 0.3750 ],
+            "parameters" : [ "color", "radius", "intensity" ],
+            "type" : "pointLight"
+         },
+         {
+            "delay" : 0.0,
+            "direction" : [ 0.0, -1.0, 0.0 ],
+            "name" : "5_thruster_afterburner_BurstThrust_lvl5",
+            "offset" : [ 0.0, 0.0, 0.1250 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.250,
+            "direction" : [ 0.0, -1.0, 0.0 ],
+            "name" : "5_thruster_afterburner_startup_lvl5",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.4250,
+            "direction" : [ 0.0, -1.0, 0.0 ],
+            "name" : "5_thruster_afterburner_lvl5",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         }
+      ],
+      "parameterList" : {
+         "color" : "007fff",
+         "intensity" : 0.010,
+         "power" : 0.0,
+         "radius" : 1.50,
+         "velocity" : 0.0
+      }
+   },
+   "Nice Sound" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "event:/ui/item_pickup",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Ore Pollution" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "name" : "p_plants_fertilizer",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Pollution" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "delay" : 0.0,
+            "name" : "p_projectile_checmical_trail",
+            "offset" : [ 0.0, 0.0, 0.250 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "WeldTool - Sparks",
+            "type" : "audio"
+         }
+      ],
+      "parameterList" : {
+         "velocity" : 0.50
+      }
+   },
+   "Prestige" : {
+      "effectList" : [
+         {
+            "delay" : 0.50,
+            "name" : "event:/ui/challenge/complete_collect",
+            "type" : "audio"
+         }
+      ]
+   },
+   "ResearchDone" : {
+      "effectList" : [
+         {
+            "direction" : [ 0.0, 1.0, 0.0 ],
+            "name" : "p_challengemode_confetti",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "particle"
+         },
+         {
+            "name" : "event:/char/npc/bots/confettibot",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Skirt" : {
+      "effectList" : [
+         {
+            "name" : "$CONTENT_DATA/Effects/Skirt/skirt.rend",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "renderable"
+         }
+      ]
+   },
+   "Upgrade Drop" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "direction" : [ 0.0, 0.0, 1.0 ],
+            "name" : "p_logfile_pickup",
+            "offset" : [ 0.0, 0.0, 0.3499999940395355 ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/vehicle/triggers/trigger_sensor_on",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Uranium Glow" : {
+      "effectList" : [
+         {
+            "delay" : 0.0,
+            "duration" : -1.0,
+            "name" : "",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "parameters" : [ "color", "radius", "intensity" ],
+            "type" : "pointLight"
+         }
+      ],
+      "parameterList" : {
+         "Color" : [ 0, 1, 0, 1 ],
+         "color" : "00ff00",
+         "intensity" : 1.250,
+         "radius" : 12.50
+      }
+   }
 }
