@@ -2,9 +2,9 @@
    "partList" : [
       {
          "box" : {
-            "x" : 6,
-            "y" : 10,
-            "z" : 6
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
          },
          "color" : "df7f01",
          "flammable" : false,
@@ -44,9 +44,9 @@
       },
       {
          "box" : {
-            "x" : 6,
-            "y" : 10,
-            "z" : 6
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
          },
          "color" : "df7f01",
          "flammable" : false,
@@ -87,9 +87,9 @@
       },
       {
          "box" : {
-            "x" : 6,
-            "y" : 10,
-            "z" : 6
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
          },
          "color" : "00ff00",
          "flammable" : false,
@@ -130,9 +130,9 @@
       },
       {
          "box" : {
-            "x" : 6,
-            "y" : 10,
-            "z" : 6
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
          },
          "color" : "00ffff",
          "flammable" : false,
