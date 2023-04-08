@@ -409,6 +409,110 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "53e7470d-99fe-450e-8606-42dc4f42e4f7"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8b7d6b",
+      "flammable": false,
+      "name": "obj_drop_moonrock",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "density": 6,
+				"durability": 3,
+				"friction": 6,
+				"buoyancy": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiGravityDrop",
+        "data":{
+          "gravity" : 0.2
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "aa0bdfae-b094-43e1-90c4-f654819b7fa1"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "5f5e6e",
+      "flammable": false,
+      "name": "obj_drop_nograv",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "density": 6,
+				"durability": 3,
+				"friction": 6,
+				"buoyancy": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiGravityDrop",
+        "data":{
+          "gravity" : 0.0
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "72f884b2-1de5-4e4c-8770-fdc315e7e612"
     }
   ]
 }

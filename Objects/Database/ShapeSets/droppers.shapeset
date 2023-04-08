@@ -350,6 +350,92 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "302c3a4f-4f03-4c8f-be8f-c1b0217d3ab5"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "d1a4a4",
+         "flammable" : false,
+         "name" : "obj_dropper_lowgrav",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "aa0bdfae-b094-43e1-90c4-f654819b7fa1",
+                  "value" : "2e9"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e15",
+            "tier" : 13
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "dd655f39-9e58-4025-ab0e-b8c622200265"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "5f5e6e",
+         "flammable" : false,
+         "name" : "obj_dropper_nograv",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "72f884b2-1de5-4e4c-8770-fdc315e7e612",
+                  "value" : "2e15"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e9
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e21",
+            "tier" : 21
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "1f53ce59-f7cb-437c-85d1-909fa3abbd9d"
       }
    ]
 }
