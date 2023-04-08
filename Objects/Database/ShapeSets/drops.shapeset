@@ -40,13 +40,6 @@
           }
         ]
       },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
@@ -95,13 +88,6 @@
             ]
           }
         ]
-      },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
@@ -154,13 +140,6 @@
             ]
           }
         ]
-      },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
@@ -215,13 +194,6 @@
             ]
           }
         ]
-      },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {

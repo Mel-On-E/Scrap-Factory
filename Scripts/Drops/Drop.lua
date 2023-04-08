@@ -33,6 +33,12 @@ function Drop:server_onCreate()
 		self.shape:destroyShape(0)
 		return
 	end
+
+	local body = self.shape.body
+	body:setLiftable(false)
+	body:setErasable(false)
+	body:setBuildable(false)
+	body:setPaintable(false)
 end
 
 function Drop:sv_init()
