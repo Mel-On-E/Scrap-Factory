@@ -29,14 +29,14 @@ function TractorBeam:server_onCreate()
     --create areaTrigger
     local size, offset = self:get_size_and_offset()
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character)
+        sm.areaTrigger.filter.dynamicBody)
     self.sv.trigger:bindOnEnter("sv_onEnter")
     self.sv.trigger:bindOnStay("sv_onStay")
 end
 
 function TractorBeam:sv_onEnter(trigger, results)
-    for _, body in ipairs(self:sv_getValidBodies(results)) do
-        self.sv.trackedBodies[#self.sv.trackedBodies + 1] = body
+    for _, shape in ipairs(self:sv_getValidShapes(results)) do
+        shape.interactable.publicData.tractorBeam = sm.game.getCurrentTick()
     end
 end
 
@@ -46,16 +46,17 @@ function TractorBeam:sv_onStay(trigger, results)
     local oldBeamedBodies = self.sv.beamedBodies
     self.sv.beamedBodies = {}
 
-    for _, body in ipairs(self:sv_getValidBodies(results)) do
+    for _, shape in ipairs(self:sv_getValidShapes(results)) do
+        shape.interactable.publicData.tractorBeam = sm.game.getCurrentTick()
         local beamDirection = -self.shape.up
 
-        local strength = oldBeamedBodies[body.id] or 0
+        local strength = oldBeamedBodies[shape.id] or 0
         strength = math.min(strength + 0.1, 10)
 
         ---@diagnostic disable-next-line: param-type-mismatch
-        sm.physics.applyImpulse(body, beamDirection * strength, true)
+        sm.physics.applyImpulse(shape:getBody(), beamDirection * strength, true)
 
-        self.sv.beamedBodies[body.id] = strength
+        self.sv.beamedBodies[shape.id] = strength
     end
 end
 
@@ -88,21 +89,32 @@ function TractorBeam:server_onFixedUpdate()
     end
 end
 
----@param results table table of boides to be validates
----@return table<integer, Body> bodies a list of bodies that are vaild
-function TractorBeam:sv_getValidBodies(results)
-    local bodies = {}
+---@param results table table of shapes to be validated
+---@return table<integer, Shape> shapes a list of shapes that are vaild
+function TractorBeam:sv_getValidShapes(results)
+    local shapes = {}
     for _, result in ipairs(results) do
         if sm.exists(result) then
             if type(result) ~= "Body" then goto continue end
             if result.id == self.shape.body.id then goto continue end
 
-            bodies[#bodies + 1] = result
+            if #result:getShapes() > 1 then goto continue end
+
+            local shape = result:getShapes()[1]
+            local interactable = shape:getInteractable()
+
+            if not interactable then goto continue end
+            if interactable.type ~= "scripted" then goto continue end
+
+            local data = interactable:getPublicData()
+            if not data or not data.value then goto continue end
+
+            shapes[#shapes + 1] = shape
         end
         ::continue::
     end
 
-    return bodies
+    return shapes
 end
 
 -- #endregion
