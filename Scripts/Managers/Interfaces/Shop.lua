@@ -144,6 +144,7 @@ function Shop:cl_changeItem(widgetName)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.item = tonumber(widgetName:sub(6))
 
+	self.cl.curPage = math.min(#self.cl.renderedPages, self.cl.curPage)
 	local item = self.cl.renderedPages[self.cl.curPage][self.cl.item]
 
 	self.cl.gui:setVisible("Preview", item and true)

@@ -16,13 +16,15 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 -- #region Server
 --------------------
 
----@class Params
+---@class UpgraderParams
 ---@field filters number|nil filters of the areaTrigger
----@param params Params
+---@param params UpgraderParams
 function Upgrader:server_onCreate(params)
+    ---@diagnostic disable-next-line: param-type-mismatch
     PowerUtility.sv_init(self)
 
     if self.data.belt then
+        ---@diagnostic disable-next-line: param-type-mismatch
         Belt.server_onCreate(self)
         self.sv_onStay = Belt.sv_onStay
     end
@@ -40,23 +42,28 @@ end
 
 function Upgrader:server_onFixedUpdate()
     if self.data.belt then
+        ---@diagnostic disable-next-line: param-type-mismatch
         Belt.server_onFixedUpdate(self)
     else
+        ---@diagnostic disable-next-line: param-type-mismatch
         PowerUtility.sv_fixedUpdate(self, "cl_toggleEffects")
     end
 end
 
 function Upgrader:sv_onEnter(trigger, results)
     if not self.powerUtil.active then return end
+
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
         if type(result) ~= "Body" then goto continue end
 
         for k, shape in ipairs(result:getShapes()) do
             local interactable = shape:getInteractable()
-            if not interactable then return end
+            if not interactable then goto continue end
+            if interactable.type ~= "scripted" then goto continue end
+
             local data = interactable:getPublicData()
-            if not data or not data.value then return end
+            if not data or not data.value then goto continue end
 
             local uuid = tostring(self.shape.uuid)
             if self.data.upgrade.cap and data.value > self.data.upgrade.cap then goto continue end
@@ -95,6 +102,7 @@ function Upgrader:client_onCreate()
     self.cl = {}
 
     if self.data.belt then
+        ---@diagnostic disable-next-line: param-type-mismatch
         Belt.client_onCreate(self)
     end
 
@@ -103,6 +111,7 @@ end
 
 function Upgrader:client_onUpdate(dt)
     if self.data.belt then
+        ---@diagnostic disable-next-line: param-type-mismatch
         Belt.client_onUpdate(self, dt)
     end
 end
@@ -137,9 +146,9 @@ function Upgrader:cl_createUpgradeEffect()
     self.cl.effect:start()
 end
 
-
 ---toggle the effects depending on the current power state
 function Upgrader:cl_toggleEffects(active)
+    ---@diagnostic disable-next-line: param-type-mismatch
     Belt.cl_toggleEffects(self, active)
     if active and not self.cl.effect:isPlaying() then
         self.cl.effect:start()

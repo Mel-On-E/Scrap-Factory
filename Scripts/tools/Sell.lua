@@ -13,6 +13,7 @@ dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 ---@field blendTime number
 ---@field cl SellCl
 Sell = class()
+Sell.resellValue = 0.8 --the fraction of the shop price gained back by selling
 
 --------------------
 -- #region Server
@@ -64,7 +65,6 @@ local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male
 local currentRenderablesTp = {}
 local currentRenderablesFp = {}
 
-local resellValue = 0.8       --the fraction of the shop price gained back by selling
 local maxSellQuantity = 10000 --maximum amount of items to be sold at once
 
 sm.tool.preloadRenderables(renderables)
@@ -116,17 +116,8 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 	if success and result.type == "body" then
 		local shape = result:getShape()
 
-		local shopItem = g_shop[tostring(shape.uuid)]
-		if shopItem then
-			local sellValue = math.floor(shopItem.price * resellValue)
-
-			--calculate blocks
-			if shape.isBlock then
-				local dim = shape:getBoundingBox() * 4
-				local blocks = dim.x * dim.y * dim.z
-				sellValue = sellValue * blocks
-			end
-
+		local sellValue = Sell.calculateSellValue(shape)
+		if sellValue then
 			sm.gui.setCenterIcon("Use")
 			local keyBindingText1 = sm.gui.getKeyBinding("Create", true)
 			local keyBindingText2 = sm.gui.getKeyBinding("NextCreateRotation")
@@ -152,6 +143,27 @@ function Sell.client_onEquippedUpdate(self, primaryState, secondaryState)
 	end
 
 	return false, false
+end
+
+---calculate the sell value for a shape
+---@param shape Shape shape to be sold
+---@return number|nil value value of the shape
+function Sell.calculateSellValue(shape)
+	local shopItem = g_shop[tostring(shape.uuid)]
+	if not shopItem then return nil end
+
+	if shopItem.prestige or shopItem.special then return nil end
+
+	local sellValue = shopItem.price
+	--calculate blocks
+	if shape.isBlock then
+		local dim = shape:getBoundingBox() * 4
+		local blocks = dim.x * dim.y * dim.z
+		sellValue = sellValue * blocks
+	end
+
+	---@diagnostic disable-next-line: return-type-mismatch
+	return math.floor(sellValue * Sell.resellValue)
 end
 
 function Sell:client_onToggle()

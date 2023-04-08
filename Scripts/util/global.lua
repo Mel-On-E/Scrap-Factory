@@ -1,5 +1,3 @@
----@diagnostic disable: lowercase-global
-
 ---@type Vec3 the spawnpoint in the world for all players
 SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
@@ -64,3 +62,6 @@ g_powerManager = {}
 
 ---@type TutorialManager
 g_tutorialManager = {}
+
+---@type PrestigeManager
+g_prestigeManager = {}
