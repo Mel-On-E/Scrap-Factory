@@ -23,7 +23,7 @@ function TractorBeam:server_onCreate()
 
     self.sv = {
         trackedBodies = {},
-        beamedBodies = {}
+        beamedShapes = {}
     }
 
     --create areaTrigger
@@ -43,20 +43,36 @@ end
 function TractorBeam:sv_onStay(trigger, results)
     if not self.powerUtil.active then return end
 
-    local oldBeamedBodies = self.sv.beamedBodies
-    self.sv.beamedBodies = {}
+    local oldBeamedShapes = self.sv.beamedShapes
+    self.sv.beamedShapes = {}
 
     for _, shape in ipairs(self:sv_getValidShapes(results)) do
+        --pull items towards the beam
         shape.interactable.publicData.tractorBeam = sm.game.getCurrentTick()
         local beamDirection = -self.shape.up
 
-        local strength = oldBeamedBodies[shape.id] or 0
-        strength = math.min(strength + 0.1, 10)
+        local strength = oldBeamedShapes[shape.id] or 0
+        strength = math.min(strength + 0.01, 1)
+        self.sv.beamedShapes[shape.id] = strength
+
+        local force = beamDirection * strength * shape.mass * 1.25
+
+        --push items towards the center of the beam
+        local distance = (self.shape.worldPosition - shape:getBody().centerOfMassPosition)
+        local BeamCenterOffset = distance -
+            beamDirection * (distance:dot(beamDirection) / beamDirection:length2())
+
+        local relVel = shape.velocity - self.shape.velocity
+        local beamCenterVel = relVel -
+            beamDirection * (relVel:dot(beamDirection) / beamDirection:length2())
+        local beamDirectionVel = relVel - beamCenterVel
+
+        if beamDirectionVel:length() > 0.1 and beamDirectionVel:length() < BeamCenterOffset:length() * 1 then
+            force = force + BeamCenterOffset * shape.mass
+        end
 
         ---@diagnostic disable-next-line: param-type-mismatch
-        sm.physics.applyImpulse(shape:getBody(), beamDirection * strength, true)
-
-        self.sv.beamedBodies[shape.id] = strength
+        sm.physics.applyImpulse(shape:getBody(), force, true)
     end
 end
 
@@ -65,27 +81,7 @@ function TractorBeam:server_onFixedUpdate()
     PowerUtility.sv_fixedUpdate(self, "cl_toggleBeamEffect")
 
     if not self.powerUtil.active then
-        self.sv.trackedBodies = {}
-        self.sv.beamedBodies = {}
-    else
-        --push items towards the center of the beam
-        for key, body in pairs(self.sv.trackedBodies) do
-            if body and sm.exists(body) then
-                local beamDirection = -self.shape.up
-                local distance = (self.shape.worldPosition - body.centerOfMassPosition)
-
-                if distance:length() < 5 then
-                    local BeamCenterOffset = distance -
-                        beamDirection * (distance:dot(beamDirection) / beamDirection:length2())
-
-                    local force = BeamCenterOffset * 10
-                    sm.physics.applyImpulse(body, force, true)
-                else
-                    print("too far", distance:length())
-                    self.sv.trackedBodies[key] = nil
-                end
-            end
-        end
+        self.sv.beamedShapes = {}
     end
 end
 
@@ -166,8 +162,7 @@ end
 
 ---@class TractorBeamSv
 ---@field trigger AreaTrigger areaTrigger of the beam that pulls items
----@field trackedBodies table<integer, Body> list of bodies that have entered the beam and need to be pushed towards it
----@field beamedBodies type<integer, integer> list of bodies which are currently inside the beam. <bodyId, beamStrength>
+---@field beamedShapes type<integer, integer> list of shapes which are currently inside the beam. <shapeId, beamStrength>
 
 ---@class TractorBeamData
 ---@field box {x: number, y: number, z: number} dimensions of the beam
