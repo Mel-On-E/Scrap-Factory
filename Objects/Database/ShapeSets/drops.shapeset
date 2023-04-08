@@ -256,6 +256,110 @@
 				"buoyancy": 2
 			},
 			"flammable": false
-		}
+		},
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ff0000",
+      "flammable": false,
+      "name": "obj_drop_magnetic_north",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data" : {
+          "north" : true
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "cbb91dad-4fcc-41a9-a433-497bee648585"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "0000ff",
+      "flammable": false,
+      "name": "obj_drop_magnetic_south",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data" : {
+          "south" : true
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "0e048581-726d-42b4-9be2-d93f5dd2b501"
+    }
   ]
 }

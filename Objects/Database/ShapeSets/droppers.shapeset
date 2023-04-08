@@ -256,6 +256,57 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "bb81b951-e48d-4aa9-a0ca-c322639f2433"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "4f69c6",
+         "flammable" : false,
+         "name" : "obj_dropper_magnets",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drops" : [
+                  {
+                     "uuid" : "cbb91dad-4fcc-41a9-a433-497bee648585",
+                     "value" : "1e12",
+                     "chance" : 1
+                  },
+                  {
+                     "uuid" : "0e048581-726d-42b4-9be2-d93f5dd2b501",
+                     "value" : "1e12",
+                     "chance" : 1
+                  }
+               ],
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e6
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e33",
+            "tier" : 13
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "884e68bd-889a-441a-ac1b-2a4f7a087e70"
       }
    ]
 }
