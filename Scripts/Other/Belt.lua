@@ -115,7 +115,7 @@ function Belt:client_onUpdate(dt)
     ---update uv animation
     if self.cl and self.cl.active then
         local uvFrames = 50
-        local timeScale = 0.58
+        local timeScale = 0.58 * self.data.belt.speed
         self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
         self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
     end
