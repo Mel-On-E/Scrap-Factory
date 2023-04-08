@@ -15,6 +15,8 @@ local triggerSize = sm.vec3.one() * 8
 function MagneticDrop:server_onCreate()
     Drop.server_onCreate(self)
 
+    if not sm.exists(self.shape) then return end
+
     self.interactable.publicData.magnetic = self.data.south and "south" or "north"
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, triggerSize / 2, sm.vec3.zero(),
         sm.quat.identity(),
