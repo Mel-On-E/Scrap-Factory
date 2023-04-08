@@ -203,6 +203,59 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
-    }
+    },
+    {
+			"uuid": "99ed2595-00c0-4e2a-a724-c5d820335c67",
+			"name": "obj_drop_wedge",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_nor.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_stairwedge_ao.tga"
+								],
+								"material": "DifAsgNorAo"
+							}
+						],
+						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_stairwedge.fbx",
+						"includes": [
+							"POSITION",
+							"UV0",
+							"UV1",
+							"NORMAL",
+							"TANGENTS"
+						]
+					}
+				]
+			},
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+			"color": "2341fe",
+			"slant": {
+				"x": 1,
+				"y": 1,
+				"z": 1,
+				"back": "-Z",
+				"bottom": "-Y"
+			},
+			"rotationSet": "PropYX",
+			"sticky": "-X+X-Y-Z",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 4,
+				"durability": 4,
+				"friction": 5,
+				"buoyancy": 2
+			},
+			"flammable": false
+		}
   ]
 }

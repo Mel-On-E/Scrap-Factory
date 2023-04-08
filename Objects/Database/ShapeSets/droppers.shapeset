@@ -213,6 +213,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "7addf4d8-6776-4acf-81e8-20e789c5b0ef"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "2341fe",
+         "flammable" : false,
+         "name" : "obj_dropper_wedge",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "99ed2595-00c0-4e2a-a724-c5d820335c67",
+                  "value" : "1.414e9"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e20",
+            "tier" : 9
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "bb81b951-e48d-4aa9-a0ca-c322639f2433"
       }
    ]
 }
