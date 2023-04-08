@@ -6,7 +6,7 @@
             "y" : 11,
             "z" : 8
          },
-         "color" : "df7f01",
+         "color" : "9f2600",
          "flammable" : false,
          "name" : "obj_dropper_scrap_wood",
          "physicsMaterial" : "Mechanical",
@@ -26,7 +26,7 @@
                   "value" : "1"
                },
                "offset" : {
-                  "x" : -1.0,
+                  "x" : -1.20,
                   "y" : 0.0,
                   "z" : -0.10
                },
@@ -48,7 +48,7 @@
             "y" : 11,
             "z" : 8
          },
-         "color" : "df7f01",
+         "color" : "9f2600",
          "flammable" : false,
          "name" : "obj_dropper_scrap_wood_auto",
          "physicsMaterial" : "Mechanical",
@@ -69,7 +69,7 @@
                },
                "interval" : 40,
                "offset" : {
-                  "x" : -1.0,
+                  "x" : -1.20,
                   "y" : 0.0,
                   "z" : -0.10
                },
@@ -112,7 +112,7 @@
                },
                "interval" : 40,
                "offset" : {
-                  "x" : -1.0,
+                  "x" : -1.20,
                   "y" : 0.0,
                   "z" : -0.10
                },
@@ -155,7 +155,7 @@
                },
                "interval" : 40,
                "offset" : {
-                  "x" : -1.0,
+                  "x" : -1.20,
                   "y" : 0.0,
                   "z" : -0.10
                },
