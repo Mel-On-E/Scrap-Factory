@@ -108,6 +108,81 @@
          "uuid" : "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe"
       },
       {
+			"uuid": "816aaa6d-01ac-43cd-8b1f-0ca5b2145972",
+			"name": "obj_tractorbeam",
+			"renderable": {
+            "lodList": [
+               {
+                  "minViewSize": 17,
+                  "mesh": "$SURVIVAL_DATA/Objects/Mesh/interactive/obj_interactive_sensor_off.fbx",
+                  "pose0": "$SURVIVAL_DATA/Objects/Mesh/interactive/obj_interactive_sensor_on.fbx",
+                  "subMeshMap": {
+                     "submesh0": {
+                        "material": "PoseAnimDifAsgNor",
+                        "textureList": [
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_nor.tga"
+                        ]
+                     }
+                  }
+               },
+               {
+                  "minViewSize": 300,
+                  "mesh": "$SURVIVAL_DATA/Objects/Mesh/interactive/obj_interactive_sensor_lod1.fbx",
+                  "subMeshMap": {
+                     "submesh0": {
+                        "material": "DifAsgNor",
+                        "textureList": [
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_sensor_05_nor.tga"
+                        ]
+                     }
+                  }
+               }
+            ]
+         },
+			"color": "df7f01",
+			"box": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"rotationSet": "PropZY",
+			"sticky": "+Y-Y-Z+X-X",
+			"physicsMaterial": "Plastic",
+			"ratings": {
+				"density": 3,
+				"durability": 7,
+				"friction": 5,
+				"buoyancy": 2
+			},
+			"stackSize" : 65535.0,
+         "scripted" : {
+            "classname" : "TractorBeam",
+            "data" : {
+               "box" : {
+                  "x" : 0.25,
+                  "y" : 0.25,
+                  "z" : 2.00
+               },
+              "offset" : {
+                  "x" : 0,
+                  "y" : 0,
+                  "z" : 1.125
+               },
+               "power" : 100
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Other/TractorBeam.lua"
+         },
+         "shop" : {
+            "category" : "Utilities",
+            "price" : "1e9",
+            "tier" : 8
+         }
+		},
+      {
          "box" : {
             "x" : 6,
             "y" : 1,
