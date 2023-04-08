@@ -106,6 +106,50 @@
          "stackSize" : 65535.0,
          "sticky" : "-Y",
          "uuid" : "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "ffffff",
+         "flammable" : false,
+         "name" : "obj_teleporter",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacebasic_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Teleporter",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 100000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Other/Teleporter.lua"
+         },
+         "shop" : {
+            "category" : "Utilities",
+            "price" : "1e12",
+            "tier" : 10
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "81012991-e13b-47ab-a3bd-f93ef72cce84"
       }
    ]
 }

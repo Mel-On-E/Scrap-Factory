@@ -158,5 +158,8 @@
 	//Tools
 	"ON": "On",
 	"OFF": "Off",
-	"JetpackAlwaysOn": "Always active: "
+	"JetpackAlwaysOn": "Always active: ",
+
+	//Interactive
+	"TeleporterMoreThan2": "You can only have 2 teleporters!"
 }
