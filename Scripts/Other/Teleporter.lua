@@ -110,6 +110,16 @@ function Teleporter:sv_onEnterDrop(shape)
     shape:destroyPart(0)
 
     teleportedShapes[newShape.id] = sm.game.getCurrentTick() + 2
+
+    --portal effects
+    local effect = self == sv_portal_blue and "Barrier" or "Encryptor"
+    local rot = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), self.shape.at)
+    sm.effect.playEffect(effect .. " - Deactivation", self.shape.worldPosition + self.shape.at * 0.25,
+        self.shape.velocity, rot)
+    effect = otherPortal == sv_portal_blue and "Barrier" or "Encryptor"
+    rot = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), otherPortal.shape.at)
+    sm.effect.playEffect(effect .. " - Deactivation", otherPortal.shape.worldPosition + otherPortal.shape.at * 0.25,
+        otherPortal.shape.velocity, rot)
 end
 
 function Teleporter:server_onFixedUpdate()
