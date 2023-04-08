@@ -42,13 +42,14 @@ function MagneticDrop:server_onFixedUpdate()
         for k1, v1 in pairs(magneticDrops.drops) do
             local force = sm.vec3.zero()
             for k2, v2 in pairs(magneticDrops.drops) do
-                if v1 ~= v2 then
-                    local direction = (v1.south == v2.south and -1) or 1
+                if v1 == v2 then goto continue end
 
-                    local distance = v2.shape.worldPosition - v1.shape.worldPosition
-                    local factor = 1 / distance:length()
-                    force = force + distance:normalize() * direction * factor
-                end
+                local direction = (v1.south == v2.south and -1) or 1
+                local distance = v2.shape.worldPosition - v1.shape.worldPosition
+                local factor = 1 / distance:length()
+                force = force + distance:normalize() * direction * factor
+
+                ::continue::
             end
             sm.physics.applyImpulse(v1.shape:getBody(), force, true)
         end
