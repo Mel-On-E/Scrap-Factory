@@ -114,6 +114,60 @@
          "stackSize" : 65535.0,
          "sticky" : "-Y",
          "uuid" : "efc1f452-8431-44c5-8c21-a06d53aed16c"
-      }
+      },
+      {
+			"uuid": "2aac62c2-aed7-4391-9e3e-3ea4676e8ef3",
+			"name": "Holy Gay Pineapple",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshMap": {
+							"pineapple": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_nor.tga"
+								]
+							},
+							"leaves": {
+								"material": "DifAsgNorAlpha",
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/plantables/obj_plantables_pineapple_nor.tga"
+								]
+							}
+						},
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/plantables/obj_plantables_pineapple.fbx"
+					}
+				]
+			},
+			"color": "e9ec0e",
+			"hull": {
+				"x": 2,
+				"y": 3,
+				"z": 2,
+				"col": "$SURVIVAL_DATA/Objects/Collision/obj_plantables_pineapple.obj"
+			},
+			"rotationSet": "PropYZ",
+			"sticky": "-X+X-Z+Z-Y",
+			"physicsMaterial": "Fruit",
+			"ratings": {
+				"density": 1,
+				"durability": 1,
+				"friction": 4,
+				"buoyancy": 4
+			},
+         "scripted" : {
+            "classname" : "Generator",
+            "data" : {
+               "power" : 1e69
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Generator.lua"
+         },
+			"flammable": true,
+			"stackSize" : 65535.0
+		}
    ]
 }
