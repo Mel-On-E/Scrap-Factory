@@ -436,6 +436,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "1f53ce59-f7cb-437c-85d1-909fa3abbd9d"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "e4a347",
+         "flammable" : false,
+         "name" : "obj_dropper_baguette",
+         "physicsMaterial": "Fruit",
+			"ratings": {
+				"density": 2,
+				"durability": 1,
+				"friction": 4,
+				"buoyancy": 7
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "97eff804-0245-4719-b23b-99432b712719",
+                  "value" : "1000"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.75
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "200",
+            "special" : true
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "52c69123-1360-4230-a312-f7c17e03d8c9"
       }
    ]
 }

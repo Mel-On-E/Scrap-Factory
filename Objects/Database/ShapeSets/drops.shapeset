@@ -513,6 +513,56 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "72f884b2-1de5-4e4c-8770-fdc315e7e612"
+    },
+    {
+      "box": {
+				"x": 1,
+				"y": 2,
+				"z": 6
+			},
+      "color": "3e9ffe",
+      "flammable": true,
+      "name": "obj_drop_baguette",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+				"density": 2,
+				"durability": 1,
+				"friction": 4,
+				"buoyancy": 7
+			},
+      "renderable": {
+				"lodList": [
+					{
+						"subMeshMap": {
+							"burger_mat": {
+								"textureList": [
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_dif.tga",
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_asg.tga",
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_nor.tga"
+								],
+								"material": "DifAsgNor"
+							},
+							"pizza_burger_lettuce": {
+								"textureList": [
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_dif.tga",
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_asg.tga",
+									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_nor.tga"
+								],
+								"material": "DifAsgNorAlphaFlip"
+							}
+						},
+						"mesh": "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich.fbx"
+					}
+				]
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "97eff804-0245-4719-b23b-99432b712719"
     }
   ]
 }
