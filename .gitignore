@@ -1,6 +1,7 @@
 # Folders
 Cache/
 .idea/
+.vscode/
 
 # Compiled Lua sources
 luac.out
@@ -44,4 +45,3 @@ d
 Scripts/HideoutMergedRecipes.json
 Scripts/MergedRecipes.json
 Scripts/WorkbenchMergedRecipes.json
-.vscode
