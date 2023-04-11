@@ -367,6 +367,7 @@ end
 ---@return table<string?, integer>
 function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
+    if blueprint == nil then return {} end
     local items = {}
     for k, body in pairs(blueprint.bodies) do
         for i, child in pairs(body.childs) do
