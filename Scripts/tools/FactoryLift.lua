@@ -121,7 +121,6 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
                     self:cl_import_updateItemGrid(self.cl.importCreation, false)
                     self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
-                    self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
                     self.importGui:open()
                 end
             end
@@ -268,6 +267,9 @@ function FactoryLift:cl_import_createUI()
     self.importGui:setVisible("creation", not noBlueprints)
     self.importGui:setVisible("import", not noBlueprints)
     self.importGui:setVisible("nothing", noBlueprints)
+    self.importGui:setVisible("DeleteCreationButton", not noBlueprints)
+    self.importGui:setVisible("DeleteCreationButtonDeactive", noBlueprints)
+    self.importGui:setText("DeleteCreation", (noBlueprints and '#808080' or '')..language_tag("ImportDeleteCreation"))
 
     if not noBlueprints then
         for k, path in pairs(creations) do
@@ -294,7 +296,6 @@ function FactoryLift:cl_import_select(option)
         ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
         self.importGui:setText("title", language_tag("ImportTitle"))
-        self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
         self.importGui:open()
     end
 end
