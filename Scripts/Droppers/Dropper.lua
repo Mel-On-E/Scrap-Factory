@@ -67,8 +67,11 @@ function Dropper:sv_consumePowerAndDrop()
 
         --spawn drop
         ---@diagnostic disable-next-line: param-type-mismatch
-        local shape = sm.shape.createPart(drop, self.shape:getWorldPosition() + offset,
+        local shape = sm.shape.createPart(drop, self.shape.worldPosition + offset,
             self.shape:getWorldRotation())
+        if self.sv.data.dropEffect then
+            sm.effect.playEffect(self.sv.data.dropEffect, self.shape.worldPosition + offset)
+        end
 
         local publicData = {
             value = value,
@@ -94,6 +97,7 @@ end
 ---@field power number how much power the dropper consumes
 ---@field drops table<integer, DropsData>|nil
 ---@field chanceSum integer|nil the chance of all drops combined
+---@field dropEffect string|nil name of an effect to be played when a drop spawns
 
 ---@class DropData unpacked script data of the interactable
 ---@field uuid Uuid Uuid of the drop
