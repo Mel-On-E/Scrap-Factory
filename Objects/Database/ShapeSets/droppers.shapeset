@@ -449,7 +449,7 @@
          "physicsMaterial": "Fruit",
 			"ratings": {
 				"density": 2,
-				"durability": 1,
+				"durability": 2,
 				"friction": 4,
 				"buoyancy": 7
 			},
@@ -492,7 +492,7 @@
          "physicsMaterial": "Fruit",
 			"ratings": {
 				"density": 2,
-				"durability": 1,
+				"durability": 2,
 				"friction": 4,
 				"buoyancy": 7
 			},
@@ -579,7 +579,7 @@
          "physicsMaterial": "Fruit",
 			"ratings": {
 				"density": 2,
-				"durability": 1,
+				"durability": 2,
 				"friction": 4,
 				"buoyancy": 7
 			},
