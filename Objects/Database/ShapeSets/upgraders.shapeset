@@ -325,6 +325,75 @@
          "stackSize": 65535.0,
          "sticky": "-Y+Y",
          "uuid": "43f254bb-3f24-4ea3-b5f9-be2f01e8ee7e"
+      },
+      {
+         "box": {
+            "x": 6,
+            "y": 1,
+            "z": 6
+         },
+         "color": "e8511e",
+         "flammable": false,
+         "name": "obj_upgrader_fire",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 4,
+            "density": 4,
+            "durability": 6,
+            "friction": 3
+         },
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_01.rend",
+         "restitution": 0.0,
+         "rotationSet": "PropY",
+         "scripted": {
+            "filename": "$CONTENT_DATA/Scripts/Upgraders/FireUpgrader.lua",
+            "classname": "FireUpgrader",
+            "data": {
+               "belt": {
+                  "box": {
+                     "x": 1.50,
+                     "y": 0.250,
+                     "z": 1.50
+                  },
+                  "direction": {
+                     "at": -0.250,
+                     "right": -1,
+                     "up": 0
+                  },
+                  "offset": {
+                     "x": 0,
+                     "y": 0.1250,
+                     "z": 0
+                  },
+                  "speed": 1
+               },
+               "effect": {
+                  "color": {
+                     "b": 1,
+                     "g": 1,
+                     "r": 0
+                  },
+                  "name": "UpgradeareaBig - Hexagon"
+               },
+               "power": 3,
+               "upgrade": {
+                  "box": {
+                     "x": 0.250,
+                     "y": 1.50,
+                     "z": 1.50
+                  },
+                  "cap": 100,
+                  "limit": 10,
+                  "offset": {
+                     "x": 0,
+                     "y": 0.8750,
+                     "z": 0
+                  }
+               }
+            }
+         },
+         "stackSize": 65535.0,
+         "uuid": "e0aaa72e-0fd9-4595-96b0-fa33b4990b28"
       }
    ]
 }
