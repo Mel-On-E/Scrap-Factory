@@ -196,6 +196,8 @@ function Drop:getValue()
 	if sm.isServerMode() then
 		value = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.value)
 			or self.sv.cachedValue
+	elseif self.sv then
+		value = self.sv.cachedValue or value
 	end
 	return value
 end
