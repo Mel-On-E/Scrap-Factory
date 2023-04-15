@@ -1,7 +1,6 @@
 # Folders
 Cache/
 .idea/
-.vscode/
 
 # Compiled Lua sources
 luac.out
