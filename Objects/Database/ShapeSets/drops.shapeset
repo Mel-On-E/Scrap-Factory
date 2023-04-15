@@ -563,6 +563,49 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "97eff804-0245-4719-b23b-99432b712719"
+    },
+    {
+      "cylinder": {
+				"diameter": 1,
+				"depth": 1,
+				"margin": 0.04,
+				"axis": "Y"
+			},
+      "color": "fe878c",
+      "flammable": true,
+      "name": "obj_drop_baguette",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+				"density": 2,
+				"durability": 1,
+				"friction": 4,
+				"buoyancy": 7
+			},
+      "renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_sunshake.fbx"
+					}
+				]
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "4fd7eb94-1c6b-47a4-9f69-292c0a641ed6"
     }
   ]
 }
