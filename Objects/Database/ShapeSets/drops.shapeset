@@ -205,58 +205,58 @@
       "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
     },
     {
-			"uuid": "99ed2595-00c0-4e2a-a724-c5d820335c67",
-			"name": "obj_drop_wedge",
-			"renderable": {
-				"lodList": [
-					{
-						"subMeshList": [
-							{
-								"textureList": [
-									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
-									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
-									"$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_nor.tga",
-									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_stairwedge_ao.tga"
-								],
-								"material": "DifAsgNorAo"
-							}
-						],
-						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_stairwedge.fbx",
-						"includes": [
-							"POSITION",
-							"UV0",
-							"UV1",
-							"NORMAL",
-							"TANGENTS"
-						]
-					}
-				]
-			},
+      "uuid": "99ed2595-00c0-4e2a-a724-c5d820335c67",
+      "name": "obj_drop_wedge",
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_nor.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_stairwedge_ao.tga"
+                ],
+                "material": "DifAsgNorAo"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_stairwedge.fbx",
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ]
+          }
+        ]
+      },
       "scripted": {
         "classname": "Drop",
         "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
-			"color": "2341fe",
-			"slant": {
-				"x": 1,
-				"y": 1,
-				"z": 1,
-				"back": "-Z",
-				"bottom": "-Y"
-			},
-			"rotationSet": "PropYX",
-			"sticky": "-X+X-Y-Z",
-			"physicsMaterial": "Metal",
-			"ratings": {
-				"density": 4,
-				"durability": 4,
-				"friction": 5,
-				"buoyancy": 2
-			},
-			"flammable": false
-		},
+      "color": "2341fe",
+      "slant": {
+        "x": 1,
+        "y": 1,
+        "z": 1,
+        "back": "-Z",
+        "bottom": "-Y"
+      },
+      "rotationSet": "PropYX",
+      "sticky": "-X+X-Y-Z",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 4,
+        "durability": 4,
+        "friction": 5,
+        "buoyancy": 2
+      },
+      "flammable": false
+    },
     {
       "box": {
         "x": 1,
@@ -300,8 +300,8 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "MagneticDrop",
-        "data" : {
-          "north" : true
+        "data": {
+          "north": true
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },
@@ -352,8 +352,8 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "MagneticDrop",
-        "data" : {
-          "south" : true
+        "data": {
+          "south": true
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },
@@ -422,9 +422,9 @@
       "physicsMaterial": "Rock",
       "ratings": {
         "density": 6,
-				"durability": 3,
-				"friction": 6,
-				"buoyancy": 4
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 4
       },
       "renderable": {
         "lodList": [
@@ -453,8 +453,8 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "AntiGravityDrop",
-        "data":{
-          "gravity" : 0.2
+        "data": {
+          "gravity": 0.2
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
       },
@@ -474,9 +474,9 @@
       "physicsMaterial": "Rock",
       "ratings": {
         "density": 6,
-				"durability": 3,
-				"friction": 6,
-				"buoyancy": 4
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 4
       },
       "renderable": {
         "lodList": [
@@ -505,8 +505,8 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "AntiGravityDrop",
-        "data":{
-          "gravity" : 0.0
+        "data": {
+          "gravity": 0.0
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
       },
@@ -516,45 +516,45 @@
     },
     {
       "box": {
-				"x": 1,
-				"y": 2,
-				"z": 6
-			},
+        "x": 1,
+        "y": 2,
+        "z": 6
+      },
       "color": "3e9ffe",
       "flammable": true,
       "name": "obj_drop_baguette",
       "physicsMaterial": "Fruit",
       "ratings": {
-				"density": 2,
-				"durability": 1,
-				"friction": 4,
-				"buoyancy": 7
-			},
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
       "renderable": {
-				"lodList": [
-					{
-						"subMeshMap": {
-							"burger_mat": {
-								"textureList": [
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_dif.tga",
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_asg.tga",
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_nor.tga"
-								],
-								"material": "DifAsgNor"
-							},
-							"pizza_burger_lettuce": {
-								"textureList": [
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_dif.tga",
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_asg.tga",
-									"$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_nor.tga"
-								],
-								"material": "DifAsgNorAlphaFlip"
-							}
-						},
-						"mesh": "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich.fbx"
-					}
-				]
-			},
+        "lodList": [
+          {
+            "subMeshMap": {
+              "burger_mat": {
+                "textureList": [
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_dif.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_asg.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_nor.tga"
+                ],
+                "material": "DifAsgNor"
+              },
+              "pizza_burger_lettuce": {
+                "textureList": [
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_dif.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_asg.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_nor.tga"
+                ],
+                "material": "DifAsgNorAlphaFlip"
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich.fbx"
+          }
+        ]
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
@@ -566,38 +566,38 @@
     },
     {
       "cylinder": {
-				"diameter": 1,
-				"depth": 1,
-				"margin": 0.04,
-				"axis": "Y"
-			},
+        "diameter": 1,
+        "depth": 1,
+        "margin": 0.04,
+        "axis": "Y"
+      },
       "color": "fe878c",
       "flammable": true,
       "name": "obj_drop_sunshake",
       "physicsMaterial": "Fruit",
       "ratings": {
-				"density": 2,
-				"durability": 1,
-				"friction": 4,
-				"buoyancy": 7
-			},
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
       "renderable": {
-				"lodList": [
-					{
-						"subMeshList": [
-							{
-								"textureList": [
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_dif.tga",
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_asg.tga",
-									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_nor.tga"
-								],
-								"material": "DifAsgNor"
-							}
-						],
-						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_sunshake.fbx"
-					}
-				]
-			},
+        "lodList": [
+          {
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_nor.tga"
+                ],
+                "material": "DifAsgNor"
+              }
+            ],
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_sunshake.fbx"
+          }
+        ]
+      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
@@ -609,33 +609,33 @@
     },
     {
       "color": "ffd504",
-			"cylinder": {
-				"diameter": 1,
-				"depth": 1,
-				"margin": 0.1,
-				"axis": "Y"
-			},
+      "cylinder": {
+        "diameter": 1,
+        "depth": 1,
+        "margin": 0.1,
+        "axis": "Y"
+      },
       "flammable": true,
       "name": "obj_drop_duck",
       "physicsMaterial": "Plastic",
       "ratings": {
-				"density": 2,
-				"durability": 4,
-				"friction": 5,
-				"buoyancy": 8
-			},
+        "density": 2,
+        "durability": 4,
+        "friction": 5,
+        "buoyancy": 8
+      },
       "renderable": {
         "lodList": [
           {
             "minViewSize": 12,
             "subMeshList": [
               {
-                  "textureList": [
-                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
-                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
-                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_nor.tga"
-                  ],
-                  "material": "DifAsgNor"
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_nor.tga"
+                ],
+                "material": "DifAsgNor"
               }
             ],
             "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck.fbx"
@@ -643,12 +643,12 @@
           {
             "subMeshList": [
               {
-                  "textureList": [
-                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
-                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
-                    ""
-                  ],
-                  "material": "DifAsg"
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                  ""
+                ],
+                "material": "DifAsg"
               }
             ],
             "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck_lod1.fbx"
@@ -663,6 +663,108 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "48dbb2c1-8ebe-478f-8020-cdef5f447d16"
+    },
+    {
+      "color": "ffffff",
+      "cylinder": {
+        "diameter": 1,
+        "depth": 2,
+        "margin": 0.04,
+        "axis": "Y"
+      },
+      "flammable": true,
+      "name": "obj_drop_milk",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshMap": {
+              "obj_consumable_milk_mat": {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              },
+              "glass_mat": {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_milk.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MilkDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/MilkDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "a02da1e6-bb86-4ee8-a3b1-35bbc275103a"
+    },
+    {
+      "color": "ff0000",
+      "cylinder": {
+        "diameter": 1,
+        "depth": 2,
+        "margin": 0.04,
+        "axis": "Y"
+      },
+      "flammable": true,
+      "name": "obj_drop_milk_empty",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshMap": {
+              "obj_consumable_milk_mat": {
+                "material": "DifAsgNorAlpha",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_nor.tga"
+                ]
+              },
+              "glass_mat": {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_milk.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MilkDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/MilkDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "09bf3314-f60e-4178-9259-2e321a466a2c"
     }
   ]
 }

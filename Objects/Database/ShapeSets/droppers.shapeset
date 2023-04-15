@@ -566,6 +566,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "0f04e3a4-0e78-4d9e-bbf2-273bdeb2abbd"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "ffffff",
+         "flammable" : true,
+         "name" : "obj_dropper_milk",
+         "physicsMaterial": "Fruit",
+			"ratings": {
+				"density": 2,
+				"durability": 1,
+				"friction": 4,
+				"buoyancy": 7
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "a02da1e6-bb86-4ee8-a3b1-35bbc275103a",
+                  "value" : "1000"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e6",
+            "special" : true
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "f80ad606-43c5-4195-a7dc-00c2c7f1ec3c"
       }
    ]
 }
