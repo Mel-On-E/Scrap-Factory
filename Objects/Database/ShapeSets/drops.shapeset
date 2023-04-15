@@ -573,7 +573,7 @@
 			},
       "color": "fe878c",
       "flammable": true,
-      "name": "obj_drop_baguette",
+      "name": "obj_drop_sunshake",
       "physicsMaterial": "Fruit",
       "ratings": {
 				"density": 2,
@@ -606,6 +606,63 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "4fd7eb94-1c6b-47a4-9f69-292c0a641ed6"
+    },
+    {
+      "color": "ffd504",
+			"cylinder": {
+				"diameter": 1,
+				"depth": 1,
+				"margin": 0.1,
+				"axis": "Y"
+			},
+      "flammable": true,
+      "name": "obj_drop_duck",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+				"density": 2,
+				"durability": 4,
+				"friction": 5,
+				"buoyancy": 8
+			},
+      "renderable": {
+        "lodList": [
+          {
+            "minViewSize": 12,
+            "subMeshList": [
+              {
+                  "textureList": [
+                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_nor.tga"
+                  ],
+                  "material": "DifAsgNor"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck.fbx"
+          },
+          {
+            "subMeshList": [
+              {
+                  "textureList": [
+                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                    "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                    ""
+                  ],
+                  "material": "DifAsg"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck_lod1.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "48dbb2c1-8ebe-478f-8020-cdef5f447d16"
     }
   ]
 }

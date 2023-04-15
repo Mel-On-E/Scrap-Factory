@@ -523,6 +523,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "aa0fb30d-c0bf-4502-9320-66020b8591ec"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "ffd504",
+         "flammable" : true,
+         "name" : "obj_dropper_duck",
+         "physicsMaterial": "Plastic",
+			"ratings": {
+				"density": 2,
+				"durability": 4,
+				"friction": 5,
+				"buoyancy": 8
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "48dbb2c1-8ebe-478f-8020-cdef5f447d16",
+                  "value" : "420"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 20
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e6",
+            "special" : true
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "0f04e3a4-0e78-4d9e-bbf2-273bdeb2abbd"
       }
    ]
 }
