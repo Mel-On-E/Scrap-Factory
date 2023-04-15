@@ -765,6 +765,71 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "09bf3314-f60e-4178-9259-2e321a466a2c"
+    },
+    {
+      "color": "cb0a00",
+      "box":{
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "flammable": true,
+      "name": "obj_drop_explosive",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+				"density": 4,
+				"durability": 10,
+				"friction": 3,
+				"buoyancy": 7
+			},
+      "renderable": {
+        "lodList": [
+          {
+            "minViewSize": 30,
+            "mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small.fbx",
+            "pose0": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small_bshape.fbx",
+            "subMeshMap": {
+              "propanetanksmall": {
+                "material": "PoseAnimDifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_dif.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_asg.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_nor.tga"
+                ]
+              }
+            }
+          },
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small_lod1.fbx",
+            "subMeshMap": {
+              "propanetanksmall": {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_dif.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_asg.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_nor.tga"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "ExplosiveDrop",
+        "data": {
+					"destructionLevel": 7,
+					"destructionRadius": 2.0,
+					"impulseRadius": 6.0,
+					"impulseMagnitude": 25.0,
+					"effectExplosion": "PropaneTank - ExplosionSmall",
+					"effectActivate": "PropaneTank - ActivateSmall"
+				},
+        "filename": "$CONTENT_DATA/Scripts/Drops/ExplosiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "0c837435-1eea-46a4-a199-b450fdb881c6"
     }
   ]
 }
