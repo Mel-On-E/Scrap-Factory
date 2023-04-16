@@ -2159,6 +2159,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "aa0bdfae-b094-43e1-90c4-f654819b7fa1"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "a6a6a6",
+      "flammable": false,
+      "name": "obj_drop_plutonium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e2085637-fa43-440c-ac4a-57fadd116293"
     }
   ]
 }

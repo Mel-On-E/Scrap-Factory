@@ -1812,6 +1812,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "dd655f39-9e58-4025-ab0e-b8c622200265"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "a6a6a6",
+         "flammable" : false,
+         "name" : "obj_dropper_technetium99m",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 6,
+				"durability": 4,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "e2085637-fa43-440c-ac4a-57fadd116293",
+                  "value" : "1e13"
+               },
+               "interval" : 120,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e7
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e36",
+            "tier" : 21
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "91d1fb2b-830f-431f-bbfc-19816f314b78"
       }
    ]
 }
