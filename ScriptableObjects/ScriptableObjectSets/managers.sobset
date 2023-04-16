@@ -59,6 +59,12 @@
 			"classname": "TutorialManager",
 			"name": "mgr_tutorial",
 			"uuid": "60702ca7-2d19-4d08-81e6-7a3ded53e338"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/SaveDataManager.lua",
+			"classname": "SaveDataManager",
+			"name": "mgr_saveData",
+			"uuid": "e4bc2df0-a163-4de5-87e4-119abd5409a4"
 		}
 	]
 }
