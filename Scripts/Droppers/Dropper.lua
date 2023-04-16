@@ -76,7 +76,8 @@ function Dropper:sv_consumePowerAndDrop()
         local publicData = {
             value = value,
             pollution = pollution,
-            upgrades = {}
+            upgrades = {},
+            impostor = false,
         }
         shape.interactable:setPublicData(publicData)
     end

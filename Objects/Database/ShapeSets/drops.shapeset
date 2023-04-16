@@ -830,6 +830,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "0c837435-1eea-46a4-a199-b450fdb881c6"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "cd9d71",
+      "flammable": true,
+      "name": "obj_drop_susshake",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$CONTENT_DATA/Objects/Mesh/amogus.obj",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "SusDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/SusDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "55bafdca-1a6e-4360-a47d-7e8d685cd962"
     }
   ]
 }

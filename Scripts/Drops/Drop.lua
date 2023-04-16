@@ -255,8 +255,11 @@ end
 
 ---@class DropInteractablePublicData
 ---@field value number the value of the drop. i.e. how much it is worth
+---@field impostor boolean Controlles if the value sells for negative or not
 ---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
 ---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
 ---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
 
+---@class DropShape: Shape
+---@field interactable DropInteractable
 -- #endregion
