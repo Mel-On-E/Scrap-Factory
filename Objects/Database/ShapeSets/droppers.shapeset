@@ -1597,6 +1597,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "00578582-da6f-47d3-9d34-9595e3fc8d01"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "bf8fc4",
+         "flammable" : false,
+         "name" : "obj_dropper_iridium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 8,
+				"durability": 2,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "ec7784d1-aa8d-4ce3-a5a2-e0345a9af399",
+                  "value" : "1e8"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 4e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e22",
+            "tier" : 15
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "9f83acd1-735f-466d-8ad5-39ac67abef3b"
       }
    ]
 }
