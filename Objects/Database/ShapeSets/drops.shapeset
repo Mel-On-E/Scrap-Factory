@@ -1963,6 +1963,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "ec7784d1-aa8d-4ce3-a5a2-e0345a9af399"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "444444",
+      "flammable": false,
+      "name": "obj_drop_neptunium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "d794e991-e16d-4463-a5d7-0a47b63b4a73"
     }
   ]
 }

@@ -1640,6 +1640,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "9f83acd1-735f-466d-8ad5-39ac67abef3b"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "444444",
+         "flammable" : false,
+         "name" : "obj_dropper_neptunium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 8,
+				"durability": 4,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "d794e991-e16d-4463-a5d7-0a47b63b4a73",
+                  "value" : "1e9"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e25",
+            "tier" : 16
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "fb3e8172-0db2-47e9-8eb2-985972c8e373"
       }
    ]
 }
