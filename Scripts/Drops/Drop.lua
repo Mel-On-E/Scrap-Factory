@@ -134,8 +134,7 @@ function Drop:sv_setClientData()
 		self.network:setClientData({
 			value = publicData.value,
 			pollution = publicData.pollution,
-			burning = publicData.burning,
-			burntime = self.sv.burntime
+			burning = publicData.burning
 		})
 	end
 end
@@ -190,9 +189,7 @@ function Drop:client_canInteract()
 	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 	local o2 = "</p>"
 	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
-	local t = self.cl.data.burntime and format_time(burnlife-self.cl.data.burntime) or ""
-	local burning = self.cl.data.burning and "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#bf3b13' spacing='9'>Burning "..t.."</p>" or ""
-
+	
 	if self:getPollution() then
 		local pollution = format_number({
 			format = "pollution",
@@ -201,9 +198,9 @@ function Drop:client_canInteract()
 		})
 
 		sm.gui.setInteractionText("", o1 .. pollution .. o2)
-		sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)" ..burning)
+		sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
 	else
-		sm.gui.setInteractionText("", o1 .. money .. o2 ..burning)
+		sm.gui.setInteractionText("", o1 .. money .. o2)
 	end
 
 	return true
@@ -258,19 +255,6 @@ function Drop:getBurning()
 			or self.sv.cachedBurning
 	end
 	return burning
-end
-
----Returns a string for time
----@param ticks number amount of ticks
----@return string
-function format_time(ticks)
-	local s = math.floor(ticks / 40)
-	local m = math.floor(s / 60)
-	local h = math.floor(m / 60)
-	if h > 0 then return tostring(h).."Hr" end
-	if m > 0 then return tostring(m).."Min" end
-	if s > 0 then return tostring(s).."Sec" end
-	return tostring(ticks/40).."Sec"
 end
 
 --------------------
