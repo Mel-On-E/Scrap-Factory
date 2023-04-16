@@ -314,49 +314,6 @@
             "y" : 8,
             "z" : 6
          },
-         "color" : "000000",
-         "flammable" : false,
-         "name" : "obj_dropper_antimatter",
-         "physicsMaterial" : "Metal",
-         "ratings" : {
-            "buoyancy" : 5,
-            "density" : 5,
-            "durability" : 10,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "AutoDropper",
-            "data" : {
-               "drop" : {
-                  "uuid" : "53e7470d-99fe-450e-8606-42dc4f42e4f7",
-                  "value" : "62.5e15"
-               },
-               "interval" : 200,
-               "offset" : {
-                  "x" : -1.250,
-                  "y" : -0.20,
-                  "z" : -0.10
-               },
-               "power" : 1e9
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
-         },
-         "shop" : {
-            "category" : "Droppers",
-            "price" : "1e33",
-            "tier" : 17
-         },
-         "stackSize" : 65535.0,
-         "uuid" : "302c3a4f-4f03-4c8f-be8f-c1b0217d3ab5"
-      },
-      {
-         "box" : {
-            "x" : 5,
-            "y" : 8,
-            "z" : 6
-         },
          "color" : "5f5e6e",
          "flammable" : false,
          "name" : "obj_dropper_nograv",
@@ -1898,6 +1855,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "7b8d6fd9-c34b-41a5-a099-f99e5f86cadf"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "000000",
+         "flammable" : false,
+         "name" : "obj_dropper_antimatter",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "53e7470d-99fe-450e-8606-42dc4f42e4f7",
+                  "value" : "6.25e17"
+               },
+               "interval" : 200,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e9
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e44",
+            "tier" : 23
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "302c3a4f-4f03-4c8f-be8f-c1b0217d3ab5"
       }
    ]
 }

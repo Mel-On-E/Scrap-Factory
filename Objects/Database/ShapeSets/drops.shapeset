@@ -367,55 +367,6 @@
         "y": 1,
         "z": 1
       },
-      "color": "000000",
-      "flammable": false,
-      "name": "obj_drop_antimatter",
-      "physicsMaterial": "Metal",
-      "ratings": {
-        "buoyancy": 4,
-        "density": 5,
-        "durability": 5,
-        "friction": 4
-      },
-      "renderable": {
-        "lodList": [
-          {
-            "includes": [
-              "POSITION",
-              "UV0",
-              "UV1",
-              "NORMAL",
-              "TANGENTS"
-            ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
-            "subMeshList": [
-              {
-                "material": "DifAsgNor",
-                "textureList": [
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
-                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "rotationSet": "StaticYmZmXm",
-      "scripted": {
-        "classname": "AntiMatterDrop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/AntiMatterDrop.lua"
-      },
-      "showInInventory": false,
-      "stackSize": 65535.0,
-      "uuid": "53e7470d-99fe-450e-8606-42dc4f42e4f7"
-    },
-    {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
-      },
       "color": "5f5e6e",
       "flammable": false,
       "name": "obj_drop_nograv",
@@ -2257,6 +2208,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "d5149233-db02-4f99-adc1-000e0b17d202"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "000000",
+      "flammable": false,
+      "name": "obj_drop_antimatter",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiMatterDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiMatterDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "53e7470d-99fe-450e-8606-42dc4f42e4f7"
     }
   ]
 }
