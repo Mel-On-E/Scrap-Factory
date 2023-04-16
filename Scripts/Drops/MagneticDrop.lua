@@ -15,9 +15,9 @@ local triggerSize = sm.vec3.one() * 8
 function MagneticDrop:server_onCreate()
     Drop.server_onCreate(self)
 
-    if not sm.exists(self.shape) then return end
+    if not sm.exists(self.shape) or not self.interactable.publicData then return end
 
-    self.interactable.publicData.magnetic = self.data.south and "south" or "north"
+    self.interactable.publicData.magnetic = self.data.magnetic
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, triggerSize / 2, sm.vec3.zero(),
         sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody)
@@ -32,6 +32,12 @@ function MagneticDrop:sv_onStay(trigger, results)
 
         if publicData.magnetic then
             local direction = (self.interactable.publicData.magnetic == publicData.magnetic and -1) or 1
+            if publicData.magnetic == "sticky" then
+                direction = 1
+            elseif publicData.magnetic == "repell" then
+                direction = -1
+            end
+
             local distance = shape.worldPosition - self.shape.worldPosition
             local factor = 1 / distance:length()
             local force = distance:normalize() * direction * factor
@@ -76,7 +82,6 @@ end
 --------------------
 
 ---@class MagneticDropData
----@field north boolean whether this drop is a north pole
----@field south boolean whether this drop is a south pole
+---@field magnetic "north"|"south"|"sticky"|"repell" the polarisation of the drop
 
 -- #endregion
