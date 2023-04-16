@@ -1630,7 +1630,7 @@
       "color": "0f52ba",
       "flammable": false,
       "name": "obj_drop_sapphire",
-      "physicsMaterial": "Metal",
+      "physicsMaterial": "Glass",
       "ratings": {
         "density": 5,
         "durability": 1,
@@ -1679,7 +1679,7 @@
       "color": "ff0000",
       "flammable": false,
       "name": "obj_drop_ruby",
-      "physicsMaterial": "Metal",
+      "physicsMaterial": "Glass",
       "ratings": {
         "density": 5,
         "durability": 1,
@@ -1816,6 +1816,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "89d34fee-1157-4aba-8ecb-9f66af01ef67"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "d9f7fa",
+      "flammable": false,
+      "name": "obj_drop_diamond",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 6,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "486ba745-16c3-4d0c-99c1-6d013d5f00e3"
     }
   ]
 }
