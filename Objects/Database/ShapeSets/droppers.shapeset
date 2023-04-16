@@ -1081,6 +1081,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "b6bb7c63-5901-4c1f-bdfc-b2fabb8f41e2"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "8f7e7e",
+         "flammable" : false,
+         "name" : "obj_dropper_iron",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 4,
+				"durability": 2,
+				"friction": 5,
+				"buoyancy": 1
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "13c5f1f8-759c-4f65-9baa-30408df34a59",
+                  "value" : "50"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 10
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e4",
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "47c70810-481d-4bd7-9fb1-b1f7885c58b5"
       }
    ]
 }

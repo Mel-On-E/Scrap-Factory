@@ -1289,11 +1289,11 @@
       "name": "obj_drop_stone",
       "physicsMaterial": "Rock",
       "ratings": {
-				"density": 6,
-				"durability": 3,
-				"friction": 6,
-				"buoyancy": 5
-			},
+        "density": 6,
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 5
+      },
       "renderable": {
         "lodList": [
           {
@@ -1326,6 +1326,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "e106fe9e-b3a5-441d-ac80-7d7d231babde"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8f7e7e",
+      "flammable": false,
+      "name": "obj_drop_iron",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 4,
+        "durability": 2,
+        "friction": 5,
+        "buoyancy": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "13c5f1f8-759c-4f65-9baa-30408df34a59"
     }
   ]
 }
