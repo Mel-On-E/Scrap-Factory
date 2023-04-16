@@ -983,6 +983,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "13db4781-760b-4097-8891-06a117e150a9"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "b3e5fc",
+      "flammable": false,
+      "name": "obj_drop_ice",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "buoyancy": 7,
+        "density": 3,
+        "durability": 1,
+        "friction": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNorAlpha",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/ice_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "IceDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/IceDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "3fcdb044-7afa-4be1-a474-6fd53f2d3b0a"
     }
   ]
 }

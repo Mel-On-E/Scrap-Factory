@@ -781,6 +781,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "3e220c52-ad65-4159-92b1-be60f18e4194"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "b3e5fc",
+         "flammable" : false,
+         "name" : "obj_dropper_ice",
+         "physicsMaterial" : "Glass",
+         "ratings" : {
+            "buoyancy" : 7,
+            "density" : 3,
+            "durability" : 2,
+            "friction" : 1
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "3fcdb044-7afa-4be1-a474-6fd53f2d3b0a",
+                  "value" : "1e7"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e13",
+            "tier" : 15
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "db624335-d808-474a-b26a-e15a8e946087"
       }
    ]
 }
