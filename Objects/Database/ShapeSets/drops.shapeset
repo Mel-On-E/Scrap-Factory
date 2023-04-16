@@ -1228,6 +1228,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "47b042d9-f1d6-472c-998e-a8f969691274"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "9b683a",
+      "flammable": true,
+      "name": "obj_drop_wood",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "2c4842af-2e79-433a-aa49-603cc7cab78f"
     }
   ]
 }

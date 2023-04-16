@@ -6,7 +6,7 @@
             "y" : 8,
             "z" : 6
          },
-         "color" : "df7f00",
+         "color" : "cd9d71",
          "flammable" : false,
          "name" : "obj_dropper_scrap_wood",
          "physicsMaterial" : "Wood",
@@ -48,9 +48,9 @@
             "y" : 8,
             "z" : 6
          },
-         "color" : "df7f00",
-         "flammable" : false,
-         "name" : "obj_dropper_scrap_wood_auto",
+         "color" : "9b683a",
+         "flammable" : true,
+         "name" : "obj_dropper_wood",
          "physicsMaterial" : "Wood",
          "ratings" : {
             "buoyancy" : 5,
@@ -64,8 +64,6 @@
             "classname" : "AutoDropper",
             "data" : {
                "drop" : {
-                  "uuid" : "87873e83-8270-4796-9401-6baba45ccef2",
-                  "value" : "1"
                },
                "interval" : 40,
                "offset" : {
