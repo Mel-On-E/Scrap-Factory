@@ -259,6 +259,7 @@ end
 ---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
 ---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
 ---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
+---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
 
 ---@class DropShape: Shape
 ---@field interactable DropInteractable

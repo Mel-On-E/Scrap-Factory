@@ -879,6 +879,208 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "55bafdca-1a6e-4360-a47d-7e8d685cd962"
+    },
+{
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ce9e0c",
+      "flammable": true,
+      "name": "obj_drop_warning",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 10,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/normal_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "CollisionExplosiveDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/CollisionExplosiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e469da35-7a6a-45ed-9ce8-d9405e42bab3"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8bc34a",
+      "flammable": false,
+      "name": "obj_drop_magnetic_sticky",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "sticky"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9ab029d1-9232-40ef-98ab-9cc90f261a96"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ff5722",
+      "flammable": false,
+      "name": "obj_drop_magnetic_repell",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "repell"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "13db4781-760b-4097-8891-06a117e150a9"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "b3e5fc",
+      "flammable": false,
+      "name": "obj_drop_ice",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "buoyancy": 7,
+        "density": 3,
+        "durability": 1,
+        "friction": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNorAlpha",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/ice_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "IceDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/IceDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "3fcdb044-7afa-4be1-a474-6fd53f2d3b0a"
     }
   ]
 }
