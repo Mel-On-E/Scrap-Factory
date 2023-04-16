@@ -768,7 +768,7 @@
     },
     {
       "color": "cb0a00",
-      "box":{
+      "box": {
         "x": 2,
         "y": 2,
         "z": 2
@@ -777,11 +777,11 @@
       "name": "obj_drop_explosive",
       "physicsMaterial": "Mechanical",
       "ratings": {
-				"density": 4,
-				"durability": 10,
-				"friction": 3,
-				"buoyancy": 7
-			},
+        "density": 4,
+        "durability": 10,
+        "friction": 3,
+        "buoyancy": 7
+      },
       "renderable": {
         "lodList": [
           {
@@ -818,18 +818,67 @@
       "scripted": {
         "classname": "ExplosiveDrop",
         "data": {
-					"destructionLevel": 7,
-					"destructionRadius": 2.0,
-					"impulseRadius": 6.0,
-					"impulseMagnitude": 25.0,
-					"effectExplosion": "PropaneTank - ExplosionSmall",
-					"effectActivate": "PropaneTank - ActivateSmall"
-				},
+          "destructionLevel": 7,
+          "destructionRadius": 2.0,
+          "impulseRadius": 6.0,
+          "impulseMagnitude": 25.0,
+          "effectExplosion": "PropaneTank - ExplosionSmall",
+          "effectActivate": "PropaneTank - ActivateSmall"
+        },
         "filename": "$CONTENT_DATA/Scripts/Drops/ExplosiveDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "0c837435-1eea-46a4-a199-b450fdb881c6"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ce9e0c",
+      "flammable": true,
+      "name": "obj_drop_warning",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 10,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/normal_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "CollisionExplosiveDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/CollisionExplosiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e469da35-7a6a-45ed-9ce8-d9405e42bab3"
     }
   ]
 }
