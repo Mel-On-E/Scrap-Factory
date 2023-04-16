@@ -1726,6 +1726,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "45082012-afcc-4bf0-9cf0-7867f74ad11d"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "8c8c8c",
+         "flammable" : false,
+         "name" : "obj_dropper_plutonium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 8,
+				"durability": 4,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "ec65be2d-8c15-41cb-8a81-f17dea95c9a6",
+                  "value" : "1.5e10"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 6e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e28",
+            "tier" : 18
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "18cacdb2-e905-421a-b7ba-cfe7ce627daa"
       }
    ]
 }
