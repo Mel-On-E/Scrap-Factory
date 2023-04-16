@@ -1253,6 +1253,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "62956d42-ef2c-4b97-bbe4-2fc35efdb973"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "2e5c06",
+         "flammable" : false,
+         "name" : "obj_dropper_uranium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 7,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "96148909-5a05-49c5-8a58-299a605c1622",
+                  "value" : "6000"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 150
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e8",
+            "tier" : 7
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "ccdab50d-1059-4e32-b65a-e17c69c71e4b"
       }
    ]
 }

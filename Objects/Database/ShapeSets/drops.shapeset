@@ -1522,6 +1522,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "3d1b9b4e-43ae-4e6c-8d1c-282ec201a550"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "2e5c06",
+      "flammable": false,
+      "name": "obj_drop_uranium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 7,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "96148909-5a05-49c5-8a58-299a605c1622"
     }
   ]
 }
