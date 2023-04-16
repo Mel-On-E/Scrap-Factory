@@ -1425,6 +1425,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "ca1e9b12-d245-40af-b6f0-6e274eed28ef"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "a8c3ed",
+         "flammable" : false,
+         "name" : "obj_dropper_deuterium",
+         "physicsMaterial" : "Mechanical",
+         "ratings": {
+				"density": 1,
+				"durability": 2,
+				"friction": 2,
+				"buoyancy": 9
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "1c61a934-3626-4ee4-845c-60328a9c295b",
+                  "value" : "3e6"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 2000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e14",
+            "tier" : 11
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "855c9a54-da9d-4b20-a566-f315c37bd494"
       }
    ]
 }
