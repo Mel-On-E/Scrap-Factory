@@ -64,6 +64,8 @@
             "classname" : "AutoDropper",
             "data" : {
                "drop" : {
+                  "uuid" : "2c4842af-2e79-433a-aa49-603cc7cab78f",
+                  "value" : "2"
                },
                "interval" : 40,
                "offset" : {
