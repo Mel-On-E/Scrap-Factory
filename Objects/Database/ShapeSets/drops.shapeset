@@ -1571,6 +1571,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "96148909-5a05-49c5-8a58-299a605c1622"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "aab3bd",
+      "flammable": false,
+      "name": "obj_drop_silver",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 5,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "eca73f9f-7d01-4526-b858-1aa8744bcda1"
     }
   ]
 }
