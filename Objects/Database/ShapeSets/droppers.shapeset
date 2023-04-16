@@ -1769,6 +1769,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "18cacdb2-e905-421a-b7ba-cfe7ce627daa"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "a8edc3",
+         "flammable" : false,
+         "name" : "obj_dropper_tritium",
+         "physicsMaterial" : "Mechanical",
+         "ratings": {
+				"density": 2,
+				"durability": 2,
+				"friction": 2,
+				"buoyancy": 9
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "c9be08f7-7b95-40bd-90bd-31a6ef30c966",
+                  "value" : "1e11"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 2e6
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e31",
+            "tier" : 19
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "8d0df830-5724-4913-a583-41925fdcb77d"
       }
    ]
 }
