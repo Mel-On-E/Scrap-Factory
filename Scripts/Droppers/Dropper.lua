@@ -80,7 +80,13 @@ function Dropper:sv_consumePowerAndDrop()
             impostor = false,
         }
         shape.interactable:setPublicData(publicData)
+
+        self:sv_onNewDropCreated(shape)
     end
+end
+
+function Dropper:sv_onNewDropCreated(shape)
+
 end
 
 -- #endregion
