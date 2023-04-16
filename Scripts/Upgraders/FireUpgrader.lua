@@ -9,6 +9,11 @@ FireUpgrader = class(Upgrader)
 -- #region Server
 --------------------
 
+function FireUpgrader.server_onCreate(self)
+    Upgrader.server_onCreate(self)
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "FireUpgraderTutorial")
+end
+
 function FireUpgrader:sv_onUpgrade(shape, data)
     if data.flamable then
         data.burning = true
