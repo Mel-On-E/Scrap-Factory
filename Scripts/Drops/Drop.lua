@@ -36,8 +36,10 @@ function Drop:server_onCreate()
 end
 
 function Drop:sv_init()
-	self.sv = {}
-	self.sv.timeout = 0
+	self.sv = {
+		timeout = 0,
+		burntime = 0,
+	}
 end
 
 function Drop:server_onFixedUpdate()
@@ -48,6 +50,14 @@ function Drop:server_onFixedUpdate()
 	--handle timeout
 	self.sv.timeout = self.shape:getVelocity():length() < 0.01 and self.sv.timeout + 1 or 0
 
+	if self.data and self.data.flamable and self:getBurning() then
+		self.sv.burntime = self.sv.burntime + 1
+		
+		if self.sv.burntime > self.data.burnticks then
+			self.shape:destroyShape(0)
+		end
+	end
+
 	if self.sv.timeout > despawnTimeout then
 		self.shape:destroyShape(0)
 	end
@@ -56,6 +66,7 @@ function Drop:server_onFixedUpdate()
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedPollution = self:getPollution()
 	self.sv.cachedValue = self:getValue()
+	self.sv.cachedBurning = self:getBurning()
 
 	--remove tractorBeamTag
 	if self.interactable.publicData.tractorBeam then
@@ -120,6 +131,7 @@ function Drop:sv_setClientData()
 		self.network:setClientData({
 			value = publicData.value,
 			pollution = publicData.pollution,
+			burning = publicData.burning
 		})
 	end
 end
@@ -152,6 +164,12 @@ end
 
 function Drop:client_onClientDataUpdate(data)
 	self.cl.data = unpackNetworkData(data)
+
+	if data.burning and not Effects.cl_getEffect(self, "burning") then
+		Effects.cl_createEffect(self, { key = "burning", effect = "Fire - gradual", host = self.interactable })
+		local effect = Effects.cl_getEffect(self, 'burning')
+		effect:setParameter('intensity', 1.5)
+	end
 
 	--create default effect for pulluted ores
 	if data.pollution and not Effects.cl_getEffect(self, "pollution") then
@@ -225,6 +243,17 @@ function Drop:getPollution()
 	return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
 
+---Retruns boolean weather it's burning or not
+---@return boolean burning
+function Drop:getBurning()
+	local burning = self.cl.data.burning
+	if sm.isServerMode() then
+		burning = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.burning)
+			or self.sv.cachedBurning
+	end
+	return burning
+end
+
 --------------------
 -- #region Types
 --------------------
@@ -233,8 +262,10 @@ end
 ---@field cachedPos Vec3
 ---@field cachedPollution number
 ---@field cachedValue number
+---@field cachedBurning boolean
 ---@field pollution number
 ---@field value number
+---@field burning boolean
 ---@field timeout number number of ticks for how long the drop has not moved
 ---@field data DropData
 
@@ -248,5 +279,6 @@ end
 ---@class clientData
 ---@field pollution number
 ---@field value number
+---@field burning boolean
 
 -- #endregion

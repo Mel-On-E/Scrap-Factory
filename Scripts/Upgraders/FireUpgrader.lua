@@ -10,6 +10,7 @@ FireUpgrader = class(Upgrader)
 --------------------
 
 function FireUpgrader:sv_onUpgrade(shape, data)
+    data.burning = true
 
     Upgrader.sv_onUpgrade(self, shape, data)
 end
