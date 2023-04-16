@@ -1554,6 +1554,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "9a7e8101-be05-4907-be61-dc6039dc0c2d"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "9b1c31",
+         "flammable" : false,
+         "name" : "obj_dropper_painite",
+         "physicsMaterial" : "Glass",
+         "ratings": {
+				"density": 5,
+				"durability": 6,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "931ecf40-5403-4b54-900f-42a224ddfd39",
+                  "value" : "5e7"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 1.5e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e20",
+            "tier" : 14
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "00578582-da6f-47d3-9d34-9595e3fc8d01"
       }
    ]
 }

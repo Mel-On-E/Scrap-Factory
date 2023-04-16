@@ -1865,6 +1865,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "486ba745-16c3-4d0c-99c1-6d013d5f00e3"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "9b1c31",
+      "flammable": false,
+      "name": "obj_drop_painite",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 6,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "931ecf40-5403-4b54-900f-42a224ddfd39"
     }
   ]
 }
