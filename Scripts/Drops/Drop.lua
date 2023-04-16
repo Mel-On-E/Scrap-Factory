@@ -11,6 +11,8 @@ local oreCount = 0
 local storedDrops = {}
 ---time after which not moving drops will be deleted:
 local despawnTimeout = 40 * 5 --5 seconds
+---time after a drop burning until it will be deleted
+local burnlife = 40 * 4 -- 4 seconds
 
 --------------------
 -- #region Server
@@ -40,7 +42,7 @@ function Drop:sv_init()
 		timeout = 0,
 		burntime = 0,
 	}
-	self.interactable.publicData.flamable = self.data.flamable
+	self.interactable.publicData.flamable = self.data.flamable or false
 end
 
 function Drop:server_onFixedUpdate()
@@ -54,7 +56,7 @@ function Drop:server_onFixedUpdate()
 	if self:getBurning() then
 		self.sv.burntime = self.sv.burntime + 1
 		
-		if self.sv.burntime > self.data.burnticks then
+		if self.sv.burntime > burnlife then
 			self.shape:destroyShape(0)
 		end
 	end
@@ -188,7 +190,7 @@ function Drop:client_canInteract()
 	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 	local o2 = "</p>"
 	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
-		local t = self.cl.data.burntime and format_time(self.data.burnticks-self.cl.data.burntime) or ""
+	local t = self.cl.data.burntime and format_time(burnlife-self.cl.data.burntime) or ""
 	local burning = self.cl.data.burning and "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#bf3b13' spacing='9'>Burning "..t.."</p>" or ""
 
 	if self:getPollution() then

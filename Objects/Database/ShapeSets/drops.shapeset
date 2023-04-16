@@ -52,8 +52,7 @@
         "classname": "Drop",
         "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua",
         "data": {
-          "flamable": true,
-          "burnticks": 200 //40*5 5 seconds
+          "flamable": true
         }
       },
       "showInInventory": false,
