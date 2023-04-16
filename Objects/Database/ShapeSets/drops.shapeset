@@ -2208,6 +2208,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "e2085637-fa43-440c-ac4a-57fadd116293"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "c2c0c0",
+      "flammable": false,
+      "name": "obj_drop_californium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "d5149233-db02-4f99-adc1-000e0b17d202"
     }
   ]
 }

@@ -1855,6 +1855,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "91d1fb2b-830f-431f-bbfc-19816f314b78"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "c2c0c0",
+         "flammable" : false,
+         "name" : "obj_dropper_californium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 6,
+				"durability": 4,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "d5149233-db02-4f99-adc1-000e0b17d202",
+                  "value" : "1.5e14"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 5e7
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e38",
+            "tier" : 22
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "7b8d6fd9-c34b-41a5-a099-f99e5f86cadf"
       }
    ]
 }
