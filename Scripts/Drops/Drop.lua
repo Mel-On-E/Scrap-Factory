@@ -2,6 +2,7 @@
 ---@class Drop : ShapeClass
 ---@field cl DropCl
 ---@field sv DropSv
+---@field interactable DropInteractable
 ---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
@@ -248,5 +249,14 @@ end
 ---@class clientData
 ---@field pollution number
 ---@field value number
+
+---@class DropInteractable : Interactable
+---@field publicData DropInteractablePublicData
+
+---@class DropInteractablePublicData
+---@field value number the value of the drop. i.e. how much it is worth
+---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
+---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
+---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
 
 -- #endregion
