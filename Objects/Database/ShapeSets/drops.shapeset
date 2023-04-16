@@ -768,7 +768,7 @@
     },
     {
       "color": "cb0a00",
-      "box":{
+      "box": {
         "x": 2,
         "y": 2,
         "z": 2
@@ -777,11 +777,11 @@
       "name": "obj_drop_explosive",
       "physicsMaterial": "Mechanical",
       "ratings": {
-				"density": 4,
-				"durability": 10,
-				"friction": 3,
-				"buoyancy": 7
-			},
+        "density": 4,
+        "durability": 10,
+        "friction": 3,
+        "buoyancy": 7
+      },
       "renderable": {
         "lodList": [
           {
@@ -818,13 +818,13 @@
       "scripted": {
         "classname": "ExplosiveDrop",
         "data": {
-					"destructionLevel": 7,
-					"destructionRadius": 2.0,
-					"impulseRadius": 6.0,
-					"impulseMagnitude": 25.0,
-					"effectExplosion": "PropaneTank - ExplosionSmall",
-					"effectActivate": "PropaneTank - ActivateSmall"
-				},
+          "destructionLevel": 7,
+          "destructionRadius": 2.0,
+          "impulseRadius": 6.0,
+          "impulseMagnitude": 25.0,
+          "effectExplosion": "PropaneTank - ExplosionSmall",
+          "effectActivate": "PropaneTank - ActivateSmall"
+        },
         "filename": "$CONTENT_DATA/Scripts/Drops/ExplosiveDrop.lua"
       },
       "showInInventory": false,
@@ -840,7 +840,7 @@
       "color": "cd9d71",
       "flammable": true,
       "name": "obj_drop_susshake",
-      "physicsMaterial": "Wood",
+      "physicsMaterial": "Metal",
       "ratings": {
         "buoyancy": 1,
         "density": 4,
@@ -880,7 +880,7 @@
       "stackSize": 65535.0,
       "uuid": "55bafdca-1a6e-4360-a47d-7e8d685cd962"
     },
-{
+    {
       "box": {
         "x": 1,
         "y": 1,

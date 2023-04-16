@@ -659,7 +659,7 @@
             "y" : 8,
             "z" : 6
          },
-         "color" : "cb0a00",
+         "color" : "c61111",
          "flammable" : false,
          "name" : "obj_dropper_sussy",
          "physicsMaterial" : "Mechanical",
@@ -690,7 +690,7 @@
          },
          "shop" : {
             "category" : "Droppers",
-            "price" : "1e69",
+            "price" : "1e11",
             "tier" : 8
          },
          "stackSize" : 65535.0,

@@ -112,11 +112,27 @@ function Furnace:sv_onEnterDrop(shape)
 				effect = "Furnace - Sell",
 			})
 		else
+			--impostor steals money
+			local color = nil
+			if shape.interactable.publicData.impostor then
+				value = value * -1
+				if MoneyManager.getMoney() - value < 0 then
+					value = 0
+				end
+				color = "#dd0000"
+			end
+
 			--make money
 			sm.event.sendToPlayer(
 				sm.player.getAllPlayers()[1],
 				"sv_e_numberEffect",
-				{ pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" }
+				{
+					pos = shape:getWorldPosition(),
+					value = tostring(value),
+					format = "money",
+					effect = "Furnace - Sell",
+					color = color
+				}
 			)
 
 			MoneyManager.sv_addMoney(value)
@@ -144,9 +160,6 @@ function Furnace:sv_upgrade(shape)
 		value = value * self.data.multiplier
 	end
 
-	if shape.interactable.publicData.impostor then
-		value = value * -1
-	end
 	return value
 end
 
