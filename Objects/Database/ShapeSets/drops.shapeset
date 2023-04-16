@@ -1375,6 +1375,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "13c5f1f8-759c-4f65-9baa-30408df34a59"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "4d4d4d",
+      "flammable": false,
+      "name": "obj_drop_lead",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 7,
+        "durability": 2,
+        "friction": 5,
+        "buoyancy": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9d04dfde-f724-4cd4-8e0f-74ab1eb231cc"
     }
   ]
 }
