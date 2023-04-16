@@ -1620,6 +1620,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "eca73f9f-7d01-4526-b858-1aa8744bcda1"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "0f52ba",
+      "flammable": false,
+      "name": "obj_drop_sapphire",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 5,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "6a9aea8d-7b02-4a4d-b26e-482e462b8f01"
     }
   ]
 }
