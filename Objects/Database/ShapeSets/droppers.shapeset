@@ -1609,7 +1609,7 @@
          "name" : "obj_dropper_iridium",
          "physicsMaterial" : "Metal",
          "ratings": {
-				"density": 8,
+				"density": 9,
 				"durability": 2,
 				"friction": 4,
 				"buoyancy": 2
@@ -1683,6 +1683,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "fb3e8172-0db2-47e9-8eb2-985972c8e373"
+      },
+      {
+         "box" : {
+            "x" : 5,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "bfd4d9",
+         "flammable" : false,
+         "name" : "obj_dropper_osmium",
+         "physicsMaterial" : "Metal",
+         "ratings": {
+				"density": 10,
+				"durability": 4,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "c73c3e12-a374-4c00-bdbb-6a27abf6ee01",
+                  "value" : "4e9"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.250,
+                  "y" : -0.20,
+                  "z" : -0.10
+               },
+               "power" : 2e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "1e26",
+            "tier" : 17
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "45082012-afcc-4bf0-9cf0-7867f74ad11d"
       }
    ]
 }
