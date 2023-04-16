@@ -1277,6 +1277,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "2c4842af-2e79-433a-aa49-603cc7cab78f"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "848484",
+      "flammable": false,
+      "name": "obj_drop_stone",
+      "physicsMaterial": "Rock",
+      "ratings": {
+				"density": 6,
+				"durability": 3,
+				"friction": 6,
+				"buoyancy": 5
+			},
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e106fe9e-b3a5-441d-ac80-7d7d231babde"
     }
   ]
 }
