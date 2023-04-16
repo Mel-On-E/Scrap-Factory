@@ -1081,6 +1081,55 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "3fcdb044-7afa-4be1-a474-6fd53f2d3b0a"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "32cd32",
+      "flammable": true,
+      "name": "obj_drop_plusplus",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "",
+                  "",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "DropPlusPlus",
+        "filename": "$CONTENT_DATA/Scripts/Drops/DropPlusPlus.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "24ed35cf-cd5f-4d05-b9b7-f6beb773d9c8"
     }
   ]
 }
