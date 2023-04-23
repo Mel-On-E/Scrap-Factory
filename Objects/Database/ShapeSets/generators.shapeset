@@ -168,6 +168,53 @@
          },
 			"flammable": true,
 			"stackSize" : 65535.0
-		}
+		},
+      {
+         "uuid": "9cb913bb-f786-403a-acf4-10d1e44a155b",
+			"name": "obj_generator_spiny",
+			"legacyId": 511,
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_dif.tga",
+									"$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_asg.tga",
+									"$GAME_DATA/Objects/Textures/fittings/obj_fittings_pipes_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$GAME_DATA/Objects/Mesh/fittings/obj_fittings_pipe.mesh"
+					}
+				]
+			},
+			"color": "e08309",
+			"cylinder": {
+				"diameter": 1,
+				"depth": 1,
+				"margin": 0.04,
+				"axis": "Y"
+			},
+			"rotationSet": "PropY",
+			"sticky": "-Y",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 6,
+				"durability": 5,
+				"friction": 3,
+				"buoyancy": 3
+			},
+         "scripted": {
+            "filename": "$CONTENT_DATA/Scripts/Generators/Spiny.lua",
+            "classname": "Spiny",
+            "data": {
+               "power": 0
+            }
+         },
+			"flammable": false,
+			"stackSize": 10
+      }
    ]
 }

@@ -161,5 +161,9 @@
 	"JetpackAlwaysOn": "Always active: ",
 
 	//Interactive
-	"TeleporterMoreThan2": "You can only have 2 teleporters!"
+	"TeleporterMoreThan2": "You can only have 2 teleporters!",
+	
+	//Generator
+	"SpinyGeneratorStatic": "Place on static body.",
+	"SpinyGeneratorBearing": "Place on bearing."
 }
