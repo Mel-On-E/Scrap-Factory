@@ -13,10 +13,6 @@ local tagBearing = language_tag('SpinyGeneratorBearing')
 -- #region Server
 --------------------
 
-function Spiny:server_onCreate()
-    Generator.server_onCreate(self)
-end
-
 function Spiny:sv_getPower()
     if not self.active then return 0 end
     return math.floor(self.shape.body.angularVelocity:length()/120 *4)
@@ -50,10 +46,24 @@ end
 -- #region Client
 --------------------
 
+function Spiny:client_onCreate()
+    Generator.client_onCreate(self)
+    Effects.cl_init(self)
+end
+function Spiny:client_onDestroy()
+    Generator.client_onDestroy(self)
+    Effects.cl_destroyAllEffects(self)
+end
+
 function Spiny:client_onClientDataUpdate(data)
     if data.active ~= nil then
         self.active = data.active
         self.reason = data.reason
+        if data.active then
+            Effects.cl_createEffect(self, { key = "afct", effect = "Paintcharacter - Small", host = self.interactable })
+        else
+            Effects.cl_destroyEffect(self, "afct")
+        end
     else
         Generator.client_onClientDataUpdate(self, data)
     end

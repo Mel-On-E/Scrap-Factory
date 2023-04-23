@@ -12,11 +12,11 @@
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/hologrammatt.effectset",
          "showInEditor" : true
       },
-	  {
+	   {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/drops.json",
          "showInEditor" : true
       },
-	  {
+	   {
          "path" : "$CONTENT_DATA/Effects/Database/EffectSets/sellpoints.json",
          "showInEditor" : true
       }
