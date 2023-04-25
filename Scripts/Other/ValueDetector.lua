@@ -84,6 +84,8 @@ function ValueDetector:sv_onOptionsChange(data)
     self.interactable:setActive(false)
 end
 
+-- #endregion
+
 --------------------
 -- #region Client
 --------------------
@@ -159,6 +161,8 @@ end
 function ValueDetector:cl_playSound(soundName)
     sm.audio.play(soundName)
 end
+
+-- #endregion
 
 --------------------
 -- #region Types
