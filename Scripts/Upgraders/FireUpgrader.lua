@@ -18,9 +18,8 @@ function FireUpgrader:sv_onUpgrade(shape, data)
     if data.flamable then
         data.burning = true
         data.value = data.value * 2.5 --TODO balance
+        Upgrader.sv_onUpgrade(self, shape, data)
     end
-
-    Upgrader.sv_onUpgrade(self, shape, data)
 end
 
 -- #endregion
