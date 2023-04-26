@@ -130,6 +130,186 @@
       "uuid": "cba96abb-2116-496f-b635-03e8e52c67f5"
     },
     {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "444444",
+      "flammable": false,
+      "name": "obj_drop_neptunium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "898e8270-1c16-4091-aa9d-1bf410945e4d"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8c8c8c",
+      "flammable": false,
+      "name": "obj_drop_plutonium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "a0588f9f-0beb-44be-8601-dab987c16e68"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "c4c4c4",
+      "flammable": false,
+      "name": "obj_drop_technetium99",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "db7e5caa-e830-46f8-9335-7b1825aac77d"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "c2c0c0",
+      "flammable": false,
+      "name": "obj_drop_californium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "05b882d5-82ef-47eb-8751-e34b067565e4"
+    },
+    {
       "cylinder": {
         "axis": "Y",
         "depth": 1,

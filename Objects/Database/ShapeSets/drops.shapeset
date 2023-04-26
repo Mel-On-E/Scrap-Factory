@@ -1934,7 +1934,7 @@
               "NORMAL",
               "TANGENTS"
             ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "mesh": "",
             "subMeshList": [
               {
                 "material": "DifAsgNor",
@@ -1950,8 +1950,13 @@
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "898e8270-1c16-4091-aa9d-1bf410945e4d",
+          "halfLife": 24000
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -2032,7 +2037,7 @@
               "NORMAL",
               "TANGENTS"
             ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "mesh": "",
             "subMeshList": [
               {
                 "material": "DifAsgNor",
@@ -2048,8 +2053,13 @@
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "a0588f9f-0beb-44be-8601-dab987c16e68",
+          "halfLife": 2400
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -2101,7 +2111,7 @@
         "data": {
           "effect": "Uranium Glow",
           "effectShape": "cba96abb-2116-496f-b635-03e8e52c67f5",
-          "halfLife": 690
+          "halfLife": 1200
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveGasDrop.lua"
       },
@@ -2216,6 +2226,60 @@
         "y": 1,
         "z": 1
       },
+      "color": "c4c4c4",
+      "flammable": false,
+      "name": "obj_drop_technetium99",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "db7e5caa-e830-46f8-9335-7b1825aac77d",
+          "halfLife": 600
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9fb9f8dc-f5b1-489e-b224-36b34ba61032"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
       "color": "c2c0c0",
       "flammable": false,
       "name": "obj_drop_californium",
@@ -2236,7 +2300,7 @@
               "NORMAL",
               "TANGENTS"
             ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "mesh": "",
             "subMeshList": [
               {
                 "material": "DifAsgNor",
@@ -2252,12 +2316,17 @@
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
-        "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "05b882d5-82ef-47eb-8751-e34b067565e4",
+          "halfLife": 1200
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
-      "uuid": "d5149233-db02-4f99-adc1-000e0b17d202"
+      "uuid": "405c3022-1055-4048-9686-c4923097fe62"
     },
     {
       "box": {

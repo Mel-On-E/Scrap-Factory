@@ -1853,7 +1853,7 @@
             "classname" : "AutoDropper",
             "data" : {
                "drop" : {
-                  "uuid" : "e2085637-fa43-440c-ac4a-57fadd116293",
+                  "uuid" : "9fb9f8dc-f5b1-489e-b224-36b34ba61032",
                   "value" : "1e13"
                },
                "interval" : 120,
@@ -1896,7 +1896,7 @@
             "classname" : "AutoDropper",
             "data" : {
                "drop" : {
-                  "uuid" : "d5149233-db02-4f99-adc1-000e0b17d202",
+                  "uuid" : "405c3022-1055-4048-9686-c4923097fe62",
                   "value" : "1.5e14"
                },
                "interval" : 80,
