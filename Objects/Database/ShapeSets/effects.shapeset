@@ -85,6 +85,51 @@
       "uuid": "d7807dca-e429-4822-9a66-2efabb09118b"
     },
     {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "a8edc3",
+      "flammable": false,
+      "name": "obj_drop_tritium",
+      "physicsMaterial": "Dirt",
+      "ratings": {
+        "density": 1,
+        "durability": 2,
+        "friction": 2,
+        "buoyancy": 9
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/tritium_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "cba96abb-2116-496f-b635-03e8e52c67f5"
+    },
+    {
       "cylinder": {
         "axis": "Y",
         "depth": 1,

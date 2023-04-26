@@ -2081,7 +2081,7 @@
               "NORMAL",
               "TANGENTS"
             ],
-            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "mesh": "",
             "subMeshList": [
               {
                 "material": "Glass",
@@ -2097,8 +2097,13 @@
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
-        "classname": "GasDrop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+        "classname": "RadioactiveGasDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "cba96abb-2116-496f-b635-03e8e52c67f5",
+          "halfLife": 690
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveGasDrop.lua"
       },
       "showInInventory": false,
       "stackSize": 65535.0,
