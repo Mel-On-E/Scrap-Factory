@@ -1440,10 +1440,10 @@
             "y" : 8,
             "z" : 6
          },
-         "color" : "d9f7fa",
+         "color" : "696969",
          "flammable" : false,
-         "name" : "obj_dropper_diamond",
-         "physicsMaterial" : "Glass",
+         "name" : "obj_dropper_mineral_mine",
+         "physicsMaterial" : "Mechanical",
          "ratings": {
 				"density": 5,
 				"durability": 6,
@@ -1455,10 +1455,63 @@
          "scripted" : {
             "classname" : "AutoDropper",
             "data" : {
-               "drop" : {
-                  "uuid" : "486ba745-16c3-4d0c-99c1-6d013d5f00e3",
-                  "value" : "1e7"
-               },
+               "drops" : [
+                  {
+                     "uuid" : "e106fe9e-b3a5-441d-ac80-7d7d231babde",
+                     "value" : "10",
+                     "chance" : 30
+                  },
+                  {
+                     "uuid" : "13c5f1f8-759c-4f65-9baa-30408df34a59",
+                     "value" : "50",
+                     "chance" : 20
+                  },
+                  {
+                     "uuid" : "9d04dfde-f724-4cd4-8e0f-74ab1eb231cc",
+                     "value" : "100",
+                     "chance" : 15
+                  },
+                  {
+                     "uuid" : "b711d89c-ff74-49e1-8847-cb969cb412f3",
+                     "value" : "500",
+                     "chance" : 11
+                  },
+                  {
+                     "uuid" : "3d1b9b4e-43ae-4e6c-8d1c-282ec201a550",
+                     "value" : "2000",
+                     "chance" : 8
+                  },
+                  {
+                     "uuid" : "eca73f9f-7d01-4526-b858-1aa8744bcda1",
+                     "value" : "5e4",
+                     "chance" : 6
+                  },
+                  {
+                     "uuid" : "6a9aea8d-7b02-4a4d-b26e-482e462b8f01",
+                     "value" : "2e5",
+                     "chance" : 4
+                  },
+                  {
+                     "uuid" : "7e5b3157-f337-4eb4-9b20-ee6b239ff505",
+                     "value" : "1e6",
+                     "chance" : 3
+                  },
+                  {
+                     "uuid" : "89d34fee-1157-4aba-8ecb-9f66af01ef67",
+                     "value" : "5e6",
+                     "chance" : 2
+                  },
+                  {
+                     "uuid" : "486ba745-16c3-4d0c-99c1-6d013d5f00e3",
+                     "value" : "1e7",
+                     "chance" : 1
+                  },
+                  {
+                     "uuid" : "931ecf40-5403-4b54-900f-42a224ddfd39",
+                     "value" : "5e7",
+                     "chance" : 0.01
+                  }
+               ],
                "interval" : 40,
                "offset" : {
                   "x" : -1.250,
