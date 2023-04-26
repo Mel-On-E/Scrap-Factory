@@ -1423,17 +1423,15 @@
       "uuid": "3d1b9b4e-43ae-4e6c-8d1c-282ec201a550"
     },
     {
-      "box": {
-        "x": 1,
-        "y": 1,
-        "z": 1
+      "sphere": {
+        "diameter": 1
       },
       "color": "2e5c06",
       "flammable": false,
-      "name": "obj_drop_uranium",
+      "name": "obj_drop_uranium238",
       "physicsMaterial": "Metal",
       "ratings": {
-        "density": 7,
+        "density": 10,
         "durability": 3,
         "friction": 4,
         "buoyancy": 2
@@ -1470,6 +1468,53 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "96148909-5a05-49c5-8a58-299a605c1622"
+    },
+    {
+      "sphere": {
+        "diameter": 1
+      },
+      "color": "ff0000",
+      "flammable": false,
+      "name": "obj_drop_uranium235",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 1,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "794da9a7-e3a5-4444-b1b1-ad6ee25b25ab"
     },
     {
       "box": {
