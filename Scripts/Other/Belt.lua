@@ -46,6 +46,19 @@ function Belt:sv_onStay(trigger, results)
             if result.id == self.shape.body.id then goto continue end
             if IDsUpdated[result.id] then goto continue end
 
+            --check for beamed drops
+            if type(result) == "Body" and not (#result:getShapes() > 1) then
+                local shape = result:getShapes()[1]
+                local interactable = shape:getInteractable()
+
+                if interactable and interactable.type == "scripted" then
+                    local data = interactable:getPublicData()
+                    if data and data.value then
+                        if data.tractorBeam then goto continue end
+                    end
+                end
+            end
+
             --applyImpulse to each valid shape
             local direction = self.shape.at * self.data.belt.direction.at +
                 self.shape.right * self.data.belt.direction.right +

@@ -63,6 +63,14 @@ function Drop:server_onFixedUpdate()
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedPollution = self:getPollution()
 	self.sv.cachedValue = self:getValue()
+
+	--remove tractorBeamTag
+	if self.interactable.publicData.tractorBeam then
+		self.sv.timeout = 0
+		if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
+			self.interactable.publicData.tractorBeam = nil
+		end
+	end
 end
 
 function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
