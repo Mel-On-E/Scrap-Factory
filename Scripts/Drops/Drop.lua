@@ -2,6 +2,7 @@
 ---@class Drop : ShapeClass
 ---@field cl DropCl
 ---@field sv DropSv
+---@field interactable DropInteractable
 ---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
@@ -33,6 +34,12 @@ function Drop:server_onCreate()
 		self.shape:destroyShape(0)
 		return
 	end
+
+	local body = self.shape.body
+	body:setLiftable(false)
+	body:setErasable(false)
+	body:setBuildable(false)
+	body:setPaintable(false)
 end
 
 function Drop:sv_init()
@@ -198,6 +205,8 @@ function Drop:getValue()
 	if sm.isServerMode() then
 		value = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.value)
 			or self.sv.cachedValue
+	elseif self.sv then
+		value = self.sv.cachedValue or value
 	end
 	return value
 end
@@ -249,4 +258,17 @@ end
 ---@field pollution number
 ---@field value number
 
+---@class DropInteractable : Interactable
+---@field publicData DropInteractablePublicData
+
+---@class DropInteractablePublicData
+---@field value number the value of the drop. i.e. how much it is worth
+---@field impostor boolean Controlles if the value sells for negative or not
+---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
+---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
+---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
+---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
+
+---@class DropShape: Shape
+---@field interactable DropInteractable
 -- #endregion

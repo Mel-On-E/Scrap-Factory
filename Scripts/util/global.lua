@@ -65,3 +65,6 @@ g_tutorialManager = {}
 
 ---@type PrestigeManager
 g_prestigeManager = {}
+
+---@type SaveDataManager
+g_saveDataManager = {}

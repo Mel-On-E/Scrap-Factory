@@ -384,7 +384,8 @@ function FactoryGame:sv_initManagers()
 		{ prestigeManager = "2474d490-4530-4ff8-9436-ba716a0c665e" },
 		{ perkManager = "35492036-d286-4b0f-a17c-efa228875c0d" },
 		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" },
-		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" }
+		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" },
+		{ saveDataManager = "e4bc2df0-a163-4de5-87e4-119abd5409a4" }
 	}
 	local STORAGE_CHANNEL_FACTORY = 69
 

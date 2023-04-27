@@ -327,5 +327,37 @@
 				"delay": 0.425
 			}
 		]
+	},
+	"Milk Spill": {
+		"parameterList": {
+			"Size": 0.08,
+			"Material": 20.0,
+			"Color": [
+				1,
+				1,
+				1,
+				1
+			]
+		},
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_glowgorp_destruct",
+				"direction": {
+					"x": 0.0,
+					"y": 1.0,
+					"z": 0.0
+				},
+				"parameters": [
+					"Color"
+				],
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/tools/waterbucket_throw",
+				"delay": 0.0
+			}
+		]
 	}
 }
