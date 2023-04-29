@@ -5,8 +5,8 @@ dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 ---@field sv PopcornSv
 PopcornDrop = class(Drop)
 
-local popTimeMin = 40 * 1
-local popTimeMax = 40 * 1.5
+local popTimeMin = 40 * 1.5
+local popTimeMax = 40 * 3
 
 local popedUuid = sm.uuid.new("b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40")
 
@@ -25,9 +25,9 @@ function PopcornDrop:server_onFixedUpdate()
     if not self.sv.poped then
         self.sv.time = self.sv.time - 1
         if self.sv.time <= 0 then
-            sm.effect.playEffect( "Cotton - Picked", self.shape.worldPosition )
-            local shape = sm.shape.createPart(popedUuid, self.shape.worldPosition, self.shape.worldRotation)
+            sm.effect.playEffect( "Cotton - Picked", self.shape.worldPosition-sm.vec3.new(0,0,1) )
             self.shape:destroyShape(0)
+            local shape = sm.shape.createPart(popedUuid, self.shape.worldPosition, self.shape.worldRotation)
             local publicData = {
                 value = self:getValue() * 2, --TODO balance multiplier
                 pollution = nil,

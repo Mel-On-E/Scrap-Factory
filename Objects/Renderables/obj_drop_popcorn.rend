@@ -1,0 +1,31 @@
+{
+	"lodList": [
+		{
+			"minViewSize": 35,
+			"subMeshList": [
+				{
+					"textureList": [
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_dif.tga",
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_asg.tga",
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_nor.tga"
+					],
+					"material": "DifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn.fbx"
+		},
+		{
+			"subMeshList": [
+				{
+					"textureList": [
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_dif.tga",
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_asg.tga",
+						"$SURVIVAL_DATA/Objects/Textures/consumable/Obj_consumable_cotton_nor.tga"
+					],
+					"material": "DifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_lod1.fbx"
+		}
+	]
+}
