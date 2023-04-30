@@ -47,7 +47,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "10",
-            "tier" : 1
+            "tier" : 0
          },
          "stackSize" : 65535.0,
          "uuid" : "69b857f1-07dc-4ea2-9391-fd24903945d1"
@@ -99,7 +99,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
-            "tier" : 3
+            "tier" : 2
          },
          "stackSize" : 65535.0,
          "uuid" : "84fbc73d-9b64-427f-a381-642597d740b7"
@@ -151,7 +151,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "10000",
-            "tier" : 6
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "uuid" : "bc9aaec8-d602-4309-9b33-1f93f439a1bf"
@@ -203,7 +203,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "100000",
-            "tier" : 6
+            "tier" : 4
          },
          "stackSize" : 65535.0,
          "uuid" : "c5c71e4f-bcc7-470f-a560-0945a45f720d"
@@ -255,7 +255,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e6",
-            "tier" : 8
+            "tier" : 6
          },
          "stackSize" : 65535.0,
          "uuid" : "5ec95a7e-4535-4f8b-ad3f-ad51e4ec5e7c"
@@ -307,7 +307,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e7",
-            "tier" : 12
+            "tier" : 7
          },
          "stackSize" : 65535.0,
          "uuid" : "ba5c45dc-c85b-4210-9fa9-aa12db63a797"
@@ -359,7 +359,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e8",
-            "tier" : 15
+            "tier" : 8
          },
          "stackSize" : 65535.0,
          "uuid" : "46c826dd-35a9-47c4-bacb-d3a5754654a7"
@@ -411,6 +411,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -463,6 +464,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -515,6 +517,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e6",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,

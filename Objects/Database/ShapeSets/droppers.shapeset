@@ -6,91 +6,6 @@
             "y" : 11,
             "z" : 8
          },
-         "color" : "9f2600",
-         "flammable" : false,
-         "name" : "obj_dropper_scrap_wood",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 5,
-            "density" : 5,
-            "durability" : 10,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "ClickDropper",
-            "data" : {
-               "drop" : {
-                  "uuid" : "87873e83-8270-4796-9401-6baba45ccef2",
-                  "value" : "1"
-               },
-               "offset" : {
-                  "x" : -1.20,
-                  "y" : 0.0,
-                  "z" : -0.10
-               },
-               "power" : 1
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
-         },
-         "shop" : {
-            "category" : "Droppers",
-            "price" : "20",
-            "tier" : 0
-         },
-         "stackSize" : 65535.0,
-         "uuid" : "692a5ebd-0793-49ba-b1ef-681a8fdceba7"
-      },
-      {
-         "box" : {
-            "x" : 7,
-            "y" : 11,
-            "z" : 8
-         },
-         "color" : "9f2600",
-         "flammable" : false,
-         "name" : "obj_dropper_scrap_wood_auto",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 5,
-            "density" : 5,
-            "durability" : 10,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "AutoDropper",
-            "data" : {
-               "drop" : {
-                  "uuid" : "87873e83-8270-4796-9401-6baba45ccef2",
-                  "value" : "1"
-               },
-               "interval" : 40,
-               "offset" : {
-                  "x" : -1.20,
-                  "y" : 0.0,
-                  "z" : -0.10
-               },
-               "power" : 2
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
-         },
-         "shop" : {
-            "category" : "Droppers",
-            "price" : "200",
-            "tier" : 1
-         },
-         "stackSize" : 65535.0,
-         "uuid" : "632a52bd-0791-49ba-b1ef-c81adfdceba7"
-      },
-      {
-         "box" : {
-            "x" : 7,
-            "y" : 11,
-            "z" : 8
-         },
          "color" : "00ff00",
          "flammable" : false,
          "name" : "obj_dropper_radioactive_auto",
@@ -123,7 +38,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "200",
-            "tier" : 1
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "f028c17e-d4ce-409b-af20-84141c880629"
@@ -166,7 +81,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "200",
-            "tier" : 1
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "3a40ff89-76bc-49ee-8b67-a0c742bdcb9b"
@@ -208,7 +123,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "20",
-            "tier" : 0,
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -252,7 +167,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e20",
-            "tier" : 9
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "bb81b951-e48d-4aa9-a0ca-c322639f2433"
@@ -303,7 +218,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e33",
-            "tier" : 13
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "884e68bd-889a-441a-ac1b-2a4f7a087e70"
@@ -346,7 +261,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e21",
-            "tier" : 21
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "1f53ce59-f7cb-437c-85d1-909fa3abbd9d"
@@ -389,6 +304,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "200",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -433,6 +349,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e9",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -476,6 +393,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e6",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -519,6 +437,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e6",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -562,7 +481,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e12",
-            "tier" : 8
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "4dc9d1e3-60cc-4bbd-8fc4-948ee7613138"
@@ -605,7 +524,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e11",
-            "tier" : 8
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "47d7d469-d483-479f-b767-2a2c78dd8e8f"
@@ -648,7 +567,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e10",
-            "tier" : 11
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "af966107-70a9-43de-a9f7-5c1c00ebed85"
@@ -691,7 +610,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e20",
-            "tier" : 19
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "f0caa9f9-36e1-48d7-80ea-7927b94d346c"
@@ -734,7 +653,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e50",
-            "tier" : 34
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "3e220c52-ad65-4159-92b1-be60f18e4194"
@@ -777,7 +696,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e13",
-            "tier" : 15
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "db624335-d808-474a-b26a-e15a8e946087"
@@ -819,6 +738,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e6",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -862,6 +782,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e9",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -905,7 +826,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e9",
-            "tier" : 9
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "uuid" : "9e63b82d-98dc-40d6-a8be-afd90a0cce05"
@@ -948,6 +869,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e12",
+            "tier" : 99,
             "special" : true
          },
          "stackSize" : 65535.0,
@@ -1119,7 +1041,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e4",
-            "tier" : 3
+            "tier" : 2
          },
          "stackSize" : 65535.0,
          "uuid" : "47c70810-481d-4bd7-9fb1-b1f7885c58b5"
@@ -1162,7 +1084,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "5e4",
-            "tier" : 4
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "uuid" : "70c3c940-2d75-4610-b283-a5fc217ab76b"
@@ -1205,7 +1127,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "5e5",
-            "tier" : 5
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "uuid" : "2ad6cea3-dba0-4ad1-a503-bd7ef2ba8947"
@@ -1248,7 +1170,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e7",
-            "tier" : 6
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "uuid" : "62956d42-ef2c-4b97-bbe4-2fc35efdb973"
@@ -1299,7 +1221,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e8",
-            "tier" : 7
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "uuid" : "ccdab50d-1059-4e32-b65a-e17c69c71e4b"
@@ -1342,7 +1264,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e10",
-            "tier" : 8
+            "tier" : 4
          },
          "stackSize" : 65535.0,
          "uuid" : "82dae71f-bbe3-46b1-882b-7e1ee686ff57"
@@ -1385,7 +1307,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e11",
-            "tier" : 9
+            "tier" : 5
          },
          "stackSize" : 65535.0,
          "uuid" : "7496218e-1096-4fce-9d47-3347be9188be"
@@ -1428,7 +1350,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e13",
-            "tier" : 10
+            "tier" : 5
          },
          "stackSize" : 65535.0,
          "uuid" : "ca1e9b12-d245-40af-b6f0-6e274eed28ef"
@@ -1471,7 +1393,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e14",
-            "tier" : 11
+            "tier" : 5
          },
          "stackSize" : 65535.0,
          "uuid" : "855c9a54-da9d-4b20-a566-f315c37bd494"
@@ -1514,7 +1436,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e16",
-            "tier" : 12
+            "tier" : 6
          },
          "stackSize" : 65535.0,
          "uuid" : "202d8e7e-3b21-45e0-a8d5-74fd5017fd3d"
@@ -1610,7 +1532,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e18",
-            "tier" : 13
+            "tier" : 6
          },
          "stackSize" : 65535.0,
          "uuid" : "9a7e8101-be05-4907-be61-dc6039dc0c2d"
@@ -1653,7 +1575,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e20",
-            "tier" : 14
+            "tier" : 7
          },
          "stackSize" : 65535.0,
          "uuid" : "00578582-da6f-47d3-9d34-9595e3fc8d01"
@@ -1696,7 +1618,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e22",
-            "tier" : 15
+            "tier" : 7
          },
          "stackSize" : 65535.0,
          "uuid" : "9f83acd1-735f-466d-8ad5-39ac67abef3b"
@@ -1739,7 +1661,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e25",
-            "tier" : 16
+            "tier" : 7
          },
          "stackSize" : 65535.0,
          "uuid" : "fb3e8172-0db2-47e9-8eb2-985972c8e373"
@@ -1782,7 +1704,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e26",
-            "tier" : 17
+            "tier" : 8
          },
          "stackSize" : 65535.0,
          "uuid" : "45082012-afcc-4bf0-9cf0-7867f74ad11d"
@@ -1825,7 +1747,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e28",
-            "tier" : 18
+            "tier" : 8
          },
          "stackSize" : 65535.0,
          "uuid" : "18cacdb2-e905-421a-b7ba-cfe7ce627daa"
@@ -1868,7 +1790,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e31",
-            "tier" : 19
+            "tier" : 8
          },
          "stackSize" : 65535.0,
          "uuid" : "8d0df830-5724-4913-a583-41925fdcb77d"
@@ -1911,7 +1833,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e33",
-            "tier" : 20
+            "tier" : 8
          },
          "stackSize" : 65535.0,
          "uuid" : "dd655f39-9e58-4025-ab0e-b8c622200265"
@@ -1954,7 +1876,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e36",
-            "tier" : 21
+            "tier" : 9
          },
          "stackSize" : 65535.0,
          "uuid" : "91d1fb2b-830f-431f-bbfc-19816f314b78"
@@ -1997,7 +1919,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e38",
-            "tier" : 22
+            "tier" : 9
          },
          "stackSize" : 65535.0,
          "uuid" : "7b8d6fd9-c34b-41a5-a099-f99e5f86cadf"
@@ -2040,7 +1962,7 @@
          "shop" : {
             "category" : "Droppers",
             "price" : "1e44",
-            "tier" : 23
+            "tier" : 9
          },
          "stackSize" : 65535.0,
          "uuid" : "302c3a4f-4f03-4c8f-be8f-c1b0217d3ab5"
