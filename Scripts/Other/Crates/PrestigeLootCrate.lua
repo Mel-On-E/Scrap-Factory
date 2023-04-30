@@ -31,15 +31,24 @@ end
 --------------------
 
 function PrestigeLootCrate:get_loot_table()
-    --TODO: write lootTable generation code
-    local prestigeGain = PrestigeManager.cl_e_getLastPrestigeGain()
-    print("Generating prestige loot table for: " .. prestigeGain .. " prestige")
-    local workInProgress = {}
+    local tier = ResearchManager.cl_getCurrentTier()
+    local itemPool = {}
+    for uuid, item in pairs(g_shop) do
+        --exclude non-prestige items
+        if not item.prestige then goto nextItem end
 
-    --TEST: only contains a normal lootcrate
-    workInProgress[#workInProgress + 1] = obj_lootcrate
+        --include items up to current tier
+        if item.tier >= tier then goto nextItem end
 
-    return workInProgress
+        --items that are cheaper than lastPrestigeGain
+        if item.price > PrestigeManager.cl_e_getLastPrestigeGain() then goto nextItem end
+
+
+        itemPool[#itemPool + 1] = sm.uuid.new(uuid)
+        ::nextItem::
+    end
+
+    return itemPool
 end
 
 -- #endregion
