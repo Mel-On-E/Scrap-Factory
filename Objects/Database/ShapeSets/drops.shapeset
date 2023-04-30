@@ -301,7 +301,7 @@
       "scripted": {
         "classname": "MagneticDrop",
         "data": {
-          "north": true
+          "magnetic": "north"
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },
@@ -353,7 +353,7 @@
       "scripted": {
         "classname": "MagneticDrop",
         "data": {
-          "south": true
+          "magnetic": "south"
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },
