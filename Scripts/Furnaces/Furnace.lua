@@ -46,7 +46,7 @@ function Furnace:server_onCreate(params)
 		end
 	end
 
-	self.sv.trigger = self:sv_createAreaTrigger(params.filters)
+	self.sv.trigger = Furnace.sv_createAreaTrigger(self, params.filters)
 	self.sv.trigger:bindOnEnter("sv_onEnter")
 	self.sv.trigger:bindOnStay("sv_onEnter")
 end
