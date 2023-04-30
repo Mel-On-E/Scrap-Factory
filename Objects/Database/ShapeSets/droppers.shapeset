@@ -6,49 +6,6 @@
             "y" : 11,
             "z" : 8
          },
-         "color" : "9f2600",
-         "flammable" : false,
-         "name" : "obj_dropper_scrap_wood_auto",
-         "physicsMaterial" : "Mechanical",
-         "ratings" : {
-            "buoyancy" : 5,
-            "density" : 5,
-            "durability" : 10,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "AutoDropper",
-            "data" : {
-               "drop" : {
-                  "uuid" : "87873e83-8270-4796-9401-6baba45ccef2",
-                  "value" : "1"
-               },
-               "interval" : 40,
-               "offset" : {
-                  "x" : -1.20,
-                  "y" : 0.0,
-                  "z" : -0.10
-               },
-               "power" : 2
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
-         },
-         "shop" : {
-            "category" : "Droppers",
-            "price" : "200",
-            "tier" : 1
-         },
-         "stackSize" : 65535.0,
-         "uuid" : "632a52bd-0791-49ba-b1ef-c81adfdceba7"
-      },
-      {
-         "box" : {
-            "x" : 7,
-            "y" : 11,
-            "z" : 8
-         },
          "color" : "00ff00",
          "flammable" : false,
          "name" : "obj_dropper_radioactive_auto",
