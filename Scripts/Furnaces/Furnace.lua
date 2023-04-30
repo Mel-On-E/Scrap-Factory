@@ -51,7 +51,7 @@ function Furnace:server_onCreate(params)
 	self.sv.trigger:bindOnStay("sv_onEnter")
 end
 
-function Furnace.sv_createAreaTrigger(self, filters)
+function Furnace:sv_createAreaTrigger(self, filters)
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
 	local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
