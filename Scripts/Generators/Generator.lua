@@ -15,7 +15,7 @@ local maxGenerators = 50
 local currentGenertors = 0
 
 function Generator:server_onCreate()
-    self.sv = {}
+    self.sv = self.sv or {}
 
     currentGenertors = currentGenertors + 1
 

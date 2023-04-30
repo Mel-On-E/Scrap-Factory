@@ -46,19 +46,22 @@ function Furnace:server_onCreate(params)
 		end
 	end
 
-	--create areaTrigger
+	self.sv.trigger = self:sv_createAreaTrigger(params.filters)
+	self.sv.trigger:bindOnEnter("sv_onEnter")
+	self.sv.trigger:bindOnStay("sv_onEnter")
+end
+
+function Furnace.sv_createAreaTrigger(self, filters)
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
 	local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
-	self.sv.trigger = sm.areaTrigger.createAttachedBox(
+	return sm.areaTrigger.createAttachedBox(
 		self.interactable,
 		size / 2,
 		offset,
 		sm.quat.identity(),
-		params.filters or sm.areaTrigger.filter.dynamicBody
+		filters or sm.areaTrigger.filter.dynamicBody
 	)
-	self.sv.trigger:bindOnEnter("sv_onEnter")
-	self.sv.trigger:bindOnStay("sv_onEnter")
 end
 
 function Furnace:sv_onEnter(trigger, results)
