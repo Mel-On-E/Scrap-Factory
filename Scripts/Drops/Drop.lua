@@ -65,7 +65,7 @@ function Drop:server_onFixedUpdate()
 	self.sv.cachedValue = self:getValue()
 
 	--remove tractorBeamTag
-	if self.interactable.publicData.tractorBeam then
+	if self.interactable.publicData and self.interactable.publicData.tractorBeam then
 		self.sv.timeout = 0
 		if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
 			self.interactable.publicData.tractorBeam = nil
