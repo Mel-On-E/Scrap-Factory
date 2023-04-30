@@ -161,7 +161,7 @@ function LootCrate:get_loot_table()
     end
 
     --only keep the 10 most expensive items
-    local sortedPool = {}
+    --[[local sortedPool = {}
     while #itemPool > 1 and #sortedPool < 10 do
         local mostExpensiveItem
         local highestPrice = 0
@@ -175,9 +175,9 @@ function LootCrate:get_loot_table()
 
         sortedPool[#sortedPool + 1] = sm.uuid.new(itemPool[mostExpensiveItem].uuid)
         table.remove(itemPool, mostExpensiveItem)
-    end
+    end]]
 
-    return sortedPool
+    return itemPool
 end
 
 -- #endregion
