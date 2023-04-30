@@ -1,3 +1,7 @@
+--------------------
+-- #region Belt
+--------------------
+
 ---A Belt is an item that has an areaTrigger. Everything inside that areaTrigger will be moved. It requires power to work.
 ---@class Belt : ShapeClass
 ---@field powerUtil PowerUtility
@@ -30,6 +34,8 @@ function Belt:server_onCreate()
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody + sm.areaTrigger.filter.character)
     self.sv.trigger:bindOnStay("sv_onStay")
+
+    self.sv.direction = 1
 end
 
 function Belt:server_onFixedUpdate()
@@ -67,7 +73,7 @@ function Belt:sv_onStay(trigger, results)
             local dirVelocity = Belt.getDirectionalVelocity(result:getVelocity(), direction)
 
             if dirVelocity:length() < self.data.belt.speed then
-                sm.physics.applyImpulse(result, force, true)
+                sm.physics.applyImpulse(result, force * self.sv.direction, true)
                 IDsUpdated[result.id] = true
             end
         end
@@ -103,7 +109,8 @@ end
 function Belt:client_onCreate()
     self.cl = {
         uvIndex = 0,
-        active = true
+        active = true,
+        direction = 1
     }
 end
 
@@ -116,7 +123,7 @@ function Belt:client_onUpdate(dt)
     if self.cl and self.cl.active then
         local uvFrames = 50
         local timeScale = 0.58 * self.data.belt.speed
-        self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
+        self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale * self.cl.direction) % 1
         self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
     end
 end
@@ -129,6 +136,7 @@ end
 
 ---@class BeltSv
 ---@field trigger AreaTrigger area in which shapes get moved
+---@field direction 1|-1 direction of the Belt
 
 ---@class BeltData
 ---@field belt BeltDataBelt
@@ -152,5 +160,79 @@ end
 ---@class BeltCl
 ---@field active boolean if the belt is currently turned on or off
 ---@field uvIndex number the current UV index of the belt
+---@field direction 1|-1 direction of the Belt
 
 -- #endregion
+
+--------------------
+-- #endregion Belt
+--------------------
+
+--------------------
+-- #region ReversableBelt
+--------------------
+
+---A ReversableBelt is a Belt that can reverse its direction via logic.
+---@class ReversableBelt : Belt
+---@field powerUtil PowerUtility
+---@field data BeltData
+---@field sv ReversableBeltSv
+---@field cl ReversableBeltCl
+ReversableBelt = class(Belt)
+
+ReversableBelt.maxParentCount = 2
+
+--------------------
+-- #region Server
+--------------------
+
+function ReversableBelt:server_onFixedUpdate()
+    Belt.server_onFixedUpdate(self)
+
+    local activeParents = 0
+    for _, parent in ipairs(self.interactable:getParents()) do
+        if parent.active then
+            activeParents = activeParents + 1
+        end
+    end
+
+    if activeParents == 2 and self.sv.direction ~= -1 then
+        self.sv.direction = -1
+        self.network:sendToClients("cl_setBeltDirection", -1)
+    elseif activeParents ~= 2 and self.sv.direction ~= 1 then
+        self.sv.direction = 1
+        self.network:sendToClients("cl_setBeltDirection", 1)
+    end
+end
+
+--------------------
+-- #endregion
+--------------------
+
+--------------------
+-- #region Client
+--------------------
+
+function ReversableBelt:cl_setBeltDirection(direction)
+    self.cl.direction = direction
+end
+
+--------------------
+-- #endregion
+--------------------
+
+--------------------
+-- #region Types
+--------------------
+
+---@class ReversableBeltSv : BeltSv
+
+---@class ReversableBeltCl : BeltCl
+
+--------------------
+-- #endregion
+--------------------
+
+--------------------
+-- #endregion ReversableBelt
+--------------------
