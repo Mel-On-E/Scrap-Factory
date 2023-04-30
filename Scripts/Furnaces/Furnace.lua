@@ -5,9 +5,9 @@
 ---@field powerUtil PowerUtility
 Furnace = class()
 Furnace.maxParentCount = 1
-Furnace.maxChildCount = 0
+Furnace.maxChildCount = 1
 Furnace.connectionInput = sm.interactable.connectionType.logic
-Furnace.connectionOutput = sm.interactable.connectionType.none
+Furnace.connectionOutput = sm.interactable.connectionType.logic
 Furnace.colorNormal = sm.color.new(0x8000ddff)
 Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
@@ -64,7 +64,7 @@ function Furnace:sv_createAreaTrigger(filters)
 	)
 end
 
-function Furnace:sv_onEnter(trigger, results)
+function Furnace:sv_onEnter(_, results)
 	if not self.powerUtil.active then
 		return
 	end
@@ -74,7 +74,7 @@ function Furnace:sv_onEnter(trigger, results)
 			goto continue
 		end
 
-		for k, shape in pairs(result:getShapes()) do
+		for _, shape in pairs(result:getShapes()) do
 			local interactable = shape:getInteractable()
 			if not interactable then
 				goto continue
@@ -102,53 +102,49 @@ function Furnace:sv_onEnterDrop(shape)
 	local publicData = shape.interactable:getPublicData()
 	publicData.value = value
 
-	if not publicData.pollution then
-		if self.sv.saved.research then
-			--make research points
-			value = value * PerkManager.sv_getMultiplier("research")
-			value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-				pos = shape:getWorldPosition(),
-				value = tostring(value),
-				format = "research",
-				color = "#00dddd",
-				effect = "Furnace - Sell",
-			})
-		else
-			--impostor steals money
-			local color = nil
-			if shape.interactable.publicData.impostor then
-				value = value * -1
-				if MoneyManager.getMoney() - value < 0 then
-					value = 0
-				end
-				color = "#dd0000"
+	if publicData.pollution then
+		return
+	end
+
+	if self.sv.saved.research then
+		--make research points
+		value = value * PerkManager.sv_getMultiplier("research")
+		value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+			pos = shape:getWorldPosition(),
+			value = tostring(value),
+			format = "research",
+			color = "#00dddd",
+			effect = "Furnace - Sell",
+		})
+	else
+		--impostor steals money
+		local color = nil
+		if shape.interactable.publicData.impostor then
+			value = value * -1
+			if MoneyManager.getMoney() - value < 0 then
+				value = 0
 			end
+			color = "#dd0000"
+		end
 
-			--make money
-			sm.event.sendToPlayer(
-				sm.player.getAllPlayers()[1],
-				"sv_e_numberEffect",
-				{
-					pos = shape:getWorldPosition(),
-					value = tostring(value),
-					format = "money",
-					effect = "Furnace - Sell",
-					color = color
-				}
-			)
+		--make money
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+			pos = shape:getWorldPosition(),
+			value = tostring(value),
+			format = "money",
+			effect = "Furnace - Sell",
+			color = color,
+		})
 
-			MoneyManager.sv_addMoney(value)
+		MoneyManager.sv_addMoney(value)
 
-			if next(publicData.upgrades) then
-				sm.event.sendToScriptableObject(
-					g_tutorialManager.scriptableObject,
-					"sv_e_questEvent",
-					"SellUpgradedDrop"
-				)
-			end
+		if next(publicData.upgrades) then
+			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
 		end
 	end
+
+	self.interactable:setActive(true)
 
 	shape.interactable.publicData.value = nil
 	shape:destroyPart(0)
@@ -200,6 +196,10 @@ end
 function Furnace:server_onFixedUpdate()
 	---@diagnostic disable-next-line: param-type-mismatch
 	PowerUtility.sv_fixedUpdate(self, "cl_toggleEffect")
+
+	if self.interactable:isActive() then
+		self.interactable:setActive(false)
+	end
 end
 
 -- #endregion
