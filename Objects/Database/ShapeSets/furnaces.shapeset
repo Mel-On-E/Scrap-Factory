@@ -130,7 +130,7 @@
          "shop" : {
             "category" : "Furnaces",
             "price" : "50000",
-            "tier" : 1
+            "tier" : 2
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
