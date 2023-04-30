@@ -355,7 +355,34 @@
 			},
 			{
 				"type": "audio",
-				"name": "event:/tools/waterbucket_throw",
+				"name": "event:/tools/waterbucket_throw"
+			}
+		]
+	},
+	"Chest Open": {
+		"effectList": [
+			{
+				"type": "audio",
+				"name": "event:/ui/openclose/chest_open",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
+				"delay": 0.0
+			}
+		]
+	},
+	"Chest Close": {
+		"effectList": [
+			{
+				"type": "audio",
+				"name": "event:/ui/openclose/chest_close",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 0.0
+				},
 				"delay": 0.0
 			}
 		]
