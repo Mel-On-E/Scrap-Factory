@@ -274,10 +274,8 @@ function FactoryPlayer.client_onCreate(self)
 		end
 	end
 
-	if sm.isHost then
-		Effects.cl_init(self)
-		self:cl_initNumberEffects()
-	end
+	Effects.cl_init(self)
+	self:cl_initNumberEffects()
 end
 
 function FactoryPlayer.client_onRefresh(self)

@@ -40,13 +40,6 @@
           }
         ]
       },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
@@ -95,13 +88,6 @@
             ]
           }
         ]
-      },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
@@ -154,13 +140,6 @@
             ]
           }
         ]
-      },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
       },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
@@ -216,13 +195,6 @@
           }
         ]
       },
-      "restrictions": {
-        "buildable": false,
-        "destructable": false,
-        "erasable": false,
-        "liftable": false,
-        "paintable": false
-      },
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "BouncyDrop",
@@ -231,6 +203,2179 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "44e23282-feaf-4911-b51f-303300c92a7e"
+    },
+    {
+      "uuid": "99ed2595-00c0-4e2a-a724-c5d820335c67",
+      "name": "obj_drop_wedge",
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_dif.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_asg.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_atlas_generic_nor.tga",
+                  "$GAME_DATA/Objects/Textures/industrial/obj_industrial_stairwedge_ao.tga"
+                ],
+                "material": "DifAsgNorAo"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_stairwedge.fbx",
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ]
+          }
+        ]
+      },
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "color": "2341fe",
+      "slant": {
+        "x": 1,
+        "y": 1,
+        "z": 1,
+        "back": "-Z",
+        "bottom": "-Y"
+      },
+      "rotationSet": "PropYX",
+      "sticky": "-X+X-Y-Z",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 4,
+        "durability": 4,
+        "friction": 5,
+        "buoyancy": 2
+      },
+      "flammable": false
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ff0000",
+      "flammable": false,
+      "name": "obj_drop_magnetic_north",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "north"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "cbb91dad-4fcc-41a9-a433-497bee648585"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "0000ff",
+      "flammable": false,
+      "name": "obj_drop_magnetic_south",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "south"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "0e048581-726d-42b4-9be2-d93f5dd2b501"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "5f5e6e",
+      "flammable": false,
+      "name": "obj_drop_nograv",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "density": 6,
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_lights01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiGravityDrop",
+        "data": {
+          "gravity": 0.0
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "72f884b2-1de5-4e4c-8770-fdc315e7e612"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 2,
+        "z": 6
+      },
+      "color": "3e9ffe",
+      "flammable": true,
+      "name": "obj_drop_baguette",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshMap": {
+              "burger_mat": {
+                "textureList": [
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_dif.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_asg.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich_nor.tga"
+                ],
+                "material": "DifAsgNor"
+              },
+              "pizza_burger_lettuce": {
+                "textureList": [
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_dif.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_asg.tga",
+                  "$SURVIVAL_DATA/Character/Char_Tools/Char_pizzaburger/char_pizzaburger_lettuce_nor.tga"
+                ],
+                "material": "DifAsgNorAlphaFlip"
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Character/Char_Tools/Char_longsandwich/char_longsandwich.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "97eff804-0245-4719-b23b-99432b712719"
+    },
+    {
+      "cylinder": {
+        "diameter": 1,
+        "depth": 1,
+        "margin": 0.04,
+        "axis": "Y"
+      },
+      "color": "fe878c",
+      "flammable": true,
+      "name": "obj_drop_sunshake",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_sunshake_nor.tga"
+                ],
+                "material": "DifAsgNor"
+              }
+            ],
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_sunshake.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "4fd7eb94-1c6b-47a4-9f69-292c0a641ed6"
+    },
+    {
+      "color": "ffd504",
+      "cylinder": {
+        "diameter": 1,
+        "depth": 1,
+        "margin": 0.1,
+        "axis": "Y"
+      },
+      "flammable": true,
+      "name": "obj_drop_duck",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 4,
+        "friction": 5,
+        "buoyancy": 8
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "minViewSize": 12,
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_nor.tga"
+                ],
+                "material": "DifAsgNor"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck.fbx"
+          },
+          {
+            "subMeshList": [
+              {
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_dif.tga",
+                  "$GAME_DATA/Objects/Textures/decor/obj_decor_babyduck_asg.tga",
+                  ""
+                ],
+                "material": "DifAsg"
+              }
+            ],
+            "mesh": "$GAME_DATA/Objects/Mesh/decor/obj_decor_babyduck_lod1.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "48dbb2c1-8ebe-478f-8020-cdef5f447d16"
+    },
+    {
+      "color": "ffffff",
+      "cylinder": {
+        "diameter": 1,
+        "depth": 2,
+        "margin": 0.04,
+        "axis": "Y"
+      },
+      "flammable": true,
+      "name": "obj_drop_milk",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshMap": {
+              "obj_consumable_milk_mat": {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              },
+              "glass_mat": {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_milk.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MilkDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/MilkDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "a02da1e6-bb86-4ee8-a3b1-35bbc275103a"
+    },
+    {
+      "color": "ff0000",
+      "cylinder": {
+        "diameter": 1,
+        "depth": 2,
+        "margin": 0.04,
+        "axis": "Y"
+      },
+      "flammable": true,
+      "name": "obj_drop_milk_empty",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "subMeshMap": {
+              "obj_consumable_milk_mat": {
+                "material": "DifAsgNorAlpha",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/nomilk_nor.tga"
+                ]
+              },
+              "glass_mat": {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_milk_nor.tga"
+                ]
+              }
+            },
+            "mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_milk.fbx"
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MilkDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/MilkDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "09bf3314-f60e-4178-9259-2e321a466a2c"
+    },
+    {
+      "color": "cb0a00",
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "flammable": true,
+      "name": "obj_drop_explosive",
+      "physicsMaterial": "Mechanical",
+      "ratings": {
+        "density": 4,
+        "durability": 10,
+        "friction": 3,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "minViewSize": 30,
+            "mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small.fbx",
+            "pose0": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small_bshape.fbx",
+            "subMeshMap": {
+              "propanetanksmall": {
+                "material": "PoseAnimDifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_dif.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_asg.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_nor.tga"
+                ]
+              }
+            }
+          },
+          {
+            "mesh": "$GAME_DATA/Objects/Mesh/interactive/obj_interactive_propanetank_small_lod1.fbx",
+            "subMeshMap": {
+              "propanetanksmall": {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_dif.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_asg.tga",
+                  "$GAME_DATA/Objects/Textures/interactive/obj_interactive_propanetank_small_nor.tga"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "ExplosiveDrop",
+        "data": {
+          "destructionLevel": 7,
+          "destructionRadius": 2.0,
+          "impulseRadius": 6.0,
+          "impulseMagnitude": 25.0,
+          "effectExplosion": "PropaneTank - ExplosionSmall",
+          "effectActivate": "PropaneTank - ActivateSmall"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/ExplosiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "0c837435-1eea-46a4-a199-b450fdb881c6"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "cd9d71",
+      "flammable": true,
+      "name": "obj_drop_susshake",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$CONTENT_DATA/Objects/Mesh/amogus.obj",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/susshake_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "SusDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/SusDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "55bafdca-1a6e-4360-a47d-7e8d685cd962"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ce9e0c",
+      "flammable": true,
+      "name": "obj_drop_warning",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 2,
+        "durability": 10,
+        "friction": 4,
+        "buoyancy": 7
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_caution01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/normal_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "CollisionExplosiveDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/CollisionExplosiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e469da35-7a6a-45ed-9ce8-d9405e42bab3"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8bc34a",
+      "flammable": false,
+      "name": "obj_drop_magnetic_sticky",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "sticky"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9ab029d1-9232-40ef-98ab-9cc90f261a96"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ff5722",
+      "flammable": false,
+      "name": "obj_drop_magnetic_repell",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "MagneticDrop",
+        "data": {
+          "magnetic": "repell"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "13db4781-760b-4097-8891-06a117e150a9"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "b3e5fc",
+      "flammable": false,
+      "name": "obj_drop_ice",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "buoyancy": 7,
+        "density": 3,
+        "durability": 1,
+        "friction": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNorAlpha",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/ice_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "IceDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/IceDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "3fcdb044-7afa-4be1-a474-6fd53f2d3b0a"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "32cd32",
+      "flammable": true,
+      "name": "obj_drop_plusplus",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "",
+                  "",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "DropPlusPlus",
+        "filename": "$CONTENT_DATA/Scripts/Drops/DropPlusPlus.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "24ed35cf-cd5f-4d05-b9b7-f6beb773d9c8"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ffffff",
+      "flammable": true,
+      "name": "obj_drop_split",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "",
+                  "",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "SplitDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/SplitDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9ff7605a-f182-4e6f-9083-db545cb648d8"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ffffff",
+      "flammable": true,
+      "name": "obj_drop_rgb",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "",
+                  "",
+                  ""
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "47b042d9-f1d6-472c-998e-a8f969691274"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "9b683a",
+      "flammable": true,
+      "name": "obj_drop_wood",
+      "physicsMaterial": "Wood",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_woodplanks01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "2c4842af-2e79-433a-aa49-603cc7cab78f"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "848484",
+      "flammable": false,
+      "name": "obj_drop_stone",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "density": 6,
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 5
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_scrapstone_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e106fe9e-b3a5-441d-ac80-7d7d231babde"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8f7e7e",
+      "flammable": false,
+      "name": "obj_drop_iron",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 4,
+        "durability": 2,
+        "friction": 5,
+        "buoyancy": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "13c5f1f8-759c-4f65-9baa-30408df34a59"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "4d4d4d",
+      "flammable": false,
+      "name": "obj_drop_lead",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 7,
+        "durability": 2,
+        "friction": 5,
+        "buoyancy": 1
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9d04dfde-f724-4cd4-8e0f-74ab1eb231cc"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "b87333",
+      "flammable": false,
+      "name": "obj_drop_copper",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 5,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "b711d89c-ff74-49e1-8847-cb969cb412f3"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "0047ab",
+      "flammable": false,
+      "name": "obj_drop_cobalt",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 5,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_metal01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "3d1b9b4e-43ae-4e6c-8d1c-282ec201a550"
+    },
+    {
+      "sphere": {
+        "diameter": 1
+      },
+      "color": "2e5c06",
+      "flammable": false,
+      "name": "obj_drop_uranium238",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 10,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "96148909-5a05-49c5-8a58-299a605c1622"
+    },
+    {
+      "sphere": {
+        "diameter": 1
+      },
+      "color": "ff0000",
+      "flammable": false,
+      "name": "obj_drop_uranium235",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 1,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metalbricks_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "794da9a7-e3a5-4444-b1b1-ad6ee25b25ab"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "aab3bd",
+      "flammable": false,
+      "name": "obj_drop_silver",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 5,
+        "durability": 3,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "eca73f9f-7d01-4526-b858-1aa8744bcda1"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "0f52ba",
+      "flammable": false,
+      "name": "obj_drop_sapphire",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "6a9aea8d-7b02-4a4d-b26e-482e462b8f01"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ff0000",
+      "flammable": false,
+      "name": "obj_drop_ruby",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 1,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glasstiles_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "7e5b3157-f337-4eb4-9b20-ee6b239ff505"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "a8c3ed",
+      "flammable": false,
+      "name": "obj_drop_deuterium",
+      "physicsMaterial": "Dirt",
+      "ratings": {
+        "density": 1,
+        "durability": 1,
+        "friction": 2,
+        "buoyancy": 9
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "GasDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "1c61a934-3626-4ee4-845c-60328a9c295b"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "d4af37",
+      "flammable": false,
+      "name": "obj_drop_gold",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 2,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "89d34fee-1157-4aba-8ecb-9f66af01ef67"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "d9f7fa",
+      "flammable": false,
+      "name": "obj_drop_diamond",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 6,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "486ba745-16c3-4d0c-99c1-6d013d5f00e3"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "9b1c31",
+      "flammable": false,
+      "name": "obj_drop_painite",
+      "physicsMaterial": "Glass",
+      "ratings": {
+        "density": 5,
+        "durability": 6,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_armoredglass_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "931ecf40-5403-4b54-900f-42a224ddfd39"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "bf8fc4",
+      "flammable": false,
+      "name": "obj_drop_iridium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 9,
+        "durability": 2,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "ec7784d1-aa8d-4ce3-a5a2-e0345a9af399"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "444444",
+      "flammable": false,
+      "name": "obj_drop_neptunium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "898e8270-1c16-4091-aa9d-1bf410945e4d",
+          "halfLife": 24000
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "d794e991-e16d-4463-a5d7-0a47b63b4a73"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "bfd4d9",
+      "flammable": false,
+      "name": "obj_drop_osmium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 10,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "c73c3e12-a374-4c00-bdbb-6a27abf6ee01"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8c8c8c",
+      "flammable": false,
+      "name": "obj_drop_plutonium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 8,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "a0588f9f-0beb-44be-8601-dab987c16e68",
+          "halfLife": 2400
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "ec65be2d-8c15-41cb-8a81-f17dea95c9a6"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "a8edc3",
+      "flammable": false,
+      "name": "obj_drop_tritium",
+      "physicsMaterial": "Dirt",
+      "ratings": {
+        "density": 1,
+        "durability": 2,
+        "friction": 2,
+        "buoyancy": 9
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_glass_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveGasDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "cba96abb-2116-496f-b635-03e8e52c67f5",
+          "halfLife": 1200
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveGasDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "c9be08f7-7b95-40bd-90bd-31a6ef30c966"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "8b7d6b",
+      "flammable": false,
+      "name": "obj_drop_moonstone",
+      "physicsMaterial": "Rock",
+      "ratings": {
+        "density": 6,
+        "durability": 3,
+        "friction": 6,
+        "buoyancy": 5
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiGravityDrop",
+        "data": {
+          "gravity": 0.2
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiGravityDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "aa0bdfae-b094-43e1-90c4-f654819b7fa1"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "a6a6a6",
+      "flammable": false,
+      "name": "obj_drop_plutonium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$GAME_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e2085637-fa43-440c-ac4a-57fadd116293"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "c4c4c4",
+      "flammable": false,
+      "name": "obj_drop_technetium99",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship02_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "db7e5caa-e830-46f8-9335-7b1825aac77d",
+          "halfLife": 600
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "9fb9f8dc-f5b1-489e-b224-36b34ba61032"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "c2c0c0",
+      "flammable": false,
+      "name": "obj_drop_californium",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "density": 6,
+        "durability": 4,
+        "friction": 4,
+        "buoyancy": 2
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_metal03_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "RadioactiveDrop",
+        "data": {
+          "effect": "Uranium Glow",
+          "effectShape": "05b882d5-82ef-47eb-8751-e34b067565e4",
+          "halfLife": 1200
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/RadioactiveDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "405c3022-1055-4048-9686-c4923097fe62"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "000000",
+      "flammable": false,
+      "name": "obj_drop_antimatter",
+      "physicsMaterial": "Metal",
+      "ratings": {
+        "buoyancy": 4,
+        "density": 5,
+        "durability": 5,
+        "friction": 4
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "DifAsgNor",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_spaceship01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "AntiMatterDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/AntiMatterDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "53e7470d-99fe-450e-8606-42dc4f42e4f7"
     }
   ]
 }

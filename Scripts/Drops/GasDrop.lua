@@ -23,13 +23,20 @@ end
 function GasDrop:server_onFixedUpdate()
     Drop.server_onFixedUpdate(self)
 
-    --apply upwards impulse and a bit of random jitter
+    self:sv_applyImpulse()
+    self:sv_destroyFarTravelledDrops()
+end
+
+---apply upwards impulse and a bit of random jitter
+function GasDrop:sv_applyImpulse()
     local mass = self.shape:getBody().mass
     local jitter = sm.vec3.new(math.random() - 0.5, math.random() - 0.5, math.random() - 0.5)
     ---@diagnostic disable-next-line: param-type-mismatch
     sm.physics.applyImpulse(self.shape, (sm.vec3.new(0, 0, 1) * (mass / 3.4)) + jitter, true)
+end
 
-    --destroy after travelling too far
+---destroy after travelling too far
+function GasDrop:sv_destroyFarTravelledDrops()
     local height = self.shape.worldPosition.z
     if (height > skyboxLimit) or ((height - self.sv.startHeight) > despawnHeight) then
         self.shape:destroyShape(0)
