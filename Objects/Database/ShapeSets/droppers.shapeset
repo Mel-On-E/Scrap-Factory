@@ -1771,7 +1771,7 @@
          "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "AutoDropper",
+            "classname" : "LunarDropper",
             "data" : {
                "drop" : {
                   "uuid" : "aa0bdfae-b094-43e1-90c4-f654819b7fa1",
@@ -1785,7 +1785,7 @@
                },
                "power" : 4e6
             },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/LunarDropper.lua"
          },
          "shop" : {
             "category" : "Droppers",
