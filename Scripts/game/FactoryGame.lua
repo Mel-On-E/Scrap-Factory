@@ -1,6 +1,7 @@
 --vanila survival
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
+dofile("$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
@@ -13,7 +14,6 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
 --custom
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/util/effects.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
@@ -306,16 +306,6 @@ function FactoryGame.sv_recreateWorld(self)
 	end
 end
 
----trigger a raid on the factory WIP
-function FactoryGame:sv_factoryRaid()
-	print("CUSTOM RAID")
-	local level = 1
-	local wave = 1
-	local hours = 12
-
-	sm.event.sendToWorld(self.sv.saved.world, "sv_raid", { level = level, wave = wave, hours = hours })
-end
-
 ---show a `displayAlertText()` based on `LanguageManager.language_tag(tag)`
 ---@param params table tag = language tag; player = specific player or all players if nil
 function FactoryGame:sv_e_showTagMessage(params)
@@ -428,11 +418,6 @@ function FactoryGame:sv_updateTimeStuff(timeStep)
 	if self.sv.time.timeProgress then
 		self.sv.time.timeOfDay = self.sv.time.timeOfDay + timeStep / DAYCYCLE_TIME
 	end
-	local newDay = self.sv.time.timeOfDay >= 1.0
-	if newDay then
-		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
-		self:sv_factoryRaid() --FACTORY
-	end
 
 	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
 		g_unitManager:sv_initNewDay()
@@ -531,10 +516,6 @@ function FactoryGame.cl_bindChatCommands(self)
 		sm.game.bindChatCommand("/sethp", { { "number", "hp", false } }, "cl_onChatCommand", "Set player hp value")
 		sm.game.bindChatCommand("/aggroall", {}, "cl_onChatCommand",
 			"All hostile units will be made aware of the player's position")
-		sm.game.bindChatCommand("/raid",
-			{ { "int", "level", false }, { "int", "wave", true }, { "number", "hours", true } },
-			"cl_onChatCommand", "Start a level <level> raid at player position at wave <wave> in <delay> hours.")
-		sm.game.bindChatCommand("/stopraid", {}, "cl_onChatCommand", "Cancel all incoming raids")
 		sm.game.bindChatCommand("/camera", {}, "cl_onChatCommand", "Spawn a SplineCamera tool")
 		sm.game.bindChatCommand("/noaggro", { { "bool", "enable", true } }, "cl_onChatCommand",
 			"Toggles the player as a target")
@@ -715,7 +696,6 @@ function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
 
 	PowerManager.cl_setloadTick(sm.game.getCurrentTick())
-	UnitManager.cl_setloadTick(g_unitManager, sm.game.getCurrentTick())
 end
 
 ---show a displayAlert to a client
