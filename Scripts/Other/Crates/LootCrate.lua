@@ -151,33 +151,24 @@ function LootCrate:get_loot_table()
     local tier = ResearchManager.cl_getCurrentTier()
     local itemPool = {}
     for uuid, item in pairs(g_shop) do
+        --exclude prestige items
+        if item.prestige then goto nextItem end
+
         --include items up to current tier
-        if item.tier < tier then
-            --items that are cheaper than money earned + 1000
-            if item.price <= MoneyManager.cl_moneyEarned() + 1000 then
-                itemPool[#itemPool + 1] = { price = item.price, uuid = uuid }
-            end
-        end
+        if item.tier >= tier then goto nextItem end
+
+        --items that are cheaper than money earned + 1000
+        if item.price > MoneyManager.cl_moneyEarned() + 1000 then goto nextItem end
+
+        --25% chance to include special items
+        if item.special and math.random() > 0.25 then goto nextItem end
+
+
+        itemPool[#itemPool + 1] = sm.uuid.new(uuid)
+        ::nextItem::
     end
 
-    --only keep the 10 most expensive items
-    local sortedPool = {}
-    while #itemPool > 1 and #sortedPool < 10 do
-        local mostExpensiveItem
-        local highestPrice = 0
-
-        for k, item in ipairs(itemPool) do
-            if item.price > highestPrice then
-                highestPrice = item.price
-                mostExpensiveItem = k
-            end
-        end
-
-        sortedPool[#sortedPool + 1] = sm.uuid.new(itemPool[mostExpensiveItem].uuid)
-        table.remove(itemPool, mostExpensiveItem)
-    end
-
-    return sortedPool
+    return itemPool
 end
 
 -- #endregion
