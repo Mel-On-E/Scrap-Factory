@@ -323,6 +323,52 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "c0eb38",
+         "flammable" : false,
+         "name" : "obj_drop_disintegrator",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "RandomFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplierMin" : 1,
+               "multiplierMax" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 3.14e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/RandomFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "3.14e9",
+            "tier" : 7
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "4b7f2c90-5ead-4830-885a-fccd6326719e"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "e69a5f",
          "flammable" : false,
          "name" : "obj_furnace_cell_best",
