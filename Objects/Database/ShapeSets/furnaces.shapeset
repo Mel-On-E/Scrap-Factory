@@ -457,6 +457,51 @@
       },
       {
          "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "000000",
+         "flammable" : false,
+         "name" : "obj_furnace_black_hole",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "BlackHoleFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 0.25,
+                  "y" : 0.0416667,
+                  "z" : 1.5
+               },
+               "multiplier" : 12,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/BlackHoleFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e4",
+            "tier" : 10
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "70fcd91a-82f5-4093-a902-98ee0ce0c3f5"
+      },
+      {
+         "box" : {
             "x" : 1,
             "y" : 1,
             "z" : 1
