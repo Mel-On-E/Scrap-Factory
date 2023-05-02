@@ -411,6 +411,52 @@
       },
       {
          "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d2460e",
+         "flammable" : false,
+         "name" : "obj_furnace_quantum_foam",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AreaFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 4.5,
+                  "y" : 0.75,
+                  "z" : 9.0
+               },
+               "sellChance" : 0.001,
+               "multiplier" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : -0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/AreaFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e4",
+            "tier" : 9
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "aee3ac37-38e0-46b7-96ad-253e16b89c44"
+      },
+      {
+         "box" : {
             "x" : 1,
             "y" : 1,
             "z" : 1

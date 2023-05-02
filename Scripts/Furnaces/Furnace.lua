@@ -48,7 +48,7 @@ function Furnace:server_onCreate(params)
 
 	self.sv.trigger = Furnace.sv_createAreaTrigger(self, params.filters)
 	self.sv.trigger:bindOnEnter("sv_onEnter")
-	self.sv.trigger:bindOnStay("sv_onEnter")
+	self.sv.trigger:bindOnStay("sv_onStay")
 end
 
 function Furnace:sv_createAreaTrigger(filters)
@@ -70,6 +70,9 @@ function Furnace:sv_onEnter(_, results)
 	for _, drop in ipairs(getDrops(results)) do
 		self:sv_onEnterDrop(drop)
 	end
+end
+
+function Furnace:sv_onStay(_, results)
 end
 
 ---Called when a valid drop enters the Furnace and it has power
