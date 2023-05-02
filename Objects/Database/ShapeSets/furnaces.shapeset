@@ -141,6 +141,52 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "8c57a9",
+         "flammable" : false,
+         "name" : "obj_furnace_cell",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 100,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e4",
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "4d648c8a-c2e5-4305-812c-5f7480a76cf2"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "eb4034",
          "flammable" : false,
          "name" : "obj_furnace_atomizer",
@@ -186,6 +232,52 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "3449d3",
+         "flammable" : false,
+         "name" : "obj_furnace_cell_better",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 500,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e4",
+            "tier" : 5
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "8ab74aff-adf6-4776-aade-66d3f78541ca"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "ff0081",
          "flammable" : false,
          "name" : "obj_furnace_pi",
@@ -224,6 +316,52 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "5b455c59-d9d4-4710-a9ae-f02da763ed94"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "e69a5f",
+         "flammable" : false,
+         "name" : "obj_furnace_cell_best",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 5000,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e4",
+            "tier" : 8
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "34b99c13-6029-4362-bed1-552ce3e2e439"
       },
       {
          "box" : {
