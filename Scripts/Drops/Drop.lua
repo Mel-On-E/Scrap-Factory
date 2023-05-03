@@ -11,12 +11,6 @@ local oreCount = 0
 local storedDrops = {}
 ---time after which not moving drops will be deleted
 local despawnTimeout = 40 * 5 --5 seconds
----amount of pollution generated when burning
-local burnPollution = 1 --TODO balance how much pollution it makes
----minimum amount of time until it produces pollution
-local randomPollutionMin = 40 * 1
----maximum amount of time until it produces pollution
-local randomPollutionMax = 40 * 2.2
 
 --------------------
 -- #region Server
@@ -44,7 +38,6 @@ end
 function Drop:sv_init()
 	self.sv = {
 		timeout = 0,
-		polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax),
 	}
 end
 
@@ -70,19 +63,14 @@ function Drop:server_onFixedUpdate()
 		--burning
 		if publicData.burnTime then
 			publicData.burnTime = publicData.burnTime - 1
-			self.sv.polluteTime = self.sv.polluteTime - 1
-
-			if self.sv.polluteTime <= 0 then
-				self.sv.polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax)
-				PollutionManager.sv_addPollution(burnPollution)
-				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-					pos = self.shape.worldPosition,
-					value = tostring(burnPollution),
-					format = "pollution", effect = "Pollution"
-				})
-			end
 
 			if publicData.burnTime <= 0 then
+				PollutionManager.sv_addPollution(publicData.value)
+				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+					pos = self.shape.worldPosition,
+					value = tostring(publicData.value),
+					format = "pollution", effect = "Pollution"
+				})
 				self.shape:destroyShape(0)
 			end
 		end
@@ -273,7 +261,6 @@ end
 ---@field cachedValue number
 ---@field pollution number
 ---@field value number
----@field polluteTime number number of ticks until it pollutes
 ---@field timeout number number of ticks for how long the drop has not moved
 ---@field data DropData
 

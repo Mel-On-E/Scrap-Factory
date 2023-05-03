@@ -379,7 +379,7 @@
                "upgrade": {
                   "limit": 1,
                   "multiplier": 2,
-                  "burnTime": 400,
+                  "burnTime": 200,
                   "box": {
                      "x": 0.250,
                      "y": 1.50,
