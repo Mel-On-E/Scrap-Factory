@@ -320,7 +320,8 @@
          "shop": {
             "category": "Upgrades",
             "price": "15000",
-            "tier": 1
+            "special" : true,
+            "tier": 99
          },
          "stackSize": 65535.0,
          "sticky": "-Y+Y",

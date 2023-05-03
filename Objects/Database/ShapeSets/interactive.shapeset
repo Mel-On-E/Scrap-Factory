@@ -35,7 +35,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
-            "tier" : 1
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "sticky" : "-Y+Y-X+X",
@@ -67,7 +67,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
-            "tier" : 1
+            "tier" : 2
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y",
@@ -101,7 +101,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1000",
-            "tier" : 1
+            "tier" : 3
          },
          "stackSize" : 65535.0,
          "sticky" : "-Y",
@@ -179,7 +179,7 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e9",
-            "tier" : 8
+            "tier" : 5
          }
 		},
       {
@@ -220,7 +220,8 @@
          "shop" : {
             "category" : "Utilities",
             "price" : "1e12",
-            "tier" : 10
+            "tier" : 99,
+            "special" : true
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
