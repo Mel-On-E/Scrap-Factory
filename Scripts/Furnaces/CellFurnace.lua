@@ -11,8 +11,6 @@ CellFurnace = class(Furnace)
 function CellFurnace:sv_upgrade(shape)
     local publicData = shape.interactable.publicData
 
-    print(publicData.upgrades)
-
     if not next(publicData.upgrades) then
         publicData.value = publicData.value * self.data.cellMultiplier
     else
