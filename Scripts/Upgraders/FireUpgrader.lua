@@ -15,12 +15,10 @@ function FireUpgrader.server_onCreate(self)
 end
 
 function FireUpgrader:sv_onUpgrade(shape, data)
-    print(g_drops)
-
     if g_drops[tostring(shape.uuid)].flammable then
         data.burning = true
-        data.value = data.value * 2.5 --TODO balance
-        data.value = data.value * data.multiplier
+        data.value = data.value + (self.data.upgrade.add or 0)
+        data.value = data.value * (self.data.upgrade.multiplier or 1)
 
         Upgrader.sv_onUpgrade(self, shape, data)
     end
