@@ -1,6 +1,6 @@
 dofile("$CONTENT_DATA/Scripts/Upgraders/Upgrader.lua")
 
----A FireUpgrader that can apply a multiplier to a drop or add a fixed value
+---A FireUpgrader upgrade drops, but sets them on fire. Burning drops will be destroyed after a fixed amount of time and cause pollution.
 ---@class FireUpgrader : Upgrader
 ---@field data FireUpgraderData
 FireUpgrader = class(Upgrader)
