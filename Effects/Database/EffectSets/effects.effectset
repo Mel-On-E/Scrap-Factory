@@ -327,5 +327,23 @@
 				"delay": 0.425
 			}
 		]
+	},
+	"Spiny Power": {
+		"effectList": [
+			{
+				"type": "particle",
+				"name": "p_spiny_power",
+				"offset": {
+					"x": 0.0,
+					"y": 0.0,
+					"z": 1.0
+				},
+				"direction": {
+					"x": 0.0,
+					"y": 1.0,
+					"z": 0.0
+				}
+			}
+		]
 	}
 }
