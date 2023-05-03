@@ -17,6 +17,7 @@ end
 function FireUpgrader:sv_onUpgrade(shape, data)
     print(g_drops)
 
+    if g_drops[tostring(shape.uuid)].flammable then
         data.burning = true
         data.value = data.value * 2.5 --TODO balance
         data.value = data.value * data.multiplier
