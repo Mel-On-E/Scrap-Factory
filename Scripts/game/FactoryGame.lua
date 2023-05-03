@@ -449,6 +449,10 @@ function FactoryGame.client_onCreate(self)
 	}
 
 	g_shop = unpackNetworkData(sm.json.open("$CONTENT_DATA/Scripts/shop.json"))
+	g_drops = {}
+	for _, drop in ipairs(unpackNetworkData(sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset").partList)) do
+		g_drops[drop.uuid] = drop
+	end
 	g_enableCollisionTumble = not sm.isHost or g_enableCollisionTumble
 
 	-- managers
