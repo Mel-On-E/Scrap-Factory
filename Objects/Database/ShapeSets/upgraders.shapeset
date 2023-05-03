@@ -377,7 +377,7 @@
                },
                "power": 3,
                "upgrade": {
-                  "limit": 2,
+                  "limit": 1,
                   "multiplier": 2,
                   "box": {
                      "x": 0.250,
