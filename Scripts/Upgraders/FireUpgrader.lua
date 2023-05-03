@@ -15,9 +15,12 @@ function FireUpgrader.server_onCreate(self)
 end
 
 function FireUpgrader:sv_onUpgrade(shape, data)
-    if data.flamable then
+    print(g_drops)
+
         data.burning = true
         data.value = data.value * 2.5 --TODO balance
+        data.value = data.value * data.multiplier
+
         Upgrader.sv_onUpgrade(self, shape, data)
     end
 end

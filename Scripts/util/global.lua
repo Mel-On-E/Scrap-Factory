@@ -10,6 +10,9 @@ g_factoryHud = {}
 ---@type table<string, ShopDb> the data of the shop.json file. Contains data for every item in the mod.
 g_shop = {}
 
+---@type table<string, table> content of drops.shapeset sorted per uuids
+g_drops = {}
+
 ---@type boolean when true players won't take damage or lose stats
 g_godMode = false
 

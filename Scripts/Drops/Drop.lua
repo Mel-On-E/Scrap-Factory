@@ -49,7 +49,6 @@ function Drop:sv_init()
 		burntime = 0,
 		polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax),
 	}
-	self.interactable.publicData.flamable = self.data.flamable or false
 end
 
 function Drop:server_onFixedUpdate()
