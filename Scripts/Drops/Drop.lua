@@ -11,8 +11,6 @@ local oreCount = 0
 local storedDrops = {}
 ---time after which not moving drops will be deleted
 local despawnTimeout = 40 * 5 --5 seconds
----time after a drop burning until it will be deleted
-local burnlife = 40 * 4 -- 4 seconds
 ---amount of pollution generated when burning
 local burnPollution = 1 --TODO balance how much pollution it makes
 ---minimum amount of time until it produces pollution
@@ -46,7 +44,6 @@ end
 function Drop:sv_init()
 	self.sv = {
 		timeout = 0,
-		burntime = 0,
 		polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax),
 	}
 end
@@ -58,27 +55,6 @@ function Drop:server_onFixedUpdate()
 
 	--handle timeout
 	self.sv.timeout = self.shape:getVelocity():length() < 0.01 and self.sv.timeout + 1 or 0
-
-	local burning = self:getBurning()
-	if burning then
-		self.sv.burntime = self.sv.burntime + 1
-		self.sv.polluteTime = self.sv.polluteTime - 1
-
-		if self.sv.polluteTime <= 0 then
-			self.sv.polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax)
-			PollutionManager.sv_addPollution(burnPollution)
-			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-				pos = self.shape.worldPosition,
-				value = tostring(burnPollution),
-				format = "pollution", effect = "Pollution"
-			})
-		end
-		
-		if self.sv.burntime > burnlife then
-			self.shape:destroyShape(0)
-		end
-	end
-
 	if self.sv.timeout > despawnTimeout then
 		self.shape:destroyShape(0)
 	end
@@ -87,15 +63,38 @@ function Drop:server_onFixedUpdate()
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedPollution = self:getPollution()
 	self.sv.cachedValue = self:getValue()
-	self.sv.cachedBurning = burning
 
-	--remove tractorBeamTag
-	if self.interactable.publicData.tractorBeam then
-		self.sv.timeout = 0
-		if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
-			self.interactable.publicData.tractorBeam = nil
+	--update publicData
+	local publicData = self.interactable.publicData
+	if publicData then
+		--burning
+		if publicData.burnTime then
+			publicData.burnTime = publicData.burnTime - 1
+			self.sv.polluteTime = self.sv.polluteTime - 1
+
+			if self.sv.polluteTime <= 0 then
+				self.sv.polluteTime = sm.noise.randomRange(randomPollutionMin,randomPollutionMax)
+				PollutionManager.sv_addPollution(burnPollution)
+				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+					pos = self.shape.worldPosition,
+					value = tostring(burnPollution),
+					format = "pollution", effect = "Pollution"
+				})
+			end
+
+			if publicData.burnTime <= 0 then
+				self.shape:destroyShape(0)
+			end
 		end
-	end
+
+		--remove tractorBeamTag
+		if publicData.tractorBeam then
+			self.sv.timeout = 0
+			if publicData.tractorBeam < sm.game.getCurrentTick() then
+				publicData.tractorBeam = nil
+			end
+		end
+	end	
 end
 
 function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
@@ -152,7 +151,7 @@ function Drop:sv_setClientData()
 		self.network:setClientData({
 			value = publicData.value,
 			pollution = publicData.pollution,
-			burning = publicData.burning
+			burnTime = publicData.burnTime
 		})
 	end
 end
@@ -186,7 +185,7 @@ end
 function Drop:client_onClientDataUpdate(data)
 	self.cl.data = unpackNetworkData(data)
 
-	if data.burning and not Effects.cl_getEffect(self, "burning") then
+	if data.burnTime and not Effects.cl_getEffect(self, "burning") then
 		Effects.cl_createEffect(self, { key = "burning", effect = "Fire - gradual", host = self.interactable })
 		local effect = Effects.cl_getEffect(self, 'burning')
 		effect:setParameter('intensity', 1.5)
@@ -264,17 +263,6 @@ function Drop:getPollution()
 	return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
 
----Retruns boolean weather it's burning or not
----@return boolean burning
-function Drop:getBurning()
-	local burning = self.cl.data.burning
-	if sm.isServerMode() then
-		burning = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.burning)
-			or self.sv.cachedBurning
-	end
-	return burning
-end
-
 --------------------
 -- #region Types
 --------------------
@@ -283,11 +271,8 @@ end
 ---@field cachedPos Vec3
 ---@field cachedPollution number
 ---@field cachedValue number
----@field cachedBurning boolean
 ---@field pollution number
 ---@field value number
----@field burning boolean
----@field burntime number
 ---@field polluteTime number number of ticks until it pollutes
 ---@field timeout number number of ticks for how long the drop has not moved
 ---@field data DropData
@@ -302,7 +287,5 @@ end
 ---@class clientData
 ---@field pollution number
 ---@field value number
----@field burning boolean
----@field burntime number
 
 -- #endregion
