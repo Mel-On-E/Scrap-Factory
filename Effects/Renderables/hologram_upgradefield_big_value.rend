@@ -5,7 +5,7 @@
             "subMeshList": [
                 {
                     "textureList": [
-                        "$CONTENT_DATA/Effects/Textures/t_hologram_template.tga"
+                        "$CONTENT_DATA/Effects/Textures/t_hologram_valuepattern.tga"
                     ],
                     "material": "Hologram"
                 }
