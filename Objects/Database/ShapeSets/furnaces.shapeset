@@ -690,6 +690,51 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "f4f3f5",
+         "flammable" : false,
+         "name" : "obj_furnace_multi",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "MultiFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/MultiFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "special" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "b5c69f79-b728-4a20-a4c3-9e4235b9b106"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "ffff00",
          "flammable" : false,
          "name" : "obj_furnace_item",
