@@ -32,7 +32,7 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 3
+               "power" : 1
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
@@ -77,13 +77,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 5
+               "power" : 25
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "100",
+            "price" : "1000",
             "tier" : 1
          },
          "stackSize" : 65535.0,
@@ -122,13 +122,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 100
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "5e4",
             "tier" : 2
          },
          "stackSize" : 65535.0,
@@ -168,13 +168,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1000
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "1e6",
             "tier" : 3
          },
          "stackSize" : 65535.0,
@@ -213,14 +213,14 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 250
+               "power" : 5000
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e6",
-            "tier" : 2
+            "price" : "1e9",
+            "tier" : 4
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
@@ -259,13 +259,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1e4
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "1e12",
             "tier" : 5
          },
          "stackSize" : 65535.0,
@@ -310,7 +310,7 @@
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "3.14e9",
+            "price" : "3.14e18",
             "tier" : 6
          },
          "stackSize" : 65535.0,
@@ -350,13 +350,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 3.14e4
+               "power" : 5e5
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/RandomFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "3.14e9",
+            "price" : "1e24",
             "tier" : 7
          },
          "stackSize" : 65535.0,
@@ -396,13 +396,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 5e6
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "1e27",
             "tier" : 8
          },
          "stackSize" : 65535.0,
@@ -442,13 +442,13 @@
                   "y" : -0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1e8
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/AreaFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "1e36",
             "tier" : 9
          },
          "stackSize" : 65535.0,
@@ -487,13 +487,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1e10
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/BlackHoleFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "1e4",
+            "price" : "1e45",
             "tier" : 10
          },
          "stackSize" : 65535.0,
@@ -532,13 +532,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 5
+               "power" : 150
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "100",
+            "price" : "1000",
             "special" : true,
             "tier" : 1
          },
@@ -579,13 +579,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1000
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/LunarFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "50000",
+            "price" : "1e6",
             "special" : true,
             "tier" : 2
          },
@@ -626,13 +626,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 5000
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/FrozenFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e7",
             "special" : true,
             "tier" : 3
          },
@@ -671,13 +671,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 3
+               "power" : 1e4
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/ItemFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "100",
+            "price" : "0",
             "tier" : 4,
             "special" : true
          },
@@ -754,13 +754,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 1e5
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/TimeFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e18",
             "special" : true,
             "tier" : 5
          },
@@ -802,13 +802,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 1e6
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/LuckyNumberFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e21",
             "special" : true,
             "tier" : 6
          },
@@ -849,13 +849,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 1e7
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/NuclearFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e27",
             "special" : true,
             "tier" : 7
          },
@@ -894,13 +894,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 5e7
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/MultiFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e33",
             "special" : true,
             "tier" : 8
          },
@@ -939,13 +939,13 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 1e9
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/VelocityFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1e39",
             "special" : true,
             "tier" : 9
          },
