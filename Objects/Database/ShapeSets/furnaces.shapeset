@@ -998,6 +998,51 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "5ec94a58-39ab-4ac8-89b5-1d82956b7469"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d6dbeb",
+         "flammable" : false,
+         "name" : "obj_furnace_tesla",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TeslaFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TeslaFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "01baecc2-cef5-469a-ae2d-f1fbb1358b51"
       }
    ]
 }
