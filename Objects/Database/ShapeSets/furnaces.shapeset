@@ -1133,6 +1133,93 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "140a42a4-e50a-4f98-bdaa-b9f06f1519df"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d8b108",
+         "flammable" : false,
+         "name" : "obj_furnace_time_is_money",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TimeFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "upgradeTimes": [
+                  { 
+                     "time" : 0,
+                     "multiplier": 100000
+                  },
+                  { 
+                     "time" : 40,
+                     "multiplier": 10000
+                  },
+                  { 
+                     "time" : 120,
+                     "multiplier": 5000
+                  },
+                  { 
+                     "time" : 200,
+                     "multiplier": 2000
+                  },
+                  { 
+                     "time" : 400,
+                     "multiplier": 1000
+                  },
+                  { 
+                     "time" : 600,
+                     "multiplier": 500
+                  },
+                  { 
+                     "time" : 800,
+                     "multiplier": 250
+                  },
+                  { 
+                     "time" : 1000,
+                     "multiplier": 125
+                  },
+                  { 
+                     "time" : 1200,
+                     "multiplier": 50
+                  },
+                  { 
+                     "time" : 2400,
+                     "multiplier": 25
+                  }
+               ],
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TimeFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "222dc84f-a426-426f-815f-0b4cfb8c614a"
       }
    ]
 }
