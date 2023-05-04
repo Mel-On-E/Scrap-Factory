@@ -632,7 +632,8 @@
          "shop" : {
             "category" : "Furnaces",
             "price" : "10000",
-            "tier" : 1
+            "special" : true,
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
@@ -664,8 +665,6 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
-               "multiplier" : 5,
-               "nuclearMultiplier" : 10,
                "offset" : {
                   "x" : 0,
                   "y" : 0.1250,
@@ -678,7 +677,8 @@
          "shop" : {
             "category" : "Furnaces",
             "price" : "10000",
-            "tier" : 1
+            "special" : true,
+            "tier" : 99
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
