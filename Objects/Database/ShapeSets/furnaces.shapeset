@@ -644,6 +644,52 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "143bee",
+         "flammable" : false,
+         "name" : "obj_furnace_fortune_wheel",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "FortuneWheelFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 5,
+               "nuclearMultiplier" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/FortuneWheelFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "f927eb1e-bb4e-42aa-82db-6056f64fa618"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "ffff00",
          "flammable" : false,
          "name" : "obj_furnace_item",
