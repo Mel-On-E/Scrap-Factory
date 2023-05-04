@@ -12,7 +12,13 @@ function CellFurnace:sv_upgrade(shape)
     local publicData = shape.interactable.publicData
 
     if not next(publicData.upgrades) then
-        publicData.value = publicData.value * self.data.cellMultiplier
+        if self.data.cellMultiplier then
+            publicData.value = publicData.value * self.data.cellMultiplier
+        end
+
+        if self.data.cellExponent then
+            publicData.value = publicData.value ^ self.data.cellExponent
+        end
     else
         publicData.value = publicData.value * self.data.multiplier
     end
