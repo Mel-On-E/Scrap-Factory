@@ -1163,35 +1163,35 @@
                "upgradeTimes": [
                   { 
                      "time" : 0,
-                     "multiplier": 100000
-                  },
-                  { 
-                     "time" : 40,
-                     "multiplier": 10000
-                  },
-                  { 
-                     "time" : 120,
-                     "multiplier": 5000
-                  },
-                  { 
-                     "time" : 200,
-                     "multiplier": 2000
-                  },
-                  { 
-                     "time" : 400,
                      "multiplier": 1000
                   },
                   { 
-                     "time" : 600,
+                     "time" : 40,
                      "multiplier": 500
                   },
                   { 
-                     "time" : 800,
+                     "time" : 120,
+                     "multiplier": 333
+                  },
+                  { 
+                     "time" : 200,
                      "multiplier": 250
                   },
                   { 
+                     "time" : 400,
+                     "multiplier": 175
+                  },
+                  { 
+                     "time" : 600,
+                     "multiplier": 133
+                  },
+                  { 
+                     "time" : 800,
+                     "multiplier": 100
+                  },
+                  { 
                      "time" : 1000,
-                     "multiplier": 125
+                     "multiplier": 75
                   },
                   { 
                      "time" : 1200,
