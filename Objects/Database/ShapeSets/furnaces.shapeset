@@ -951,6 +951,53 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "497c8d31-5fc4-44d0-93ab-a9b70bce85b7"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "ff4500",
+         "flammable" : false,
+         "name" : "obj_furnace_vulcano",
+         "physicsMaterial" : "Rock",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "VolcanoFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 10,
+               "erruptionMultiplier" : 50,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/VolcanoFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "5ec94a58-39ab-4ac8-89b5-1d82956b7469"
       }
    ]
 }
