@@ -735,6 +735,89 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "50a0ceb7-20e5-4583-81f2-50c034186316",
+         "flammable" : false,
+         "name" : "obj_furnace_time",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TimeFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "upgradeTimes": [
+                  { 
+                     "time" : 0,
+                     "multiplier": 1
+                  },
+                  { 
+                     "time" : 1200,
+                     "multiplier": 1.5
+                  },
+                  { 
+                     "time" : 2400,
+                     "multiplier": 2
+                  },
+                  { 
+                     "time" : 4800,
+                     "multiplier": 2.5
+                  },
+                  { 
+                     "time" : 9600,
+                     "multiplier": 3
+                  },
+                  { 
+                     "time" : 19200,
+                     "multiplier": 4
+                  },
+                  { 
+                     "time" : 36000,
+                     "multiplier": 6
+                  },
+                  { 
+                     "time" : 72000,
+                     "multiplier": 8
+                  },
+                  { 
+                     "time" : 144000,
+                     "multiplier": 10
+                  }
+               ],
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TimeFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "special" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "898d8e5b-cfeb-43f4-a530-cd5de2ddaf9e"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "ffff00",
          "flammable" : false,
          "name" : "obj_furnace_item",
