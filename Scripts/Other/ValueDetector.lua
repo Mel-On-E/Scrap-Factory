@@ -22,11 +22,10 @@ function ValueDetector:server_onCreate()
     Upgrader.server_onCreate(self)
 
     self.sv = self.sv or {}
-    self.sv.lastButtonTick = false
     self.sv.options = self.storage:load()
     if not self.sv.options then
         self.sv.options = {
-            mode = 'greater',
+            mode = 'Greater',
             value = 1,
             outputMode = 'switch'
         }
@@ -36,10 +35,16 @@ end
 
 function ValueDetector:sv_onUpgrade(shape, data)
     local active = false
-    if self.sv.options.mode == 'lesser' then
+    if self.sv.options.mode == 'Smaller' then
         active = data.value < self.sv.options.value
-    elseif self.sv.options.mode == 'greater' then
+    elseif self.sv.options.mode == 'Greater' then
         active = data.value > self.sv.options.value
+    elseif self.sv.options.mode == 'Equal' then
+        active = data.value == self.sv.options.value
+    elseif self.sv.options.mode == "SmallerOrEqual" then
+        active = data.value <= self.sv.options.value
+    elseif self.sv.options.mode == "GreaterOrEqual" then
+        active = data.value >= self.sv.options.value
     end
 
     if self.sv.options.outputMode == "switch" then
@@ -53,7 +58,6 @@ function ValueDetector:sv_onUpgrade(shape, data)
             if self.interactable.active ~= true then
                 self.network:sendToClients("cl_playSound", "Sensor on")
             end
-            self.sv.lastButtonTick = true
         end
     end
 end
@@ -61,13 +65,10 @@ end
 function ValueDetector:server_onFixedUpdate()
     Upgrader.server_onFixedUpdate(self)
 
-    if self.sv.options.outputMode == "button" then
-        if self.interactable.active and not self.sv.lastButtonTick then
-            self.interactable:setActive(false)
-            self.network:sendToClients("cl_playSound", "Sensor off")
-        end
+    if self.sv.options.outputMode == "button" and self.interactable:isActive() then
+        self.interactable:setActive(false)
+        self.network:sendToClients("cl_playSound", "Sensor off")
     end
-    self.sv.lastButtonTick = false
 end
 
 function ValueDetector:sv_onOptionsChange(data)
@@ -94,8 +95,11 @@ function ValueDetector:client_onCreate()
     Upgrader.client_onCreate(self)
 
     self.cl.gui = sm.gui.createGuiFromLayout('$CONTENT_DATA/Gui/Layouts/ValueDetectorMenu.layout')
-    self.cl.gui:setButtonCallback('lesser', 'cl_onModeChange')
-    self.cl.gui:setButtonCallback('greater', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('Smaller', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('Greater', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('GreaterOrEqual', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('SmallerOrEqual', 'cl_onModeChange')
+    self.cl.gui:setButtonCallback('Equal', 'cl_onModeChange')
     self.cl.gui:setTextAcceptedCallback('ValueEdit', 'cl_onValueChange')
     self.cl.gui:setButtonCallback('LogicMode', 'cl_onOutputModeChange')
 end
@@ -150,8 +154,11 @@ function ValueDetector:cl_onOutputModeChange()
 end
 
 function ValueDetector:cl_highlightButtons()
-    self.cl.gui:setButtonState('lesser', self.cl.options.mode == 'lesser')
-    self.cl.gui:setButtonState('greater', self.cl.options.mode == 'greater')
+    self.cl.gui:setButtonState('Smaller', self.cl.options.mode == 'Smaller')
+    self.cl.gui:setButtonState('Greater', self.cl.options.mode == 'Greater')
+    self.cl.gui:setButtonState('SmallerOrEqual', self.cl.options.mode == 'SmallerOrEqual')
+    self.cl.gui:setButtonState('GreaterOrEqual', self.cl.options.mode == 'GreaterOrEqual')
+    self.cl.gui:setButtonState('Equal', self.cl.options.mode == 'Equal')
 end
 
 function ValueDetector:cl_setOutputModeButtonName()
@@ -170,14 +177,13 @@ end
 
 ---@class ValueDetectorSv
 ---@field options ValueDetectorOptions
----@field lastButtonTick boolean whether the detector was active during the last tick. Used for button mode only.
 
 ---@class ValueDetectorCl
 ---@field gui GuiInterface gui to change the options
 ---@field options ValueDetectorOptions
 
 ---@class ValueDetectorOptions
----@field mode "lesser"|"greater" how the detector compares the value of a drop
+---@field mode "Smaller"|"Greater" | "SmallerOrEqual" | "GreaterOrEqual" | "Equal" how the detector compares the value of a drop
 ---@field value number the number to compare the value of a drop to
 ---@field outputMode "switch"|"button" whether the logic output behaves like a button or switch
 

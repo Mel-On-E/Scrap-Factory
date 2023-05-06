@@ -1,48 +1,59 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <MyGUI type="Layout" version="3.2.0">
-    <Widget type="Widget" skin="BackgroundPromptWide" position_real="0.29999999999999999 0.20000000000000001 0.40000000000000002 0.5">
-        <Widget type="TextBox" skin="TextBox" position_real="0.083333333333333329 0.057407407407407407 0.83463541666666663 0.16851851851851851" name="Title">
-            <Property key="FontHeight" value="48"/>
-            <Property key="TextAlign" value="Center"/>
-        </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.16927083333333334 0.28703703703703703 0.2734375 0.07407407407407407" name="CompareModeTitle">
-            <Property key="FontHeight" value="32"/>
-            <Property key="TextAlign" value="Left VCenter"/>
-        </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.16927083333333334 0.42592592592592593 0.2734375 0.07407407407407407" name="ValueTitle">
-            <Property key="FontHeight" value="32"/>
-            <Property key="TextAlign" value="Left VCenter"/>
-        </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.16927083333333334 0.56481481481481477 0.2734375 0.07407407407407407" name="LogicOutputTitle">
-            <Property key="FontHeight" value="32"/>
-            <Property key="TextAlign" value="Left VCenter"/>
-        </Widget>
-        <Widget type="Widget" skin="BeaconIconBorder" position_real="0.44921875 0.42592592592592593 0.17578125 0.07407407407407407">
-            <Widget type="EditBox" skin="EditBoxEmpty" position_real="0 0 1 1" name="ValueEdit">
+    <Widget type="Widget" skin="PanelEmpty" position_real="0 0 1 1" align="Center" name="CreateGamePanel">
+        <Widget type="Widget" skin="BackgroundPromptWide" position_real="0.31770833333333331 0.24537037037037038 0.36458333333333331 0.5092592592592593">
+            <Widget type="TextBox" skin="TextBox" position_real="0.084285714285714283 0.056363636363636366 0.83285714285714285 0.15636363636363637" name="Title">
                 <Property key="TextAlign" value="Center"/>
-                <Property key="FontHeight" value="20"/>
+                <Property key="Caption" value="test lol"/>
+                <Property key="FontName" value="SM_HeaderLarge_Wide"/>
             </Widget>
-        </Widget>
-        <Widget type="Button" skin="LogicGateButtons" position_real="0.47526041666666669 0.28703703703703703 0.052083333333333336 0.07407407407407407" name="lesser">
-            <Property key="TextAlign" value="Default"/>
-            <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
-                <Property key="TextAlign" value="Center"/>
-                <Property key="Caption" value="&lt;"/>
-                <Property key="NeedMouse" value="false"/>
+            <Widget type="Button" skin="PrimaryButton" position_real="0.35714285714285715 0.40000000000000002 0.29428571428571426 0.072727272727272724" name="LogicMode">
+                <Property key="TextAlign" value="Default"/>
+                <Widget type="TextBox" skin="TextBox" position_real="0 0 1 1" name="LogicModeText">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="TextColour" value="0 0 0"/>
+                </Widget>
             </Widget>
-        </Widget>
-        <Widget type="Button" skin="LogicGateButtons" position_real="0.546875 0.28703703703703703 0.052083333333333336 0.07407407407407407" name="greater">
-            <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
-                <Property key="Caption" value="&gt;"/>
-                <Property key="TextAlign" value="Center"/>
-                <Property key="NeedMouse" value="false"/>
+            <Widget type="Widget" skin="SecondaryButton" position_real="0.29285714285714287 0.29999999999999999 0.42142857142857143 0.072727272727272724">
+                <Widget type="EditBox" skin="EditBoxEmpty" position_real="0 0 1 1" name="ValueEdit">
+                    <Property key="TextAlign" value="Center"/>
+                </Widget>
             </Widget>
-        </Widget>
-        <Widget type="Button" skin="LogicGateButtons" position_real="0.44921875 0.56481481481481477 0.17578125 0.07407407407407407" name="LogicMode">
-            <Property key="TextAlign" value="Default"/>
-            <Widget type="TextBox" skin="TextBox" position_real="0 0 1 1" name="LogicModeText">
-                <Property key="TextAlign" value="Center"/>
-                <Property key="NeedMouse" value="false"/>
+            <Widget type="Button" skin="LogicGateButtons" position_real="0.72142857142857142 0.60909090909090913 0.11428571428571428 0.14545454545454545" name="Greater">
+                <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
+                    <Property key="Caption" value="&gt;"/>
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="LogicGateButtons" position_real="0.17857142857142858 0.60909090909090913 0.11428571428571428 0.14545454545454545" name="Smaller">
+                <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="&lt;"/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="LogicGateButtons" position_real="0.58571428571428574 0.60909090909090913 0.11428571428571428 0.14545454545454545" name="GreaterOrEqual">
+                <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="&gt;="/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="LogicGateButtons" position_real="0.31428571428571428 0.60909090909090913 0.11428571428571428 0.14545454545454545" name="SmallerOrEqual">
+                <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="&lt;="/>
+                </Widget>
+            </Widget>
+            <Widget type="Button" skin="LogicGateButtons" position_real="0.45000000000000001 0.60909090909090913 0.11428571428571428 0.14545454545454545" name="Equal">
+                <Widget type="TextBox" skin="TextBox" position_real="0.20000000000000001 0.20000000000000001 0.59999999999999998 0.59999999999999998">
+                    <Property key="TextAlign" value="Center"/>
+                    <Property key="NeedMouse" value="false"/>
+                    <Property key="Caption" value="=="/>
+                </Widget>
             </Widget>
         </Widget>
     </Widget>
