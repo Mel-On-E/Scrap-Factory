@@ -106,7 +106,7 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
         local hit, result = sm.localPlayer.getRaycast(7.5)
         Lift.client_interact(self, primaryState, secondaryState, result)
 
-        if hit then
+        if hit and PerkManager.isPerkOwned("LiftLv1") then
             if result.type == "body" and result:getBody():isLiftable() then
                 --export gui
                 sm.gui.setInteractionText("", sm.gui.getKeyBinding("ForceBuild", true), language_tag("ExportInteraction"))
@@ -121,7 +121,6 @@ function FactoryLift:client_onEquippedUpdate(primaryState, secondaryState, force
                     self:cl_import_updateItemGrid(self.cl.importCreation, false)
                     self.importGui:setText("nothing", language_tag("ImportNone"))
                     self.importGui:setText("title", language_tag("ImportTitle"))
-                    self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
                     self.importGui:open()
                 end
             end
@@ -139,6 +138,7 @@ function FactoryLift:client_onUpdate()
     if hit and result.type == "lift" then
         local import = sm.localPlayer.getActiveItem() == tool_lift and
             "\t" .. sm.gui.getKeyBinding("ForceBuild", true) .. language_tag("ImportInteraction") or ""
+        import = PerkManager.isPerkOwned("LiftLv1") and import or ""
         sm.gui.setInteractionText(sm.gui.getKeyBinding("Use", true) .. "#{INTERACTION_USE}", import, "")
     end
 end
@@ -267,6 +267,9 @@ function FactoryLift:cl_import_createUI()
     self.importGui:setVisible("creation", not noBlueprints)
     self.importGui:setVisible("import", not noBlueprints)
     self.importGui:setVisible("nothing", noBlueprints)
+    self.importGui:setVisible("DeleteCreationButton", not noBlueprints)
+    self.importGui:setVisible("DeleteCreationButtonDeactive", noBlueprints)
+    self.importGui:setText("DeleteCreation", (noBlueprints and '#808080' or '')..language_tag("ImportDeleteCreation"))
 
     if not noBlueprints then
         for k, path in pairs(creations) do
@@ -293,7 +296,6 @@ function FactoryLift:cl_import_select(option)
         ---@diagnostic disable-next-line: redundant-parameter
         self.importGui:setSelectedDropDownItem("creation", option)
         self.importGui:setText("title", language_tag("ImportTitle"))
-        self.importGui:setText("DeleteCreation", language_tag("ImportDeleteCreation"))
         self.importGui:open()
     end
 end
@@ -365,6 +367,7 @@ end
 ---@return table<string?, integer>
 function FactoryLift:getBlueprintItems(name)
     local blueprint = sm.json.open(self:getCreationPath(name))
+    if blueprint == nil then return {} end
     local items = {}
     for k, body in pairs(blueprint.bodies) do
         for i, child in pairs(body.childs) do

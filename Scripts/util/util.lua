@@ -1,5 +1,3 @@
----@diagnostic disable: lowercase-global
-
 --------------------
 -- #region Daytime
 --------------------
@@ -220,6 +218,47 @@ function angle(v1, v2)
     local cos = dot / (v1:length() * v2:length())
     acos = math.acos(cos)
     return acos > 1e-3 and acos or 0
+end
+
+---Check whether an object is a drop
+---@param object any object to be checked
+---@return Shape|nil drop the shape of the drop if it is a drop
+function checkIfDrop(object)
+    if not sm.exists(object) then return end
+
+    local shape
+    if type(object) == "Body" then
+        if #object:getShapes() > 1 then return end
+        shape = object:getShapes()[1]
+    elseif type(object) == "Shape" then
+        shape = object
+    else
+        return
+    end
+
+    local interactable = shape:getInteractable()
+
+    if not interactable then return end
+    if interactable.type ~= "scripted" then return end
+
+    local data = interactable:getPublicData()
+    if not data or not data.value then return end
+
+    return shape
+end
+
+---Returns a list of drops from a table if it contains any
+---@param objects table<integer, any> table containing objects to be checked
+---@return Shape[] drops list of drop shapes that have been found
+function getDrops(objects)
+    local drops = {}
+    for _, object in ipairs(objects) do
+        local drop = checkIfDrop(object)
+        if drop then
+            drops[#drops + 1] = drop
+        end
+    end
+    return drops
 end
 
 -- #endregion

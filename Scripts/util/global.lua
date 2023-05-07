@@ -1,5 +1,3 @@
----@diagnostic disable: lowercase-global
-
 ---@type Vec3 the spawnpoint in the world for all players
 SPAWN_POINT = sm.vec3.new(0, 0, 20)
 
@@ -11,6 +9,9 @@ g_factoryHud = {}
 
 ---@type table<string, ShopDb> the data of the shop.json file. Contains data for every item in the mod.
 g_shop = {}
+
+---@type table<string, table> content of drops.shapeset sorted per uuids
+g_drops = {}
 
 ---@type boolean when true players won't take damage or lose stats
 g_godMode = false
@@ -64,3 +65,9 @@ g_powerManager = {}
 
 ---@type TutorialManager
 g_tutorialManager = {}
+
+---@type PrestigeManager
+g_prestigeManager = {}
+
+---@type SaveDataManager
+g_saveDataManager = {}

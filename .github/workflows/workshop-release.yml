@@ -15,7 +15,7 @@ jobs:
       with:
         type: 'zip'
         filename: 'workshop-release.zip'
-        exclusions: '*.git* *.exe'
+        exclusions: '*.git* *.exe *.vscode* .luarc.json'
     - name: Upload release
       uses: ncipollo/release-action@main
       with:

@@ -1,6 +1,7 @@
 --vanila survival
 dofile("$SURVIVAL_DATA/Scripts/game/managers/BeaconManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/managers/EffectManager.lua")
+dofile("$SURVIVAL_DATA/Scripts/game/managers/UnitManager.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_harvestable.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_shapes.lua")
@@ -13,7 +14,6 @@ dofile("$GAME_DATA/Scripts/game/managers/EventManager.lua")
 
 --custom
 dofile("$CONTENT_DATA/Scripts/Managers/RespawnManager.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/UnitManager.lua")
 dofile("$CONTENT_DATA/Scripts/util/power.lua")
 dofile("$CONTENT_DATA/Scripts/util/effects.lua")
 dofile("$CONTENT_DATA/Scripts/util/util.lua")
@@ -77,43 +77,60 @@ function FactoryGame.server_onPlayerJoined(self, player, newPlayer)
 	print(player.name, "joined the game")
 
 	if newPlayer then --Player is first time joiners
-		local inventory = player:getInventory()
-
-		local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
-
-		local startingItems = {
-			tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
-			obj_generator_windmill
-		}
-
-		sm.container.beginTransaction()
-
-		for slot, item in ipairs(startingItems) do
-			sm.container.setItem(inventory, slot - 1, item, 1)
-		end
-
-		for i = #startingItems, inventory.size, 1 do
-			sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
-		end
-
-		if sm.player.getAllPlayers()[1] == player then --if host
-			print(PrestigeManager.sv_getSpecialItems())
-			local i = 7
-			for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
-				sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
-				i = i + 1
-			end
-		end
-
-		sm.container.endTransaction()
-
-		if not sm.exists(self.sv.saved.world) then
-			sm.world.loadWorld(self.sv.saved.world)
-		end
-		self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
-			"sv_createNewPlayer")
+		self:sv_resetPlayer(player)
+	else
+		sm.event.sendToPlayer(player, "sv_e_checkPlayerPrestigeLevel")
 	end
+
 	g_unitManager:sv_onPlayerJoined(player)
+end
+
+---reset a player's inventory and character
+function FactoryGame:sv_resetPlayer(player)
+	local inventory = player:getInventory()
+
+	local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
+
+	local startingItems = {
+		tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
+		obj_generator_windmill
+	}
+
+	sm.container.beginTransaction()
+
+	for slot, item in ipairs(startingItems) do
+		sm.container.setItem(inventory, slot - 1, item, 1)
+	end
+
+	for i = #startingItems, inventory.size, 1 do
+		sm.container.setItem(inventory, i, sm.uuid.getNil(), 0)
+	end
+
+	local i = #startingItems
+
+	--perk items
+	if g_perkManager then
+		for _, item in ipairs(g_perkManager.sv.items) do
+			sm.container.setItem(inventory, i, item, 1)
+			i = i + 1
+		end
+	end
+
+	--special items for host only
+	if sm.player.getAllPlayers()[1] == player then --if host
+		for uuid, quantity in pairs(PrestigeManager.sv_getSpecialItems()) do
+			sm.container.setItem(inventory, i, sm.uuid.new(uuid), quantity)
+			i = i + 1
+		end
+	end
+
+	sm.container.endTransaction()
+
+	if not sm.exists(self.sv.saved.world) then
+		sm.world.loadWorld(self.sv.saved.world)
+	end
+	self.sv.saved.world:loadCell(math.floor(SPAWN_POINT.x / 64), math.floor(SPAWN_POINT.y / 64), player,
+		"sv_createNewPlayer")
 end
 
 --------------------
@@ -178,6 +195,7 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 
 		--FACTORY
 	elseif params[1] == "/addmoney" then
+		---@diagnostic disable-next-line: param-type-mismatch
 		MoneyManager.sv_addMoney(tonumber(params[2]))
 	elseif params[1] == "/setmoney" then
 		MoneyManager.sv_setMoney(tonumber(params[2]))
@@ -189,6 +207,10 @@ function FactoryGame.sv_onChatCommand(self, params, player)
 		PrestigeManager.sv_addPrestige(tonumber(params[2]))
 	elseif params[1] == "/setprestige" then
 		PrestigeManager.sv_setPrestige(tonumber(params[2]))
+	elseif params[1] == "/settier" then
+		ResearchManager.sv_setResearchTier(params[2])
+	elseif params[1] == "/skiptutorial" then
+		TutorialManager.sv_skipTutorial()
 	else
 		params.player = player
 		if sm.exists(player.character) then
@@ -284,16 +306,6 @@ function FactoryGame.sv_recreateWorld(self)
 	end
 end
 
----trigger a raid on the factory WIP
-function FactoryGame:sv_factoryRaid()
-	print("CUSTOM RAID")
-	local level = 1
-	local wave = 1
-	local hours = 12
-
-	sm.event.sendToWorld(self.sv.saved.world, "sv_raid", { level = level, wave = wave, hours = hours })
-end
-
 ---show a `displayAlertText()` based on `LanguageManager.language_tag(tag)`
 ---@param params table tag = language tag; player = specific player or all players if nil
 function FactoryGame:sv_e_showTagMessage(params)
@@ -362,7 +374,8 @@ function FactoryGame:sv_initManagers()
 		{ prestigeManager = "2474d490-4530-4ff8-9436-ba716a0c665e" },
 		{ perkManager = "35492036-d286-4b0f-a17c-efa228875c0d" },
 		{ dailyRewardManager = "d0bed7e0-7065-40a5-b246-9f7356856037" },
-		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" }
+		{ tutorialManager = "60702ca7-2d19-4d08-81e6-7a3ded53e338" },
+		{ saveDataManager = "e4bc2df0-a163-4de5-87e4-119abd5409a4" }
 	}
 	local STORAGE_CHANNEL_FACTORY = 69
 
@@ -405,11 +418,6 @@ function FactoryGame:sv_updateTimeStuff(timeStep)
 	if self.sv.time.timeProgress then
 		self.sv.time.timeOfDay = self.sv.time.timeOfDay + timeStep / DAYCYCLE_TIME
 	end
-	local newDay = self.sv.time.timeOfDay >= 1.0
-	if newDay then
-		self.sv.time.timeOfDay = math.fmod(self.sv.time.timeOfDay, 1)
-		self:sv_factoryRaid() --FACTORY
-	end
 
 	if self.sv.time.timeOfDay >= DAYCYCLE_DAWN and prevTime < DAYCYCLE_DAWN then
 		g_unitManager:sv_initNewDay()
@@ -441,6 +449,10 @@ function FactoryGame.client_onCreate(self)
 	}
 
 	g_shop = unpackNetworkData(sm.json.open("$CONTENT_DATA/Scripts/shop.json"))
+	g_drops = {}
+	for _, drop in ipairs(unpackNetworkData(sm.json.open("$CONTENT_DATA/Objects/Database/ShapeSets/drops.shapeset").partList)) do
+		g_drops[drop.uuid] = drop
+	end
 	g_enableCollisionTumble = not sm.isHost or g_enableCollisionTumble
 
 	-- managers
@@ -482,6 +494,10 @@ function FactoryGame.cl_bindChatCommands(self)
 		sm.game.bindChatCommand("/give", { { "string", "uuid", false }, { "number", "quantity", true } },
 			"cl_onChatCommand",
 			"Gives an item by its uuid")
+		sm.game.bindChatCommand("/settier", { { "int", "tier", false } }, "cl_onChatCommand",
+			"Sets the research tier to this level")
+		sm.game.bindChatCommand("/skiptutorial", {}, "cl_onChatCommand",
+			"Skip the tutorial")
 
 		-- vanila
 		sm.game.bindChatCommand("/god", {}, "cl_onChatCommand", "Mechanic characters will take no damage")
@@ -504,10 +520,6 @@ function FactoryGame.cl_bindChatCommands(self)
 		sm.game.bindChatCommand("/sethp", { { "number", "hp", false } }, "cl_onChatCommand", "Set player hp value")
 		sm.game.bindChatCommand("/aggroall", {}, "cl_onChatCommand",
 			"All hostile units will be made aware of the player's position")
-		sm.game.bindChatCommand("/raid",
-			{ { "int", "level", false }, { "int", "wave", true }, { "number", "hours", true } },
-			"cl_onChatCommand", "Start a level <level> raid at player position at wave <wave> in <delay> hours.")
-		sm.game.bindChatCommand("/stopraid", {}, "cl_onChatCommand", "Cancel all incoming raids")
 		sm.game.bindChatCommand("/camera", {}, "cl_onChatCommand", "Spawn a SplineCamera tool")
 		sm.game.bindChatCommand("/noaggro", { { "bool", "enable", true } }, "cl_onChatCommand",
 			"Toggles the player as a target")
@@ -688,7 +700,6 @@ function FactoryGame.client_onLoadingScreenLifted(self)
 	g_effectManager:cl_onLoadingScreenLifted()
 
 	PowerManager.cl_setloadTick(sm.game.getCurrentTick())
-	UnitManager.cl_setloadTick(g_unitManager, sm.game.getCurrentTick())
 end
 
 ---show a displayAlert to a client

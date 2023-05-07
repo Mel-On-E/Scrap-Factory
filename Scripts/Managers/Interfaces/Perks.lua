@@ -116,6 +116,7 @@ function Perks:cl_changeItem(widgetName)
 	---@diagnostic disable-next-line: assign-type-mismatch
 	self.cl.curItem = tonumber(widgetName:sub(6))
 
+	self.cl.curPage = math.min(#self.cl.renderedPages, self.cl.curPage)
 	local item = self.cl.renderedPages[self.cl.curPage][self.cl.curItem]
 	self.cl.perkGui:setVisible("BuyButton", item and true)
 	self.cl.perkGui:setVisible("Preview", item and true)

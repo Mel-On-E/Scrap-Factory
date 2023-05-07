@@ -2,6 +2,7 @@
 ---@class Drop : ShapeClass
 ---@field cl DropCl
 ---@field sv DropSv
+---@field interactable DropInteractable
 ---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
@@ -9,7 +10,7 @@ Drop = class(nil)
 local oreCount = 0
 ---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
 local storedDrops = {}
----time after which not moving drops will be deleted:
+---time after which not moving drops will be deleted
 local despawnTimeout = 40 * 5 --5 seconds
 
 --------------------
@@ -33,11 +34,18 @@ function Drop:server_onCreate()
 		self.shape:destroyShape(0)
 		return
 	end
+
+	local body = self.shape.body
+	body:setLiftable(false)
+	body:setErasable(false)
+	body:setBuildable(false)
+	body:setPaintable(false)
 end
 
 function Drop:sv_init()
-	self.sv = {}
-	self.sv.timeout = 0
+	self.sv = {
+		timeout = 0,
+	}
 end
 
 function Drop:server_onFixedUpdate()
@@ -47,7 +55,6 @@ function Drop:server_onFixedUpdate()
 
 	--handle timeout
 	self.sv.timeout = self.shape:getVelocity():length() < 0.01 and self.sv.timeout + 1 or 0
-
 	if self.sv.timeout > despawnTimeout then
 		self.shape:destroyShape(0)
 	end
@@ -56,6 +63,33 @@ function Drop:server_onFixedUpdate()
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedPollution = self:getPollution()
 	self.sv.cachedValue = self:getValue()
+
+	--update publicData
+	local publicData = self.interactable.publicData
+	if publicData then
+		--burning
+		if publicData.burnTime then
+			publicData.burnTime = publicData.burnTime - 1
+
+			if publicData.burnTime <= 0 then
+				PollutionManager.sv_addPollution(publicData.value)
+				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+					pos = self.shape.worldPosition,
+					value = tostring(publicData.value),
+					format = "pollution", effect = "Pollution"
+				})
+				self.shape:destroyShape(0)
+			end
+		end
+
+		--remove tractorBeamTag
+		if self.interactable.publicData and self.interactable.publicData.tractorBeam then
+			self.sv.timeout = 0
+			if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
+				self.interactable.publicData.tractorBeam = nil
+			end
+		end
+	end
 end
 
 function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
@@ -112,6 +146,7 @@ function Drop:sv_setClientData()
 		self.network:setClientData({
 			value = publicData.value,
 			pollution = publicData.pollution,
+			burnTime = publicData.burnTime
 		})
 	end
 end
@@ -145,6 +180,12 @@ end
 function Drop:client_onClientDataUpdate(data)
 	self.cl.data = unpackNetworkData(data)
 
+	if data.burnTime and not Effects.cl_getEffect(self, "burning") then
+		Effects.cl_createEffect(self, { key = "burning", effect = "Fire - gradual", host = self.interactable })
+		local effect = Effects.cl_getEffect(self, 'burning')
+		effect:setParameter('intensity', 1.5)
+	end
+
 	--create default effect for pulluted ores
 	if data.pollution and not Effects.cl_getEffect(self, "pollution") then
 		Effects.cl_createEffect(self, { key = "pollution", effect = "Drops - Pollution", host = self.interactable })
@@ -160,7 +201,7 @@ function Drop:client_canInteract()
 	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 	local o2 = "</p>"
 	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
-
+	
 	if self:getPollution() then
 		local pollution = format_number({
 			format = "pollution",
@@ -190,6 +231,8 @@ function Drop:getValue()
 	if sm.isServerMode() then
 		value = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.value)
 			or self.sv.cachedValue
+	elseif self.sv then
+		value = self.sv.cachedValue or value
 	end
 	return value
 end
@@ -241,4 +284,17 @@ end
 ---@field pollution number
 ---@field value number
 
+---@class DropInteractable : Interactable
+---@field publicData DropInteractablePublicData
+
+---@class DropInteractablePublicData
+---@field value number the value of the drop. i.e. how much it is worth
+---@field impostor boolean Controlles if the value sells for negative or not
+---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
+---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
+---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
+---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
+
+---@class DropShape: Shape
+---@field interactable DropInteractable
 -- #endregion

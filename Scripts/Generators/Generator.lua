@@ -1,8 +1,9 @@
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
+dofile("$SURVIVAL_DATA/Scripts/game/survival_loot.lua")
 
 ---A Generator produces power. Additionally it can also store power.
 ---@class Generator : ShapeClass
 ---@field data GeneratorData script data from the json file
+---@field sv GeneratorSv
 ---@field cl GeneratorCl
 Generator = class(nil)
 
@@ -10,7 +11,21 @@ Generator = class(nil)
 -- #region Server
 --------------------
 
+local maxGenerators = 50
+local currentGenertors = 0
+
 function Generator:server_onCreate()
+    self.sv = self.sv or {}
+
+    currentGenertors = currentGenertors + 1
+
+    if currentGenertors > maxGenerators then
+        SpawnLoot(sm.player.getAllPlayers()[1], { { uuid = self.shape.uuid } }, self.shape.worldPosition)
+        self.shape:destroyShape(0)
+        self.sv.overLimit = true
+        return
+    end
+
     if self.data.power then
         ---@diagnostic disable-next-line: assign-type-mismatch
         self.data.power = tonumber(self.data.power)
@@ -24,6 +39,9 @@ function Generator:server_onCreate()
 end
 
 function Generator:server_onDestroy()
+    currentGenertors = currentGenertors - 1
+    if self.sv.overLimit then return end
+
     if self.data.powerStorage then
         PowerManager.sv_changePowerStorage(-self.data.powerStorage)
     end
@@ -52,6 +70,11 @@ end
 function Generator:client_onCreate()
     self.cl = {}
     self.cl.power = 0
+
+    if not sm.isHost then
+        currentGenertors = currentGenertors + 1
+    end
+    sm.gui.displayAlertText(string.format(language_tag("GeneratorUsage"), currentGenertors, maxGenerators))
 end
 
 function Generator:client_onClientDataUpdate(data)
@@ -67,6 +90,18 @@ function Generator:client_canInteract()
     return true
 end
 
+function Generator:client_onDestroy()
+    if not sm.isHost then
+        currentGenertors = currentGenertors + 1
+    end
+    local warning = ""
+    if currentGenertors == maxGenerators then
+        warning = "#ff0000"
+        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_playAudio", "RaftShark")
+    end
+    sm.gui.displayAlertText(warning .. string.format(language_tag("GeneratorUsage"), currentGenertors, maxGenerators))
+end
+
 -- #endregion
 
 --------------------
@@ -79,6 +114,9 @@ end
 ---@class GeneratorData
 ---@field power number how much power is produced by default
 ---@field powerStorage number if it is a Battery class, the max capacity
+
+---@class GeneratorSv
+---@field overLimit boolean wether this Generator is over the allowed Generator limit
 
 ---@class GeneratorCl
 ---@field power number current power output set by clientData

@@ -119,15 +119,16 @@ function Jetpack:client_onUpdate(dt)
 	end
 
 	self.cl.fuelRechargeCooldown = math.max(self.cl.fuelRechargeCooldown - dt, 0)
+	local char = self.tool:getOwner():getCharacter()
 	---@diagnostic disable-next-line: missing-parameter
-	local isSwimming = self.tool:getOwner():getCharacter():isSwimming()
-	if isSwimming then
+	if char:isSwimming() then
 		self.cl.fuelRechargeCooldown = fuelRechargeCooldown
 	end
 
 	if self.cl.active then
 		fuel = math.max(fuel - fuelBurnRatePerSecond * dt, 0)
-	elseif self.tool:isOnGround() and not isSwimming and self.cl.fuelRechargeCooldown == 0 and self.tool:isEquipped() then
+		---@diagnostic disable-next-line: missing-parameter
+	elseif self.tool:isOnGround() and self.cl.fuelRechargeCooldown == 0 and not char:isSwimming() and not char:isTumbling() then
 		fuel = math.min(fuel + fuelRestoreRatePerSecond * dt, maxFuel)
 	end
 
