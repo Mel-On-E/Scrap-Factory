@@ -7,6 +7,7 @@
 	//Energy System
 	"PowerCapacity": "Capacity: ",
 	"PowerOutput": "Producing: ",
+	"GeneratorUsage": "Generators: %s/%s",
 
 	//Factory Import/Export
 	"ExportInteraction": "Export creation",
@@ -55,8 +56,17 @@
 	"Research": "Research",
 
 	//Tiers
-	"DescTier1": "This is quite a long description so we can test if the text actually wraps. Now the real research is this text. But feel free to sell this crap or whatever.",
-	"DescTier2": "Ducks. Everyone likes ducks. You should too! They are really nice. Also they cost $69 in the store lol",
+	"DescTier1": "Through the power of deep-learning crypto quantum gene editing nanotechnology we can create drops out of thin air! Studying those drops should help us improve the process (and profits)!",
+	"DescTier2": "The humble and reliable Wood, perfect for research purposes! Its versatility allows us to build factories, chairs, and even toothpicks. Just remember, with every tree felled, profits grow while forests...well, they'll always be there, right?",
+	"DescTier3": "Ah, Iron, the backbone of industrial progress! With this sturdy metal, we'll forge our way to success. Ignoring a few rusty details, it's amazing how selling iron can iron out financial worries!",
+	"DescTier4": "Introducing Uranium, the hidden treasure of our research endeavors! Its unique properties allow us to unlock new realms of energy efficiency and productivity. While some warn about its radioactive properties, we just didn't implement them!",
+	"DescTier5": "Move over, Uranium 238, and make way for the more refined Uranium 235! With this precious isotope, we'll unlock the secrets of nuclear energy and watch our profits skyrocket. Research showed that our Uranium mines produce a small amount of it. We've been able to mark them red. It also seems to be (ridiculously) more lightweight.",
+	"DescTier6": "Deuterium, the fuel of the future! By harnessing the power of heavy water, we'll create unimaginable wealth. It's a scientific masterpiece, and the fact that it requires a lot of energy to produce is just a minor hiccup. We'll find a way around that... eventually.",
+	"DescTier7": "Diamonds are forever, and so are our profits! With these dazzling gems, we'll make a fortune. Just remember, there may be a few ethical concerns about the diamond industry, but hey, who doesn't love shiny objects? Unfortunately our mines produce a lot of other drops, so we might need to filter the diamonds out.",
+	"DescTier8": "Neptunium, the mysterious element from the deep sea. It may not have many practical uses, but hey, it sounds impressive, right? Researching this rare material might not bring immediate profits, but it's all about the thrill of the unknown... and a little bit of radioactive excitement!",
+	"DescTier9": "Ah, the enchanting Moon Stone! Rumor has it, it grants incredible powers and brings prosperity to those who possess it. Forget about the fact that it's just a shiny rock. With clever marketing and a sprinkle of imagination, our profits will soar to lunar heights!",
+	"DescTier10": "Prepare for explosive profits with Antimatter! Sure, it's highly unstable and difficult to handle, but who can resist the allure of harnessing the most powerful substance in the universe? Just make sure to keep those containment fields intact, and everything will be fine.",
+	"DescTier11": "Introducing Bouncium, the bouncy material that defies gravity and logic! With its absurd physics, we'll invent never-before-seen contraptions and create a spectacle that attracts customers like moths to a flame. Just try not to bounce too high and lose sight of your profits!",
 
 	//Prestige
 	"Prestige": "Prestige",
@@ -85,6 +95,18 @@
 	"PollutionLv3Name": "Pollution Lvl.3",
 	"PollutionLv3Desc": "The only solution is pollution! Let's pump some chemtrails into the air to make the public even more dumb. This should shae off another 2%!",
 
+	"JetpackLv1Name": "Jetpack!",
+	"JetpackLv1Desc": "Unlock a cool and epic jetpack that allows you to fly too the moon! Well at least if you would not have to keep an eye on fuel. Good thing you can recharge it with earthly magic when touching the ground.",
+	
+	"LiftLv1Name": "Lift++",
+	"LiftLv1Desc": "Upgrade your lift! This will allow you to export and import entire factories! It will even automatically buy the parts you need!",
+
+	"PaintToolLv1Name": "Paint Tool",
+	"PaintToolLv1Desc": "The paint tool allows you to color your creations! Customize your factories and have show them monochromes who's boss! (paint not included)",
+
+	"WeldToolLv1Name": "Weld Tool",
+	"WeldToolLv1Desc": "The weld tool allows you to make one out of two! It is quite incredible indeed.",
+
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
 	"ClearOresMessageMale": "You sure, bro?",
@@ -92,7 +114,6 @@
 
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
-	"RaidWarning": "Unauthorized Factory Detected!",
 	"TutorialLockedFeature": "Follow the tutorial to unlock this feature",
 
 	//Tutorials
@@ -141,6 +162,8 @@
 	"SellTutorialMessage": "You can use the sell tool to turn unneeded items into money. Simply look at an item you want to sell. By pressing \"%s\" you can increase the amount of items you want to sell. This will sell items from your inventory as well. Cleanig out your inventory was never as profitable before!",
 	"PowerStorageTutorialTitle": "Power Storage",
 	"PowerStorageTutorialMessage": "As your factory grows, your power needs will change. It's always a good idea to have excess capaciy in case of a power surge. Batteries can store excess power, and provide power when you need it. The HUD will show you how much all of your batteries are charged.",
+	"FireUpgraderTutorialTitle": "Fire Upgrader",
+	"FireUpgraderTutorialMessage": "This will light flamable drops on fire!\na burning drop will be burnt after a small time.",
 
 	//Tools
 	"ON": "On",
@@ -149,5 +172,6 @@
 
 	//Interactive
 	"ValueDetectorOutputMode_switch": "Switch",
-	"ValueDetectorOutputMode_button": "Button"
+	"ValueDetectorOutputMode_button": "Button",
+	"TeleporterMoreThan2": "You can only have 2 teleporters!"
 }

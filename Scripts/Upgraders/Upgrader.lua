@@ -16,9 +16,9 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 -- #region Server
 --------------------
 
----@class Params
+---@class UpgraderParams
 ---@field filters number|nil filters of the areaTrigger
----@param params Params?
+---@param params UpgraderParams?
 function Upgrader:server_onCreate(params)
     PowerUtility.sv_init(self)
 
