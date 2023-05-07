@@ -113,9 +113,6 @@ function ValueDetector:client_onInteract(_, state)
     if not state then return end
 
     self.cl.gui:setText("Title", sm.shape.getShapeTitle(self.shape.uuid))
-    self.cl.gui:setText("CompareModeTitle", language_tag("ValueDetectorCompareMode"))
-    self.cl.gui:setText("ValueTitle", language_tag("ValueDetectorCompareValue"))
-    self.cl.gui:setText("LogicOutputTitle", language_tag("ValueDetectorOutputMode"))
 
     self:cl_updateGuiData()
     self.cl.gui:open()
