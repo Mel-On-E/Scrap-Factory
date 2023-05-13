@@ -12,7 +12,7 @@
 					"material": "DifAsgNor"
 				}
 			],
-			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn.fbx"
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_popped.fbx"
 		},
 		{
 			"subMeshList": [
@@ -25,7 +25,7 @@
 					"material": "DifAsgNor"
 				}
 			],
-			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_lod1.fbx"
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_popped_lod1.fbx"
 		}
 	]
 }

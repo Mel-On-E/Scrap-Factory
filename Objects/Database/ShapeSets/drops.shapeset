@@ -2414,7 +2414,7 @@
         "durability": 4,
         "friction": 3
       },
-      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_popcorn.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_popcorn_popped.rend",
 			"color": "3e9ffe",
 			"hull": {
 				"x": 1,
