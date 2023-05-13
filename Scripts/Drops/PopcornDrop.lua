@@ -25,8 +25,6 @@ function PopcornDrop:server_onFixedUpdate()
     if not self.popped then
         self.sv.time = self.sv.time - 1
         if self.sv.time <= 0 then
-            --i honestly don't know why this offset is needed. but without it, it hovers in the air :/
-            sm.effect.playEffect( "Cotton - Picked", self.shape.worldPosition-sm.vec3.new(0,0,1) )
             self.shape:destroyShape(0)
             local shape = sm.shape.createPart(poppedUuid, self.shape.worldPosition, self.shape.worldRotation)
             local publicData = {
@@ -37,6 +35,21 @@ function PopcornDrop:server_onFixedUpdate()
             }
             shape.interactable:setPublicData(publicData)
         end
+    end
+end
+
+-- #endregion
+
+--------------------
+-- @region Client
+--------------------
+
+function PopcornDrop:client_onCreate()
+    Drop.client_onCreate(self)
+    if self.shape:getShapeUuid() == poppedUuid then
+        local e = sm.effect.createEffect( "Cotton - Picked", self.interactable )
+        e:setOffsetPosition(sm.vec3.new(0,0,-1)) --offset down because cotton plants are tall
+        e:start()
     end
 end
 
