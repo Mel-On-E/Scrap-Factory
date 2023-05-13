@@ -2406,7 +2406,7 @@
     },
     {
       "flammable": true,
-      "name": "obj_drop_popcorn_poped",
+      "name": "obj_drop_popcorn_popped",
       "physicsMaterial": "Fruit",
       "ratings": {
         "buoyancy": 1,
