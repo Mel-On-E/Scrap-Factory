@@ -2387,13 +2387,13 @@
         "durability": 4,
         "friction": 3
       },
-      "renderable": "$SURVIVAL_DATA/Objects/Renderable/resource/obj_resource_corn.rend",
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_popcorn.rend",
 			"color": "1c8687",
 			"hull": {
 				"x": 1,
 				"y": 2,
 				"z": 1,
-				"col": "$SURVIVAL_DATA/Objects/Collision/obj_consumable_corn_col.obj"
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_col.obj"
 			},
       "rotationSet": "StaticYmZmXm",
       "scripted": {
@@ -2420,7 +2420,7 @@
 				"x": 1,
 				"y": 2,
 				"z": 1,
-				"col": "$SURVIVAL_DATA/Objects/Collision/obj_consumable_corn_col.obj"
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_col.obj"
 			},
       "rotationSet": "StaticYmZmXm",
       "scripted": {
