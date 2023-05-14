@@ -172,7 +172,6 @@
       {
          "uuid": "9cb913bb-f786-403a-acf4-10d1e44a155b",
 			"name": "obj_generator_spiny",
-			"legacyId": 511,
 			"renderable": {
 				"lodList": [
 					{
