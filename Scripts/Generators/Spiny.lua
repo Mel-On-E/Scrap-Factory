@@ -61,8 +61,6 @@ function Spiny:client_onClientDataUpdate(data)
         self.reason = data.reason
         if data.active then
             Effects.cl_createEffect(self, { key = "afct", effect = "Spiny Power", host = self.interactable })
-        else
-            Effects.cl_destroyEffect(self, "afct")
         end
     else
         Generator.client_onClientDataUpdate(self, data)
