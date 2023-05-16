@@ -6,9 +6,6 @@ dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 ---@field pvActive boolean previus frame active
 Spiny = class(Generator)
 
-local tagStatic = language_tag('SpinyGeneratorStatic')
-local tagBearing = language_tag('SpinyGeneratorBearing')
-
 --------------------
 -- #region Server
 --------------------
@@ -71,7 +68,7 @@ function Spiny:client_canInteract()
     if self.active then
         return Generator.client_canInteract(self)
     end
-    local s = self.reason==1 and tagStatic or tagBearing
+    local s = self.reason==1 and language_tag('SpinyGeneratorStatic') or language_tag('SpinyGeneratorBearing')
     sm.gui.setInteractionText("<p textShadow='false' bg='gui_keybinds_bg_orange' color='#db2a16' spacing='9'>"..s.."</p>")
     return true
 end
