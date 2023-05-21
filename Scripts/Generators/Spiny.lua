@@ -2,7 +2,7 @@ dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 
 ---A type of generator that will produce power when spun.
 ---@class Spiny : Generator
----@field active boolean weather it is producing power
+---@field valid boolean weather it is producing power
 Spiny = class(Generator)
 
 --------------------
@@ -11,25 +11,25 @@ Spiny = class(Generator)
 
 function Spiny:server_onCreate()
     Generator.server_onCreate(self)
-    self.active = false
+    self.valid = false
     -- 0 means placed on block   
     -- 1 means non static
     local reason = 0
     for _,joint in ipairs(self.shape.body:getCreationJoints()) do
         if joint.shapeB == self.shape then
-            self.active = true
+            self.valid = true
             if not joint.shapeA.body:isStatic() then
-                self.active = false
+                self.valid = false
                 reason = 1
             end
             break
         end
     end
-    self.network:setClientData({active=self.active, reason=reason})
+    self.network:setClientData({valid=self.valid, reason=reason})
 end
 
 function Spiny:sv_getPower()
-    if not self.active then return 0 end
+    if not self.valid then return 0 end
     return math.floor(self.shape.body.angularVelocity:length()/120 *4)
 end
 
@@ -53,16 +53,16 @@ function Spiny:client_onClientDataUpdate(data)
     if data.power then
         Generator.client_onClientDataUpdate(self, data)
     else
-        self.active = data.active
+        self.valid = data.valid
         self.reason = data.reason
-        if data.active then
+        if data.valid then
             Effects.cl_createEffect(self, { key = "afct", effect = "Spiny Power", host = self.interactable })
         end
     end
 end
 
 function Spiny:client_canInteract()
-    if self.active then
+    if self.valid then
         return Generator.client_canInteract(self)
     end
     local s = self.reason==1 and language_tag('SpinyGeneratorStatic') or language_tag('SpinyGeneratorBearing')
