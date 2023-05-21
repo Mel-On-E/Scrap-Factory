@@ -30,7 +30,7 @@ end
 
 function Spiny:sv_getPower()
     if not self.valid then return 0 end
-    return math.floor(self.shape.body.angularVelocity:length()/120 *4)
+    return math.min(math.floor(self.shape.body.angularVelocity:length()/120 *self.data.power), self.data.power)
 end
 
 -- #endregion
