@@ -13,7 +13,7 @@ Shop = class(Interface)
 -- #region Server
 --------------------
 
----@param params { quantity: number, item: Item }
+---@param params { quantity: number, item: ShopItem }
 ---@param player Player
 function Shop:sv_buy(params, player)
 	if not MoneyManager.sv_trySpendMoney(params.item.price * params.quantity) then return end
@@ -346,7 +346,7 @@ end
 ---@field curPage number Current page
 ---@field sortHighest boolean Wheater the gui should sort from highest price or the lowest
 ---@field category "All" | "Generators" | "Utilities" | "Upgrades" | "Furnaces" | "Decor" The current category
----@field sortedItems Item[] List containing all items sorted by price ***DONT MODIFY***
+---@field sortedItems ShopItem[] List containing all items sorted by price ***DONT MODIFY***
 ---@field renderedPages Page[] The rendered pages
 ---@field tier number What tier to filter to -1 == No filter
 ---@field tierText string Used for the dropdown cuz lang doesnt change ***DONT MODIFY***
@@ -362,13 +362,13 @@ end
 ---@field special boolean?
 ---@field prestige boolean?
 
----@class Item
+---@class ShopItem
 ---@field tier integer
 ---@field price integer
 ---@field category "All" | "Generators" | "Utilities" | "Upgrades" | "Furnaces" | "Decor"
 ---@field uuid Uuid
 
 ---Has also a highestValueItem wich i dont know how to use luadoc syntax to document it
----@alias Page Item[]
+---@alias Page ShopItem[]
 
 -- #endregion
