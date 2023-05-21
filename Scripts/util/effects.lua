@@ -8,12 +8,14 @@ Effects = class(nil)
 --------------------
 
 ---create a new effect for all clients
+---@param self any
 ---@param params effectParam
 function Effects:sv_createEffect(params)
     self.network:sendToClients("cl_createEffect", params)
 end
 
 ---pauses or starts the effect for all clients that belongs to the key
+---@param self any
 ---@param key string the key/id of the effect
 function Effects:sv_toggleEffect(key)
     self.network:sendToClients("cl_toggleEffect", key)
@@ -26,12 +28,14 @@ end
 --------------------
 
 ---initialize the Effects system
+---@param self any
 function Effects.cl_init(self)
     self.cl = self.cl or {}
     self.cl.effects = {}
 end
 
 ---create an effect for the client
+---@param self any
 ---@param params effectParam parameters for the effect
 function Effects.cl_createEffect(self, params)
     local effect = Effects.cl_getEffect(self, params.key)
@@ -59,6 +63,7 @@ function Effects.cl_createEffect(self, params)
 end
 
 ---get the effect that belongs to a key
+---@param self any
 ---@param key string the key/id of the effect
 ---@return Effect|nil effect the effect if it exist or nil
 function Effects.cl_getEffect(self, key)
@@ -66,12 +71,14 @@ function Effects.cl_getEffect(self, key)
 end
 
 ---starts the effect that belongs to a key
+---@param self any
 ---@param key string the key/id of the effect
 function Effects.cl_startEffect(self, key)
     return self.cl.effects[key]:start()
 end
 
 ---pauses or starts the effect that belongs to the key
+---@param self any
 ---@param key string the key/id of the effect
 function Effects.cl_toggleEffect(self, key)
     if self.cl.effects[key]:isPlaying() then
@@ -82,6 +89,7 @@ function Effects.cl_toggleEffect(self, key)
 end
 
 ---destroy a specific effect
+---@param self any
 ---@param id string id of the effect to destroy
 function Effects.cl_destroyEffect(self, id)
     if self.cl.effects[id] then
@@ -91,6 +99,7 @@ function Effects.cl_destroyEffect(self, id)
 end
 
 ---destroy all effects which have been created via the `self` instance
+---@param self any
 function Effects.cl_destroyAllEffects(self)
     for _, effect in pairs(self.cl.effects) do
         if sm.exists(effect) then

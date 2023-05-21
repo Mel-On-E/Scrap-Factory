@@ -20,7 +20,7 @@ local sv_research_furnace
 
 ---@class FurnaceParams
 ---@field filters number|nil filters of the areaTrigger
----@param params FurnaceParams
+---@param params? FurnaceParams
 function Furnace:server_onCreate(params)
     params = params or {}
 
