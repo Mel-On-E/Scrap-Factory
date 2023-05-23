@@ -28,15 +28,19 @@ function Jumppad:sv_onEnter(_, results)
 
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
-        ---@type Character|Body
-        result = result
 
         ---@type Character|Shape
         local thing
-        if false then --TODO check if it is a character
+        ---@type Vec3
+        local dir
+        if type(result) == "Character" then
             result = result ---@class Character
-            if result:isPlayer() then thing = result end
+            if result:isPlayer() then
+                thing = result 
+                dir = self.shape.at
+            end
         else
+            result = result ---@class Body
             for _, shape in pairs(result:getShapes()) do
                 local interactable = shape:getInteractable()
                 if not interactable then goto continue end
@@ -46,9 +50,10 @@ function Jumppad:sv_onEnter(_, results)
                 if not publicData or not publicData.value then goto continue end
 
                 thing = shape
+                dir = -self.shape.right
             end
         end
-        sm.physics.applyImpulse(thing, self.shape.at*thing.mass*20)
+        sm.physics.applyImpulse(thing, dir*thing.mass*10)
 
         ::continue::
     end
