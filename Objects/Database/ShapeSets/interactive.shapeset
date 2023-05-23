@@ -233,7 +233,7 @@
             "y" : 1,
             "z" : 6
          },
-         "color" : "EDB826",
+         "color" : "db530f",
          "flammable" : false,
          "name" : "obj_jumppad",
          "physicsMaterial" : "Metal",
