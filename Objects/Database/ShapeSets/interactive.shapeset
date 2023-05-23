@@ -226,6 +226,45 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "81012991-e13b-47ab-a3bd-f93ef72cce84"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "EDB826",
+         "flammable" : false,
+         "name" : "obj_jumppad",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacebasic_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "filename" : "$CONTENT_DATA/Scripts/Other/jumppad.lua",
+            "classname" : "Jumppad",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 2
+            }
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "cd6de292-8f63-4c34-985e-096af4376482"
       }
    ]
 }

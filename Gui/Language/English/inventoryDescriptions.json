@@ -100,6 +100,9 @@
         "title": "Chest",
         "description": "A chest to store extra items. When your inventory gets too full. Don't worry, everything inside the chest won't get lost. And if it does, it's definitely not my fault..."
     },
+    "cd6de292-8f63-4c34-985e-096af4376482": {
+        "title": "Jump Pad"
+    },
     //Tools
     "8f190ce2-3a59-423e-8483-a7aa67bd5bc0": {
         "title": "Sell Tool",
