@@ -52,7 +52,7 @@ function Jumppad:sv_onEnter(_, results)
                 if not publicData or not publicData.value then goto continue end
 
                 thing = shape
-                dir = -self.shape.right
+                dir = sm.vec3.new(0,1,0) -- TODO find up normal of this shape
             end
         end
         sm.physics.applyImpulse(thing, dir*thing.mass*10)
