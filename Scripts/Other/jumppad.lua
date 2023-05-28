@@ -31,32 +31,23 @@ function Jumppad:sv_onEnter(_, results)
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
 
-        ---@type Character|Shape
-        local thing
-        ---@type Vec3
-        local dir
+        local v = self.shape.at*10*result.mass
         if type(result) == "Character" then
             result = result ---@class Character
-            if result:isPlayer() then
-                thing = result 
-                dir = self.shape.at
-            end
+            if not result:isPlayer() then goto continue end
+            sm.physics.applyImpulse(result, v)
         else
             result = result ---@class Body
-            for _, shape in pairs(result:getShapes()) do
+            for _,shape in ipairs(result:getShapes()) do
                 local interactable = shape:getInteractable()
-                if not interactable then goto continue end
-                if interactable.type ~= "scripted" then goto continue end
+                if not interactable or interactable.type ~= "scripted"  then goto continue end
 
                 local publicData = interactable:getPublicData()
-                if not publicData or not publicData.value then goto continue end
+                if not (publicData and publicData.value) then goto continue end
 
-                thing = shape
-                dir = sm.vec3.new(0,1,0) -- TODO find up normal of this shape
+                sm.physics.applyImpulse(result, v, true)
             end
         end
-        sm.physics.applyImpulse(thing, dir*thing.mass*10)
-
         ::continue::
     end
 end
@@ -74,7 +65,6 @@ end
 function Jumppad:client_onCreate()
     self.cl = {}
 
-    --create portal area effect
     local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
     local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
 
