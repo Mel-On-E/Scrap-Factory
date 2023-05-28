@@ -1,18 +1,18 @@
 
 ---a pad that will launch drops and players into the air
----@class Jumppad : ShapeClass
+---@class JumpPad : ShapeClass
 ---@field powerUtil PowerUtility
-Jumppad = class()
-Jumppad.maxParentCount = 1
-Jumppad.connectionInput = sm.interactable.connectionType.logic
-Jumppad.colorNormal = sm.color.new(0x2222ddff)
-Jumppad.colorHighlight = sm.color.new(0x4444ffff)
+JumpPad = class()
+JumpPad.maxParentCount = 1
+JumpPad.connectionInput = sm.interactable.connectionType.logic
+JumpPad.colorNormal = sm.color.new(0x2222ddff)
+JumpPad.colorHighlight = sm.color.new(0x4444ffff)
 
 --------------------
 -- #region Server
 --------------------
 
-function Jumppad:server_onCreate()
+function JumpPad:server_onCreate()
     PowerUtility.sv_init(self)
 
     self.sv = {}
@@ -25,7 +25,7 @@ function Jumppad:server_onCreate()
     self.sv.trigger:bindOnEnter("sv_onEnter")
 end
 
-function Jumppad:sv_onEnter(_, results)
+function JumpPad:sv_onEnter(_, results)
     if not self.powerUtil.active then return end
 
     for _, result in ipairs(results) do
@@ -52,7 +52,7 @@ function Jumppad:sv_onEnter(_, results)
     end
 end
 
-function Jumppad:server_onFixedUpdate(dt)
+function JumpPad:server_onFixedUpdate(dt)
     PowerUtility.sv_fixedUpdate(self, "cl_toggleEffect")
 end
 
@@ -62,7 +62,7 @@ end
 -- #region Client
 --------------------
 
-function Jumppad:client_onCreate()
+function JumpPad:client_onCreate()
     self.cl = {}
 
     local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
@@ -83,7 +83,7 @@ function Jumppad:client_onCreate()
     self.cl.effect:start()
 end
 
-function Jumppad:cl_toggleEffect(active)
+function JumpPad:cl_toggleEffect(active)
     if active and not self.cl.effect:isPlaying() then
         self.cl.effect:start()
     else

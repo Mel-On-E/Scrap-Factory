@@ -246,7 +246,7 @@
          "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacebasic_01.rend",
          "rotationSet" : "PropY",
          "scripted" : {
-            "filename" : "$CONTENT_DATA/Scripts/Other/jumppad.lua",
+            "filename" : "$CONTENT_DATA/Scripts/Other/JumpPad.lua",
             "classname" : "Jumppad",
             "data" : {
                "box" : {
