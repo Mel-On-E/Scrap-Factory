@@ -43,7 +43,10 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua",
+        "data": {
+          "flamable": true
+        }
       },
       "showInInventory": false,
       "stackSize": 65535.0,
@@ -301,7 +304,7 @@
       "scripted": {
         "classname": "MagneticDrop",
         "data": {
-          "north": true
+          "magnetic": "north"
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },
@@ -353,7 +356,7 @@
       "scripted": {
         "classname": "MagneticDrop",
         "data": {
-          "south": true
+          "magnetic": "south"
         },
         "filename": "$CONTENT_DATA/Scripts/Drops/MagneticDrop.lua"
       },

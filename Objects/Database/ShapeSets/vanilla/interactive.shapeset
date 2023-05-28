@@ -729,7 +729,7 @@
       "shop": {
         "category": "Utilities",
         "price": "1000",
-        "tier": 2
+        "tier": 1
       },
       "stackSize": 65535.0,
       "uuid": "9f0f56e8-2c31-4d83-996c-d00a9b296c3f"

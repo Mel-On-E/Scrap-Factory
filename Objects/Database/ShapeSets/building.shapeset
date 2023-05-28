@@ -18,7 +18,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "100",
-            "tier" : 0
+            "tier" : 2
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -42,7 +42,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "100",
-            "tier" : 0
+            "tier" : 2
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -66,7 +66,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "100",
-            "tier" : 0
+            "tier" : 3
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -90,7 +90,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "25",
-            "tier" : 0
+            "tier" : 3
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -114,7 +114,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "50",
-            "tier" : 0
+            "tier" : 3
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -138,7 +138,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "50",
-            "tier" : 0
+            "tier" : 3
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -162,7 +162,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "50",
-            "tier" : 0
+            "tier" : 4
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -186,7 +186,7 @@
          "shop" : {
             "category" : "Decor",
             "price" : "50",
-            "tier" : 0
+            "tier" : 4
          },
          "stackSize" : 65535,
          "sticky" : "All",
@@ -209,6 +209,11 @@
             "y" : 4,
             "z" : 6
          },
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 4
+         },
          "stackSize" : 65535,
          "sticky" : "All",
          "uuid" : "259bbaa6-e6b3-4f08-a3ad-5ac7e7940f6b"
@@ -229,6 +234,11 @@
             "x" : 14,
             "y" : 15,
             "z" : 30
+         },
+         "shop" : {
+            "category" : "Decor",
+            "price" : "50",
+            "tier" : 4
          },
          "stackSize" : 65535,
          "sticky" : "All",

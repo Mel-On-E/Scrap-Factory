@@ -25,7 +25,20 @@ end
 function PowerUtility.sv_fixedUpdate(self, toggleCallback)
     self.powerUtil.powerUpdate = self.powerUtil.powerUpdate - 1
 
-    local parent = self.interactable:getSingleParent()
+    -- get parent
+    local parent
+    if self.interactable:getMaxParentCount() == 1 then
+        parent = self.interactable:getSingleParent()
+    else
+        for _, p in ipairs(self.interactable:getParents()) do
+            parent = p
+            if parent:isActive() then
+                break
+            end
+        end
+    end
+
+
     if not parent then
         self.powerUtil.active = true
     else
