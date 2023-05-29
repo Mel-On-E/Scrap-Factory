@@ -107,10 +107,12 @@ function Furnace:sv_onEnterDrop(shape)
 			--make research points
 			value = value * PerkManager.sv_getMultiplier("research")
 			value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
-				{ pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd",
-					effect = "Furnace - Sell" })
-					sm.effect.playEffect( "Furnace - Research Debris", (self.shape.worldPosition + sm.vec3.new(0, 0, 0.5)) )
+			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+				pos = shape:getWorldPosition(),
+				value = tostring(value), format = "research", color = "#00dddd",
+				effect = "Furnace - Sell"
+			})
+			sm.effect.playEffect( "Furnace - Research Debris", (self.shape.worldPosition + sm.vec3.new(0, 0, 0.5)) )
 		else
 			--make money
 			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
