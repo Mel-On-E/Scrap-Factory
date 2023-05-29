@@ -117,6 +117,8 @@ function Furnace:sv_onEnterDrop(shape)
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
             MoneyManager.sv_addMoney(value)
             sm.effect.playEffect( "Furnace - OnSell", self.shape.worldPosition )
+		end
+	end
 
 	if self.sv.saved.research then
 		--make research points
