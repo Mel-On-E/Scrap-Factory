@@ -709,49 +709,6 @@
          },
          "color" : "32cd32",
          "flammable" : false,
-         "name" : "obj_dropper_plusplus_click",
-         "physicsMaterial" : "Wood",
-         "ratings" : {
-            "buoyancy" : 5,
-            "density" : 5,
-            "durability" : 10,
-            "friction" : 5
-         },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
-         "rotationSet" : "PropY",
-         "scripted" : {
-            "classname" : "ClickDropper",
-            "data" : {
-               "drop" : {
-                  "uuid" : "24ed35cf-cd5f-4d05-b9b7-f6beb773d9c8",
-                  "value" : "1"
-               },
-               "offset" : {
-                  "x" : -1.250,
-                  "y" : -0.20,
-                  "z" : -0.10
-               },
-               "power" : 1
-            },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/ClickDropper.lua"
-         },
-         "shop" : {
-            "category" : "Droppers",
-            "price" : "1e6",
-            "tier" : 99,
-            "special" : true
-         },
-         "stackSize" : 65535.0,
-         "uuid" : "e44de959-3f94-4ad3-babf-4051921ffbca"
-      },
-      {
-         "box" : {
-            "x" : 5,
-            "y" : 8,
-            "z" : 6
-         },
-         "color" : "32cd32",
-         "flammable" : false,
          "name" : "obj_dropper_plusplus",
          "physicsMaterial" : "Wood",
          "ratings" : {
@@ -1814,7 +1771,7 @@
          "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
          "rotationSet" : "PropY",
          "scripted" : {
-            "classname" : "AutoDropper",
+            "classname" : "LunarDropper",
             "data" : {
                "drop" : {
                   "uuid" : "aa0bdfae-b094-43e1-90c4-f654819b7fa1",
@@ -1828,7 +1785,7 @@
                },
                "power" : 4e6
             },
-            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/LunarDropper.lua"
          },
          "shop" : {
             "category" : "Droppers",
