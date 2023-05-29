@@ -114,7 +114,6 @@
 
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
-	"RaidWarning": "Unauthorized Factory Detected!",
 	"TutorialLockedFeature": "Follow the tutorial to unlock this feature",
 
 	//Tutorials
@@ -163,6 +162,8 @@
 	"SellTutorialMessage": "You can use the sell tool to turn unneeded items into money. Simply look at an item you want to sell. By pressing \"%s\" you can increase the amount of items you want to sell. This will sell items from your inventory as well. Cleanig out your inventory was never as profitable before!",
 	"PowerStorageTutorialTitle": "Power Storage",
 	"PowerStorageTutorialMessage": "As your factory grows, your power needs will change. It's always a good idea to have excess capaciy in case of a power surge. Batteries can store excess power, and provide power when you need it. The HUD will show you how much all of your batteries are charged.",
+	"FireUpgraderTutorialTitle": "Fire Upgrader",
+	"FireUpgraderTutorialMessage": "This will light flamable drops on fire!\na burning drop will be burnt after a small time.",
 
 	//Tools
 	"ON": "On",

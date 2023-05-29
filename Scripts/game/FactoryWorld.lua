@@ -85,14 +85,6 @@ function FactoryWorld.sv_e_onChatCommand(self, params)
 		for _, unit in ipairs(units) do
 			unit:destroy()
 		end
-	elseif params[1] == "/raid" then
-		print("Starting raid level", params[2], "in, wave", params[3] or 1, " in", params[4] or (10 / 60), "hours")
-		local position = params.player.character.worldPosition -
-			sm.vec3.new(0, 0, params.player.character:getHeight() / 2)
-		g_unitManager:sv_beginRaidCountdown(self, position, params[2], params[3] or 1, (params[4] or (10 / 60)) * 60 * 40)
-	elseif params[1] == "/stopraid" then
-		print("Cancelling all raid")
-		g_unitManager:sv_cancelRaidCountdown(self)
 	end
 end
 
@@ -183,50 +175,6 @@ function FactoryWorld.sv_spawnHarvestable(self, params)
 	end
 end
 
-function FactoryWorld.sv_e_spawnRaiders(self, params)
-	local attackPos = params.attackPos
-	local raiders = params.raiders
-
-	local minDistance = 50
-	local maxDistance = 80 -- 128 is maximum guaranteed terrain distance
-
-	local incomingUnits = {}
-	for k, v in pairs(raiders) do
-		for i = 1, v do
-			table.insert(incomingUnits, k)
-		end
-	end
-
-	print(#incomingUnits, "raiders incoming")
-
-	local maxSpawnAttempts = 32
-	for i = 1, #incomingUnits do
-		local spawnAttempts = 0
-		while spawnAttempts < maxSpawnAttempts do
-			spawnAttempts = spawnAttempts + 1
-			local distanceFromCenter = math.random(minDistance, maxDistance)
-			local spawnDirection = sm.vec3.new(0, 1, 0)
-			spawnDirection = spawnDirection:rotateZ(math.rad(math.random(359)))
-			local unitPos = attackPos + spawnDirection * distanceFromCenter
-
-			local success, result = sm.physics.raycast(unitPos + sm.vec3.new(0, 0, 128),
-				unitPos + sm.vec3.new(0, 0, -128), nil,
-				-1)
-			if success and (result.type == "limiter" or result.type == "terrainSurface") then
-				local direction = attackPos - unitPos
-				---@diagnostic disable-next-line: deprecated
-				local yaw = math.atan2(direction.y, direction.x) - math.pi / 2
-				---@diagnostic disable-next-line: cast-local-type
-				unitPos = result.pointWorld
-				local deathTick = sm.game.getCurrentTick() + 40 * 60 * 5 -- Despawn after 5 minutes (flee after 4)
-				sm.unit.createUnit(incomingUnits[i], unitPos, yaw,
-					{ temporary = true, roaming = true, raider = true, tetherPoint = attackPos, deathTick = deathTick })
-				break
-			end
-		end
-	end
-end
-
 function FactoryWorld.sv_e_spawnTempUnitsOnCell(self, params)
 	local cellSize = 64.0
 	local cellSteps = cellSize - 1
@@ -312,30 +260,6 @@ end
 
 function FactoryWorld.server_onCellLoaded(self, x, y)
 	g_unitManager:sv_onWorldCellReloaded(self, x, y)
-end
-
----trigger a raid on a random part in the world
----@param params table level, wave, hours
-function FactoryWorld:sv_raid(params)
-	local pos
-
-	local allBodies = sm.body.getAllBodies()
-	if #allBodies > 1 then
-		for i = 0, 10 do
-			local body = allBodies[math.random(1, #allBodies)]
-			local shapes = body:getShapes()
-			local shape = shapes[math.random(1, #shapes)]
-
-			if shape.uuid ~= obj_lootcrate and shape.uuid ~= obj_lootcrate_rare and shape.uuid ~= obj_lootcrate_prestige then
-				pos = shape.worldPosition
-				break
-			end
-		end
-	end
-
-	if pos then
-		g_unitManager:sv_beginRaidCountdown(self, pos, params.level, params.wave, params.hours * 40 * 60)
-	end
 end
 
 ---create a new shape in the world
