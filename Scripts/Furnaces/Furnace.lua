@@ -102,21 +102,21 @@ function Furnace:sv_onEnterDrop(shape)
 	local publicData = shape.interactable:getPublicData()
 	publicData.value = value
 
-    if not publicData.pollution then
-        if self.sv.saved.research then
-            --make research points
-            value = value * PerkManager.sv_getMultiplier("research")
-            value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
-            sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
-                { pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd",
-                    effect = "Furnace - Sell" })
-                    sm.effect.playEffect( "Furnace - Research Debris", (self.shape.worldPosition + sm.vec3.new(0, 0, 0.5)) )
-        else
-            --make money
-            sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
-                { pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
-            MoneyManager.sv_addMoney(value)
-            sm.effect.playEffect( "Furnace - OnSell", self.shape.worldPosition )
+	if not publicData.pollution then
+		if self.sv.saved.research then
+			--make research points
+			value = value * PerkManager.sv_getMultiplier("research")
+			value = (ResearchManager.sv_addResearch(value, shape) and value) or 0
+			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+				{ pos = shape:getWorldPosition(), value = tostring(value), format = "research", color = "#00dddd",
+					effect = "Furnace - Sell" })
+					sm.effect.playEffect( "Furnace - Research Debris", (self.shape.worldPosition + sm.vec3.new(0, 0, 0.5)) )
+		else
+			--make money
+			sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect",
+				{ pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
+			MoneyManager.sv_addMoney(value)
+			sm.effect.playEffect( "Furnace - OnSell", self.shape.worldPosition )
 		end
 	end
 
