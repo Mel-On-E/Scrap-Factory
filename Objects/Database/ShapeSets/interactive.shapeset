@@ -247,7 +247,7 @@
          "rotationSet" : "PropY",
          "scripted" : {
             "filename" : "$CONTENT_DATA/Scripts/Other/JumpPad.lua",
-            "classname" : "Jumppad",
+            "classname" : "JumpPad",
             "data" : {
                "box" : {
                   "x" : 1.50,
