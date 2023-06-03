@@ -31,21 +31,21 @@ function JumpPad:sv_onEnter(_, results)
     for _, result in ipairs(results) do
         if not sm.exists(result) then goto continue end
 
-        local v = self.shape.at*10*result.mass
+        local force = self.shape.at * 10 * result.mass
         if type(result) == "Character" then
-            result = result ---@class Character
+            ---@cast result Character
             if not result:isPlayer() then goto continue end
-            sm.physics.applyImpulse(result, v)
+            sm.physics.applyImpulse(result, force)
         else
-            result = result ---@class Body
+            ---@cast result Body
             for _,shape in ipairs(result:getShapes()) do
+                --make sure shape is a drop
                 local interactable = shape:getInteractable()
                 if not interactable or interactable.type ~= "scripted"  then goto continue end
-
                 local publicData = interactable:getPublicData()
                 if not (publicData and publicData.value) then goto continue end
 
-                sm.physics.applyImpulse(result, v, true)
+                sm.physics.applyImpulse(result, force, true)
             end
         end
         ::continue::
@@ -73,11 +73,12 @@ function JumpPad:client_onCreate()
     self.cl.effect:setParameter("color", sm.color.new('#f0580c'))
     self.cl.effect:setScale(size / 4.5)
     self.cl.effect:setOffsetPosition(offset)
-    local rot1 = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), sm.vec3.new(0, 1, 0))
 
+    local rot1 = sm.vec3.getRotation(sm.vec3.new(0, 0, 1), sm.vec3.new(0, 1, 0))
     --really fucking weird rotation offset thingy bc epic shader doesn't work on all rotations. WTF axolot why?
-    local rot2 = self.shape.xAxis.y ~= 0 and sm.vec3.getRotation(sm.vec3.new(1, 0, 0), sm.vec3.new(0, 1, 0)) or
-        sm.quat.identity()
+    local rot2 = self.shape.xAxis.y ~= 0 and
+        sm.vec3.getRotation(sm.vec3.new(1, 0, 0), sm.vec3.new(0, 1, 0))
+        or sm.quat.identity()
     self.cl.effect:setOffsetRotation(rot1 * rot2)
 
     self.cl.effect:start()
