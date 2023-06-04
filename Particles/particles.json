@@ -10,6 +10,7 @@
       "dev/p_laser_test.json",
       "upgraders/p_upgrade_random.json",
       "dev/p_areaTrigger_visualiser.json",
-      "upgraders/p_upgrade_drop.json"
+      "upgraders/p_upgrade_drop.json",
+      "sellpoints/p_sellpoints_furnace_science_idle_loop.json"
    ]
 }

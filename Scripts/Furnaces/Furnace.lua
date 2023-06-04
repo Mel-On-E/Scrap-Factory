@@ -117,7 +117,8 @@ function Furnace:sv_onEnterDrop(shape)
                 { pos = shape:getWorldPosition(), value = tostring(value), format = "money", effect = "Furnace - Sell" })
             MoneyManager.sv_addMoney(value)
             sm.effect.playEffect( "Furnace - OnSell", self.shape.worldPosition )
-
+		end
+	end
 	if self.sv.saved.research then
 		--make research points
 		value = value * PerkManager.sv_getMultiplier("research")
@@ -261,7 +262,7 @@ function Furnace:cl_toggle_research_effect(active)
 		cl_research_Effect:destroy()
 	end
 
-	cl_research_Effect = sm.effect.createEffect("Builderguide - Background", self.interactable)
+	cl_research_Effect = sm.effect.createEffect("Sellpoints - ScienceIdleLoop", self.interactable)
 
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
 	cl_research_Effect:setScale(size)
