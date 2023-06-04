@@ -15,57 +15,57 @@ Burner = class(nil)
 local secretEffectChance = 0.05
 
 function Burner:server_onCreate()
-    Furnace.server_onCreate(self)
-    Generator.server_onCreate(self)
+	Furnace.server_onCreate(self)
+	Generator.server_onCreate(self)
 
-    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
+	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
 end
 
 function Burner:server_onDestroy()
-    Generator.server_onDestroy(self)
+	Generator.server_onDestroy(self)
 end
 
 function Burner:sv_onEnter(trigger, results)
-    self.powerUtil.active = true
-    Furnace.sv_onEnter(self, trigger, results)
+	self.powerUtil.active = true
+	Furnace.sv_onEnter(self, trigger, results)
 end
 
 function Burner:sv_onEnterDrop(shape)
-    --exclude non-burnable drops
-    if not self.data.drops[tostring(shape.uuid)] then return end
+	--exclude non-burnable drops
+	if not self.data.drops[tostring(shape.uuid)] then return end
 
-    --exclude polluted drops
-    local publicData = shape.interactable.publicData
-    if publicData.pollution then return end
+	--exclude polluted drops
+	local publicData = shape.interactable.publicData
+	if publicData.pollution then return end
 
-    --create power
-    local power = publicData.value
-    if self.data.powerFunction == "root" then
-        power = (power ^ (1 / (4 / 3)))
-    end
-    power = power + 1
+	--create power
+	local power = publicData.value
+	if self.data.powerFunction == "root" then
+		power = (power ^ (1 / (4 / 3)))
+	end
+	power = power + 1
 
-    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-        pos = ( self.shape.worldPosition + sm.vec3.new( 0, 0, 1 ) ), --jank manual offset
-        value = tostring(power),
-        effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
-            "Sellpoints - CampfireOnsell",
-        format = "power"
-    })
-    PowerManager.sv_changePower(power)
+	sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+		pos = ( self.shape.worldPosition + sm.vec3.new( 0, 0, 1 ) ), --jank manual offset
+		value = tostring(power),
+		effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
+			"Sellpoints - CampfireOnsell",
+		format = "power"
+	})
+	PowerManager.sv_changePower(power)
 
-    --create pollution drop
-    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
-    local newPublicData = {
-        value = 1,
-        pollution = power,
-        upgrades = {}
-    }
-    smoke.interactable:setPublicData(newPublicData)
+	--create pollution drop
+	local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
+	local newPublicData = {
+		value = 1,
+		pollution = power,
+		upgrades = {}
+	}
+	smoke.interactable:setPublicData(newPublicData)
 
-    --destory drop
-    shape.interactable.publicData.value = nil
-    shape:destroyPart(0)
+	--destory drop
+	shape.interactable.publicData.value = nil
+	shape:destroyPart(0)
 end
 
 -- #endregion
@@ -75,9 +75,9 @@ end
 --------------------
 
 function Burner:client_onCreate()
-    Furnace.client_onCreate(self)
+	Furnace.client_onCreate(self)
 
-    self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
+	self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
 
 -- #endregion

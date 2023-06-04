@@ -12,6 +12,8 @@ DropPlusPlus = class(Drop)
 function DropPlusPlus:server_onCreate()
     Drop.server_onCreate(self)
 
+    if not self.interactable.publicData then return end
+
     self.interactable.publicData.value = SaveDataManager.Sv_getData("dropPlusPlus")
     SaveDataManager.Sv_setData("dropPlusPlus", self.interactable.publicData.value + 1)
 end

@@ -43,7 +43,10 @@
       "rotationSet": "StaticYmZmXm",
       "scripted": {
         "classname": "Drop",
-        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua",
+        "data": {
+          "flamable": true
+        }
       },
       "showInInventory": false,
       "stackSize": 65535.0,
