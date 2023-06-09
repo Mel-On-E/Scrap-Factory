@@ -209,7 +209,7 @@
             "filename": "$CONTENT_DATA/Scripts/Generators/Spiny.lua",
             "classname": "Spiny",
             "data": {
-               "power": 4
+               "power": 4 //todo balance
             }
          },
 			"flammable": false,

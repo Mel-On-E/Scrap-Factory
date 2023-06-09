@@ -15,6 +15,8 @@ function Spiny:server_onCreate()
     -- 0 means placed on block   
     -- 1 means non static
     local reason = 0
+
+    --this check will see if you placed it on a nonstatic shape or not on a bearing
     for _,joint in ipairs(self.shape.body:getCreationJoints()) do
         if joint.shapeB == self.shape then
             self.valid = true
@@ -30,11 +32,11 @@ end
 
 function Spiny:sv_getPower()
     if not self.valid then return 0 end
+    -- 120 is just the biggest number i found the engine can produce
     return math.min(math.floor(self.shape.body.angularVelocity:length()/120 *self.data.power), self.data.power)
 end
 
 -- #endregion
-
 
 --------------------
 -- #region Client
