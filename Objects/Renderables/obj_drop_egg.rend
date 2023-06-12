@@ -5,7 +5,7 @@
 			"subMeshList": [
 				{
 					"textureList": [
-						"$CONTENT_DATA/Objects/Textures/Drops/egg_dif.tga",
+						"$GAME_DATA/Textures/transparent.tga", //$CONTENT_DATA/Objects/Textures/Drops/egg_dif.tga
 						"$GAME_DATA/Textures/transparent.tga",
 						"$GAME_DATA/Textures/Materialtextures/normal_nor.tga"
 					],
