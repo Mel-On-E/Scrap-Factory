@@ -5,7 +5,7 @@ dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 EggDrop = class(Drop)
 
 --------------------
--- @region Server
+-- #region Server
 --------------------
 
 function EggDrop:server_onCreate()
@@ -15,7 +15,7 @@ end
 -- #endregion
 
 --------------------
--- @region Client
+-- #region Client
 --------------------
 
 function EggDrop:client_onCreate()
