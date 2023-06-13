@@ -1,25 +1,34 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----An EggDrop is a drop that is egg.
+---An EggDrop
 ---@class EggDrop: Drop
 EggDrop = class(Drop)
+
+-- velocity threshold to destory on collisions
+local velocityThreshold = 5
 
 --------------------
 -- #region Server
 --------------------
 
-function EggDrop:server_onCreate()
-    Drop.server_onCreate(self)
+function EggDrop:server_onCollision(other, position, selfVel, otherVel, normal)
+    -- check if it hit something at a velocity threshold
+    -- `not other` case is for when it hits the ground
+    if selfVel:length() > velocityThreshold or not other then self:sv_destroy() end
+    -- check if character hits at a velocity (trampeling)
+    if type(other) == "Character" then
+        if (normal*otherVel):length() > 2 then self:sv_destroy() end
+    end
 end
 
--- #endregion
+function EggDrop:server_onMelee(position, attacker, damage, power, direction, normal )
+    -- 1 is the durability of the drop (somehow get from shapeset pls)
+    if damage > 1 then self:sv_destroy() end
+end
 
---------------------
--- #region Client
---------------------
-
-function EggDrop:client_onCreate()
-    Drop.client_onCreate(self)
+function EggDrop:sv_destroy()
+    self.shape:destroyShape()
+    sm.effect.playEffect("Egg - Break", self.shape.worldPosition)
 end
 
 -- #endregion
