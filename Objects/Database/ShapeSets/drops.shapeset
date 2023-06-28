@@ -2433,6 +2433,30 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40"
+    },
+    {
+      "name": "obj_drop_vampire",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_vampire.rend",
+			"color": "1c1e24",
+			"hull": {
+				"x": 2,
+				"y": 2,
+				"z": 2,
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_vampire_col.obj"
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "VampireDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/VampireDrop.lua"
+      },
+      "showInInventory": false,
+      "uuid": "e9e9fd5b-062f-48b0-b89d-09b3b14c4fff"
     }
   ]
 }
