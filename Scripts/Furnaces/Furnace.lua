@@ -287,7 +287,7 @@ end
 
 function Furnace:client_canInteract()
 	sm.gui.setInteractionText("", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace"))
-    sm.gui.setInteractionText("<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. format_number({ color = "#66440C", format = "money", value = self.cl.moneyPerInterval, unit = "/min" }) ..  "</p>")
+    sm.gui.setInteractionText("<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. format_number({ color = "#66440C", format = "money", value = (self.cl.moneyPerInterval ~= nil and self.cl.moneyPerInterval or 0), unit = "/min" }) ..  "</p>")
 	return true
 end
 
