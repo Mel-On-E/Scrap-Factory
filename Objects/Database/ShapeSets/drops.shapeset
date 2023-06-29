@@ -2444,11 +2444,10 @@
       },
       "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_vampire.rend",
 			"color": "1c1e24",
-			"hull": {
-				"x": 2,
-				"y": 2,
-				"z": 2,
-				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_vampire_col.obj"
+			"box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
 			},
       "rotationSet": "StaticYmZmXm",
       "scripted": {
