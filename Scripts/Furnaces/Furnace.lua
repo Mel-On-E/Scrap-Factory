@@ -34,9 +34,9 @@ function Furnace:server_onCreate(params)
 
 	--save data
 	self.sv = {
-    moneyEarnedCache = {},
-    moneyEarnedSinceUpdate = 0
-  }
+    	moneyEarnedCache = {},
+    	moneyEarnedSinceUpdate = 0
+    }
 	self.sv.saved = self.storage:load()
 	if not self.sv.saved then
 		self.sv.saved = {}
@@ -147,7 +147,7 @@ function Furnace:sv_onEnterDrop(shape)
 		if next(publicData.upgrades) then
 			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
 		end
-    self.sv.moneyEarnedSinceUpdate = self.sv.moneyEarnedSinceUpdate + shape.interactable.publicData.value
+    	self.sv.moneyEarnedSinceUpdate = self.sv.moneyEarnedSinceUpdate + shape.interactable.publicData.value
 	end
 
 	self.interactable:setActive(true)
@@ -207,15 +207,15 @@ function Furnace:server_onFixedUpdate()
 		self.interactable:setActive(false)
 	end
 
-  if sm.game.getCurrentTick() % 40 ~= 0 then return end
-  self.sv.moneyEarnedCache[math.floor(sm.game.getCurrentTick() / 40) % (moneyCacheInterval + 3)] = self.sv.moneyEarnedSinceUpdate
-  self.sv.moneyEarnedSinceUpdate = 0
+    if sm.game.getCurrentTick() % 40 ~= 0 then return end
+	self.sv.moneyEarnedCache[math.floor(sm.game.getCurrentTick() / 40) % (moneyCacheInterval + 3)] = self.sv.moneyEarnedSinceUpdate
+	self.sv.moneyEarnedSinceUpdate = 0
 
-  local moneyPerInterval = 0
-  for k, money in pairs(self.sv.moneyEarnedCache) do
-    moneyPerInterval = moneyPerInterval + money
-  end
-  self.network:setClientData(moneyPerInterval)
+	local moneyPerInterval = 0
+  	for k, money in pairs(self.sv.moneyEarnedCache) do
+    	moneyPerInterval = moneyPerInterval + money
+  	end
+  	self.network:setClientData(moneyPerInterval)
 end
 
 -- #endregion
@@ -287,7 +287,7 @@ end
 
 function Furnace:client_canInteract()
 	sm.gui.setInteractionText("", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace"))
-  sm.gui.setInteractionText("<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. format_number({ color = "#66440C", format = "money", value = self.cl.moneyPerInterval, unit = "/min" }) ..  "</p>")
+    sm.gui.setInteractionText("<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. format_number({ color = "#66440C", format = "money", value = self.cl.moneyPerInterval, unit = "/min" }) ..  "</p>")
 	return true
 end
 
@@ -304,7 +304,7 @@ function Furnace:client_onInteract(character, state)
 end
 
 function Furnace:client_onClientDataUpdate(data)
-  self.cl.moneyPerInterval = data
+  	self.cl.moneyPerInterval = data
 end
 
 -- #endregion
