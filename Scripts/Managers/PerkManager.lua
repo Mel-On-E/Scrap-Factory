@@ -126,7 +126,7 @@ function PerkManager:client_onCreate()
     }
 end
 
-function PerkManager:client_onClientDataUpdate(clientData, channel)
+function PerkManager:client_onClientDataUpdate(clientData)
     self.cl.data = clientData
 end
 
@@ -170,4 +170,6 @@ end
 ---@field pollution number how much polluton affects research
 
 ---@class PerkManagerCl
+---@field data PerkManagerData
+---@class PerkManagerData
 ---@field perks table<string, boolean> table of owned perks

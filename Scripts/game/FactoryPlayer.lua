@@ -418,7 +418,7 @@ function FactoryPlayer:cl_numberEffect(params)
 	gui:setWorldPosition(params.pos)
 	gui:open()
 	gui:setMaxRenderDistance(100)
-	gui:setText("Text", params.value)
+	gui:setText("Text", params.value) --TODO type fix
 
 	if params.effect then
 		sm.effect.playEffect(params.effect, params.pos - sm.vec3.new(0, 0, 0.25))

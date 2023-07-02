@@ -14,6 +14,7 @@ Generator = class(nil)
 local maxGenerators = 50
 local currentGenertors = 0
 
+---@param self any
 function Generator:server_onCreate()
     self.sv = self.sv or {}
 
@@ -38,6 +39,7 @@ function Generator:server_onCreate()
     end
 end
 
+---@param self any
 function Generator:server_onDestroy()
     currentGenertors = currentGenertors - 1
     if self.sv.overLimit then return end

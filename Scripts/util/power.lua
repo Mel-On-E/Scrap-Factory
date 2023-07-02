@@ -9,7 +9,8 @@ PowerUtility = class(nil)
 --------------------
 
 ---initialize the power utility
-function PowerUtility.sv_init(self)
+---@param self ShapeClass|PowerUtility
+function PowerUtility:sv_init()
     self.data.power = tonumber(self.data.power)
 
     self.powerUtil = {
@@ -21,8 +22,9 @@ function PowerUtility.sv_init(self)
 end
 
 ---update the power utility
+---@param self ShapeClass|PowerUtility
 ---@param toggleCallback string|nil name of the client callback used to toggle things, e.g. effects, when the power changes
-function PowerUtility.sv_fixedUpdate(self, toggleCallback)
+function PowerUtility:sv_fixedUpdate(toggleCallback)
     self.powerUtil.powerUpdate = self.powerUtil.powerUpdate - 1
 
     -- get parent

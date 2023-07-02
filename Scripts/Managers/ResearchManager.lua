@@ -8,7 +8,7 @@ ResearchManager.isSaveObject = true
 ---@type TierData[] tier data from tiers.json
 tiersJson = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
 for k, v in ipairs(tiersJson) do
-    v.uuid = sm.uuid.new(v.uuid)
+    v.uuid = sm.uuid.new(v.uuid) --TODO types fix
     ---@diagnostic disable-next-line: assign-type-mismatch
     v.goal = tonumber(v.goal)
 end

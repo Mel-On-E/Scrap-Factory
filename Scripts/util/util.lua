@@ -262,3 +262,5 @@ function getDrops(objects)
 end
 
 -- #endregion
+
+--TODO maybe uuidString type (string representation of a uuid)

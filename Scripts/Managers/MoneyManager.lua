@@ -162,5 +162,6 @@ end
 ---@field money number available money
 ---@field moneyEarned number total amount of money earned
 ---@field moneyPerInterval number money earned per interval (used in HUD)
+--TODO type fix
 
 -- #endregion

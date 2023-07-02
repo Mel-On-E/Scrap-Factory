@@ -8,6 +8,7 @@ Effects = class(nil)
 --------------------
 
 ---create a new effect for all clients
+---@param self ShapeClass|any
 ---@param params effectParam
 function Effects:sv_createEffect(params)
     self.network:sendToClients("cl_createEffect", params)
@@ -26,14 +27,16 @@ end
 --------------------
 
 ---initialize the Effects system
-function Effects.cl_init(self)
+---@param self ShapeClass|any
+function Effects:cl_init()
     self.cl = self.cl or {}
     self.cl.effects = {}
 end
 
 ---create an effect for the client
+---@param self ShapeClass|any
 ---@param params effectParam parameters for the effect
-function Effects.cl_createEffect(self, params)
+function Effects:cl_createEffect(params)
     local effect = Effects.cl_getEffect(self, params.key)
     if effect then
         effect:destroy()
@@ -59,13 +62,15 @@ function Effects.cl_createEffect(self, params)
 end
 
 ---get the effect that belongs to a key
+---@param self ShapeClass|any
 ---@param key string the key/id of the effect
 ---@return Effect|nil effect the effect if it exist or nil
-function Effects.cl_getEffect(self, key)
+function Effects:cl_getEffect(key)
     return self.cl.effects[key]
 end
 
 ---starts the effect that belongs to a key
+---@param self ShapeClass|any
 ---@param key string the key/id of the effect
 function Effects.cl_startEffect(self, key)
     return self.cl.effects[key]:start()
@@ -82,6 +87,7 @@ function Effects.cl_toggleEffect(self, key)
 end
 
 ---destroy a specific effect
+---@param self ShapeClass|any
 ---@param id string id of the effect to destroy
 function Effects.cl_destroyEffect(self, id)
     if self.cl.effects[id] then
@@ -91,7 +97,8 @@ function Effects.cl_destroyEffect(self, id)
 end
 
 ---destroy all effects which have been created via the `self` instance
-function Effects.cl_destroyAllEffects(self)
+---@param self ShapeClass|any
+function Effects:cl_destroyAllEffects()
     for _, effect in pairs(self.cl.effects) do
         if sm.exists(effect) then
             effect:destroy()

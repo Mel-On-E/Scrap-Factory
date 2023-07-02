@@ -20,7 +20,8 @@ local sv_research_furnace
 
 ---@class FurnaceParams
 ---@field filters number|nil filters of the areaTrigger
----@param params FurnaceParams
+---@param self any
+---@param params? FurnaceParams
 function Furnace:server_onCreate(params)
 	params = params or {}
 
@@ -64,6 +65,7 @@ function Furnace:sv_createAreaTrigger(filters)
 	)
 end
 
+---@param self any
 function Furnace:sv_onEnter(_, results)
 	if not self.powerUtil.active then
 		return
@@ -211,6 +213,7 @@ end
 ---@type Effect|nil effect that marks a research furnace
 local cl_research_Effect
 
+---@param self any
 function Furnace:client_onCreate()
 	self.cl = {}
 

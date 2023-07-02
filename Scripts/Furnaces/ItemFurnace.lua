@@ -21,7 +21,7 @@ function ItemFurnace:server_onFixedUpdate()
     if not self.powerUtil.active then return end
 
     --sell shapes
-    for k, v in pairs(self.sv.trigger:getShapes()) do
+    for _,v in ipairs(self.sv.trigger:getShapes()) do
         if not sm.exists(v.shape) then goto continue end
 
         local sellValue = Sell.calculateSellValue(v.shape)
