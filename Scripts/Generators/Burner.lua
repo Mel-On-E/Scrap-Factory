@@ -1,18 +1,18 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
----A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
----@class Burner: ShapeClass
----@field cl BurnerCl
+---A type of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
+---@class Burner : ShapeClass
+---@field cl FurnaceCl
 ---@field powerUtil PowerUtility
-Burner = class(nil)
+Burner = class()
+
+---chance a special effect plays when a drop is sold
+local secretEffectChance = 0.15
 
 --------------------
 -- #region Server
 --------------------
-
----chance a special effect plays when a drop is sold
-local secretEffectChance = 0.15
 
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)
@@ -33,6 +33,7 @@ end
 function Burner:sv_onEnterDrop(shape)
     --exclude non-burnable drops
     if not self.data.drops[tostring(shape.uuid)] then return end
+    --REMAKE allow better system for burnable items (see fire upgrader)
 
     --exclude polluted drops
     local publicData = shape.interactable.publicData
@@ -79,13 +80,5 @@ function Burner:client_onCreate()
 
     self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
-
--- #endregion
-
---------------------
--- #region Types
---------------------
-
----@class BurnerCl : FurnaceCl
 
 -- #endregion

@@ -5,6 +5,12 @@ dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 ---@field cl WindmillCl
 Windmill = class(Generator)
 
+local animSpeeds = {
+    Prop_R = 20,
+    Idle_R = 20,
+    --Idle_L = 20
+}
+
 --------------------
 -- #region Server
 --------------------
@@ -24,11 +30,6 @@ end
 -- #region Client
 --------------------
 
-local animSpeeds = {
-    Prop_R = 20,
-    Idle_R = 20,
-    --Idle_L = 20
-}
 function Windmill:client_onCreate()
     Generator.client_onCreate(self)
 
@@ -36,7 +37,7 @@ function Windmill:client_onCreate()
 end
 
 function Windmill:cl_setAnim(anim)
-    for _anim, v in pairs(animSpeeds) do
+    for _anim, _ in pairs(animSpeeds) do
         self.interactable:setAnimEnabled(_anim, _anim == anim)
         self.interactable:setAnimProgress(_anim, 0)
     end
@@ -65,9 +66,15 @@ end
 
 -- #endregion
 
+--------------------
+-- #region All Sandboxes
+--------------------
+
 function Windmill:get_height_multiplier()
     return sm.util.clamp(self.shape.worldPosition.z / 100 + 1, 1, 2)
 end
+
+-- #endregion
 
 --------------------
 -- #region Types

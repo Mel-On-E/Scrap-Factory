@@ -17,7 +17,7 @@ end
 -- #endregion
 
 --------------------
--- #region Server
+-- #region Client
 --------------------
 
 function Storage:client_canInteract()

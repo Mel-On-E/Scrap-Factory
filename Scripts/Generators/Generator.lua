@@ -7,14 +7,14 @@ dofile("$SURVIVAL_DATA/Scripts/game/survival_loot.lua")
 ---@field cl GeneratorCl
 Generator = class(nil)
 
+local maxGenerators = 50
+local currentGenertors = 0
+
 --------------------
 -- #region Server
 --------------------
 
-local maxGenerators = 50
-local currentGenertors = 0
-
----@param self any
+---@param self Generator|ShapeClass
 function Generator:server_onCreate()
     self.sv = self.sv or {}
 
@@ -39,7 +39,7 @@ function Generator:server_onCreate()
     end
 end
 
----@param self any
+---@param self Generator|ShapeClass
 function Generator:server_onDestroy()
     currentGenertors = currentGenertors - 1
     if self.sv.overLimit then return end
@@ -70,8 +70,9 @@ end
 --------------------
 
 function Generator:client_onCreate()
-    self.cl = {}
-    self.cl.power = 0
+    self.cl = {
+        power = 0
+    }
 
     if not sm.isHost then
         currentGenertors = currentGenertors + 1

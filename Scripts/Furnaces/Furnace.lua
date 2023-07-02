@@ -18,6 +18,7 @@ local sv_research_furnace
 -- #region Server
 --------------------
 
+---@param self Furnace|ShapeClass
 ---@param params? FurnaceParams
 function Furnace:server_onCreate(params)
 	params = params or {}
@@ -48,6 +49,7 @@ function Furnace:server_onCreate(params)
 	self.sv.trigger:bindOnStay("sv_onEnter")
 end
 
+---@param self Furnace|ShapeClass
 function Furnace:sv_createAreaTrigger(filters)
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
 	local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
@@ -61,6 +63,7 @@ function Furnace:sv_createAreaTrigger(filters)
 	)
 end
 
+---@param self Furnace|ShapeClass
 function Furnace:sv_onEnter(_, results)
 	if not self.powerUtil.active then
 		return
@@ -93,6 +96,7 @@ function Furnace:sv_onEnter(_, results)
 end
 
 ---Called when a valid drop enters the Furnace and it has power
+---@param self Furnace|ShapeClass
 ---@param shape DropShape
 function Furnace:sv_onEnterDrop(shape)
 	local value = self:sv_upgrade(shape)
@@ -148,6 +152,7 @@ function Furnace:sv_onEnterDrop(shape)
 end
 
 ---Called before a shape is sold, so it's value can be modified before
+---@param self Furnace|ShapeClass
 ---@param shape DropShape shape that is to be sold by the furnace
 ---@return number value new value of the drop
 function Furnace:sv_upgrade(shape)
