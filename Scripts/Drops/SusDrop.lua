@@ -1,11 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----Drop that has a chance to be impostor. When selling the impostor, the player will lose money.
+---a SusDop is a Drop that has a chance to be impostor. When selling the impostor, the player will lose money.
 ---@class SusDrop : Drop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 SusDrop = class(Drop)
-
--- #region Server
 
 local colors = {
 	"#132ed2",
@@ -24,10 +21,14 @@ local colors = {
 	"#fffebe",
 	"#708496",
 	"#928776",
-	"#ec7578",
+	"#ec7578"
 }
 
 local susChance = 0.1
+
+--------------------
+-- #region Server
+--------------------
 
 function SusDrop:server_onCreate()
 	Drop.server_onCreate(self)

@@ -1,9 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A MagneticDrop is a `Drop` that is attracted to drops of opposite magnetic polarisation and attracted to drops of opposite.
+---A MagneticDrop is a Drop that is attracted to drops of opposite magnetic polarisation and attracted to drops of opposite.
 ---@class MagneticDrop : Drop
 ---@field data MagneticDropData
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 MagneticDrop = class(Drop)
 
 --------------------
@@ -24,7 +23,7 @@ function MagneticDrop:server_onCreate()
     self.sv.trigger:bindOnStay("sv_onStay")
 end
 
-function MagneticDrop:sv_onStay(trigger, results)
+function MagneticDrop:sv_onStay(_, results)
     local shapes = self:sv_getValidShapes(results)
 
     for _, shape in ipairs(shapes) do

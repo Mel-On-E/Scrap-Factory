@@ -1,6 +1,6 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A PopcornDrop is a drop ...
+---A PopcornDrop is a Drop that pops, after time, to gain money
 ---@class PopcornDrop : Drop
 ---@field popped boolean is this drop popped
 PopcornDrop = class(Drop)
@@ -11,7 +11,7 @@ local popTimeMax = 3   *40
 local poppedUuid = sm.uuid.new("b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40")
 
 --------------------
--- @region Server
+-- #region Server
 --------------------
 
 function PopcornDrop:server_onCreate()
@@ -40,7 +40,7 @@ end
 -- #endregion
 
 --------------------
--- @region Client
+-- #region Client
 --------------------
 
 function PopcornDrop:client_onCreate()

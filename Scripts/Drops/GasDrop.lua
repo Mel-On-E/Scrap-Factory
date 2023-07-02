@@ -1,9 +1,8 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A GasDrop is a `Drop` that floats towards the sky and eventually dissapears after reaching a certain height
+---A GasDrop is a Drop that floats towards the sky and eventually dissapears after reaching a certain height
 ---@class GasDrop : Drop
 ---@field sv GasDropSv
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 GasDrop = class(Drop)
 
 --------------------

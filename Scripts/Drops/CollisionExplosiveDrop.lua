@@ -1,8 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A CollisionExplosiveDrop is a `Drop` that will explode when it collides with another drop of its kind
+---A CollisionExplosiveDrop is a Drop that will explode when it collides with another drop of its kind
 ---@class CollisionExplosiveDrop : Drop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 CollisionExplosiveDrop = class(Drop)
 
 --------------------
@@ -24,7 +23,7 @@ function CollisionExplosiveDrop:server_onCreate()
     self.sv.trigger:bindOnEnter("sv_onEnter")
 end
 
-function CollisionExplosiveDrop:sv_onEnter(trigger, results)
+function CollisionExplosiveDrop:sv_onEnter(_, results)
     local drops = getDrops(results)
     for _, drop in ipairs(drops) do
         if drop ~= self.shape and self.shape.uuid == drop.uuid then

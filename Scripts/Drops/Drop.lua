@@ -3,8 +3,7 @@
 ---@field cl DropCl
 ---@field sv DropSv
 ---@field interactable DropInteractable
----@diagnostic disable-next-line: assign-type-mismatch
-Drop = class(nil)
+Drop = class()
 
 ---number of ores that exist at any given time
 local oreCount = 0
@@ -44,7 +43,7 @@ end
 
 function Drop:sv_init()
 	self.sv = {
-		timeout = 0,
+		timeout = 0
 	}
 end
 
@@ -92,14 +91,13 @@ function Drop:server_onFixedUpdate()
 	end
 end
 
-function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
+function Drop:server_onCollision(other)
 	--destroy drop when it hits terrain
 	if not other then
 		self.shape:destroyShape(0)
 	end
 end
 
----add an effect to a drop
 ---@param params effectParam
 function Drop:sv_e_addEffect(params)
 	Effects.sv_createEffect(self, params)
@@ -126,20 +124,16 @@ function Drop:server_onDestroy()
 	end
 end
 
----update oreCount
----@param change number +1 or -1
+---@param change -1|1
 function Drop:sv_changeOreCount(change)
 	oreCount = oreCount + change
 	if oreCount == 100 then
-		sm.event.sendToScriptableObject(
-			g_tutorialManager.scriptableObject,
-			"sv_e_tryStartTutorial",
-			"ClearOresTutorial"
-		)
+		--show tutorial for clearing all ores
+		--REMAKE shouldn't this be ClearDropsTutorial not Ores?
+		sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "ClearOresTutorial")
 	end
 end
 
----sets the clientData
 function Drop:sv_setClientData()
 	local publicData = unpackNetworkData(self.interactable.publicData)
 	if publicData then
@@ -158,16 +152,6 @@ end
 --------------------
 
 function Drop:client_onCreate()
-	self:cl_init()
-
-	--create default effect
-	if self.data and self.data.effect then
-		Effects.cl_createEffect(self,
-			{ key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
-	end
-end
-
-function Drop:cl_init()
 	self.cl = {
 		data = {
 			value = 0
@@ -175,6 +159,10 @@ function Drop:cl_init()
 	}
 
 	Effects.cl_init(self)
+	--create default effect
+	if self.data and self.data.effect then
+		Effects.cl_createEffect(self, { key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
+	end
 end
 
 function Drop:client_onClientDataUpdate(data)
@@ -198,7 +186,6 @@ function Drop:client_onDestroy()
 end
 
 function Drop:client_canInteract()
-	--set interaction text
 	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 	local o2 = "</p>"
 	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
@@ -219,13 +206,12 @@ function Drop:client_canInteract()
 	return true
 end
 
-function Drop:cl_createEffect(params)
-	Effects.cl_createEffect(self, params)
-end
-
 -- #endregion
 
----Returns the current value of a drop
+--------------------
+-- #region All Sandboxes
+--------------------
+
 ---@return number
 function Drop:getValue()
 	local value = self.cl.data.value
@@ -238,8 +224,7 @@ function Drop:getValue()
 	return value
 end
 
----Returns the current pollution value of a drop
----@return unknown pollution 0 or positive. nil if the drop has no pullution
+---@return number|nil pollution nil if the drop has no pullution
 function Drop:getPollution()
 	local pollution = self.cl.data.pollution
 
@@ -252,14 +237,12 @@ function Drop:getPollution()
 			return self.sv.cachedPollution
 		end
 
-		sm.event.sendToScriptableObject(
-			g_tutorialManager.scriptableObject,
-			"sv_e_tryStartTutorial",
-			"PollutionTutorial"
-		)
+		sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "PollutionTutorial")
 	end
 	return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
+
+-- #endregion
 
 --------------------
 -- #region Types
@@ -298,4 +281,5 @@ end
 
 ---@class DropShape: Shape
 ---@field interactable DropInteractable
+
 -- #endregion

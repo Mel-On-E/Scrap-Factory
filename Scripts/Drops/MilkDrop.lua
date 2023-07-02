@@ -1,8 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A MilkDrop is a drop that will spill the milk when it falls over and becomes much less valueable.
+---A MilkDrop is a Drop that will spill the milk when it falls over and becomes much less valueable.
 ---@class MilkDrop : Drop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 MilkDrop = class(Drop)
 
 --------------------

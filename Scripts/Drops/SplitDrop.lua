@@ -1,16 +1,15 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A SplitDrop is a `Drop` that will randomly split into 2 Drops each half its value
+---A SplitDrop is a Drop that will randomly split into 2 Drops each half its value
 ---@class SplitDrop : Drop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 SplitDrop = class(Drop)
+
+local splitChancePerTick = 0.001
+local colorLossPerSplit = 20 / 255
 
 --------------------
 -- #region Server
 --------------------
-
-local splitChancePerTick = 0.001
-local colorLossPerSplit = 20 / 255
 
 function SplitDrop:server_onFixedUpdate()
     Drop.server_onFixedUpdate(self)
@@ -23,7 +22,6 @@ function SplitDrop:server_onFixedUpdate()
         self.shape.color.b - colorLossPerSplit)
 
     --spawn drop
-    ---@diagnostic disable-next-line: param-type-mismatch
     local shape = sm.shape.createPart(self.shape.uuid, self.shape.worldPosition,
         self.shape:getWorldRotation())
     shape:setColor(self.shape.color)

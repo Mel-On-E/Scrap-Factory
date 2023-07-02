@@ -1,16 +1,17 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----An ExplosiveDrop is a `Drop` that can explode. While about to explode it massively increases value.
+---An ExplosiveDrop is a Drop that can explode. While about to explode it massively increases value.
 ---@class ExplosiveDrop : Drop
 ---@field sv ExplosiveDropSv
 ---@field cl ExplosiveDropCl
 ---@field data ExplosiveDropData
----@diagnostic disable-next-line: param-type-mismatch
 ExplosiveDrop = class(Drop)
 ExplosiveDrop.poseWeightCount = 1
 
 ExplosiveDrop.fireDelay = 80 --ticks (2 seconds)
 ExplosiveDrop.fuseDelay = 0.0625
+
+--ERROR fix idk, check console
 
 --------------------
 -- #region Server
@@ -18,9 +19,11 @@ ExplosiveDrop.fuseDelay = 0.0625
 
 function ExplosiveDrop:sv_init()
     Drop.sv_init(self)
-    self.sv.exploded = false
-    self.sv.counting = false
-    self.sv.fireDelayProgress = 0
+    self.sv = {
+        exploded = false,
+        counting = false,
+        fireDelayProgress = 0
+    }
 end
 
 function ExplosiveDrop:server_onFixedUpdate()
@@ -47,13 +50,9 @@ function ExplosiveDrop:sv_tryExplode()
     end
 end
 
-function ExplosiveDrop:server_onProjectile(hitPos)
-    self:sv_onHit(hitPos)
-end
+function ExplosiveDrop:server_onProjectile(hitPos) self:sv_onHit(hitPos) end
 
-function ExplosiveDrop:server_onMelee(hitPos)
-    self:sv_onHit(hitPos)
-end
+function ExplosiveDrop:server_onMelee(hitPos) self:sv_onHit(hitPos) end
 
 function ExplosiveDrop:sv_onHit(hitPos)
     if self.sv.exploded then return end
@@ -101,7 +100,7 @@ function ExplosiveDrop:server_onCollision(other, position, selfPointVelocity, ot
     end
 
     if not self.sv.counting then
-        Drop.server_onCollision(self, other, position, selfPointVelocity, otherPointVelocity, normal)
+        Drop.server_onCollision(self, other)
     end
 end
 
@@ -113,7 +112,6 @@ function ExplosiveDrop:sv_startCountdown()
 end
 
 -- #endregion
-
 
 --------------------
 -- #region Client
@@ -180,7 +178,7 @@ end
 -- #endregion
 
 --------------------
--- #region Typings
+-- #region Types
 --------------------
 
 ---@class ExplosiveDropSv

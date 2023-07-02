@@ -3,7 +3,6 @@ dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 ---A AntiGravityDrop is a `Drop` that has reduced, no, or inverted gravity
 ---@class AntiGravityDrop : Drop
 ---@field data AntiGravityDropData
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 AntiGravityDrop = class(Drop)
 
 --------------------
@@ -19,7 +18,6 @@ function AntiGravityDrop:server_onFixedUpdate()
     local mass = self.shape:getBody().mass
     local antiGravity = (mass / 3.8186375)
     antiGravity = antiGravity * (1 - self.data.gravity)
-    ---@diagnostic disable-next-line: param-type-mismatch
     sm.physics.applyImpulse(self.shape, (sm.vec3.new(0, 0, 1) * antiGravity), true)
 
     --destroy after travelling too far

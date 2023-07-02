@@ -1,20 +1,19 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----A RadioactiveDrop is a `Drop` that will decay over time, releasing pollution and reducing its value in the process.
+---A RadioactiveDrop is a Drop that will decay over time, releasing pollution and reducing its value in the process.
 ---@class RadioactiveDrop : Drop
 ---@field sv RadioactiveDrop
 ---@field cl RadioactiveDrop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 RadioactiveDrop = class(Drop)
-
---------------------
--- #region Server
---------------------
 
 ---@type number the radius in which Players are hurt by the radiation
 local dmgRadius = 5
 ---@type number the interval between radiation damage
 local dmgInterval = 20
+
+--------------------
+-- #region Server
+--------------------
 
 function RadioactiveDrop:server_onCreate()
     Drop.server_onCreate(self)
@@ -78,7 +77,6 @@ end
 function RadioactiveDrop:client_onCreate()
     Drop.client_onCreate(self)
 
-    ---@diagnostic disable-next-line:assign-type-mismatch
     self.cl.scale = sm.vec3.one() / 4
 
     Effects.cl_createEffect(self, {
@@ -92,7 +90,6 @@ function RadioactiveDrop:client_onCreate()
 end
 
 function RadioactiveDrop:cl_decreaseSize()
-    ---@diagnostic disable-next-line:assign-type-mismatch
     self.cl.scale = self.cl.scale * 0.5 ^ (1 / 3)
     Effects.cl_getEffect(self, "radioactive"):setScale(self.cl.scale)
 end

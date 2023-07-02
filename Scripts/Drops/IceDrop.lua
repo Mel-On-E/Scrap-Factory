@@ -1,8 +1,7 @@
 dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 
----An IceDrop is a `Drop` that has low friction and slowly "melts" over time, reducing its value
+---An IceDrop is a Drop that has low friction and slowly "melts" over time, reducing its value
 ---@class IceDrop : Drop
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 IceDrop = class(Drop)
 
 --------------------
