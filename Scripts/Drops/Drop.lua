@@ -183,7 +183,8 @@ function Drop:client_onClientDataUpdate(data)
 	if data.burnTime and not Effects.cl_getEffect(self, "burning") then
 		Effects.cl_createEffect(self, { key = "burning", effect = "Fire - gradual", host = self.interactable })
 		local effect = Effects.cl_getEffect(self, 'burning')
-		effect:setParameter('intensity', 1.5) --TODO type fix
+		---@cast effect Effect
+		effect:setParameter('intensity', 1.5)
 	end
 
 	--create default effect for pulluted ores

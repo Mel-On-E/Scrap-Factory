@@ -34,7 +34,7 @@ function ExplosiveDrop:server_onFixedUpdate()
     end
 end
 
-function ExplosiveDrop.sv_tryExplode(self)
+function ExplosiveDrop:sv_tryExplode()
     if not self.sv.exploded then
         self.sv.exploded = false
         self.sv.counting = false
@@ -47,12 +47,11 @@ function ExplosiveDrop.sv_tryExplode(self)
     end
 end
 
-function ExplosiveDrop.server_onProjectile(self, hitPos, hitTime, hitVelocity, _, attacker, damage, userData, hitNormal,
-                                           projectileUuid)
+function ExplosiveDrop:server_onProjectile(hitPos)
     self:sv_onHit(hitPos)
 end
 
-function ExplosiveDrop.server_onMelee(self, hitPos, attackingCharacter, damage, power, hitDirection)
+function ExplosiveDrop:server_onMelee(hitPos)
     self:sv_onHit(hitPos)
 end
 
@@ -68,7 +67,7 @@ function ExplosiveDrop:sv_onHit(hitPos)
     end
 end
 
-function ExplosiveDrop.server_onExplosion(self, center, destructionLevel)
+function ExplosiveDrop:server_onExplosion()
     -- Explode within a few ticks
     if not self.sv.exploded then
         self.fireDelay = 5
@@ -107,7 +106,7 @@ function ExplosiveDrop:server_onCollision(other, position, selfPointVelocity, ot
 end
 
 ---Start countdown and update clients
-function ExplosiveDrop.sv_startCountdown(self)
+function ExplosiveDrop:sv_startCountdown()
     self.interactable.publicData.value = self.interactable.publicData.value * 100
     self.sv.counting = true
     self.network:sendToClients("cl_startCountdown")
@@ -133,7 +132,7 @@ function ExplosiveDrop:cl_init()
     self.cl.activateEffect = sm.effect.createEffect(self.data.effectActivate, self.interactable)
 end
 
-function ExplosiveDrop.client_onDestroy(self)
+function ExplosiveDrop:client_onDestroy()
     Drop.client_onDestroy(self)
 
     self.cl.singleHitEffect:stopImmediate()
@@ -156,7 +155,7 @@ function ExplosiveDrop:client_onUpdate(dt)
 end
 
 -- Called from server upon getting triggered by a hit
-function ExplosiveDrop.cl_hitActivation(self, hitPos)
+function ExplosiveDrop:cl_hitActivation(hitPos)
     local localPos = self.shape:transformPoint(hitPos)
 
     local smokeDirection = (hitPos - self.shape.worldPosition):normalize()
@@ -169,7 +168,7 @@ function ExplosiveDrop.cl_hitActivation(self, hitPos)
 end
 
 -- Called from server upon countdown start
-function ExplosiveDrop.cl_startCountdown(self)
+function ExplosiveDrop:cl_startCountdown()
     self.cl.counting = true
     self.cl.activateEffect:start()
 

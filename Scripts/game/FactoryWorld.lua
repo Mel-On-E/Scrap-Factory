@@ -88,8 +88,7 @@ function FactoryWorld.sv_e_onChatCommand(self, params)
 	end
 end
 
-function FactoryWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, _, attacker, damage, userData, hitNormal,
-										  target, projectileUuid)
+function FactoryWorld.server_onProjectile(self, hitPos, hitTime, hitVelocity, _, attacker, damage, userData, _, _, projectileUuid)
 	-- Spawn loot from projectiles with loot user data
 	if userData and userData.lootUid then
 		local normal = -hitVelocity:normalize()

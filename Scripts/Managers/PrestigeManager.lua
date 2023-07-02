@@ -172,7 +172,7 @@ end
 function PrestigeManager.getPrestigeGain()
     local money = MoneyManager.getMoney()
     local minMoney = 1e9
-    money = money - minMoney
+    money = money - minMoney --ERROR idk check console
 
     if money > 0 then
         return 2 ^ math.log(money, 10) / 100

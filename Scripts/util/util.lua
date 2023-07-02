@@ -263,4 +263,10 @@ end
 
 -- #endregion
 
---TODO maybe uuidString type (string representation of a uuid)
+--------------------
+-- #region Types
+--------------------
+
+---@class UuidString : string
+
+-- #endregion

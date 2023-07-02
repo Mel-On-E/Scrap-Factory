@@ -6,11 +6,13 @@ ResearchManager = class()
 ResearchManager.isSaveObject = true
 
 ---@type TierData[] tier data from tiers.json
-tiersJson = sm.json.open("$CONTENT_DATA/Scripts/tiers.json")
-for k, v in ipairs(tiersJson) do
-    v.uuid = sm.uuid.new(v.uuid) --TODO types fix
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    v.goal = tonumber(v.goal)
+local tiers = {}
+for i,v in ipairs(sm.json.open("$CONTENT_DATA/Scripts/tiers.json")) do
+    tiers[i] = {
+        uuid = sm.uuid.new(v.uuid),
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        goal = tonumber(v.goal)
+    }
 end
 
 --------------------
@@ -54,7 +56,7 @@ end
 ---@return boolean success whether research points have been added
 function ResearchManager.sv_addResearch(value, shape)
     local tier = g_ResearchManager.sv.saved.tier
-    local tierData = tiersJson[tier]
+    local tierData = tiers[tier]
     if shape and tierData.uuid ~= shape.uuid then
         return false
     end
@@ -84,7 +86,7 @@ end
 ---@return string progress the current tier progress formatted as a % value
 function ResearchManager:sv_getProgressString()
     progressFraction = (self.sv.saved.research[self.sv.saved.tier] or 0) /
-        (tiersJson[self.sv.saved.tier].goal * PollutionManager.getResearchMultiplier())
+        (tiers[self.sv.saved.tier].goal * PollutionManager.getResearchMultiplier())
     return string.format("%.2f", progressFraction * 100)
 end
 
@@ -98,7 +100,7 @@ end
 
 ---**DEBUG** set the research tier
 function ResearchManager.sv_setResearchTier(tier)
-    g_ResearchManager.sv.saved.tier = math.min(#tiersJson - 1, tier)
+    g_ResearchManager.sv.saved.tier = math.min(#tiers - 1, tier)
     sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_researchDone")
 end
 
@@ -130,7 +132,7 @@ end
 
 function ResearchManager:client_onFixedUpdate()
     if g_factoryHud and self.cl.data.tier > 0 then
-        g_factoryHud:setIconImage("ResearchIcon", tiersJson[self.cl.data.tier].uuid)
+        g_factoryHud:setIconImage("ResearchIcon", tiers[self.cl.data.tier].uuid)
         g_factoryHud:setText("Research", "#00dddd" .. self:getTierProgress() .. "%")
     end
 
@@ -166,14 +168,14 @@ end
 ---@return number goal amount of research ponts needed for completition
 function ResearchManager.cl_getTierProgressInfo(tier)
     local progress = g_ResearchManager.sv.saved.research[tier] or 0
-    local goal = (tiersJson[tier] and tiersJson[tier].goal) *
+    local goal = (tiers[tier] and tiers[tier].goal) *
         PollutionManager.getResearchMultiplier()
     return progress, goal
 end
 
 ---get a list of items to be unlocked
 ---@param tier integer tier of which to get the unlocks
----@return table<integer, Uuid> unlocks list of items to be unlocked
+---@return table<integer, UuidString> unlocks list of items to be unlocked
 function ResearchManager.cl_getTierUnlocks(tier)
     local unlocks = {}
     for uuid, item in pairs(g_shop) do
@@ -186,11 +188,11 @@ function ResearchManager.cl_getTierUnlocks(tier)
 end
 
 function ResearchManager.cl_getTierUuid(tier)
-    return tiersJson[tier].uuid
+    return tiers[tier].uuid
 end
 
 function ResearchManager.cl_getTierCount()
-    return #tiersJson
+    return #tiers
 end
 
 -- #endregion

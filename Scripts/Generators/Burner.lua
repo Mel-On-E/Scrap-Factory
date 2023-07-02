@@ -83,7 +83,7 @@ end
 -- #endregion
 
 --------------------
--- #region Client
+-- #region Types
 --------------------
 
 ---@class BurnerCl : FurnaceCl

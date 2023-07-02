@@ -1,6 +1,7 @@
 dofile("$SURVIVAL_DATA/Scripts/game/managers/RespawnManager.lua")
 
----@class OldUnitManager : ScriptableObjectClass
+--TODO types fix
+---@class OldUnitManager : ScriptableObject
 OldRespawnManager = class(RespawnManager)
 
 --------------------

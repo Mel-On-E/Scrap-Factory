@@ -186,7 +186,7 @@ end
 ---@class UpgraderDataEffect
 ---@field name string the name of the upgrade effect
 ---@field color table<string, number> r, g, b values for the color of the effect
----@field uuid string uuid used for ShapeRenderable effect
+---@field uuid UuidString uuid used for ShapeRenderable effect
 
 ---@class UpgraderCl
 ---@field effect Effect the effect that visualizes the areaTrigger of the Upgrader

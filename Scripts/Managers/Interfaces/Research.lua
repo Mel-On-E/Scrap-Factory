@@ -55,7 +55,7 @@ function Research:update_gui()
 	local unlocks = ResearchManager.cl_getTierUnlocks(self.cl.tier)
 	for i = 1, unlockSlots, 1 do
 		local uuid = unlocks[i + self.cl.unlockIndex] or tostring(sm.uuid.getNil())
-		self.cl.gui:setIconImage("IconUnlock_" .. tostring(i), sm.uuid.new(uuid)) --TODO type fix
+		self.cl.gui:setIconImage("IconUnlock_" .. tostring(i), sm.uuid.new(uuid))
 	end
 end
 
