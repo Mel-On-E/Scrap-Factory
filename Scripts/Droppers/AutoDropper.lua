@@ -3,7 +3,6 @@ dofile("$CONTENT_DATA/Scripts/Droppers/Dropper.lua")
 ---An AutoDropper automatically creates a `Drop` between a specified interval.
 ---@class AutoDropper : Dropper
 ---@field sv AutoDropperSv
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 AutoDropper = class(Dropper)
 AutoDropper.maxParentCount = 1
 AutoDropper.maxChildCount = 0
@@ -37,7 +36,7 @@ end
 -- #endregion
 
 --------------------
--- #region Server
+-- #region Types
 --------------------
 
 ---@class AutoDropperSv

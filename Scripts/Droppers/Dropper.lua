@@ -3,8 +3,7 @@ dofile("$CONTENT_DATA/Scripts/util/util.lua")
 ---A dropper uses power to spawn shapes into the world called `Drop`.
 ---@class Dropper : ShapeClass
 ---@field sv DropperSv
----@diagnostic disable-next-line: assign-type-mismatch
-Dropper = class(nil)
+Dropper = class()
 
 --------------------
 -- #region Server
@@ -85,9 +84,8 @@ function Dropper:sv_consumePowerAndDrop()
     end
 end
 
-function Dropper:sv_onNewDropCreated(shape)
-
-end
+---@param shape Shape
+function Dropper:sv_onNewDropCreated(shape) end
 
 -- #endregion
 

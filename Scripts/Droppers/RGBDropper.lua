@@ -2,8 +2,6 @@ dofile("$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua")
 
 ---An RGBDropper automatically spawns Drops of random color and value
 ---@class RGBDropper : AutoDropper
----@field sv AutoDropperSv
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 RGBDropper = class(AutoDropper)
 
 --------------------

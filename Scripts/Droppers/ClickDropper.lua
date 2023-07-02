@@ -1,9 +1,9 @@
 dofile("$CONTENT_DATA/Scripts/Droppers/Dropper.lua")
+
 ---A ClickDropper is a `Dropper` that will create a `Drop` and consume power when the player clicks (interacts) with it.
 ---@class ClickDropper : Dropper
 ---@field cl ClickDropperCl
 ---@field sv ClickDropperSv
----@diagnostic disable-next-line: param-type-mismatch, assign-type-mismatch
 ClickDropper = class(Dropper)
 ClickDropper.poseWeightCount = 1
 
@@ -43,7 +43,7 @@ function ClickDropper:client_onFixedUpdate()
     self.cl.prevState = state
 end
 
-function ClickDropper:client_onInteract(character, state)
+function ClickDropper:client_onInteract(_, state)
     self.network:sendToServer("sv_setActive", state)
 end
 
