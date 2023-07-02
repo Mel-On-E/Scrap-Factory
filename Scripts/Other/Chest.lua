@@ -141,7 +141,7 @@ end
 ---@class ChestSv
 ---@field container Container
 ---@field cachedPos Vec3 cached position of the Chest
----@field lootList table <number, Item> list of all items in a Chest
+---@field lootList table <number, ShopItem> list of all items in a Chest
 ---@field playersHavingChestGuiOpen integer how many players have the chest opened rn
 
 ---@class ChestCl
