@@ -1,6 +1,5 @@
----A Furnace that can sell any item like the sell tool
+---A Furnace that will try to sell any body that it detects
 ---@class ItemFurnace : Furnace
----@diagnostic disable-next-line: param-type-mismatch
 ItemFurnace = class(Furnace)
 
 --------------------
@@ -41,9 +40,7 @@ function ItemFurnace:server_onFixedUpdate()
     end
 end
 
-function ItemFurnace:sv_onEnter(trigger, results)
-    return
-end
+function ItemFurnace:sv_onEnter() end
 
 -- #endregion
 

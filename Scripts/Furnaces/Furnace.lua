@@ -11,16 +11,13 @@ Furnace.connectionOutput = sm.interactable.connectionType.logic
 Furnace.colorNormal = sm.color.new(0x8000ddff)
 Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
+---@type Interactable|nil if not nil, the Furnace set for research
+local sv_research_furnace
+
 --------------------
 -- #region Server
 --------------------
 
----@type Interactable|nil if not nil, the Furnace set for research
-local sv_research_furnace
-
----@class FurnaceParams
----@field filters number|nil filters of the areaTrigger
----@param self any
 ---@param params? FurnaceParams
 function Furnace:server_onCreate(params)
 	params = params or {}
@@ -28,7 +25,6 @@ function Furnace:server_onCreate(params)
 	--tutorial stuff
 	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "FurnacePlaced")
 
-	---@diagnostic disable-next-line: param-type-mismatch
 	PowerUtility.sv_init(self)
 
 	--save data
@@ -47,7 +43,7 @@ function Furnace:server_onCreate(params)
 		end
 	end
 
-	self.sv.trigger = Furnace.sv_createAreaTrigger(self, params.filters)
+	self.sv.trigger = self:sv_createAreaTrigger(params.filters)
 	self.sv.trigger:bindOnEnter("sv_onEnter")
 	self.sv.trigger:bindOnStay("sv_onEnter")
 end
@@ -65,7 +61,6 @@ function Furnace:sv_createAreaTrigger(filters)
 	)
 end
 
----@param self any
 function Furnace:sv_onEnter(_, results)
 	if not self.powerUtil.active then
 		return
@@ -294,6 +289,9 @@ end
 --------------------
 -- #region Types
 --------------------
+
+---@class FurnaceParams
+---@field filters number|nil filters of the areaTrigger
 
 ---@class FurnaceSv
 ---@field saved FurnaceSaveData
