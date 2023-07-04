@@ -12,8 +12,9 @@ PrestigeManager.isSaveObject = true
 function PrestigeManager:server_onCreate()
     g_prestigeManager = g_prestigeManager or self
 
-    self.sv = {}
-    self.sv.saved = self.storage:load()
+    self.sv = {
+        saved = self.storage:load()
+    }
     if self.sv.saved == nil then
         self.sv.saved = {
             prestigePoints = 0,
@@ -114,7 +115,7 @@ function PrestigeManager:sv_doPrestige()
 
     MoneyManager.sv_setMoney(0)
     PollutionManager.sv_setPollution(0)
-    PerkManager.Sv_clearItemsToCollect()
+    PerkManager.sv_clearItemsToCollect()
     sm.event.sendToScriptableObject(g_ResearchManager.scriptableObject, "sv_resetResearchProgress")
 end
 
@@ -144,10 +145,10 @@ function PrestigeManager:client_onClientDataUpdate(clientData)
 end
 
 function PrestigeManager:client_onFixedUpdate()
-    self:updateHud()
+    self:cl_updateHud()
 end
 
-function PrestigeManager:updateHud()
+function PrestigeManager:cl_updateHud()
     if g_factoryHud then
         local prestige = self.getPrestigeGain()
         if prestige then

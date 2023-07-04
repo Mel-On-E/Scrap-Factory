@@ -22,12 +22,15 @@ end
 function ResearchManager:server_onCreate()
     g_ResearchManager = g_ResearchManager or self
 
-    self.sv = {}
-    self.sv.saved = self.storage:load()
+    self.sv = {
+        saved = self.storage:load()
+    }
+
     if self.sv.saved == nil then
-        self.sv.saved = {}
-        self.sv.saved.tier = 1
-        self.sv.saved.research = {}
+        self.sv.saved = {
+            tier = 1,
+            research = {}
+        }
     else
         self.sv.saved = unpackNetworkData(self.sv.saved)
     end
@@ -105,10 +108,6 @@ function ResearchManager.sv_setResearchTier(tier)
 end
 
 -- #endregion
-
-function ResearchManager:getTierProgress()
-    return (self.sv and self:sv_getProgressString()) or self.cl.data.progress
-end
 
 --------------------
 -- #region Client
@@ -196,6 +195,10 @@ function ResearchManager.cl_getTierCount()
 end
 
 -- #endregion
+
+function ResearchManager:getTierProgress()
+    return (self.sv and self:sv_getProgressString()) or self.cl.data.progress
+end
 
 --------------------
 -- #region Types

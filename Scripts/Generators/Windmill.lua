@@ -66,15 +66,9 @@ end
 
 -- #endregion
 
---------------------
--- #region All Sandboxes
---------------------
-
 function Windmill:get_height_multiplier()
     return sm.util.clamp(self.shape.worldPosition.z / 100 + 1, 1, 2)
 end
-
--- #endregion
 
 --------------------
 -- #region Types

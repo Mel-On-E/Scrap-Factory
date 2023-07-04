@@ -12,9 +12,10 @@ SaveDataManager.isSaveObject = true
 function SaveDataManager:server_onCreate()
     g_saveDataManager = g_saveDataManager or self
 
-    self.sv = {}
-    self.sv.saved = self.storage:load() or {
-        dropPlusPlus = 1
+    self.sv = {
+        saved = self.storage:load() or {
+            dropPlusPlus = 1
+        }
     }
     self:sv_saveDataAndSync()
 end
@@ -54,6 +55,8 @@ end
 function SaveDataManager:client_onClientDataUpdate(data)
     self.cl.saved = data
 end
+
+-- #endregion
 
 --------------------
 -- #region Server

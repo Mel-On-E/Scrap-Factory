@@ -2,7 +2,6 @@
 ---@class MoneyManager : ScriptableObjectClass
 ---@field sv MoneyManagerSv
 ---@field cl MoneyManagerCl
----@diagnostic disable-next-line: assign-type-mismatch
 MoneyManager = class()
 MoneyManager.isSaveObject = true
 
@@ -54,7 +53,6 @@ function MoneyManager:server_onFixedUpdate()
     end
 end
 
----Adds money
 ---@param money number amount of money to add
 ---@param source "sellTool"|nil source that generated the money
 function MoneyManager.sv_addMoney(money, source)
@@ -80,7 +78,6 @@ function MoneyManager.sv_setMoney(money)
     g_moneyManager:sv_resetMoneyCache()
 end
 
----Try to spend money
 ---@param price number amount of money to spend
 ---@return boolean spent wheter the amount of money could be spent or not
 function MoneyManager.sv_trySpendMoney(price)
@@ -107,48 +104,45 @@ function MoneyManager:client_onCreate()
     g_moneyManager = g_moneyManager or self
 
     self.cl = {
-        data = {
-            money = 0,
-            moneyEarned = 0,
-            moneyPerInterval = 0
-        }
+        money = 0,
+        moneyEarned = 0,
+        moneyPerInterval = 0
     }
 end
 
-function MoneyManager:client_onClientDataUpdate(clientData, channel)
-    self.cl.data = unpackNetworkData(clientData)
+function MoneyManager:client_onClientDataUpdate(clientData)
+    self.cl = unpackNetworkData(clientData)
 end
 
 function MoneyManager:client_onFixedUpdate()
-    self:updateHud()
+    self:cl_updateHud()
 end
 
-function MoneyManager:updateHud()
+function MoneyManager:cl_updateHud()
     if g_factoryHud then
         local money = self.getMoney()
         if money then
             g_factoryHud:setText("Money", format_number({ format = "money", value = money }))
             g_factoryHud:setText("Money/s",
-                format_number({ format = "money", value = self.cl.data.moneyPerInterval, unit = "/min" }))
+                format_number({ format = "money", value = self.cl.moneyPerInterval, unit = "/min" }))
         end
     end
 end
 
 function MoneyManager.cl_moneyEarned()
-    return g_moneyManager.cl.data.moneyEarned
+    return g_moneyManager.cl.moneyEarned
 end
 
 -- #endregion
 
 function MoneyManager.getMoney()
-    return g_moneyManager.sv and g_moneyManager.sv.saved.money or g_moneyManager.cl.data.money
+    return g_moneyManager.sv and g_moneyManager.sv.saved.money or g_moneyManager.cl.money
 end
 
 --------------------
 -- #region Types
 --------------------
 
---Types
 ---@class MoneyManagerSv
 ---@field moneyEarnedSinceUpdate number money earned since last money update
 ---@field moneyEarnedCache table<integer, number> table of money earned per ticks
@@ -162,6 +156,5 @@ end
 ---@field money number available money
 ---@field moneyEarned number total amount of money earned
 ---@field moneyPerInterval number money earned per interval (used in HUD)
---TODO type fix
 
 -- #endregion

@@ -208,10 +208,6 @@ end
 
 -- #endregion
 
---------------------
--- #region All Sandboxes
---------------------
-
 ---@return number
 function Drop:getValue()
 	local value = self.cl.data.value
@@ -241,8 +237,6 @@ function Drop:getPollution()
 	end
 	return (pollution and math.max(pollution - self:getValue(), 0)) or nil
 end
-
--- #endregion
 
 --------------------
 -- #region Types

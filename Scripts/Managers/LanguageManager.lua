@@ -11,7 +11,7 @@ function LanguageManager:client_onCreate()
 end
 
 ---Automatically translates a string into the client language:
----
+---<br>**Client Only**
 ---```lua
 --- if sm.gui.getCurrentLanguage() == "English" then
 ---     print(language_tag("Research"))

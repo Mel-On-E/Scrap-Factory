@@ -20,7 +20,8 @@ function PerkManager:server_onCreate()
             research = 1,
             pollution = 1
         },
-        items = {}
+        items = {},
+        init = true,
     }
 
     self.sv.saved = self.sv.saved or {
@@ -36,7 +37,6 @@ function PerkManager:server_onCreate()
     end
 
     self:sv_saveDataAndSync()
-    self.sv.init = true
 end
 
 function PerkManager:sv_saveDataAndSync()
@@ -56,7 +56,7 @@ function PerkManager.sv_addPerk(perk)
         end
 
         if effect == "items" then
-            for key, uuid in pairs(params) do
+            for _,uuid in ipairs(params) do
                 g_perkManager.sv.items[#g_perkManager.sv.items + 1] = sm.uuid.new(uuid)
 
                 if g_perkManager.sv.init then
@@ -79,7 +79,7 @@ function PerkManager.sv_addPerk(perk)
 end
 
 ---clear the list of items to give to offline players
-function PerkManager.Sv_clearItemsToCollect()
+function PerkManager.sv_clearItemsToCollect()
     g_perkManager.sv.saved.itemsCollected = {}
     sm.event.sendToScriptableObject(g_perkManager.scriptableObject, "sv_saveDataAndSync")
 end
@@ -173,3 +173,5 @@ end
 ---@field data PerkManagerData
 ---@class PerkManagerData
 ---@field perks table<string, boolean> table of owned perks
+
+-- #endregion

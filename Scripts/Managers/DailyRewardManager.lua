@@ -152,8 +152,10 @@ function DailyRewardManager:cl_claimReward()
     sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_destroyEffect", "DailyReward")
 end
 
+-- #endregion
+
 --------------------
--- #region Server
+-- #region Types
 --------------------
 
 ---@class DailyRewardManagerSv

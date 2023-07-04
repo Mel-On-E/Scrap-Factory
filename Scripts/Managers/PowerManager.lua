@@ -1,7 +1,6 @@
 ---@class PowerManager : ScriptableObjectClass
 ---@field sv PowerManagerSv
 ---@field cl PowerManagerCl
----@diagnostic disable-next-line: assign-type-mismatch
 PowerManager = class()
 PowerManager.isSaveObject = true
 
@@ -14,10 +13,10 @@ function PowerManager:server_onCreate()
 
     self.sv = {
         power = 0,
-        powerStorage = 0
+        powerStorage = 0,
+        saved = self.storage:load()
     }
-
-    self.sv.saved = self.storage:load()
+    
     if self.sv.saved == nil then
         self.sv.saved = { powerStored = 0 }
     else

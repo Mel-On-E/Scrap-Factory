@@ -77,14 +77,13 @@ local tutorialSteps = {
 --------------------
 
 function TutorialManager:server_onCreate()
-    ---@type TutorialManager
     g_tutorialManager = g_tutorialManager or self
 
     self.sv = {
-        eventsReceived = {}
+        eventsReceived = {},
+        saved = self.storage:load()
     }
 
-    self.sv.saved = self.storage:load()
     if not self.sv.saved then
         self.sv.saved = {
             tutorialsWatched = {},
@@ -166,20 +165,18 @@ end
 --------------------
 
 function TutorialManager:client_onCreate()
-    ---@type TutorialManager
     g_tutorialManager = g_tutorialManager or self
 
     self.cl = {
         activeTutorial = "",
-        trackerHud = sm.gui.createQuestTrackerGui()
+        trackerHud = sm.gui.createQuestTrackerGui(),
+        data = {
+            tutorialsWatched = {},
+            eventsReceived = {},
+            tutorialStep = 1
+        }
     }
     self.cl.trackerHud:open()
-
-    self.cl.data = {
-        tutorialsWatched = {},
-        eventsReceived = {},
-        tutorialStep = 1
-    }
 end
 
 function TutorialManager:client_onClientDataUpdate(data)
@@ -295,6 +292,8 @@ function TutorialManager.cl_isTutorialEventCompleteOrActive(event)
     --neither
     return false
 end
+
+-- #endregion
 
 --------------------
 -- #region Types

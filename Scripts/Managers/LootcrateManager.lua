@@ -2,7 +2,11 @@
 ---@class LootCrateManager : ScriptableObjectClass
 LootCrateManager = class()
 
-local dropInterval = 40 * 30 --ticks
+--------------------
+-- #region Server
+--------------------
+
+local dropInterval = 30 *40 --30 secs
 local lootTable = {
     { chance = 95, uuid = obj_lootcrate },
     { chance = 5,  uuid = obj_lootcrate_rare }
@@ -43,3 +47,5 @@ function LootCrateManager:sv_pickRandomCrate()
         ---@diagnostic disable-next-line: missing-return
     end
 end
+
+-- #endregion

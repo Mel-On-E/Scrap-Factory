@@ -2,7 +2,6 @@
 ---@class PollutionManager : ScriptableObjectClass
 ---@field sv PollutionManagerSv
 ---@field cl PollutionManagerCl
----@diagnostic disable-next-line: assign-type-mismatch
 PollutionManager = class()
 PollutionManager.isSaveObject = true
 
@@ -13,9 +12,10 @@ PollutionManager.isSaveObject = true
 function PollutionManager:server_onCreate()
     g_pollutionManager = g_pollutionManager or self
 
-    self.sv = {}
+    self.sv = {
+        saved = self.storage:load()
+    }
 
-    self.sv.saved = self.storage:load()
     if self.sv.saved == nil then
         self.sv.saved = { pollution = 0 }
     else
@@ -57,21 +57,21 @@ function PollutionManager:client_onCreate()
     }
 end
 
-function PollutionManager:client_onClientDataUpdate(clientData, channel)
+function PollutionManager:client_onClientDataUpdate(clientData)
     self.cl.data = unpackNetworkData(clientData)
 end
 
 function PollutionManager:client_onFixedUpdate()
-    self:updateHud()
+    self:cl_updateHud()
 end
 
 function PollutionManager:client_onUpdate()
     if sm.isHost then
-        self:updateHud()
+        self:cl_updateHud()
     end
 end
 
-function PollutionManager:updateHud()
+function PollutionManager:cl_updateHud()
     if g_factoryHud then
         local pollution = self.getPollution()
         if pollution then
