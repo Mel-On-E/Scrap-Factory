@@ -18,7 +18,7 @@ end
 
 ---apply a boost to a solar panel if the ray hits one
 function SolarMirror:sv_boost_solar_panel()
-    if not isDay then return end
+    if not isDay() then return end
     if not self:has_valid_rotation() then return end
 
     local reflectDir = self:get_reflection_dir()
