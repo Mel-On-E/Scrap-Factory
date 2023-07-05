@@ -46,7 +46,7 @@ function VampireDrop:server_onFixedUpdate()
     end
 end
 
-function VampireDrop:sv_onStay(trigger, results)
+function VampireDrop:sv_onStay(_, results)
     if self.sv.suckDelay > 0 then return end
 
     drops = getDrops(results)
