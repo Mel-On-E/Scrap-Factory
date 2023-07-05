@@ -11,12 +11,12 @@ Furnace.connectionOutput = sm.interactable.connectionType.logic
 Furnace.colorNormal = sm.color.new(0x8000ddff)
 Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
----@type Interactable|nil if not nil, the Furnace set for research
-local sv_research_furnace
-
 --------------------
 -- #region Server
 --------------------
+
+---@type Interactable|nil if not nil, the Furnace set for research
+local sv_research_furnace
 
 ---@param self Furnace|ShapeClass
 ---@param params? FurnaceParams

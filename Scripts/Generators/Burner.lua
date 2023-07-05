@@ -7,12 +7,12 @@ dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 ---@field powerUtil PowerUtility
 Burner = class()
 
----chance a special effect plays when a drop is sold
-local secretEffectChance = 0.15
-
 --------------------
 -- #region Server
 --------------------
+
+---chance a special effect plays when a drop is sold
+local secretEffectChance = 0.15
 
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)

@@ -4,12 +4,12 @@ dofile("$CONTENT_DATA/Scripts/Drops/Drop.lua")
 ---@class SplitDrop : Drop
 SplitDrop = class(Drop)
 
-local splitChancePerTick = 0.001
-local colorLossPerSplit = 20 / 255
-
 --------------------
 -- #region Server
 --------------------
+
+local splitChancePerTick = 0.001
+local colorLossPerSplit = 20 / 255
 
 function SplitDrop:server_onFixedUpdate()
     Drop.server_onFixedUpdate(self)
