@@ -12,7 +12,7 @@ IceDrop = class(Drop)
 local meltRatePerTick = 0.99995
 
 function IceDrop:server_onFixedUpdate()
-    if self.interactable.publicData then
+    if self.interactable.publicData and self.interactable.publicData.value then
         self.interactable.publicData.value = self.interactable.publicData.value * meltRatePerTick
     end
 

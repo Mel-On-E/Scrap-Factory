@@ -78,6 +78,7 @@ function Dropper:sv_consumePowerAndDrop()
             pollution = pollution,
             upgrades = {},
             impostor = false,
+            creationTime = sm.game.getCurrentTick()
         }
         shape.interactable:setPublicData(publicData)
 
