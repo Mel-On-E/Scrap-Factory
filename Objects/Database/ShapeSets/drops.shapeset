@@ -2379,6 +2379,60 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "53e7470d-99fe-450e-8606-42dc4f42e4f7"
+    },
+    {
+      "flammable": true,
+      "name": "obj_drop_popcorn",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_popcorn.rend",
+			"color": "1c8687",
+			"hull": {
+				"x": 1,
+				"y": 2,
+				"z": 1,
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_col.obj"
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "PopcornDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/PopcornDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "00e1724b-1ce2-45f1-92cd-cdcc89c8329e"
+    },
+    {
+      "flammable": true,
+      "name": "obj_drop_popcorn_popped",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_popcorn_popped.rend",
+			"color": "3e9ffe",
+			"hull": {
+				"x": 1,
+				"y": 2,
+				"z": 1,
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_popcorn_col.obj"
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "PopcornDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/PopcornDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40"
     }
   ]
 }
