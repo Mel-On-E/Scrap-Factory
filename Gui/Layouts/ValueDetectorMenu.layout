@@ -5,7 +5,7 @@
             <Widget type="TextBox" skin="TextBox" position_real="0.084406294706723894 0.06458333333333334 0.83404864091559372 0.17916666666666667" name="Title">
                 <Property key="TextAlign" value="Center"/>
                 <Property key="Caption" value="test lol"/>
-                <Property key="FontName" value="SM_HeaderLarge_Wide"/>
+                <Property key="FontName" value="SM_GameName"/>
             </Widget>
             <Widget type="Button" skin="PrimaryButton" position_real="0.35765379113018597 0.45833333333333331 0.29327610872675253 0.083333333333333329" name="LogicMode">
                 <Property key="TextAlign" value="Default"/>
