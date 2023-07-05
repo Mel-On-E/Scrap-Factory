@@ -1,0 +1,5 @@
+Types Todos
+TODO fix all ---@diagnostic disable-next-line occurences
+TODO standards for end region
+TODO fix docs for callbacks
+TODO maybe put sandboxed constants into the coresponding region
