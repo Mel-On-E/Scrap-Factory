@@ -92,7 +92,7 @@ function FactoryGame:sv_resetPlayer(player)
 	local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
 
 	local startingItems = {
-		tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_basic,
+		tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_scrap,
 		obj_generator_windmill
 	}
 

@@ -48,7 +48,7 @@ function Furnace:server_onCreate(params)
 
 	self.sv.trigger = Furnace.sv_createAreaTrigger(self, params.filters)
 	self.sv.trigger:bindOnEnter("sv_onEnter")
-	self.sv.trigger:bindOnStay("sv_onEnter")
+	self.sv.trigger:bindOnStay("sv_onStay")
 end
 
 function Furnace:sv_createAreaTrigger(filters)
@@ -65,46 +65,23 @@ function Furnace:sv_createAreaTrigger(filters)
 end
 
 function Furnace:sv_onEnter(_, results)
-	if not self.powerUtil.active then
-		return
-	end
+	if not self.powerUtil.active then return end
 
-	for _, result in ipairs(results) do
-		if not sm.exists(result) then
-			goto continue
-		end
-
-		for _, shape in pairs(result:getShapes()) do
-			local interactable = shape:getInteractable()
-			if not interactable then
-				goto continue
-			end
-			if interactable.type ~= "scripted" then
-				goto continue
-			end
-
-			local publicData = interactable:getPublicData()
-			if not publicData or not publicData.value then
-				goto continue
-			end
-
-			--valid drop entered
-			self:sv_onEnterDrop(shape)
-		end
-		::continue::
+	for _, drop in ipairs(getDrops(results)) do
+		self:sv_onEnterDrop(drop)
 	end
 end
 
+function Furnace:sv_onStay(_, results)
+end
+
 ---Called when a valid drop enters the Furnace and it has power
----@param shape DropShape
+---@param shape Shape
 function Furnace:sv_onEnterDrop(shape)
 	local value = self:sv_upgrade(shape)
 	local publicData = shape.interactable:getPublicData()
-	publicData.value = value
 
-	if publicData.pollution then
-		return
-	end
+	if publicData.pollution then return end
 
 	if self.sv.saved.research then
 		--make research points
@@ -119,12 +96,9 @@ function Furnace:sv_onEnterDrop(shape)
 		})
 	else
 		--impostor steals money
-		local color = nil
+		local color
 		if shape.interactable.publicData.impostor then
-			value = value * -1
-			if MoneyManager.getMoney() - value < 0 then
-				value = 0
-			end
+			value = math.max(value * -1, -1 * MoneyManager.getMoney())
 			color = "#dd0000"
 		end
 
@@ -151,7 +125,7 @@ function Furnace:sv_onEnterDrop(shape)
 end
 
 ---Called before a shape is sold, so it's value can be modified before
----@param shape DropShape shape that is to be sold by the furnace
+---@param shape Shape shape that is to be sold by the furnace
 ---@return number value new value of the drop
 function Furnace:sv_upgrade(shape)
 	local value = shape.interactable.publicData.value
