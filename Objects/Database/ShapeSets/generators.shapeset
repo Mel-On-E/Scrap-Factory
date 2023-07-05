@@ -169,6 +169,50 @@
          },
 			"flammable": true,
 			"stackSize" : 65535.0
+		},
+      {
+			"uuid": "0a099d28-1e39-41c2-9bad-58d30202ff3d",
+			"name": "obj_solar_mirror",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/decor/obj_decor_mirror.fbx"
+					}
+				]
+			},
+			"color": "3495e8",
+			"hull": {
+				"x": 3,
+				"y": 4,
+				"z": 1,
+				"col": "$SURVIVAL_DATA/Objects/Collision/obj_decor_mirror.obj"
+			},
+			"rotationSet": "PropYZmX",
+			"sticky": "-Z+Y-Y+X-X",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 4,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "scripted" : {
+            "classname" : "SolarMirror",
+            "data" : {
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/SolarMirror.lua"
+         },
+			"flammable": false
 		}
    ]
 }
