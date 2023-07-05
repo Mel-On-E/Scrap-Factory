@@ -20,8 +20,6 @@ function LightningRod:server_onFixedUpdate()
         self.sv.powerGenerated = self.sv.powerGenerated + self.data.power
         PowerManager.sv_changePower(self.data.power)
         self.network:setClientData({ power = tostring(self.sv.powerGenerated) })
-
-        sm.gui.chatMessage(tostring(self:get_height_multiplier()))
     end
 
     if sm.game.getCurrentTick() % 40 == 0 then
