@@ -248,6 +248,56 @@
             "filename" : "$CONTENT_DATA/Scripts/Generators/SolarMirror.lua"
          },
 			"flammable": false
-		}
+		},
+      {
+         "box": {
+				"x": 1,
+				"y": 8,
+				"z": 1
+			},
+         "color" : "df7f01",
+         "flammable" : false,
+         "name" : "obj_generator_lightning",
+         "physicsMaterial" : "Mechanical",
+         "ratings": {
+				"density": 2,
+				"durability": 2,
+				"friction": 3,
+				"buoyancy": 3
+			},
+         "renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_dif.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_asg.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_antenna01.fbx"
+					}
+				]
+			},
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "LightningRod",
+            "data" : {
+               "power" : 1000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/LightningRod.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "1e6",
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y",
+         "uuid" : "ffe3338e-db44-49b9-a3d3-6e764d0b7e3e"
+      }
    ]
 }
