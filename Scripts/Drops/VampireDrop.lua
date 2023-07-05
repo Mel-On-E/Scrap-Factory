@@ -21,6 +21,23 @@ function VampireDrop:server_onFixedUpdate()
     Drop.server_onFixedUpdate(self)
 
     self.sv.suckDelay = self.sv.suckDelay - 1
+
+    if isDay() then
+        sm.effect.playEffect("Fire -medium01_putout", self.shape.worldPosition)
+
+        --create pollution drop
+        local smoke = sm.shape.createPart(obj_drop_smoke, self.shape.worldPosition, self.shape.worldRotation)
+        local newPublicData = {
+            value = 0,
+            pollution = self.interactable.publicData.value,
+            upgrades = {}
+        }
+        smoke.interactable:setPublicData(newPublicData)
+
+        --destory drop
+        self.shape.interactable.publicData.value = nil
+        self.shape:destroyPart(0)
+    end
 end
 
 function VampireDrop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
