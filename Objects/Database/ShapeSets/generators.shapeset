@@ -70,6 +70,41 @@
       },
       {
          "box" : {
+            "x" : 3,
+            "y" : 4,
+            "z" : 3
+         },
+         "color" : "000000",
+         "flammable" : false,
+         "name" : "obj_generator_lunar",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_solarpanel_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Lunar",
+            "data" : {
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Lunar.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "200",
+            "special" : true,
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "cc5d9979-630d-4f8c-b454-b73c57d438fe"
+      },
+      {
+         "box" : {
             "x" : 6,
             "y" : 1,
             "z" : 6
