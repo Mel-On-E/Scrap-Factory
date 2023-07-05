@@ -15,6 +15,12 @@ local suckDelayTime = 3 * 40
 function VampireDrop:server_onCreate()
     Drop.server_onCreate(self)
     self.sv.suckDelay = 0
+
+    self.interactable.publicData.vampire = true
+    self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, sm.vec3.one() * 2, sm.vec3.zero(),
+        sm.quat.identity(),
+        sm.areaTrigger.filter.dynamicBody)
+    self.sv.trigger:bindOnEnter("sv_onStay")
 end
 
 function VampireDrop:server_onFixedUpdate()
@@ -22,7 +28,7 @@ function VampireDrop:server_onFixedUpdate()
 
     self.sv.suckDelay = self.sv.suckDelay - 1
 
-    if isDay() then
+    if isDay() or isSunrise() or isSunset() then
         sm.effect.playEffect("Fire -medium01_putout", self.shape.worldPosition)
 
         --create pollution drop
@@ -40,36 +46,36 @@ function VampireDrop:server_onFixedUpdate()
     end
 end
 
-function VampireDrop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
-    if type(other) == "Shape" and self.sv.suckDelay <= 0 then
-        self.sv.suckDelay = suckDelayTime
-        ---@cast other Shape
-        local interactable = other:getInteractable()
-        if not interactable or interactable.type ~= "scripted" then goto continue end
-        local data = interactable:getPublicData()
-        if not data or not data.value then goto continue end
-        -- varify that the collided shape is a drop.
+function VampireDrop:sv_onStay(trigger, results)
+    if self.sv.suckDelay > 0 then return end
 
-        local stolenValue = suckFraction * data.value
-        data.value = math.sqrt(data.value)
-        self.interactable.publicData.value = self.interactable.publicData.value + stolenValue
+    drops = getDrops(results)
 
-        sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-            pos = other.worldPosition,
-            value = tostring(stolenValue),
-            color = '#de431d'
-        })
-        :: continue ::
+    for _, drop in ipairs(drops) do
+        local publicData = drop.interactable.publicData
+
+        if not publicData.vampire and self.sv.suckDelay <= 0 then
+            self.sv.suckDelay = suckDelayTime
+
+            local stolenValue = suckFraction * publicData.value
+            publicData.value = math.sqrt(publicData.value)
+            self.interactable.publicData.value = self.interactable.publicData.value + stolenValue
+            drop.color = sm.color.new(drop.color.r * 2, drop.color.g * 2, drop.color.b * 2)
+
+            sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+                pos = drop.worldPosition,
+                format = "money",
+                value = tostring(stolenValue),
+                color = '#880808'
+            })
+
+            sm.effect.playEffect("Eat - Munch", drop.worldPosition)
+            sm.effect.playEffect("Eat - MunchSound", drop.worldPosition)
+        end
     end
-    Drop.server_onCollision(self, other) -- destroy shape if touching ground
 end
 
---TODO hide in light
-
 -- #endregion
-
--- ERROR the shape collides with the spawner (line 1996 in droppers.shapeset)
--- TODO destroy explosion guts effect
 
 --------------------
 -- #region Types
