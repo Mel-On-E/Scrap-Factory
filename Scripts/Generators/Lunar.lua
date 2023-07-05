@@ -10,6 +10,7 @@ Lunar = class(Generator)
 --------------------
 
 function Lunar:sv_getPower()
+    ---@diagnostic disable-next-line param-type-missmatch
     return self.data.power - Solar.sv_getPower(self)
 end
 
