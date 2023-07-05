@@ -1973,7 +1973,7 @@
             "y" : 11,
             "z" : 8
          },
-         "color" : "eeeeee",
+         "color" : "880808",
          "flammable" : false,
          "name" : "obj_dropper_vampire",
          "physicsMaterial" : "Mechanical",
