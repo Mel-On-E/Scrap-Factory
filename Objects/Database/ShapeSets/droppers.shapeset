@@ -2002,6 +2002,7 @@
             },
             "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
          },
+         "stackSize" : 65535.0,
          "uuid" : "68e2aca1-a254-47c8-ae63-1d33b6865003"
       }
    ]
