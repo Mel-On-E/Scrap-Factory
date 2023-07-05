@@ -17,6 +17,8 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
 ---@type Interactable|nil if not nil, the Furnace set for research
 local sv_research_furnace
+---Time in seconds
+local moneyCacheInterval = 60
 
 ---@class FurnaceParams
 ---@field filters number|nil filters of the areaTrigger
@@ -31,7 +33,10 @@ function Furnace:server_onCreate(params)
 	PowerUtility.sv_init(self)
 
 	--save data
-	self.sv = {}
+	self.sv = {
+		moneyEarnedCache = {},
+		moneyEarnedSinceUpdate = 0,
+	}
 	self.sv.saved = self.storage:load()
 	if not self.sv.saved then
 		self.sv.saved = {}
@@ -102,7 +107,7 @@ function Furnace:sv_onEnterDrop(shape)
 			color = "#dd0000"
 		end
 
-		--make money
+		--make money,
 		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 			pos = shape:getWorldPosition(),
 			value = tostring(value),
@@ -117,7 +122,7 @@ function Furnace:sv_onEnterDrop(shape)
 			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
 		end
 	end
-
+	self.sv.moneyEarnedSinceUpdate = self.sv.moneyEarnedSinceUpdate + shape.interactable.publicData.value
 	self.interactable:setActive(true)
 
 	shape.interactable.publicData.value = nil
@@ -174,6 +179,25 @@ function Furnace:server_onFixedUpdate()
 	if self.interactable:isActive() then
 		self.interactable:setActive(false)
 	end
+
+	if sm.game.getCurrentTick() % 40 ~= 0 then
+		return
+	end
+	self.sv.moneyEarnedCache[math.floor(sm.game.getCurrentTick() / 40) % (moneyCacheInterval + 3)] =
+		self.sv.moneyEarnedSinceUpdate
+	self.sv.moneyEarnedSinceUpdate = 0
+
+	local moneyPerInterval = 0
+	for _, money in pairs(self.sv.moneyEarnedCache) do
+		moneyPerInterval = moneyPerInterval + money
+	end
+	self.network:setClientData(moneyPerInterval)
+end
+
+function Furnace:sv_resetCache()
+	self.sv.moneyEarnedCache = {}
+	self.sv.moneyEarnedSinceUpdate = 0
+	self.network:setClientData(0)
 end
 
 -- #endregion
@@ -186,7 +210,9 @@ end
 local cl_research_Effect
 
 function Furnace:client_onCreate()
-	self.cl = {}
+	self.cl = {
+		research = false,
+	}
 
 	--create sell area effect
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
@@ -245,6 +271,26 @@ end
 
 function Furnace:client_canInteract()
 	sm.gui.setInteractionText("", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace"))
+	local formatted_money
+
+	if self.cl.research then
+		formatted_money = format_number({
+			color = "#00dddd",
+			value = (self.cl.moneyPerInterval ~= nil and self.cl.moneyPerInterval or 0),
+			unit = "/min",
+		})
+	else
+		formatted_money = format_number({
+			color = "#66440C",
+			format = "money",
+			value = (self.cl.moneyPerInterval ~= nil and self.cl.moneyPerInterval or 0),
+			unit = "/min",
+		})
+	end
+
+	sm.gui.setInteractionText(
+		"<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. formatted_money .. "</p>"
+	)
 	return true
 end
 
@@ -254,10 +300,16 @@ function Furnace:client_onInteract(character, state)
 		--check if feature unlocked
 		if TutorialManager.cl_isTutorialEventCompleteOrActive("ResearchFurnaceSet") then
 			self.network:sendToServer("sv_setResearch")
+			self.cl.research = not self.cl.research
+			self.network:sendToServer("sv_resetCache")
 		else
 			sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
 		end
 	end
+end
+
+function Furnace:client_onClientDataUpdate(data)
+	self.cl.moneyPerInterval = data
 end
 
 -- #endregion
@@ -269,11 +321,14 @@ end
 ---@class FurnaceSv
 ---@field saved FurnaceSaveData
 ---@field trigger AreaTrigger the areaTrigger that defines the sell area
+---@field moneyEarnedCache table<integer, number> table of money earned per ticks
+---@field moneyEarnedSinceUpdate number Money earned since last money update
 
 ---@class FurnaceSaveData
 ---@field research boolean whether the furnace is a research furnace
 
 ---@class FurnaceCl
 ---@field effect Effect effect that visualizes the sell area
-
+---@field moneyPerInterval number
+---@field research boolean whether the furnace is a research furnace
 -- #endregion
