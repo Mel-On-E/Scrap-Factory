@@ -17,6 +17,12 @@ function VampireDrop:server_onCreate()
     self.sv.suckDelay = 0
 end
 
+function VampireDrop:server_onFixedUpdate()
+    Drop.server_onFixedUpdate(self)
+
+    self.sv.suckDelay = self.sv.suckDelay - 1
+end
+
 function VampireDrop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
     if type(other) == "Shape" and self.sv.suckDelay <= 0 then
         self.sv.suckDelay = suckDelayTime
