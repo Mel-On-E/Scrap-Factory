@@ -20,7 +20,7 @@ function VampireDrop:server_onCreate()
     self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, sm.vec3.one() * 2, sm.vec3.zero(),
         sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody)
-    self.sv.trigger:bindOnEnter("sv_onStay")
+    self.sv.trigger:bindOnEnter("sv_onEnter")
 end
 
 function VampireDrop:server_onFixedUpdate()
@@ -46,12 +46,10 @@ function VampireDrop:server_onFixedUpdate()
     end
 end
 
-function VampireDrop:sv_onStay(_, results)
+function VampireDrop:sv_onEnter(_, results)
     if self.sv.suckDelay > 0 then return end
 
-    drops = getDrops(results)
-
-    for _, drop in ipairs(drops) do
+    for _, drop in ipairs(getDrops(results)) do
         local publicData = drop.interactable.publicData
 
         if not publicData.vampire and self.sv.suckDelay <= 0 then
