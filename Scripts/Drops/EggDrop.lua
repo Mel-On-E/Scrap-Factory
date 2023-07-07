@@ -13,11 +13,15 @@ local velocityThreshold = 5
 
 function EggDrop:server_onCollision(other, position, selfVel, otherVel, normal)
     -- check if it hit something at a velocity threshold
-    -- `not other` case is for when it hits the ground
-    if selfVel:length() > velocityThreshold or not other then self:sv_destroy() end
-    -- check if character hits at a velocity (trampeling)
+    local velDiff = selfVel + otherVel
+
+    local collAngle = math.deg(angle(selfVel, normal)) - 90
+    local angleFactor = 2 * (collAngle / 90)
+
+    if velDiff:length() * angleFactor > velocityThreshold or not other then self:sv_destroy() end
+
     if type(other) == "Character" then
-        if (normal*otherVel):length() > 2 then self:sv_destroy() end
+        if (normal * otherVel):length() > 2 then self:sv_destroy() end
     end
 end
 
