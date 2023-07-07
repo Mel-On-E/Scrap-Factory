@@ -21,9 +21,8 @@ function EggDrop:server_onCollision(other, position, selfVel, otherVel, normal)
     end
 end
 
-function EggDrop:server_onMelee(position, attacker, damage, power, direction, normal )
-    -- 1 is the durability of the drop (somehow get from shapeset pls)
-    if damage > 1 then self:sv_destroy() end
+function EggDrop:server_onMelee(position, attacker, damage, power, direction, normal)
+    self:sv_destroy()
 end
 
 function EggDrop:sv_destroy()
