@@ -17,7 +17,7 @@ function VampireDrop:server_onCreate()
     self.sv.suckDelay = 0
 
     self.interactable.publicData.vampire = true
-    self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, sm.vec3.one() * 2, sm.vec3.zero(),
+    self.sv.trigger = sm.areaTrigger.createAttachedBox(self.interactable, sm.vec3.one() * 0.5, sm.vec3.zero(),
         sm.quat.identity(),
         sm.areaTrigger.filter.dynamicBody)
     self.sv.trigger:bindOnEnter("sv_onEnter")
