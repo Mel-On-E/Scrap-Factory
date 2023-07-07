@@ -12,8 +12,7 @@ local velocityThreshold = 5
 --------------------
 
 function EggDrop:server_onCollision(other, position, selfVel, otherVel, normal)
-    -- check if it hit something at a velocity threshold
-    local velDiff = selfVel + otherVel
+    local velDiff = selfVel - otherVel
 
     local collAngle = math.deg(angle(selfVel, normal)) - 90
     local angleFactor = 2 * (collAngle / 90)
