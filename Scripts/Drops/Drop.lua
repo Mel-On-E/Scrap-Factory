@@ -25,7 +25,7 @@ end
 function Drop:server_onCreate()
 	self:sv_init()
 	self:sv_changeOreCount(1)
-
+	
 	--delete drop if it has been created before
 	if not self.storage:load() then
 		self.storage:save(true)
@@ -60,6 +60,7 @@ function Drop:server_onFixedUpdate()
 
 	--cache server variables
 	self.sv.cachedPos = self.shape.worldPosition
+	---@diagnostic disable-next-line
 	self.sv.cachedPollution = self:getPollution()
 	self.sv.cachedValue = self:getValue()
 
@@ -82,6 +83,7 @@ function Drop:server_onFixedUpdate()
 		end
 
 		--remove tractorBeamTag
+		--TODO refactor
 		if self.interactable.publicData and self.interactable.publicData.tractorBeam then
 			self.sv.timeout = 0
 			if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
@@ -152,19 +154,25 @@ end
 --------------------
 
 function Drop:client_onCreate()
+	self:cl_init()
+
+	--create default effect
+	if self.data and self.data.effect then
+		Effects.cl_createEffect(self,
+			{ key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
+	end
+end
+
+function Drop:cl_init()
 	self.cl = {
 		data = {
 			value = 0
 		}
 	}
-
 	Effects.cl_init(self)
-	--create default effect
-	if self.data and self.data.effect then
-		Effects.cl_createEffect(self, { key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
-	end
 end
 
+---@param data DropClientData
 function Drop:client_onClientDataUpdate(data)
 	self.cl.data = unpackNetworkData(data)
 
@@ -256,9 +264,9 @@ end
 ---@field autoPlay boolean whether the effect should auto play
 
 ---@class DropCl
----@field data clientData
+---@field data DropClientData
 
----@class clientData
+---@class DropClientData
 ---@field pollution number
 ---@field value number
 

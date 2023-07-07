@@ -11,19 +11,15 @@ ExplosiveDrop.poseWeightCount = 1
 ExplosiveDrop.fireDelay = 80 --ticks (2 seconds)
 ExplosiveDrop.fuseDelay = 0.0625
 
---ERROR fix idk, check console
-
 --------------------
 -- #region Server
 --------------------
 
 function ExplosiveDrop:sv_init()
     Drop.sv_init(self)
-    self.sv = {
-        exploded = false,
-        counting = false,
-        fireDelayProgress = 0
-    }
+    self.sv.exploded = false
+    self.sv.counting = false
+    self.sv.fireDelayProgress = 0
 end
 
 function ExplosiveDrop:server_onFixedUpdate()
