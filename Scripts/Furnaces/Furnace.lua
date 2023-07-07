@@ -17,6 +17,8 @@ Furnace.colorHighlight = sm.color.new(0x8000ffff)
 
 ---@type Interactable|nil if not nil, the Furnace set for research
 local sv_research_furnace
+---Time in seconds
+local moneyCacheInterval = 60
 
 ---@param self Furnace|ShapeClass
 ---@param params? FurnaceParams
@@ -29,7 +31,10 @@ function Furnace:server_onCreate(params)
 	PowerUtility.sv_init(self)
 
 	--save data
-	self.sv = {}
+	self.sv = {
+		moneyEarnedCache = {},
+		moneyEarnedSinceUpdate = 0,
+	}
 	self.sv.saved = self.storage:load()
 	if not self.sv.saved then
 		self.sv.saved = {}
@@ -46,7 +51,7 @@ function Furnace:server_onCreate(params)
 
 	self.sv.trigger = self:sv_createAreaTrigger(params.filters)
 	self.sv.trigger:bindOnEnter("sv_onEnter")
-	self.sv.trigger:bindOnStay("sv_onEnter")
+	self.sv.trigger:bindOnStay("sv_onStay")
 end
 
 ---@param self Furnace|ShapeClass
@@ -65,34 +70,14 @@ end
 
 ---@param self Furnace|ShapeClass
 function Furnace:sv_onEnter(_, results)
-	if not self.powerUtil.active then
-		return
+	if not self.powerUtil.active then return end
+
+	for _, drop in ipairs(getDrops(results)) do
+		self:sv_onEnterDrop(drop)
 	end
+end
 
-	for _, result in ipairs(results) do
-		if not sm.exists(result) then
-			goto continue
-		end
-
-		for _, shape in pairs(result:getShapes()) do
-			local interactable = shape:getInteractable()
-			if not interactable then
-				goto continue
-			end
-			if interactable.type ~= "scripted" then
-				goto continue
-			end
-
-			local publicData = interactable:getPublicData()
-			if not publicData or not publicData.value then
-				goto continue
-			end
-
-			--valid drop entered
-			self:sv_onEnterDrop(shape)
-		end
-		::continue::
-	end
+function Furnace:sv_onStay(_, results)
 end
 
 ---Called when a valid drop enters the Furnace and it has power
@@ -101,11 +86,8 @@ end
 function Furnace:sv_onEnterDrop(shape)
 	local value = self:sv_upgrade(shape)
 	local publicData = shape.interactable:getPublicData()
-	publicData.value = value
 
-	if publicData.pollution then
-		return
-	end
+	if publicData.pollution then return end
 
 	if self.sv.saved.research then
 		--make research points
@@ -120,16 +102,13 @@ function Furnace:sv_onEnterDrop(shape)
 		})
 	else
 		--impostor steals money
-		local color = nil
+		local color
 		if shape.interactable.publicData.impostor then
-			value = value * -1
-			if MoneyManager.getMoney() - value < 0 then
-				value = 0
-			end
+			value = math.max(value * -1, -1 * MoneyManager.getMoney())
 			color = "#dd0000"
 		end
 
-		--make money
+		--make money,
 		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 			pos = shape:getWorldPosition(),
 			value = tostring(value),
@@ -144,7 +123,7 @@ function Furnace:sv_onEnterDrop(shape)
 			sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "SellUpgradedDrop")
 		end
 	end
-
+	self.sv.moneyEarnedSinceUpdate = self.sv.moneyEarnedSinceUpdate + shape.interactable.publicData.value
 	self.interactable:setActive(true)
 
 	shape.interactable.publicData.value = nil
@@ -202,6 +181,25 @@ function Furnace:server_onFixedUpdate()
 	if self.interactable:isActive() then
 		self.interactable:setActive(false)
 	end
+
+	if sm.game.getCurrentTick() % 40 ~= 0 then
+		return
+	end
+	self.sv.moneyEarnedCache[math.floor(sm.game.getCurrentTick() / 40) % (moneyCacheInterval + 3)] =
+		self.sv.moneyEarnedSinceUpdate
+	self.sv.moneyEarnedSinceUpdate = 0
+
+	local moneyPerInterval = 0
+	for _, money in pairs(self.sv.moneyEarnedCache) do
+		moneyPerInterval = moneyPerInterval + money
+	end
+	self.network:setClientData(moneyPerInterval)
+end
+
+function Furnace:sv_resetCache()
+	self.sv.moneyEarnedCache = {}
+	self.sv.moneyEarnedSinceUpdate = 0
+	self.network:setClientData(0)
 end
 
 -- #endregion
@@ -215,7 +213,9 @@ local cl_research_Effect
 
 ---@param self any
 function Furnace:client_onCreate()
-	self.cl = {}
+	self.cl = {
+		research = false,
+	}
 
 	--create sell area effect
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y * 7.5, self.data.box.z)
@@ -274,6 +274,26 @@ end
 
 function Furnace:client_canInteract()
 	sm.gui.setInteractionText("", sm.gui.getKeyBinding("Use", true), language_tag("SetResearchFurnace"))
+	local formatted_money
+
+	if self.cl.research then
+		formatted_money = format_number({
+			color = "#00dddd",
+			value = (self.cl.moneyPerInterval ~= nil and self.cl.moneyPerInterval or 0),
+			unit = "/min",
+		})
+	else
+		formatted_money = format_number({
+			color = "#66440C",
+			format = "money",
+			value = (self.cl.moneyPerInterval ~= nil and self.cl.moneyPerInterval or 0),
+			unit = "/min",
+		})
+	end
+
+	sm.gui.setInteractionText(
+		"<p textShadow='false' bg='gui_keybinds_bg_orange' color='#66440C' spacing='9'>" .. formatted_money .. "</p>"
+	)
 	return true
 end
 
@@ -283,10 +303,16 @@ function Furnace:client_onInteract(character, state)
 		--check if feature unlocked
 		if TutorialManager.cl_isTutorialEventCompleteOrActive("ResearchFurnaceSet") then
 			self.network:sendToServer("sv_setResearch")
+			self.cl.research = not self.cl.research
+			self.network:sendToServer("sv_resetCache")
 		else
 			sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
 		end
 	end
+end
+
+function Furnace:client_onClientDataUpdate(data)
+	self.cl.moneyPerInterval = data
 end
 
 -- #endregion
@@ -301,11 +327,14 @@ end
 ---@class FurnaceSv
 ---@field saved FurnaceSaveData
 ---@field trigger AreaTrigger the areaTrigger that defines the sell area
+---@field moneyEarnedCache table<integer, number> table of money earned per ticks
+---@field moneyEarnedSinceUpdate number Money earned since last money update
 
 ---@class FurnaceSaveData
 ---@field research boolean whether the furnace is a research furnace
 
 ---@class FurnaceCl
 ---@field effect Effect effect that visualizes the sell area
-
+---@field moneyPerInterval number
+---@field research boolean whether the furnace is a research furnace
 -- #endregion

@@ -6,10 +6,10 @@
             "y" : 1,
             "z" : 6
          },
-         "color" : "df7f00",
-         "flammable" : false,
-         "name" : "obj_furnace_basic",
-         "physicsMaterial" : "Metal",
+         "color" : "cd9d71",
+         "flammable" : true,
+         "name" : "obj_furnace_scrap",
+         "physicsMaterial" : "Wood",
          "ratings" : {
             "buoyancy" : 3,
             "density" : 5,
@@ -26,19 +26,19 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
-               "multiplier" : 1,
+               "multiplier" : 0.5,
                "offset" : {
                   "x" : 0,
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 3
+               "power" : 1
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "100",
+            "price" : "10",
             "tier" : 0
          },
          "stackSize" : 65535.0,
@@ -51,9 +51,54 @@
             "y" : 1,
             "z" : 6
          },
+         "color" : "df7f00",
+         "flammable" : false,
+         "name" : "obj_furnace_basic",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 3,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Furnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 25
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1000",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "f3cd4701-7c2a-4ca2-bc41-b4fea87ff2d6"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
          "color" : "0156df",
          "flammable" : false,
-         "name" : "obj_furnace_2x",
+         "name" : "obj_furnace_better",
          "physicsMaterial" : "Metal",
          "ratings" : {
             "buoyancy" : 3,
@@ -71,24 +116,435 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
+               "multiplier" : 1.5,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 100
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "5e4",
+            "tier" : 2
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "3039176f-dea8-453d-82be-2c73a68ad05f"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "8c57a9",
+         "flammable" : false,
+         "name" : "obj_furnace_cell",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 100,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e6",
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "4d648c8a-c2e5-4305-812c-5f7480a76cf2"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "eb4034",
+         "flammable" : false,
+         "name" : "obj_furnace_atomizer",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Furnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 2.38,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e9",
+            "tier" : 4
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "44b5f23f-87db-4ab7-b8bc-0e8a27e0e8dc"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "3449d3",
+         "flammable" : false,
+         "name" : "obj_furnace_cell_better",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 500,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e12",
+            "tier" : 5
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "8ab74aff-adf6-4776-aade-66d3f78541ca"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "ff0081",
+         "flammable" : false,
+         "name" : "obj_furnace_pi",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Furnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 3.14159265359,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 3.14e4
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "3.14e18",
+            "tier" : 6
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "5b455c59-d9d4-4710-a9ae-f02da763ed94"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "c0eb38",
+         "flammable" : false,
+         "name" : "obj_drop_disintegrator",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "RandomFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplierMin" : 1,
+               "multiplierMax" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/RandomFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e24",
+            "tier" : 7
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "4b7f2c90-5ead-4830-885a-fccd6326719e"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "e69a5f",
+         "flammable" : false,
+         "name" : "obj_furnace_cell_best",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellMultiplier" : 5000,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5e6
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e27",
+            "tier" : 8
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "34b99c13-6029-4362-bed1-552ce3e2e439"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d2460e",
+         "flammable" : false,
+         "name" : "obj_furnace_quantum_foam",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AreaFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 4.5,
+                  "y" : 0.75,
+                  "z" : 9.0
+               },
+               "sellChance" : 0.001,
+               "multiplier" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : -0.1250,
+                  "z" : 0
+               },
+               "power" : 1e8
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/AreaFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e36",
+            "tier" : 9
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "aee3ac37-38e0-46b7-96ad-253e16b89c44"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "000000",
+         "flammable" : false,
+         "name" : "obj_furnace_black_hole",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "BlackHoleFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 0.25,
+                  "y" : 0.0416667,
+                  "z" : 1.5
+               },
+               "multiplier" : 12,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e10
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/BlackHoleFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e45",
+            "tier" : 10
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "70fcd91a-82f5-4093-a902-98ee0ce0c3f5"
+      },
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "df7f00",
+         "flammable" : false,
+         "name" : "obj_furnace_tiny",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 3,
+            "friction" : 5
+         },
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_furnace_tiny.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Furnace",
+            "data" : {
+               "box" : {
+                  "x" : 0.25,
+                  "y" : 0.0416667,
+                  "z" : 1.5
+               },
                "multiplier" : 2,
                "offset" : {
                   "x" : 0,
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 30
+               "power" : 150
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "10000",
+            "price" : "1000",
+            "special" : true,
             "tier" : 1
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
-         "uuid" : "3039176f-dea8-453d-82be-2c73a68ad05f"
+         "uuid" : "f9c087c1-8f99-4daf-ba0c-6d1fa89f4f78"
       },
       {
          "box" : {
@@ -117,24 +573,72 @@
                   "z" : 1.50
                },
                "dayMultiplier" : 0.50,
-               "nightMultiplier" : 5,
+               "nightMultiplier" : 3,
                "offset" : {
                   "x" : 0,
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 50
+               "power" : 1000
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/LunarFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "50000",
+            "price" : "1e6",
+            "special" : true,
             "tier" : 2
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "e0587c21-2145-4ee1-beaa-d33ca3407c61"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "b2ffff",
+         "flammable" : false,
+         "name" : "obj_furnace_frozen",
+         "physicsMaterial" : "Glass",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "FrozenFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 2,
+               "burnMultiplier" : 8,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/FrozenFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e7",
+            "special" : true,
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "497c8d31-5fc4-44d0-93ab-a9b70bce85b7"
       },
       {
          "box" : {
@@ -167,19 +671,694 @@
                   "y" : 0.1250,
                   "z" : 0
                },
-               "power" : 3
+               "power" : 1e4
             },
             "filename" : "$CONTENT_DATA/Scripts/Furnaces/ItemFurnace.lua"
          },
          "shop" : {
             "category" : "Furnaces",
-            "price" : "100",
-            "tier" : 0,
+            "price" : "0",
+            "tier" : 4,
             "special" : true
          },
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "07909074-edf0-4fbc-952b-f97fa3eef6e9"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "50a0ceb7-20e5-4583-81f2-50c034186316",
+         "flammable" : false,
+         "name" : "obj_furnace_time",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TimeFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "upgradeTimes": [
+                  { 
+                     "time" : 0,
+                     "multiplier": 1
+                  },
+                  { 
+                     "time" : 1200,
+                     "multiplier": 1.5
+                  },
+                  { 
+                     "time" : 2400,
+                     "multiplier": 2
+                  },
+                  { 
+                     "time" : 4800,
+                     "multiplier": 2.5
+                  },
+                  { 
+                     "time" : 9600,
+                     "multiplier": 3
+                  },
+                  { 
+                     "time" : 19200,
+                     "multiplier": 4
+                  },
+                  { 
+                     "time" : 36000,
+                     "multiplier": 6
+                  },
+                  { 
+                     "time" : 72000,
+                     "multiplier": 8
+                  },
+                  { 
+                     "time" : 144000,
+                     "multiplier": 10
+                  }
+               ],
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TimeFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e18",
+            "special" : true,
+            "tier" : 5
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "898d8e5b-cfeb-43f4-a530-cd5de2ddaf9e"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "666666",
+         "flammable" : false,
+         "name" : "obj_furnace_lucky_six",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "LuckyNumberFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 1,
+               "luckyMultiplier" : 6,
+               "luckyNumber" : 6,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e6
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/LuckyNumberFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e21",
+            "special" : true,
+            "tier" : 6
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "12d59662-f766-40af-9f60-b289ef7b41c9"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "00ff00",
+         "flammable" : false,
+         "name" : "obj_furnace_nuclear",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "NuclearFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 5,
+               "nuclearMultiplier" : 10,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e7
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/NuclearFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e27",
+            "special" : true,
+            "tier" : 7
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "1c9eedee-a890-4e7a-9ce3-4c1ccc4f7e70"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "f4f3f5",
+         "flammable" : false,
+         "name" : "obj_furnace_multi",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "MultiFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5e7
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/MultiFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e33",
+            "special" : true,
+            "tier" : 8
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "b5c69f79-b728-4a20-a4c3-9e4235b9b106"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "0fc2ad",
+         "flammable" : false,
+         "name" : "obj_furnace_velocity",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "VelocityFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 1e9
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/VelocityFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "1e39",
+            "special" : true,
+            "tier" : 9
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "140a42a4-e50a-4f98-bdaa-b9f06f1519df"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "143bee",
+         "flammable" : false,
+         "name" : "obj_furnace_fortune_wheel",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "FortuneWheelFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/FortuneWheelFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "f927eb1e-bb4e-42aa-82db-6056f64fa618"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "ff4500",
+         "flammable" : false,
+         "name" : "obj_furnace_vulcano",
+         "physicsMaterial" : "Rock",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "VolcanoFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 10,
+               "erruptionMultiplier" : 50,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/VolcanoFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "5ec94a58-39ab-4ac8-89b5-1d82956b7469"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d6dbeb",
+         "flammable" : false,
+         "name" : "obj_furnace_tesla",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TeslaFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TeslaFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "01baecc2-cef5-469a-ae2d-f1fbb1358b51"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "25c00a",
+         "flammable" : false,
+         "name" : "obj_furnace_inclusive",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "InclusiveFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/InclusiveFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "f6351c43-6dbf-4e25-9409-bfa7d4edd914"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "d8b108",
+         "flammable" : false,
+         "name" : "obj_furnace_time_is_money",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "TimeFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "upgradeTimes": [
+                  { 
+                     "time" : 0,
+                     "multiplier": 1000
+                  },
+                  { 
+                     "time" : 40,
+                     "multiplier": 500
+                  },
+                  { 
+                     "time" : 120,
+                     "multiplier": 333
+                  },
+                  { 
+                     "time" : 200,
+                     "multiplier": 250
+                  },
+                  { 
+                     "time" : 400,
+                     "multiplier": 175
+                  },
+                  { 
+                     "time" : 600,
+                     "multiplier": 133
+                  },
+                  { 
+                     "time" : 800,
+                     "multiplier": 100
+                  },
+                  { 
+                     "time" : 1000,
+                     "multiplier": 75
+                  },
+                  { 
+                     "time" : 1200,
+                     "multiplier": 50
+                  },
+                  { 
+                     "time" : 2400,
+                     "multiplier": 25
+                  }
+               ],
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/TimeFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "222dc84f-a426-426f-815f-0b4cfb8c614a"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "a931de",
+         "flammable" : false,
+         "name" : "obj_furnace_compounding",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CompoundingFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 30
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CompoundingFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "ef8da598-ed24-414e-93a9-1d7d834a6823"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "00fa41",
+         "flammable" : false,
+         "name" : "obj_00furnace",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 3,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Furnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "multiplier" : 100,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 5
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/Furnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "41e46418-e184-4230-9c1e-eec24a1461bb"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "e02300",
+         "flammable" : false,
+         "name" : "obj_furnace_cell_exponent",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 2,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_furnacedouble_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "CellFurnace",
+            "data" : {
+               "box" : {
+                  "x" : 1.50,
+                  "y" : 0.250,
+                  "z" : 1.50
+               },
+               "cellExponent" : 1.23456789,
+               "multiplier" : 1,
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.1250,
+                  "z" : 0
+               },
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Furnaces/CellFurnace.lua"
+         },
+         "shop" : {
+            "category" : "Furnaces",
+            "price" : "10000",
+            "prestige" : true,
+            "tier" : 99
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "f81a101d-130a-419d-8cfd-927258d8a19a"
       }
    ]
 }

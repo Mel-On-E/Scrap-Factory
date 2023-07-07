@@ -76,7 +76,8 @@ function Drop:server_onFixedUpdate()
 				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 					pos = self.shape.worldPosition,
 					value = tostring(publicData.value),
-					format = "pollution", effect = "Pollution"
+					format = "pollution",
+					effect = "Pollution"
 				})
 				self.shape:destroyShape(0)
 			end
@@ -197,7 +198,7 @@ function Drop:client_canInteract()
 	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
 	local o2 = "</p>"
 	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
-	
+
 	if self:getPollution() then
 		local pollution = format_number({
 			format = "pollution",
@@ -275,10 +276,11 @@ end
 
 ---@class DropInteractablePublicData
 ---@field value number the value of the drop. i.e. how much it is worth
----@field impostor boolean Controlles if the value sells for negative or not
+---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
+---@field creationTime integer the tick at which the drop was created
+---@field impostor boolean|nil Controlles if the value sells for negative or not
 ---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
 ---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
----@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
 ---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
 
 ---@class DropShape: Shape

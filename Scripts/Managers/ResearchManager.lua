@@ -178,7 +178,7 @@ end
 function ResearchManager.cl_getTierUnlocks(tier)
     local unlocks = {}
     for uuid, item in pairs(g_shop) do
-        if item.tier == tier then
+        if item.tier == tier and not (item.special or item.prestige) then
             unlocks[#unlocks + 1] = uuid
         end
     end
