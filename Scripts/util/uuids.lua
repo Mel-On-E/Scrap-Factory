@@ -4,7 +4,7 @@
 --./Objects/Database/ShapeSets/furnaces.shapeset
 ----------------------------------------
 
-obj_furnace_basic = sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf")
+obj_furnace_scrap = sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf")
 obj_furnace_2x = sm.uuid.new("3039176f-dea8-453d-82be-2c73a68ad05f")
 obj_furnace_lunar = sm.uuid.new("e0587c21-2145-4ee1-beaa-d33ca3407c61")
 
