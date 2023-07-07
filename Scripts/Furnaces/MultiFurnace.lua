@@ -10,7 +10,7 @@ MultiFurnace = class(Furnace)
 --------------------
 
 function MultiFurnace:server_onCreate()
-    Furnace.server_onCreate(self, {})
+    Furnace.server_onCreate(self)
 
     self.sv.multiUpgrader = 0
 end
@@ -33,7 +33,7 @@ end
 -- #endregion
 
 --------------------
--- #region Typings
+-- #region Types
 --------------------
 
 ---@class MultiFurnaceSv : FurnaceSv

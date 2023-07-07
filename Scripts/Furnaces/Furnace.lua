@@ -77,8 +77,7 @@ function Furnace:sv_onEnter(_, results)
 	end
 end
 
-function Furnace:sv_onStay(_, results)
-end
+function Furnace:sv_onStay(_, results) end
 
 ---Called when a valid drop enters the Furnace and it has power
 ---@param self Furnace|ShapeClass

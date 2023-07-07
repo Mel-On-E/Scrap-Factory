@@ -16,7 +16,7 @@ local maxEruptionDuration = 40 * 15
 local explosionChance = 0.025
 
 function VolcanoFurnace:server_onCreate()
-    Furnace.server_onCreate(self, {})
+    Furnace.server_onCreate(self)
 
     self.sv.nextEruption = math.random(minEruptionWait, maxEruptionWait)
     self.sv.eruptionDuration = 0
@@ -60,7 +60,7 @@ end
 -- #endregion
 
 --------------------
--- #region Server
+-- #region Types
 --------------------
 
 ---@class VolcanoFurnaceSv : FurnaceSv

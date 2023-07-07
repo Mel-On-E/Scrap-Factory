@@ -249,7 +249,7 @@ end
 
 ---Returns a list of drops from a table if it contains any
 ---@param objects table<integer, any> table containing objects to be checked
----@return Shape[] drops list of drop shapes that have been found
+---@return DropShape[] drops list of drop shapes that have been found
 function getDrops(objects)
     local drops = {}
     for _, object in ipairs(objects) do

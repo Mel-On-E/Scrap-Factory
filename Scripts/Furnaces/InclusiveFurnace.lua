@@ -10,7 +10,7 @@ InclusiveFurnace = class(Furnace)
 --------------------
 
 function InclusiveFurnace:server_onCreate()
-    Furnace.server_onCreate(self, {})
+    Furnace.server_onCreate(self)
 
     self.sv.dropsSold = {}
 end
@@ -25,7 +25,7 @@ function InclusiveFurnace:sv_upgrade(shape)
     local value = shape.interactable.publicData.value
 
     local multiplier = 0
-    for k, v in pairs(self.sv.dropsSold) do
+    for _,_ in pairs(self.sv.dropsSold) do
         multiplier = multiplier + 1
     end
 
@@ -35,7 +35,7 @@ end
 -- #endregion
 
 --------------------
--- #region Server
+-- #region Types
 --------------------
 
 ---@class InclusiveFurnaceSv : FurnaceSv

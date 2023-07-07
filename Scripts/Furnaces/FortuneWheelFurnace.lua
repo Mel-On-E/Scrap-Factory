@@ -52,7 +52,7 @@ end
 --------------------
 
 function FortuneWheelFurnace:server_onCreate()
-	Furnace.server_onCreate(self, {})
+	Furnace.server_onCreate(self)
 
 	self.sv.angle = 0
 end
@@ -91,7 +91,6 @@ function FortuneWheelFurnace:server_onFixedUpdate(timeStep)
 end
 
 -- #endregion
-
 
 --------------------
 -- #region Client
@@ -166,7 +165,7 @@ end
 -- #endregion
 
 --------------------
--- #region Typings
+-- #region Types
 --------------------
 
 ---@class FortuneWheelFurnaceSv : FurnaceSv

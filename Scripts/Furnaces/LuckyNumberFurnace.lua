@@ -10,7 +10,7 @@ LuckyNumberFurnace = class(Furnace)
 --------------------
 
 function LuckyNumberFurnace:server_onCreate()
-    Furnace.server_onCreate(self, {})
+    Furnace.server_onCreate(self)
 
     self.sv.dropCount = 0
 end
@@ -31,7 +31,7 @@ end
 -- #endregion
 
 --------------------
--- #region Server
+-- #region Types
 --------------------
 
 ---@class LuckyNumberFurnaceSv : FurnaceSv

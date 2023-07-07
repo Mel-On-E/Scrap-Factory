@@ -10,8 +10,7 @@ BlackHoleFurnace = class(Furnace)
 
 local ImplosionChance = 0.025
 
-
-function BlackHoleFurnace:server_onFixedUpdate(dt)
+function BlackHoleFurnace:server_onFixedUpdate()
     Furnace.server_onFixedUpdate(self)
 
     if math.random() <= ImplosionChance then

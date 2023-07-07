@@ -8,8 +8,7 @@ AreaFurnace = class(Furnace)
 -- #region Server
 --------------------
 
-function AreaFurnace:sv_onEnter(_, results)
-end
+function AreaFurnace:sv_onEnter() end
 
 function AreaFurnace:sv_onStay(_, results)
     if not self.powerUtil.active then return end
