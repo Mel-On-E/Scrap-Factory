@@ -69,9 +69,7 @@ function Drop:server_onFixedUpdate()
 	if publicData then
 		--burning
 		if publicData.burnTime then
-			publicData.burnTime = publicData.burnTime - 1
-
-			if publicData.burnTime <= 0 then
+			if sm.game.getCurrentTick() >= publicData.burnTime then --NOTE this might be an issue when saving the game and loading in
 				PollutionManager.sv_addPollution(publicData.value)
 				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 					pos = self.shape.worldPosition,
@@ -284,6 +282,7 @@ end
 ---@class clientData
 ---@field pollution number
 ---@field value number
+---@field burnTime number the tick where it will burn
 
 ---@class DropInteractable : Interactable
 ---@field publicData DropInteractablePublicData
@@ -296,7 +295,9 @@ end
 ---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
 ---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
 ---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
+---@field burnTime number the tick where it will burn
 
 ---@class DropShape: Shape
 ---@field interactable DropInteractable
+
 -- #endregion
