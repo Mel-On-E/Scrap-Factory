@@ -2433,6 +2433,48 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "color": "3e9ffe",
+      "flammable": false,
+      "name": "obj_drop_water",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+				"density": 2,
+				"durability": 2,
+				"friction": 4,
+				"buoyancy": 7
+			},
+      "renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_water.fbx"
+					}
+				]
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "fe0e948c-a660-446a-bf34-a48e2d0ba551"
     }
   ]
 }

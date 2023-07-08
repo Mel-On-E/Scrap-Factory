@@ -78,8 +78,10 @@ function Generator:client_onCreate()
 end
 
 function Generator:client_onClientDataUpdate(data)
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    self.cl.power = tonumber(data.power)
+    if data.power then
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        self.cl.power = tonumber(data.power)
+    end
 end
 
 function Generator:client_canInteract()

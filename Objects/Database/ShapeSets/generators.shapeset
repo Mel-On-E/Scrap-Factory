@@ -298,6 +298,73 @@
          "stackSize" : 65535.0,
          "sticky" : "-Y",
          "uuid" : "ffe3338e-db44-49b9-a3d3-6e764d0b7e3e"
+      },
+      {
+         "color" : "00ff00",
+         "name" : "obj_generator_nuclear",
+         "renderable" : {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/fittings/obj_fittings_pipebigtank.mesh"
+					}
+				]
+			},
+         "uuid" : "00edb7f6-946c-40c3-a6e9-2db51c157347",
+         "hull": {
+				"x": 5,
+				"y": 5,
+				"z": 8,
+				"col": "$SURVIVAL_DATA/Objects/Collision/obj_fittings_pipebigtank.obj"
+			},
+         "scripted" : {
+            "classname" : "NuclearReactor",
+            "data" : {
+               "water" : {
+                  "box" : {
+                     "x" : 1.25,
+                     "y" : 0.20833,
+                     "z" : 2.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.0,
+                     "z" : 1.0
+                  }
+               },
+               "uranium" : {
+                  "box" : {
+                     "x" : 1.25,
+                     "y" : 0.20833,
+                     "z" : 2.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.0,
+                     "z" : -1.0
+                  }
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/NuclearReactor.lua"
+         },
+			"rotationSet": "PropY",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 7,
+				"durability": 6,
+				"friction": 7,
+				"buoyancy": 2
+			},
+			"flammable": false
       }
    ]
 }

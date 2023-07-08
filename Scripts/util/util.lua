@@ -83,7 +83,7 @@ end
 --------------------
 
 ---@class FormatNumberParams
----@field format "power" | "pollution" | "prestige" | "money" standard formatting options
+---@field format "power" | "pollution" | "prestige" | "money" | "temperature" standard formatting options
 ---@field color string|nil A hex color (#rrggbb) that will be the text color
 ---@field unit string|nil The symbol after the number (postfix)
 ---@field suffixes string[] The suffixes of the numbers for each 3 orders of magnitude
@@ -109,6 +109,9 @@ function format_number(params)
     elseif params.format == "prestige" then
         params.color = params.color or "#dd6e00"
         params.unit = params.unit or " ◊"
+    elseif params.format == "temperature" then
+        params.unit = params.unit or " °C"
+        params.suffixes = numeralSuffixes
     end
 
     local function number_suffix(value, suffixes)
@@ -135,7 +138,7 @@ function format_number(params)
         end
     end
 
-    return params.color ..
+    return (params.color and params.color or "") ..
         (params.prefix or "") .. number_suffix(params.value, (params.suffixes or metricSuffixes)) .. (params.unit or "")
 end
 

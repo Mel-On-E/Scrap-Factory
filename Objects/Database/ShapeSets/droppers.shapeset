@@ -1966,6 +1966,49 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "bd7a7443-8c8f-4ce7-b0ff-7e65831ae655"
+      },
+      {
+         "box" : {
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
+         },
+         "color" : "3e9ffe",
+         "flammable" : false,
+         "name" : "obj_dropper_water",
+         "physicsMaterial" : "Plastic",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "fe0e948c-a660-446a-bf34-a48e2d0ba551",
+                  "value" : "0"
+               },
+               "interval" : 40,
+               "offset" : {
+                  "x" : -1.50,
+                  "y" : 0.0,
+                  "z" : -0.10
+               },
+               "power" : 10
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "shop" : {
+            "category" : "Droppers",
+            "price" : "3e6",
+            "tier" : 4
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "87e551e9-40ce-4401-ad92-cd8e134cb6bb"
       }
    ]
 }
