@@ -320,6 +320,30 @@
       "stackSize": 65535.0,
       "sticky": "-Y+Y-Z",
       "uuid": "9f37d9e9-be8d-49c8-a7ac-e59c67786083"
-    }
+    },
+    {
+			"uuid": "c9396a42-67c3-4fa3-b682-31428ff9eced",
+			"name": "obj_resource_flower",
+			"renderable": "$SURVIVAL_DATA/Objects/Renderable/resource/obj_resource_pigmentflower.rend",
+			"color": "4bffb5",
+			"cylinder": {
+				"diameter": 1,
+				"depth": 2,
+				"margin": 0.1,
+				"axis": "Y"
+			},
+			"itemStack": {},
+			"rotationSet": "PropY",
+			"sticky": "-Y",
+			"physicsMaterial": "Plastic",
+			"ratings": {
+				"density": 4,
+				"durability": 2,
+				"friction": 4,
+				"buoyancy": 3
+			},
+			"flammable": true,
+			"stackSize": 20
+		}
   ]
 }
