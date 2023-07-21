@@ -1,0 +1,32 @@
+{
+	"lodList": [
+		{
+			"minViewSize": 20,
+			"subMeshList": [
+				{
+					"textureList": [
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_dif.tga",
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_asg.tga",
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_nor.tga"
+					],
+					"material": "PoseAnimDifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_jaw.fbx",
+            "pose0": "$CONTENT_DATA/Objects/Mesh/obj_drop_jaw_open.fbx"
+		},
+		{
+			"subMeshList": [
+				{
+					"textureList": [
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_dif.tga",
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_asg.tga",
+						"$GAME_DATA/Character/Textures/char_male/char_male_head01_nor.tga"
+					],
+					"material": "DifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_jaw.fbx"
+		}
+	]
+}

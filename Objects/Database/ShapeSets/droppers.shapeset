@@ -1966,6 +1966,44 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "bd7a7443-8c8f-4ce7-b0ff-7e65831ae655"
+      },
+      {
+         "box" : {
+            "x" : 7,
+            "y" : 11,
+            "z" : 8
+         },
+         "color" : "eeeeee",
+         "flammable" : false,
+         "name" : "obj_dropper_jaw",
+         "physicsMaterial" : "Mechanical",
+         "ratings" : {
+            "buoyancy" : 5,
+            "density" : 5,
+            "durability" : 10,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "AutoDropper",
+            "data" : {
+               "drop" : {
+                  "uuid" : "cd73ae78-5d54-4318-9f61-ca25604ebf19",
+                  "value" : "4"
+               },
+               "interval" : 80,
+               "offset" : {
+                  "x" : -1.20,
+                  "y" : 0.0,
+                  "z" : -0.10
+               },
+               "power" : 8
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Droppers/AutoDropper.lua"
+         },
+         "stackSize" : 65535.0,
+         "uuid" : "fa3cccde-8482-4628-8ed9-30211796fae3"
       }
    ]
 }
