@@ -1969,9 +1969,9 @@
       },
       {
          "box" : {
-            "x" : 7,
-            "y" : 11,
-            "z" : 8
+            "x" : 2,
+            "y" : 6,
+            "z" : 4
          },
          "color" : "eeeeee",
          "flammable" : false,
@@ -1983,7 +1983,7 @@
             "durability" : 10,
             "friction" : 5
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_jaw_dropper.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1994,7 +1994,7 @@
                },
                "interval" : 80,
                "offset" : {
-                  "x" : -1.20,
+                  "x" : -0.50,
                   "y" : 0.0,
                   "z" : -0.10
                },

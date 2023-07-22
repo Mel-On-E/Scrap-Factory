@@ -18,6 +18,3 @@ function JawDrop:client_onFixedUpdate()
 end
 
 -- #endregion
-
---TODO rotate mesh so it faces down the conveyer
---TODO add character model for dropper. (maybe have him standing on a platform, landing pad scaled down)

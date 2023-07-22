@@ -1,0 +1,71 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_dropper_jaw.fbx",
+         "pose0" : "$CONTENT_DATA/Objects/Mesh/obj_dropper_jaw.fbx",
+         "subMeshMap" : {
+            "landingplatform2": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_dif.tga",
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_asg.tga",
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_nor.tga"
+               ]
+            },
+            "landingplatform": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_dif.tga",
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_asg.tga",
+                  "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_nor.tga"
+               ]
+            },
+            "skin": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/Default/default_nor.tga"
+               ],
+               "color": "#ffffff"
+            },
+            "brow": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/Default/default_nor.tga"
+               ],
+               "color": "#8f582b"
+            },
+            "eyes": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/Default/default_nor.tga"
+               ],
+               "color": "#25a3d9"
+            },
+            "mouth": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/Default/default_nor.tga"
+               ],
+               "color": "#00a000"
+            },
+            "default_body_male": {
+               "material" : "PoseAnimDifAsgNor",
+               "textureList" : [
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/transparent.tga",
+                  "$GAME_DATA/Textures/Default/default_nor.tga"
+               ],
+               "color": "#8f582b"
+            }
+         }
+      }
+   ]
+}
