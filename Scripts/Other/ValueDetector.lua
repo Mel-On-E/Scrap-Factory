@@ -119,7 +119,9 @@ function ValueDetector:client_onInteract(_, state)
 end
 
 function ValueDetector:cl_updateGuiData()
-    self.cl.gui:setText('ValueEdit', tostring(self.sv.options.value))
+    if not self.cl.gui:isActive() then
+        self.cl.gui:setText('ValueEdit', tostring(self.sv.options.value))
+    end
     self:cl_highlightButtons()
     self:cl_setOutputModeButtonName()
 end
