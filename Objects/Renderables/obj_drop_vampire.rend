@@ -1,0 +1,31 @@
+{
+	"lodList": [
+		{
+			"minViewSize": 50,
+			"subMeshList": [
+				{
+					"textureList": [
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_dif.tga",
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_asg.tga",
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_nor.tga"
+					],
+					"material": "DifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_vampire.fbx"
+		},
+		{
+			"subMeshList": [
+				{
+					"textureList": [
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_dif.tga",
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_asg.tga",
+						"$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_steak_nor.tga"
+					],
+					"material": "DifAsgNor"
+				}
+			],
+			"mesh": "$CONTENT_DATA/Objects/Mesh/obj_drop_vampire_lod1.fbx"
+		}
+	]
+}
