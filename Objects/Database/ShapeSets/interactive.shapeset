@@ -247,7 +247,6 @@
          "restitution": 0.0,
          "rotationSet": "PropY",
          "color": "848484",
-         "sticky": "-Y+Y",
          "stackSize": 10,
          "scripted": {
             "filename": "$CONTENT_DATA/Scripts/Other/ValueDetector.lua",
