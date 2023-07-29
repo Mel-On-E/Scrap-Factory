@@ -171,5 +171,7 @@
 	"JetpackAlwaysOn": "Always active: ",
 
 	//Interactive
+	"ValueDetectorOutputMode_switch": "Switch",
+	"ValueDetectorOutputMode_button": "Button",
 	"TeleporterMoreThan2": "You can only have 2 teleporters!"
 }
