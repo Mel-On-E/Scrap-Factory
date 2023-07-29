@@ -73,7 +73,7 @@ end
 
 function ValueDetector:sv_onOptionsChange(data)
     if data.value then
-        self.sv.options.value = data.value
+        self.sv.options.value = tonumber(data.value)
     elseif data.mode then
         self.sv.options.mode = data.mode
     elseif data.outputMode then
@@ -130,6 +130,7 @@ function ValueDetector:cl_onValueChange(_, val)
     sm.audio.play((val and "Button on" or "RaftShark"), self.shape.worldPosition)
     if not val then return end
 
+    self.network:sendToServer('sv_onOptionsChange', { value = tostring(val) })
 end
 
 function ValueDetector:cl_onModeChange(buttonName)
