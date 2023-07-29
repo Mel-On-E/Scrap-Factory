@@ -2433,6 +2433,36 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40"
+    },
+    {
+      "flammable": true,
+      "name": "obj_drop_egg",
+      "physicsMaterial": "Fruit",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 3,
+        "durability": 1,
+        "friction": 3
+      },
+      "renderable": "$CONTENT_DATA/Objects/Renderables/obj_drop_egg.rend",
+			"color": "f0ead6",
+			"hull": {
+				"x": 2,
+				"y": 2,
+				"z": 2,
+				"col": "$CONTENT_DATA/Objects/Mesh/obj_drop_egg_col.fbx"
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "EggDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/EggDrop.lua",
+        "data": {
+          "flamable": true
+        }
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "529cba91-8ee8-4a14-bd64-20d7d51b1db0"
     }
   ]
 }
