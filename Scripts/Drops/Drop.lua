@@ -69,7 +69,7 @@ function Drop:server_onFixedUpdate()
 	if publicData then
 		--burning
 		if publicData.burnTime then
-			if sm.game.getCurrentTick() >= publicData.burnTime then --NOTE this might be an issue when saving the game and loading in
+			if sm.game.getCurrentTick() >= publicData.burnTime then
 				PollutionManager.sv_addPollution(publicData.value)
 				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 					pos = self.shape.worldPosition,

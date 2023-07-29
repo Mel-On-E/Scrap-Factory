@@ -17,4 +17,6 @@ function JawDrop:client_onFixedUpdate()
     self.interactable:setPoseWeight(0, v)
 end
 
+--TODO use char anims for dropper
+
 -- #endregion
