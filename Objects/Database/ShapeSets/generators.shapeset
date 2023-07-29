@@ -169,6 +169,57 @@
          },
 			"flammable": true,
 			"stackSize" : 65535.0
-		}
+		},
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "AFE943",
+         "flammable" : false,
+         "name" : "obj_generator_treadmill",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/belt_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Treadmill",
+            "data" : {
+               "trigger" : {
+                  "box" : {
+                     "x" : 1.50,
+                     "y" : 0.250,
+                     "z" : 1.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.1250,
+                     "z" : 0
+                  },
+                  "direction" : {
+                     "at" : -0.250,
+                     "right" : -1,
+                     "up" : 0
+                  }
+               },
+               "power" : 40
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Treadmill.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "1",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "dc0e057f-372f-4aa4-b169-ac1ac6e3a3d3"
+      }
    ]
 }
