@@ -100,7 +100,7 @@ function ValueDetector:client_onCreate()
     self.cl.gui:setButtonCallback('GreaterOrEqual', 'cl_onModeChange')
     self.cl.gui:setButtonCallback('SmallerOrEqual', 'cl_onModeChange')
     self.cl.gui:setButtonCallback('Equal', 'cl_onModeChange')
-    self.cl.gui:setTextAcceptedCallback('ValueEdit', 'cl_onValueChange')
+    self.cl.gui:setTextChangedCallback('ValueEdit', 'cl_onValueChange')
     self.cl.gui:setButtonCallback('LogicMode', 'cl_onOutputModeChange')
 end
 
@@ -126,9 +126,10 @@ end
 
 function ValueDetector:cl_onValueChange(_, val)
     val = tonumber(val)
-    if val == nil then return end
 
-    self.network:sendToServer('sv_onOptionsChange', { value = val })
+    sm.audio.play((val and "Button on" or "RaftShark"), self.shape.worldPosition)
+    if not val then return end
+
 end
 
 function ValueDetector:cl_onModeChange(buttonName)
