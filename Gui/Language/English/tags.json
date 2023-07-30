@@ -171,5 +171,13 @@
 	"JetpackAlwaysOn": "Always active: ",
 
 	//Interactive
-	"TeleporterMoreThan2": "You can only have 2 teleporters!"
+	"TeleporterMoreThan2": "You can only have 2 teleporters!",
+	"NuclearReactorCritical": "TEMPERATURE CRITICAL",
+	"NuclearReactorEfficiency": "Efficiency",
+	"NuclearReactorLowTemperature": "Temparature too low",
+	"NuclearReactorNeedUranium235": "You need Uranium 235 to start the reactor",
+	"NuclearReactorMaximumPurity": "Maximum processed purity: ",
+	"NuclearReactorHeat": "Heat: ",
+	"NuclearReactorFuel": "Fuel: ",
+	"NuclearReactorPurity": "Purity: "
 }

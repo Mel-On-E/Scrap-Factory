@@ -156,21 +156,22 @@ function NuclearReactor:sv_updateHeat()
 			{ Color = self.shape.color })
 	elseif self.sv.saved.heat >= maxHeat then
 		efficiency = 0
-		status = "#ff0000TEMPERATURE CRITICAL"
+		status = "#ff0000"
 	elseif self.sv.saved.heat >= endHeat then
 		efficiency = (maxHeat - self.sv.saved.heat) / (maxHeat - endHeat)
 		efficiency = efficiency ^ 0.667
-		status = "Efficiency " .. tostring(math.floor(efficiency * 100)) .. "%"
+		status = "NuclearReactorEfficiency"
 	elseif self.sv.saved.heat >= startHeat then
 		efficiency = self.sv.saved.heat / endHeat
 		efficiency = efficiency ^ (1 / 3)
-		status = "Efficiency " .. tostring(math.floor(efficiency * 100)) .. "%"
+		status = "NuclearReactorEfficiency"
 	else
-		status = "Temparature too low"
+		status = "NuclearReactorLowTemperature"
 	end
 
 	self.network:setClientData({
 		status = status,
+		efficiency = " " .. tostring(math.floor(efficiency * 100)) .. "%",
 		purity = purity,
 		fuelPoints = fuel
 	})
@@ -186,11 +187,11 @@ function NuclearReactor:sv_setGear(gearIdx, player)
 	if gearIdx > 1 and self.sv.saved.uranium.u235 == 0 then
 		self.sv.saved.gearIdx = 1
 		if player then
-			self.network:sendToClient(player, "cl_msg", "#ff0000You need Uranium 235 to start the reactor")
+			self.network:sendToClient(player, "cl_msg", { pre = "#ff0000", tag = "NuclearReactorNeedUranium235" })
 		end
 	elseif player then
 		self.network:sendToClient(player, "cl_msg",
-			"Maximum processed purity: " .. string.format("%.2f", 3 * (gearIdx - 1)) .. "%")
+			{ tag = "NuclearReactorMaximumPurity", post = string.format("%.2f", 3 * (gearIdx - 1)) .. "%" })
 	end
 
 	self.storage:save(self.sv.saved)
@@ -209,7 +210,7 @@ function NuclearReactor:client_onCreate()
 	Generator.client_onCreate(self)
 	self.cl.gearIdx = 1
 	self.cl.heat = 0
-	self.cl.status = "Efficiency 0%"
+	self.cl.status = ""
 	self.cl.statusGUI = sm.gui.createNameTagGui()
 	self.cl.statusGUI:setMaxRenderDistance(100)
 	self.cl.purity = 0
@@ -277,7 +278,13 @@ function NuclearReactor:client_onClientDataUpdate(data)
 		end
 	end
 	if data.status then
-		self.cl.status = data.status
+		if data.status == "NuclearReactorCritical" then
+			self.cl.status = "#ff0000" .. language_tag(data.status)
+		elseif data.status == "NuclearReactorEfficiency" and data.efficiency then
+			self.cl.status = language_tag(data.status) .. data.efficiency
+		else
+			self.cl.status = language_tag(data.status)
+		end
 	end
 	if data.purity then
 		self.cl.purity = data.purity
@@ -315,16 +322,16 @@ function NuclearReactor:cl_onGuiClosed()
 end
 
 function NuclearReactor:cl_msg(msg)
-	sm.gui.displayAlertText(msg)
+	sm.gui.displayAlertText((msg.pre or "") .. language_tag(msg.tag) .. (msg.post or ""))
 	sm.audio.play("RaftShark")
 end
 
 function NuclearReactor:client_canInteract()
 	self.cl.statusGUI:setWorldPosition(self.shape.worldPosition + sm.vec3.new(0, 0, 1))
 	self.cl.statusGUI:setText("Text",
-		"Heat: " .. format_number({ format = "temperature", value = self.cl.heat }) ..
-		"\nFuel: " .. string.format("%.2f", self.cl.fuelPoints) ..
-		"\nPurity: " .. string.format("%.2f", self.cl.purity * 100) .. "%" ..
+		language_tag("NuclearReactorHeat") .. format_number({ format = "temperature", value = self.cl.heat }) ..
+		"\n" .. language_tag("NuclearReactorFuel") .. string.format("%.2f", self.cl.fuelPoints) ..
+		"\n" .. language_tag("NuclearReactorPurity") .. string.format("%.2f", self.cl.purity * 100) .. "%" ..
 		"")
 	self.cl.statusGUI:open()
 	self.cl.couldInteract = true
