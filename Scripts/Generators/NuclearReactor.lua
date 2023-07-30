@@ -151,7 +151,10 @@ function NuclearReactor:sv_updateHeat()
 	--generatePower
 	local efficiency = 0
 	local status = ""
-	if self.sv.saved.heat >= maxHeat then
+	if self.sv.saved.heat >= MELTDOWN then
+		sm.physics.explode(self.shape.worldPosition, 8, 16, 32, 75, "Farmbot - Destroyed", nil,
+			{ Color = self.shape.color })
+	elseif self.sv.saved.heat >= maxHeat then
 		efficiency = 0
 		status = "#ff0000TEMPERATURE CRITICAL"
 	elseif self.sv.saved.heat >= endHeat then
@@ -171,7 +174,6 @@ function NuclearReactor:sv_updateHeat()
 		purity = purity,
 		fuelPoints = fuel
 	})
-	print(self.sv.saved.uranium)
 
 	local powerGenerated = powerFactor * efficiency * gearPowerFactor
 
@@ -183,8 +185,10 @@ function NuclearReactor:sv_setGear(gearIdx, player)
 
 	if gearIdx > 1 and self.sv.saved.uranium.u235 == 0 then
 		self.sv.saved.gearIdx = 1
-		self.network:sendToClient(player, "cl_msg", "#ff0000You need Uranium 235 to start the reactor")
-	else
+		if player then
+			self.network:sendToClient(player, "cl_msg", "#ff0000You need Uranium 235 to start the reactor")
+		end
+	elseif player then
 		self.network:sendToClient(player, "cl_msg",
 			"Maximum processed purity: " .. string.format("%.2f", 3 * (gearIdx - 1)) .. "%")
 	end
@@ -210,6 +214,7 @@ function NuclearReactor:client_onCreate()
 	self.cl.statusGUI:setMaxRenderDistance(100)
 	self.cl.purity = 0
 	self.cl.fuelPoints = 0
+	self.cl.smokeEffect = sm.effect.createEffect("Smoke - blowing01", self.interactable)
 
 	---@diagnostic disable-next-line: undefined-field
 	self.cl.waterEffect = self:cl_createTriggerEffect(self.data.water, sm.color.new(0x3e9ffeff), sm.quat.identity())
@@ -265,6 +270,11 @@ function NuclearReactor:client_onClientDataUpdate(data)
 	end
 	if data.heat then
 		self.cl.heat = data.heat
+		if self.cl.heat >= maxHeat then
+			self.cl.smokeEffect:start()
+		else
+			self.cl.smokeEffect:stop()
+		end
 	end
 	if data.status then
 		self.cl.status = data.status
@@ -324,6 +334,10 @@ function NuclearReactor:client_canInteract()
 	return Generator.client_canInteract(self)
 end
 
+function NuclearReactor:client_onDestroy()
+	self.cl.smokeEffect:destroy()
+end
+
 -- #endregion
 
 --------------------
@@ -354,5 +368,6 @@ end
 ---@field couldInteract boolean
 ---@field purity number
 ---@field fuelPoints number
+---@field smokeEffect Effect
 
 -- #endregion
