@@ -25,6 +25,7 @@ function Treadmill:server_onCreate()
 
     --TODO add treadmill tutorial
     --TODO balance power
+    --TODO adjust to trello specs
     -- sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SolarTutorial")
 end
 
