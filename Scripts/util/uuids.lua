@@ -120,6 +120,7 @@ obj_drop_antimatter = sm.uuid.new("53e7470d-99fe-450e-8606-42dc4f42e4f7")
 obj_drop_popcorn = sm.uuid.new("00e1724b-1ce2-45f1-92cd-cdcc89c8329e")
 obj_drop_popcorn_popped = sm.uuid.new("b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40")
 obj_drop_water = sm.uuid.new("fe0e948c-a660-446a-bf34-a48e2d0ba551")
+obj_uranium_waste = sm.uuid.new("f5f7970c-8048-4fae-8276-9958a3b7130e")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/upgraders.shapeset

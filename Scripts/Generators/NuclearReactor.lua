@@ -7,6 +7,7 @@ NuclearReactor = class(nil)
 local gears = 10
 local pointsPerFuel = 5 * 60
 local powerFactor = 1e7
+local fuelPerWaste = 5
 local ambienceTemperature = 21
 local startHeat = 100
 local endHeat = 320
@@ -16,8 +17,6 @@ local MELTDOWN = 1800
 --------------------
 -- #region Server
 --------------------
-
----TODO use language tags
 
 function NuclearReactor:server_onCreate()
 	Generator.server_onCreate(self)
@@ -39,7 +38,8 @@ function NuclearReactor:server_onCreate()
 				u235 = 0,
 				u238 = 0
 			},
-			heat = ambienceTemperature
+			heat = ambienceTemperature,
+			waste = 0
 		}
 	end
 
@@ -145,6 +145,22 @@ function NuclearReactor:sv_updateHeat()
 
 			self.sv.saved.uranium.u238 = math.max(0, self.sv.saved.uranium.u238 - (1 - purity) / pointsPerFuel)
 			self.sv.saved.uranium.u235 = math.max(0, self.sv.saved.uranium.u235 - purity / pointsPerFuel)
+
+			--nuclear waste
+			local fuelConsumption = fuel - (self.sv.saved.uranium.u235 + self.sv.saved.uranium.u238)
+			self.sv.saved.waste = self.sv.saved.waste + fuelConsumption
+			if self.sv.saved.waste >= fuelPerWaste then
+				self.sv.saved.waste = self.sv.saved.waste - fuelPerWaste
+
+				---@diagnostic disable-next-line: param-type-mismatch
+				local shape = sm.shape.createPart(obj_uranium_waste, self.shape.worldPosition - self.shape.right * 1,
+					self.shape:getWorldRotation())
+
+				local publicData = {
+					pollution = NuclearWaste.maxPollution,
+				}
+				shape.interactable:setPublicData(publicData)
+			end
 		end
 	end
 

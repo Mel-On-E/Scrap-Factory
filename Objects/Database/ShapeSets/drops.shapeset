@@ -2475,6 +2475,59 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "fe0e948c-a660-446a-bf34-a48e2d0ba551"
-    }
+    },
+    {
+			"uuid": "f5f7970c-8048-4fae-8276-9958a3b7130e",
+			"name": "obj_uranium_waste",
+			"renderable": {
+				"lodList": [
+					{
+						"maxViewDistance": 1500,
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_chemical.fbx",
+						"subMeshMap": {
+							"chemicalconsumable": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_dif.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_asg.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_nor.tga"
+								]
+							},
+							"glass": {
+								"material": "Glass",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_dif.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_asg.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_nor.tga"
+								]
+							}
+						}
+					}
+				]
+			},
+			"color": "696969",
+			"box": {
+				"x": 2,
+				"y": 2,
+				"z": 2
+			},
+			"rotationSet": "PropY",
+      "scripted": {
+        "classname": "NuclearWaste",
+        "data": {
+          "effect": "Uranium Glow"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/NuclearWaste.lua"
+      },
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Mechanical",
+			"ratings": {
+				"density": 2,
+				"durability": 10,
+				"friction": 4,
+				"buoyancy": 7
+			},
+			"flammable": false
+		}
   ]
 }
