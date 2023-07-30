@@ -136,7 +136,7 @@ function NuclearReactor:sv_updateHeat()
 	--nuclear reaction
 	local purity = 0
 	local fuel = self.sv.saved.uranium.u235 + self.sv.saved.uranium.u238
-	local gearPowerFactor = 0
+	local gearPowerFactor = 1
 	if self.sv.saved.uranium.u235 > 0 then
 		purity = self.sv.saved.uranium.u235 / (self.sv.saved.uranium.u235 + self.sv.saved.uranium.u238)
 		if self.sv.saved.gearIdx > 1 and purity > 0.03 then
