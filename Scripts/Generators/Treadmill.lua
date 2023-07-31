@@ -39,7 +39,18 @@ end
 
 function Treadmill:sv_getPower()
     if self.sv.char == nil then return 0 end
-    return math.abs(self:getSpeed(self.sv.char))
+    return self:getSpeed(self.sv.char)
+end
+
+function Treadmill:server_onFixedUpdate()
+    Generator.server_onFixedUpdate(self)
+    if self.sv.char then
+        local direction = self.shape.at * self.data.trigger.direction.at +
+                self.shape.right * self.data.trigger.direction.right +
+                self.shape.up * self.data.trigger.direction.up
+        local force = direction * (self.sv.char.mass / 4) * self:getSpeed(self.sv.char)
+        sm.physics.applyImpulse(self.sv.char, force)
+    end
 end
 
 -- #endregion
@@ -76,10 +87,8 @@ end
 ---@param char Character
 ---@return number
 function Treadmill:getSpeed(char)
-    local direction = self.shape.at * self.data.trigger.direction.at +
-                self.shape.right * self.data.trigger.direction.right +
-                self.shape.up * self.data.trigger.direction.up
-    return char.velocity:dot(direction)
+    --4 = player speed multiplier (sprinting is x2)
+    return (char:isSprinting() and 2 or 1) * 4
 end
 
 --------------------
