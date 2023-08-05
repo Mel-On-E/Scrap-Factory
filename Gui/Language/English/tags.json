@@ -15,7 +15,7 @@
 	"ExportedCreation": "Exported creation!",
 	"InvalidName": "Please enter a name!",
 	"ExportBlueprintExists": "Blueprint by the name of '%s' already exists, do you want to overwrite it?",
-	
+
 	"ImportInteraction": "Import creation",
 	"ImportTitle": "Select a creation to import!",
 	"ImportedCreation": "Imported Creation!",
@@ -97,7 +97,7 @@
 
 	"JetpackLv1Name": "Jetpack!",
 	"JetpackLv1Desc": "Unlock a cool and epic jetpack that allows you to fly too the moon! Well at least if you would not have to keep an eye on fuel. Good thing you can recharge it with earthly magic when touching the ground.",
-	
+
 	"LiftLv1Name": "Lift++",
 	"LiftLv1Desc": "Upgrade your lift! This will allow you to export and import entire factories! It will even automatically buy the parts you need!",
 
@@ -171,5 +171,9 @@
 	"JetpackAlwaysOn": "Always active: ",
 
 	//Interactive
-	"TeleporterMoreThan2": "You can only have 2 teleporters!"
+	"TeleporterMoreThan2": "You can only have 2 teleporters!",
+	"TreadmillMessage1": "You got this!",
+	"TreadmillMessage2": "Keep going!",
+	"TreadmillMessage3": "Support the Factory!",
+	"TreadmillMessageFaster": "Run faster!"
 }

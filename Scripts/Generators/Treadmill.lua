@@ -9,6 +9,15 @@ dofile("$SURVIVAL_DATA/Scripts/game/survival_units.lua")
 ---@field cl TreadmillCl
 Treadmill = class(Generator)
 
+---the amount of messages in `tags.json`
+local messageCount = 3
+---the min time inbetween messages
+local minMessageTime = 1--[[120]] *40
+---the max time inbetween messages
+local maxMessageTime = 4--[[240]] *40
+---precent that the message will tell them to speed up if they aren't running
+local speedUpPrecent = 0.2
+
 --------------------
 -- #region Server
 --------------------
@@ -62,6 +71,7 @@ end
 function Treadmill:client_onCreate()
     Generator.client_onCreate(self)
     self.cl.uvIndex = 0
+    self:cl_pickTime()
 end
 
 function Treadmill:client_onClientDataUpdate(data)
@@ -72,14 +82,31 @@ function Treadmill:client_onClientDataUpdate(data)
     end
 end
 
-function Treadmill:client_onUpdate(dt)
+function Treadmill:client_onFixedUpdate(dt)
     ---update uv animation
     if self.cl.char ~= nil then
         local uvFrames = 50
         local timeScale = 0.58 * self:getSpeed(self.cl.char)
         self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
         self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
+
+        self.cl.messageTimer = self.cl.messageTimer - 1
+        if self.cl.messageTimer <= 0 then
+            self:cl_pickTime()
+            local name
+            if not self.cl.char:isSprinting() and sm.noise.randomRange(0,1) < speedUpPrecent then name = 'Faster'
+            else name = math.floor(sm.noise.randomRange(1,messageCount+1))
+            end
+            sm.event.sendToPlayer(sm.localPlayer.getPlayer(), 'cl_numberEffect', {
+                value = language_tag('TreadmillMessage'..name),
+                pos = self.shape.worldPosition + self.shape:getAt() + self.shape:getRight()
+            })
+        end
     end
+end
+
+function Treadmill:cl_pickTime()
+    self.cl.messageTimer = sm.noise.randomRange(minMessageTime,maxMessageTime)
 end
 
 -- #endregion
@@ -105,6 +132,7 @@ end
 ---@field char Character|nil
 ---@field active boolean
 ---@field uvIndex number
+---@field messageTimer number the ticks until it will display a message
 
 ---@class TreadmillTrigger
 ---@field box BeltVec size of the areaTrigger
