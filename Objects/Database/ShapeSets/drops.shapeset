@@ -2528,6 +2528,59 @@
 				"buoyancy": 7
 			},
 			"flammable": false
-		}
+		},
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ffffff",
+      "flammable": true,
+      "name": "obj_drop_biomass_gas",
+      "physicsMaterial": "Dirt",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "GasDrop",
+        "data": {
+          "effect": "Paintcharacter - Small",
+          "autoPlay": true
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e6ddd837-a5d3-468a-ae82-aebd7ad98fc1"
+    }
   ]
 }

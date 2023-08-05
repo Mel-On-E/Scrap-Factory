@@ -19,6 +19,9 @@ local biomassDrops = {
     [tostring(obj_drop_popcorn)] = true,
 }
 
+local minGasTime = 12 *40
+local maxGasTime = 24 *40
+
 --------------------
 -- #region Server
 --------------------
@@ -38,7 +41,8 @@ function BiomassContainer:server_onCreate()
         },
         droppingOffset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z),
         cachedPos = self.shape.worldPosition,
-        cachedRot = self.shape.worldRotation
+        cachedRot = self.shape.worldRotation,
+        gasTimer = 0
     }
 	local shapeSize = sm.item.getShapeSize(self.shape:getShapeUuid()) * 0.125
 	local size = sm.vec3.new(shapeSize.x + 0.875, shapeSize.y + 0.875, shapeSize.z + 0.875)
@@ -50,7 +54,36 @@ function BiomassContainer:server_onCreate()
 end
 
 function BiomassContainer:server_onFixedUpdate()
-    --TODO add biomass drops (12 - 24 secs maybe)
+    local container = self.interactable:getContainer(0)
+    if not container:isEmpty() then
+        self.sv.gasTimer = self.sv.gasTimer - 1
+        if self.sv.gasTimer <= 0 then
+            self.sv.gasTimer = sm.noise.randomRange(minGasTime, maxGasTime)
+
+            local slot = self:sv_getLastUsedSlot(container) - 1
+            local slotItem = container:getItem(slot)
+            sm.container.beginTransaction()
+		    sm.container.spendFromSlot(container, slot, slotItem.uuid, 1, true)
+            if sm.container.endTransaction() then
+                local offset = self.shape.right * self.sv.droppingOffset.x + self.shape.at * self.sv.droppingOffset.y +
+                    self.shape.up * self.sv.droppingOffset.z
+
+                local shape = sm.shape.createPart(obj_drop_biomass_gas, (self.sv.cachedPos or self.shape.worldPosition) + offset,
+                    self.sv.cachedRot)
+
+                local publicData = unpackNetworkData(self.sv.saved.drops[slot])
+                shape.interactable:setPublicData({
+                    value = 0,
+                    pollution = publicData.value,
+                    upgrades = {},
+                    impostor = false
+                })
+
+                self.sv.saved.drops[slot] = nil
+                self.storage:save(self.sv.saved)
+            end
+        end
+    end
 
     --cache transform
 	self.sv.cachedPos = self.shape.worldPosition
@@ -123,6 +156,7 @@ function BiomassContainer:client_canInteract() return false end
 ---@field droppingOffset Vec3 offset that determines where drops are dropped
 ---@field cachedPos Vec3
 ---@field cachedRot Quat
+---@field gasTimer number number of ticks until it creates a biomass gas
 
 ---@class BiomassContainerSaveData : DropContainerSaveData
 

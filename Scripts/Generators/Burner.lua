@@ -1,3 +1,4 @@
+dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
@@ -30,7 +31,38 @@ function Burner:sv_onEnter(trigger, results)
     Furnace.sv_onEnter(self, trigger, results)
 end
 
+---@param shape Shape
 function Burner:sv_onEnterDrop(shape)
+    if shape.uuid == obj_drop_biomass_gas then
+        local publicData = shape.interactable.publicData
+
+        local pollution = math.sqrt(publicData.pollution) --TODO balance biomass
+        local power = publicData.pollution * 2
+
+        sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+            pos = shape.worldPosition,
+            value = tostring(power),
+            effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
+                "Sellpoints - CampfireOnsell",
+            format = "power"
+        })
+        PowerManager.sv_changePower(power)
+
+        --create pollution drop
+        local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
+        smoke.interactable:setPublicData({
+            value = 0,
+            pollution = pollution,
+            upgrades = {},
+            impostor = false
+        })
+
+        --destory drop
+        shape.interactable.publicData.value = nil
+        shape:destroyPart(0)
+        return
+    end
+
     --exclude non-burnable drops
     if not self.data.drops[tostring(shape.uuid)] then return end
 
