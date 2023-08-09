@@ -172,7 +172,7 @@ function NuclearReactor:sv_updateHeat()
 			{ Color = self.shape.color })
 	elseif self.sv.saved.heat >= maxHeat then
 		efficiency = 0
-		status = "#ff0000"
+		status = "NuclearReactorCritical"
 	elseif self.sv.saved.heat >= endHeat then
 		efficiency = (maxHeat - self.sv.saved.heat) / (maxHeat - endHeat)
 		efficiency = efficiency ^ 0.667
