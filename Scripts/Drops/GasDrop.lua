@@ -17,6 +17,10 @@ local skyboxLimit = 1000
 
 function GasDrop:server_onCreate()
     Drop.server_onCreate(self)
+end
+
+function GasDrop:sv_init()
+    Drop.sv_init(self)
     self.sv.startHeight = self.shape.worldPosition.z
 end
 
