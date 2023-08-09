@@ -1,3 +1,5 @@
+dofile("$CONTENT_DATA/Scripts/Drops/NuclearWaste.lua")
+
 ---A type of `Generator` that produces power when supplied by enriched uranium and water
 ---@class NuclearReactor : Generator
 ---@field sv NuclearReactorSv
