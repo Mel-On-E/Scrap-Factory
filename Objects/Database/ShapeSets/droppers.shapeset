@@ -1730,10 +1730,18 @@
          "scripted" : {
             "classname" : "AutoDropper",
             "data" : {
-               "drop" : {
-                  "uuid" : "c9be08f7-7b95-40bd-90bd-31a6ef30c966",
-                  "value" : "1e11"
-               },
+               "drops" : [
+                  {
+                     "uuid" : "c9be08f7-7b95-40bd-90bd-31a6ef30c966",
+                     "value" : "1e11",
+                     "chance" : 1
+                  },
+                  {
+                     "uuid" : "4ca69a07-d032-4066-a775-29b25a587da7",
+                     "value" : "69",
+                     "chance" : 1
+                  }
+               ],
                "interval" : 40,
                "offset" : {
                   "x" : -1.250,
