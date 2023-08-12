@@ -2581,6 +2581,85 @@
       "showInInventory": false,
       "stackSize": 65535.0,
       "uuid": "e6ddd837-a5d3-468a-ae82-aebd7ad98fc1"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "color": "00ff00",
+      "flammable": false,
+      "name": "obj_drop_helium",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 1,
+        "durability": 1,
+        "friction": 2,
+        "buoyancy": 9
+      },
+      "renderable": {
+        "lodList" : [
+           {
+              "mesh" : "$CONTENT_DATA/Objects/Mesh/Drops/helium_balloon.fbx",
+              "minViewSize" : 15,
+              "subMeshMap" : {
+                 "t_hotspot_inflatable01" : {
+                    "custom" : {
+                       "color" : "Color01"
+                    },
+                    "material" : "DifAsgNor",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_nor.tga"
+                    ]
+                 },
+                 "t_hotspot_inflatable06" : {
+                    "custom" : {
+                       "color" : "Color06"
+                    },
+                    "material" : "DifAsg",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon01_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       ""
+                    ]
+                 },
+                 "t_hotspot_inflatable07" : {
+                    "custom" : {
+                       "color" : "Color07"
+                    },
+                    "material" : "DifAsgNor",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon02_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_nor.tga"
+                    ]
+                 },
+                 "totebottether" : {
+                  "custom" : {
+                     "color" : "Color01"
+                  },
+                  "material" : "DifAsgNor",
+                  "textureList" : [
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_dif.tga",
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_asg.tga",
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_nor.tga"
+                  ]
+               }
+              }
+           }
+        ]
+     },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "GasDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+      },
+      "showInInventory": true,
+      "stackSize": 65535.0,
+      "uuid": "4ca69a07-d032-4066-a775-29b25a587da7"
     }
   ]
 }

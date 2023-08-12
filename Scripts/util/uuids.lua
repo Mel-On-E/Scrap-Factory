@@ -122,6 +122,7 @@ obj_drop_popcorn_popped = sm.uuid.new("b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40")
 obj_drop_water = sm.uuid.new("fe0e948c-a660-446a-bf34-a48e2d0ba551")
 obj_uranium_waste = sm.uuid.new("f5f7970c-8048-4fae-8276-9958a3b7130e")
 obj_drop_biomass_gas = sm.uuid.new("e6ddd837-a5d3-468a-ae82-aebd7ad98fc1")
+obj_drop_helium = sm.uuid.new("4ca69a07-d032-4066-a775-29b25a587da7")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/upgraders.shapeset
@@ -162,6 +163,7 @@ Holy_Gay_Pineapple = sm.uuid.new("2aac62c2-aed7-4391-9e3e-3ea4676e8ef3")
 obj_solar_mirror = sm.uuid.new("0a099d28-1e39-41c2-9bad-58d30202ff3d")
 obj_generator_lightning = sm.uuid.new("ffe3338e-db44-49b9-a3d3-6e764d0b7e3e")
 obj_generator_nuclear = sm.uuid.new("00edb7f6-946c-40c3-a6e9-2db51c157347")
+obj_generator_fusion = sm.uuid.new("7fc98eb0-0b4d-4386-b542-c85cfcfc9c03")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/storage.shapeset
@@ -188,6 +190,7 @@ obj_chest = sm.uuid.new("4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe")
 obj_tractorbeam = sm.uuid.new("816aaa6d-01ac-43cd-8b1f-0ca5b2145972")
 obj_teleporter = sm.uuid.new("81012991-e13b-47ab-a3bd-f93ef72cce84")
 obj_jumppad = sm.uuid.new("cd6de292-8f63-4c34-985e-096af4376482")
+obj_biomasscontainer = sm.uuid.new("dc68719b-eeb0-45ad-a946-c74059854bb2")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/effects.shapeset
@@ -195,7 +198,7 @@ obj_jumppad = sm.uuid.new("cd6de292-8f63-4c34-985e-096af4376482")
 
 obj_furnace_effect = sm.uuid.new("f74a0354-05e9-411c-a8ba-75359449f770")
 obj_drop_radioactive_effect = sm.uuid.new("d7807dca-e429-4822-9a66-2efabb09118b")
-obj_drop_tritium = sm.uuid.new("cba96abb-2116-496f-b635-03e8e52c67f5")
+obj_drop_tritium_effect = sm.uuid.new("cba96abb-2116-496f-b635-03e8e52c67f5")
 obj_drop_neptunium = sm.uuid.new("898e8270-1c16-4091-aa9d-1bf410945e4d")
 obj_drop_plutonium = sm.uuid.new("a0588f9f-0beb-44be-8601-dab987c16e68")
 obj_drop_technetium99 = sm.uuid.new("db7e5caa-e830-46f8-9335-7b1825aac77d")

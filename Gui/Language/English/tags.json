@@ -179,5 +179,14 @@
 	"NuclearReactorMaximumPurity": "Maximum processed purity: ",
 	"NuclearReactorHeat": "Heat: ",
 	"NuclearReactorFuel": "Fuel: ",
-	"NuclearReactorPurity": "Purity: "
+	"NuclearReactorPurity": "Purity: ",
+
+	"FusionReactorPowerUpDescription": "Power up the plasma to start the fusion reaction. You need to supply %s power for %s seconds. Supply deuterium and tritium evenly to keep the reaction going.",
+	"FusionReactorPowerUpButton": "Power Up!",
+	"FusionReactorFuel": "Fuel: ",
+	"FusionReactorRatio": "D-T Ratio: ",
+	"FusionReactorPoweringUp": "Charging: ",
+	"FusionReactorPoweredUp": "Active",
+	"FusionReactorNotPoweredUp": "Inactive",
+	"FusionReactorReactionSpeedControl": "Drag to adjust reaction speed"
 }

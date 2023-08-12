@@ -365,6 +365,76 @@
 				"buoyancy": 2
 			},
 			"flammable": false
-      }
+      },
+      {
+			"uuid": "7fc98eb0-0b4d-4386-b542-c85cfcfc9c03",
+			"name": "obj_generator_fusion",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "DifAsgNor"
+							},
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "Glass"
+							},
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "DifAsgNorAlpha"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/fittings/obj_fittings_7x8_glass.fbx"
+					}
+				]
+			},
+			"color": "d07500",
+         "scripted" : {
+            "classname" : "FusionReactor",
+            "data" : {
+               "box" : {
+                  "x" : 1.25,
+                  "y" : 0.20833,
+                  "z" : 2.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.0,
+                  "z" : -1.0
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/FusionReactor.lua"
+         },
+			"cylinder": {
+				"diameter": 7,
+				"depth": 8,
+				"margin": 0.04,
+				"axis": "Y"
+			},
+			"rotationSet": "PropY",
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 5,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 6
+			},
+			"flammable": false
+		}
    ]
 }

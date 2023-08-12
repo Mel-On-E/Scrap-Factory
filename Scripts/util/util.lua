@@ -86,7 +86,7 @@ end
 ---@field format "power" | "pollution" | "prestige" | "money" | "temperature" standard formatting options
 ---@field color string|nil A hex color (#rrggbb) that will be the text color
 ---@field unit string|nil The symbol after the number (postfix)
----@field suffixes string[] The suffixes of the numbers for each 3 orders of magnitude
+---@field suffixes string[]|nil The suffixes of the numbers for each 3 orders of magnitude
 ---@field value number The number to format
 
 ---Formats a number value to a nice string for fancy display e.g. `"#00dd00$1.69k"`

@@ -92,7 +92,7 @@
       },
       "color": "a8edc3",
       "flammable": false,
-      "name": "obj_drop_tritium",
+      "name": "obj_drop_tritium_effect",
       "physicsMaterial": "Dirt",
       "ratings": {
         "density": 1,
