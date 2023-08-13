@@ -435,6 +435,67 @@
 				"buoyancy": 6
 			},
 			"flammable": false
+		},
+      {
+			"uuid": "25364f15-c7d3-408a-a513-2f270eb15e40",
+			"name": "obj_generator_dyson_sphere",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshMap" : {
+                     "landingplatform2" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_nor.tga"
+                        ]
+                     },
+                     "landingplatform" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Generators/dyson_sphere_logo_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_nor.tga"
+                        ]
+                     },
+                     "antenna" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Generators/dyson_sphere_logo_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_nor.tga"
+                        ]
+                     },
+                     "poop": {
+                        "textureList": [
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_nor.tga"
+                        ],
+                        "material": "DifAsgNor"
+                     }
+                  },
+						"mesh": "$CONTENT_DATA/Objects/Mesh/dyson_launch_platform.fbx"
+					}
+				]
+			},
+			"color": "d07500",
+			"box": {
+				"x": 16,
+				"y": 1,
+				"z": 16
+			},
+			"rotationSet": "PropY",
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 5,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 6
+			},
+			"flammable": false
 		}
    ]
 }
