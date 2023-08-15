@@ -186,7 +186,7 @@
             "durability" : 4,
             "friction" : 5
          },
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_belt_01.rend",
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/treadmill.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "Treadmill",
