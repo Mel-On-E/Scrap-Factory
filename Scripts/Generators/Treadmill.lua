@@ -9,12 +9,10 @@ dofile("$SURVIVAL_DATA/Scripts/game/survival_units.lua")
 ---@field cl TreadmillCl
 Treadmill = class(Generator)
 
----the amount of messages in `tags.json`
-local messageCount = 3
----the min time inbetween messages
-local minMessageTime = 1 --[[120]] * 40
----the max time inbetween messages
-local maxMessageTime = 4 --[[240]] * 40
+---the min time inbetween messages in ticks
+local minMessageTime = 1 * 40
+---the max time inbetween messages in ticks
+local maxMessageTime = 4 * 40
 ---precent that the message will tell them to speed up if they aren't running
 local speedUpPrecent = 0.2
 
@@ -76,6 +74,7 @@ end
 function Treadmill:client_onCreate()
     Generator.client_onCreate(self)
     self.cl.uvIndex = 0
+    self.cl.messageCount = self:cl_getMessageCount()
     self:cl_pickTime()
 end
 
@@ -102,7 +101,7 @@ function Treadmill:client_onFixedUpdate(dt)
             if not self.cl.char:isSprinting() and sm.noise.randomRange(0, 1) < speedUpPrecent then
                 name = 'Faster'
             else
-                name = math.floor(sm.noise.randomRange(1, messageCount + 1))
+                name = math.floor(sm.noise.randomRange(1, self.cl.messageCount + 1))
             end
             sm.event.sendToPlayer(sm.localPlayer.getPlayer(), 'cl_numberEffect', {
                 value = language_tag('TreadmillMessage' .. name),
@@ -114,6 +113,16 @@ end
 
 function Treadmill:cl_pickTime()
     self.cl.messageTimer = sm.noise.randomRange(minMessageTime, maxMessageTime)
+end
+
+function Treadmill:cl_getMessageCount()
+    local i = 1
+    local count = 0
+    while language_tag("TreadmillMessage" .. tostring(i)) ~= "nil" do
+        count = i
+        i = i + 1
+    end
+    return count
 end
 
 -- #endregion
@@ -151,6 +160,7 @@ end
 ---@field active boolean
 ---@field uvIndex number
 ---@field messageTimer number the ticks until it will display a message
+---@field messageCount integer number of messages in `tags.json`
 
 ---@class TreadmillTrigger
 ---@field box BeltVec size of the areaTrigger
