@@ -188,5 +188,9 @@
 	"FusionReactorPoweringUp": "Charging: ",
 	"FusionReactorPoweredUp": "Active",
 	"FusionReactorNotPoweredUp": "Inactive",
-	"FusionReactorReactionSpeedControl": "Drag to adjust reaction speed"
+	"FusionReactorReactionSpeedControl": "Drag to adjust reaction speed",
+
+	"DysonSphereLaunch": "Launch:",
+	"DysonSphereLaunching": "Launching...",
+	"DysonSphereInOrbit": "In Orbit"
 }

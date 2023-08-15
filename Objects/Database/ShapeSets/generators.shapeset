@@ -481,6 +481,14 @@
 				]
 			},
 			"color": "d07500",
+         "scripted" : {
+            "classname" : "DysonSphere",
+            "data" : {
+               "power" : 1e18,
+               "launchPower" : 1e19
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/DysonSphere.lua"
+         },
 			"box": {
 				"x": 16,
 				"y": 1,

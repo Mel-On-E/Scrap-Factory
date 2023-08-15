@@ -322,8 +322,21 @@
       "rotationSet": "Default",
       "showInInventory": false,
       "stackSize": 65535.0,
-      "uuid": "9a95da31-cfdd-4e51-97c5-4c9f6b6b2116",
-      "color": "00ff00"
+      "uuid": "9a95da31-cfdd-4e51-97c5-4c9f6b6b2116"
+    },
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ffd504",
+      "name": "obj_duckson_sphere_effect",
+      "physicsMaterial": "Plastic",
+      "renderable": "$CONTENT_DATA/Effects/Renderables/dyson_sphere.rend",
+      "rotationSet": "Default",
+      "stackSize": 65535.0,
+      "uuid": "81b49c66-3202-47a0-909e-ff42a289cfbd"
     }
   ]
 }

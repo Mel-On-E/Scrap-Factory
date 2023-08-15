@@ -2,9 +2,9 @@
 ---@class SolarMirror : ShapeClass
 ---@field cl SolarMirrorCl
 SolarMirror = class(nil)
+SolarMirror.sunDir = sm.vec3.new(0.232, 0.688, -0.687):normalize()
 
 local rayLength = 100
-local sunDir = sm.vec3.new(0.232, 0.688, -0.687):normalize()
 
 --------------------
 -- #region Server
@@ -97,12 +97,12 @@ end
 ---gets the direction of the sun's reflection on the mirror
 function SolarMirror:get_reflection_dir()
     local mirrorNormal = self.shape.up
-    return sunDir - mirrorNormal * 2 * (sunDir:dot(mirrorNormal))
+    return SolarMirror.sunDir - mirrorNormal * 2 * (SolarMirror.sunDir:dot(mirrorNormal))
 end
 
 ---check if the reflective side of the mirror is facing the sun
 function SolarMirror:has_valid_rotation()
-    local degrees = math.deg(angle(self.shape.up, -sunDir))
+    local degrees = math.deg(angle(self.shape.up, -SolarMirror.sunDir))
     return degrees <= 85
 end
 

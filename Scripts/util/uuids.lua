@@ -164,6 +164,7 @@ obj_solar_mirror = sm.uuid.new("0a099d28-1e39-41c2-9bad-58d30202ff3d")
 obj_generator_lightning = sm.uuid.new("ffe3338e-db44-49b9-a3d3-6e764d0b7e3e")
 obj_generator_nuclear = sm.uuid.new("00edb7f6-946c-40c3-a6e9-2db51c157347")
 obj_generator_fusion = sm.uuid.new("7fc98eb0-0b4d-4386-b542-c85cfcfc9c03")
+obj_generator_dyson_sphere = sm.uuid.new("25364f15-c7d3-408a-a513-2f270eb15e40")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/storage.shapeset
@@ -204,6 +205,7 @@ obj_drop_plutonium = sm.uuid.new("a0588f9f-0beb-44be-8601-dab987c16e68")
 obj_drop_technetium99 = sm.uuid.new("db7e5caa-e830-46f8-9335-7b1825aac77d")
 obj_drop_californium = sm.uuid.new("05b882d5-82ef-47eb-8751-e34b067565e4")
 obj_skirt_effect = sm.uuid.new("9a95da31-cfdd-4e51-97c5-4c9f6b6b2116")
+obj_duckson_sphere_effect = sm.uuid.new("81b49c66-3202-47a0-909e-ff42a289cfbd")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/vanilla/blocks.shapeset
