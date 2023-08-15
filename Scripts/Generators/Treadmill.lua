@@ -12,9 +12,9 @@ Treadmill = class(Generator)
 ---the amount of messages in `tags.json`
 local messageCount = 3
 ---the min time inbetween messages
-local minMessageTime = 1--[[120]] *40
+local minMessageTime = 1 --[[120]] * 40
 ---the max time inbetween messages
-local maxMessageTime = 4--[[240]] *40
+local maxMessageTime = 4 --[[240]] * 40
 ---precent that the message will tell them to speed up if they aren't running
 local speedUpPrecent = 0.2
 
@@ -38,12 +38,17 @@ function Treadmill:server_onCreate()
     -- sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SolarTutorial")
 end
 
-function Treadmill:sv_enter(_, results) self:sv_updateChar(results[1]) end
-function Treadmill:sv_exit() self:sv_updateChar(nil) end
+function Treadmill:sv_enter(_, results)
+    self:sv_updateChar(results[1])
+end
+
+function Treadmill:sv_exit()
+    self:sv_updateChar(nil)
+end
 
 function Treadmill:sv_updateChar(char)
     self.sv.char = char
-    self.network:setClientData({typ='char', char = char})
+    self.network:setClientData({ typ = 'char', char = char })
 end
 
 function Treadmill:sv_getPower()
@@ -55,8 +60,8 @@ function Treadmill:server_onFixedUpdate()
     Generator.server_onFixedUpdate(self)
     if self.sv.char then
         local direction = self.shape.at * self.data.trigger.direction.at +
-                self.shape.right * self.data.trigger.direction.right +
-                self.shape.up * self.data.trigger.direction.up
+            self.shape.right * self.data.trigger.direction.right +
+            self.shape.up * self.data.trigger.direction.up
         local force = direction * (self.sv.char.mass / 4) * self:getSpeed(self.sv.char)
         sm.physics.applyImpulse(self.sv.char, force)
     end
@@ -94,11 +99,13 @@ function Treadmill:client_onFixedUpdate(dt)
         if self.cl.messageTimer <= 0 then
             self:cl_pickTime()
             local name
-            if not self.cl.char:isSprinting() and sm.noise.randomRange(0,1) < speedUpPrecent then name = 'Faster'
-            else name = math.floor(sm.noise.randomRange(1,messageCount+1))
+            if not self.cl.char:isSprinting() and sm.noise.randomRange(0, 1) < speedUpPrecent then
+                name = 'Faster'
+            else
+                name = math.floor(sm.noise.randomRange(1, messageCount + 1))
             end
             sm.event.sendToPlayer(sm.localPlayer.getPlayer(), 'cl_numberEffect', {
-                value = language_tag('TreadmillMessage'..name),
+                value = language_tag('TreadmillMessage' .. name),
                 pos = self.shape.worldPosition + self.shape:getAt() + self.shape:getRight()
             })
         end
@@ -106,7 +113,7 @@ function Treadmill:client_onFixedUpdate(dt)
 end
 
 function Treadmill:cl_pickTime()
-    self.cl.messageTimer = sm.noise.randomRange(minMessageTime,maxMessageTime)
+    self.cl.messageTimer = sm.noise.randomRange(minMessageTime, maxMessageTime)
 end
 
 -- #endregion
