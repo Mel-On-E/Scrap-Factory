@@ -121,8 +121,19 @@ end
 ---@param char Character
 ---@return number
 function Treadmill:getSpeed(char)
-    --4 = player speed multiplier (sprinting is x2)
-    return (char:isSprinting() and 2 or 1) * 4
+    local speed = 0
+    local animations = char:getActiveAnimations()
+    for k, v in pairs(animations) do
+        if string.find(v.name, "run") then
+            speed = 4
+            print(v.name)
+        elseif string.find(v.name, "sprint") then
+            speed = 8
+            print(v.name)
+        end
+    end
+
+    return speed
 end
 
 --------------------
