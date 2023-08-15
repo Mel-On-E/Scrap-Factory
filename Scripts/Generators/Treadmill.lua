@@ -135,10 +135,8 @@ function Treadmill:getSpeed(char)
     for k, v in pairs(animations) do
         if string.find(v.name, "run") then
             speed = 4
-            print(v.name)
         elseif string.find(v.name, "sprint") then
             speed = 8
-            print(v.name)
         end
     end
 
