@@ -98,6 +98,7 @@ function FusionReactor:server_onFixedUpdate()
             if PowerManager.sv_changePower(-powerUpEnergy) then
                 if fuelPoints > 0 then
                     local gearFactor = math.max(0, 1.5 ^ (self.sv.saved.gearIdx - 1) - 0.5)
+                    gearFactor = (self.sv.saved.gearIdx == 1) and 0 or gearFactor
                     local ratio = self.sv.saved.fuel.deuterium / fuelPoints
                     local ratioFactor = math.min(ratio, 1 - ratio)
                     ratioFactor = ratioFactor ^ 2 * 4
