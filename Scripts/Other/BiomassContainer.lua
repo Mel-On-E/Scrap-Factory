@@ -85,6 +85,16 @@ function BiomassContainer:server_onFixedUpdate()
         end
     end
 
+    --logic output (true if full)
+	local container = self.interactable:getContainer(0)
+	local isFull = true
+	for i=0, container.size-1, 1 do
+		local item = container:getItem(i)
+		isFull = isFull and item.uuid ~= sm.uuid.getNil()
+        if not isFull then break end
+	end
+	self.interactable:setActive(isFull)
+
     --cache transform
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedRot = self.shape.worldRotation
