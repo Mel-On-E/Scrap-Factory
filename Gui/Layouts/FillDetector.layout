@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="BackgroundPromptNarrow" position_real="0.29999999999999999 0.20000000000000001 0.40000000000000002 0.5">
+        <Widget type="TextBox" skin="TextBox" position_real="0.1171875 0.055555555555555552 0.76822916666666663 0.17592592592592593">
+            <Property key="Caption" value="C O N T A I N E R   F I L L   D E T E C T O R "/>
+            <Property key="TextAlign" value="Center"/>
+            <Property key="FontHeight" value="25"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.34999999999999998 0.14973958333333334 0.059259259259259262">
+            <Property key="Caption" value="Minimum Value:"/>
+            <Property key="TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.5 0.14973958333333334 0.059259259259259262">
+            <Property key="Caption" value="Maximum Value:"/>
+            <Property key="TextAlign" value="Left VCenter"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position_real="0.3984375 0.34999999999999998 0.098958333333333329 0.059259259259259262" name="MIN_VAL">
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+        <Widget type="EditBox" skin="EditBox" position_real="0.3984375 0.5 0.09765625 0.059259259259259262" name="MAX_VAL">
+            <Property key="TextAlign" value="Center"/>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>
