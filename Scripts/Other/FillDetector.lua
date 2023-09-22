@@ -52,7 +52,8 @@ function FillDetector:sv_countContents(container)
 	for i = 0, container.size - 1, 1 do
 		local item = container:getItem(i)
 		if item.uuid:isNil() then return i end
-	end
+    end
+    return container.size
 end
 
 function FillDetector:sv_onOptionChange(data)
