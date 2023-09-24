@@ -32,7 +32,7 @@ function Treadmill:server_onCreate()
 
     --TODO add treadmill tutorial
     --TODO balance power
-    --TODO adjust to trello specs
+    --TODO non billboarded text, place it on the screen of treadmill
     -- sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SolarTutorial")
 end
 
