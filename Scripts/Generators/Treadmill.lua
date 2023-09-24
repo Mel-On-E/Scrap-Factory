@@ -87,16 +87,18 @@ function Treadmill:client_onClientDataUpdate(data)
 end
 
 function Treadmill:client_onFixedUpdate(dt)
-    ---update uv animation
     if self.cl.char ~= nil then
+        --update uv animation
         local uvFrames = 50
         local timeScale = 0.58 * self:getSpeed(self.cl.char)
         self.cl.uvIndex = (self.cl.uvIndex + dt * timeScale) % 1
         self.interactable:setUvFrameIndex(uvFrames - (self.cl.uvIndex * uvFrames))
 
+        --display message
         self.cl.messageTimer = self.cl.messageTimer - 1
         if self.cl.messageTimer <= 0 then
             self:cl_pickTime()
+            ---@type string|number language tag suffex
             local name
             if not self.cl.char:isSprinting() and sm.noise.randomRange(0, 1) < speedUpPrecent then
                 name = 'Faster'
