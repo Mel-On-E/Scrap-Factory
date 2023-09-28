@@ -95,6 +95,8 @@ function BiomassContainer:server_onFixedUpdate()
 	end
 	self.interactable:setActive(isFull)
 
+    --TODO: when merging into main, add to fill detector
+
     --cache transform
 	self.sv.cachedPos = self.shape.worldPosition
 	self.sv.cachedRot = self.shape.worldRotation
