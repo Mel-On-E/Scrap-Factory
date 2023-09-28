@@ -6,19 +6,23 @@
             <Property key="TextAlign" value="Center"/>
             <Property key="FontHeight" value="25"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.34999999999999998 0.14973958333333334 0.059259259259259262">
+        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.34999999999999998 0.16885416666666666 0.059259259259259262">
             <Property key="Caption" value="Minimum Value:"/>
             <Property key="TextAlign" value="Left VCenter"/>
         </Widget>
-        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.5 0.14973958333333334 0.059259259259259262">
+        <Widget type="TextBox" skin="TextBox" position_real="0.19921875 0.5 0.16885416666666666 0.059259259259259262">
             <Property key="Caption" value="Maximum Value:"/>
             <Property key="TextAlign" value="Left VCenter"/>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position_real="0.3984375 0.34999999999999998 0.098958333333333329 0.059259259259259262" name="MIN_VAL">
-            <Property key="TextAlign" value="Center"/>
+        <Widget type="Widget" skin="BeaconIconColorBorder" position_real="0.42838541666666669 0.34999999999999998 0.09765625 0.059259259259259262">
+            <Widget type="EditBox" skin="EditBoxEmpty" position_real="0 0 1 1" name="MIN_VAL">
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
         </Widget>
-        <Widget type="EditBox" skin="EditBox" position_real="0.3984375 0.5 0.09765625 0.059259259259259262" name="MAX_VAL">
-            <Property key="TextAlign" value="Center"/>
+        <Widget type="Widget" skin="BeaconIconColorBorder" position_real="0.42838541666666669 0.5 0.09765625 0.059259259259259262">
+            <Widget type="EditBox" skin="EditBoxEmpty" position_real="0 0 1 1" name="MAX_VAL">
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
         </Widget>
     </Widget>
     <CodeGeneratorSettings/>

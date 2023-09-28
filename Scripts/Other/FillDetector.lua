@@ -41,7 +41,6 @@ function FillDetector:server_onFixedUpdate(dt)
     local active = false
     if self.container then
         local count = self:sv_countContents(self.container)
-        sm.gui.chatMessage(tostring(count)..'  '..tostring(self.ops.minVal))
         active = count>=self.ops.minVal and count<=self.ops.maxVal
     end
     self.interactable:setActive(active)
