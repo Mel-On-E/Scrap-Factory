@@ -396,6 +396,64 @@
          },
          "stackSize": 65535.0,
          "uuid": "e0aaa72e-0fd9-4595-96b0-fa33b4990b28"
+      },
+      {
+         "box": {
+            "x": 4,
+            "y": 9,
+            "z": 4
+         },
+         "color": "df7f00",
+         "flammable": false,
+         "name": "obj_upgrader_tesslacoil",
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 4,
+            "density": 4,
+            "durability": 6,
+            "friction": 3
+         },
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_tesslacoil.rend",
+         "restitution": 0.0,
+         "rotationSet": "StaticY",
+         "sticky": "-Y",
+         "scripted": {
+            "filename": "$CONTENT_DATA/Scripts/Upgraders/TesslaCoil.lua",
+            "classname": "TesslaCoil",
+            "data": {
+               "effect": {
+                  "color": {
+                     "b": 1,
+                     "g": 1,
+                     "r": 0
+                  },
+                  "name": "UpgradeareaBig - Hexagon" //TODO dome area effect
+               },
+               "power": 10,
+               "upgrade": {
+                  "add": 1,
+                  "box": {
+                     "x": 2.00,
+                     "y": 2.00,
+                     "z": 2.00
+                  },
+                  "cap": 100,
+                  "limit": 10,
+                  "offset": {
+                     "x": 0,
+                     "y": 0,
+                     "z": 0
+                  }
+               }
+            }
+         },
+         "shop": {
+            "category": "Upgrades",
+            "price": "100",
+            "tier": 5
+         },
+         "stackSize": 65535.0,
+         "uuid": "b2d675c2-4141-44aa-8ba6-b28b6887b522"
       }
    ]
 }
