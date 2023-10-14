@@ -1,0 +1,38 @@
+{
+   "lodList": [
+      {
+         "mesh": "$CONTENT_DATA/Objects/Mesh/treadmill.fbx",
+         "subMeshMap": {
+            "submesh2": {
+               "material": "DifAsgNor",
+               "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_driverseat_02_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_driverseat_02_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_driverseat_02_nor.tga"
+               ]
+            },
+            "factory_belt_01": {
+               "custom": {
+                  "uv0": {
+                     "u": 0.01000000014901161,
+                     "v": 0.0
+                  }
+               },
+               "material": "UVAnimDifAsg",
+               "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_beltdetails_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_beltdetails_01_asg.tga"
+               ]
+            },
+            "factory_conveyer_01": {
+               "material": "DifAsgNor",
+               "textureList": [
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_nor.tga"
+               ]
+            }
+         }
+      }
+   ]
+}
