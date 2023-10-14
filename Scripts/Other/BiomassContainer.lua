@@ -24,8 +24,7 @@ local biomassDrops = {
     [tostring(obj_drop_popcorn_popped)] = true
 }
 
-local minGasTime = 12 *40
-local maxGasTime = 24 *40
+local gasChance = 1 / (40 * 60)
 
 --------------------
 -- #region Server
@@ -47,7 +46,6 @@ function BiomassContainer:server_onCreate()
         droppingOffset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z),
         cachedPos = self.shape.worldPosition,
         cachedRot = self.shape.worldRotation,
-        gasTimer = 0
     }
 	local shapeSize = sm.item.getShapeSize(self.shape:getShapeUuid()) * 0.125
 	local size = sm.vec3.new(shapeSize.x + 0.875, shapeSize.y + 0.875, shapeSize.z + 0.875)
@@ -61,9 +59,8 @@ end
 function BiomassContainer:server_onFixedUpdate()
     local container = self.interactable:getContainer(0)
     if not container:isEmpty() then
-        self.sv.gasTimer = self.sv.gasTimer - 1
-        if self.sv.gasTimer <= 0 then
-            self.sv.gasTimer = sm.noise.randomRange(minGasTime, maxGasTime)
+
+        if math.random() <= gasChance * #self.sv.saved.drops then
 
             local slot = self:sv_getLastUsedSlot(container) - 1
             local slotItem = container:getItem(slot)
@@ -173,7 +170,6 @@ function BiomassContainer:client_canInteract() return false end
 ---@field droppingOffset Vec3 offset that determines where drops are dropped
 ---@field cachedPos Vec3
 ---@field cachedRot Quat
----@field gasTimer number number of ticks until it creates a biomass gas
 
 ---@class BiomassContainerSaveData : DropContainerSaveData
 
