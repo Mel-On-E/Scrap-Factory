@@ -5,7 +5,7 @@
 --./Objects/Database/ShapeSets/furnaces.shapeset
 ----------------------------------------
 
-obj_furnace_basic = sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf")
+obj_furnace_scrap = sm.uuid.new("7e3df19b-2450-44ae-ad46-d2f6b5148cbf")
 obj_furnace_2x = sm.uuid.new("3039176f-dea8-453d-82be-2c73a68ad05f")
 obj_furnace_lunar = sm.uuid.new("e0587c21-2145-4ee1-beaa-d33ca3407c61")
 obj_furnace_item = sm.uuid.new("07909074-edf0-4fbc-952b-f97fa3eef6e9")
@@ -192,6 +192,7 @@ obj_tractorbeam = sm.uuid.new("816aaa6d-01ac-43cd-8b1f-0ca5b2145972")
 obj_teleporter = sm.uuid.new("81012991-e13b-47ab-a3bd-f93ef72cce84")
 obj_jumppad = sm.uuid.new("cd6de292-8f63-4c34-985e-096af4376482")
 obj_biomasscontainer = sm.uuid.new("dc68719b-eeb0-45ad-a946-c74059854bb2")
+obj_valuedetector = sm.uuid.new("3da3d636-d263-4443-bdc5-37a8facd73c5")
 
 ----------------------------------------
 --./Objects/Database/ShapeSets/effects.shapeset
