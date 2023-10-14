@@ -25,6 +25,8 @@ local biomassDrops = {
 }
 
 local gasChance = 1 / (40 * 60)
+local dropPollution = 1e9
+local dropValue = 1e3
 
 --------------------
 -- #region Server
@@ -75,8 +77,8 @@ function BiomassContainer:server_onFixedUpdate()
 
                 local publicData = unpackNetworkData(self.sv.saved.drops[slot])
                 shape.interactable:setPublicData({
-                    value = 0,
-                    pollution = publicData.value,
+                    value = dropValue,
+                    pollution = dropPollution,
                     upgrades = {},
                     impostor = false
                 })
