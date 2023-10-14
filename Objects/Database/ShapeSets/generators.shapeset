@@ -129,16 +129,11 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
-               "drops" : {
-                  "87873e83-8270-4796-9401-6baba45ccef2" : true,
-                  "2c4842af-2e79-433a-aa49-603cc7cab78f": true
-               },
                "offset" : {
                   "x" : -0.1250,
                   "y" : 0.1250,
                   "z" : -0.1250
-               },
-               "powerFunction" : "root"
+               }
             },
             "filename" : "$CONTENT_DATA/Scripts/Generators/Burner.lua"
          },

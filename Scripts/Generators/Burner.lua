@@ -33,49 +33,28 @@ end
 
 ---@param shape Shape
 function Burner:sv_onEnterDrop(shape)
+    local publicData = shape.interactable.publicData
+    local powerFunc = function () end
+
     if shape.uuid == obj_drop_biomass_gas then
-        local publicData = shape.interactable.publicData
+        powerFunc = function (x)
+            return x ^ (1/2)
+        end
 
-        local pollution = math.sqrt(publicData.pollution) --TODO balance biomass
-        local power = publicData.pollution * 2
+        Drop:Sv_dropStored(shape.id)
 
-        sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-            pos = shape.worldPosition,
-            value = tostring(power),
-            effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
-                "Sellpoints - CampfireOnsell",
-            format = "power"
-        })
-        PowerManager.sv_changePower(power)
+    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_scrap_wood then
+        if publicData.pollution then return end
 
-        --create pollution drop
-        local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
-        smoke.interactable:setPublicData({
-            value = 0,
-            pollution = pollution,
-            upgrades = {},
-            impostor = false
-        })
-
-        --destory drop
-        shape.interactable.publicData.value = nil
-        shape:destroyPart(0)
+        powerFunc = function (x)
+            return x ^ (1/3)
+        end
+    else
         return
     end
 
-    --exclude non-burnable drops
-    if not self.data.drops[tostring(shape.uuid)] then return end
-
-    --exclude polluted drops
-    local publicData = shape.interactable.publicData
-    if publicData.pollution then return end
-
-    --create power
-    local power = publicData.value
-    if self.data.powerFunction == "root" then
-        power = (power ^ (1 / (4 / 3)))
-    end
-    power = power + 1
+    local power = powerFunc(publicData.value)
+    local pollution = math.sqrt(power)
 
     sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
         pos = shape.worldPosition,
@@ -88,12 +67,12 @@ function Burner:sv_onEnterDrop(shape)
 
     --create pollution drop
     local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
-    local newPublicData = {
-        value = 1,
-        pollution = power,
-        upgrades = {}
-    }
-    smoke.interactable:setPublicData(newPublicData)
+    smoke.interactable:setPublicData({
+        value = 0,
+        pollution = pollution,
+        upgrades = {},
+        impostor = false
+    })
 
     --destory drop
     shape.interactable.publicData.value = nil
