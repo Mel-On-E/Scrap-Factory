@@ -228,6 +228,73 @@
          "uuid" : "81012991-e13b-47ab-a3bd-f93ef72cce84"
       },
       {
+         "uuid": "3da3d636-d263-4443-bdc5-37a8facd73c5",
+         "name": "obj_valuedetector",
+         "box": {
+            "x": 3,
+            "y": 1,
+            "z": 6
+         },
+         "flammable": false,
+         "physicsMaterial": "Metal",
+         "ratings": {
+            "buoyancy": 4,
+            "density": 4,
+            "durability": 6,
+            "friction": 3
+         },
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_upgrader_basic_02.rend",
+         "restitution": 0.0,
+         "rotationSet": "PropY",
+         "color": "848484",
+         "stackSize": 10,
+         "scripted": {
+            "filename": "$CONTENT_DATA/Scripts/Other/ValueDetector.lua",
+            "classname": "ValueDetector",
+            "data": {
+               "belt": {
+                  "box": {
+                     "x": 0.75,
+                     "y": 0.25,
+                     "z": 1.50
+                  },
+                  "direction": {
+                     "at": -0.250,
+                     "right": -1,
+                     "up": 0
+                  },
+                  "offset": {
+                     "x": 0,
+                     "y": 0.1250,
+                     "z": 0
+                  },
+                  "speed": 1
+               },
+               "upgrade": {
+                  "box": {
+                     "x": 0.250,
+                     "y": 1.50,
+                     "z": 1.50
+                  },
+                  "offset": {
+                     "x": 0,
+                     "y": 0.8750,
+                     "z": 0
+                  }
+               },
+               "effect": {
+                  "color": {
+                     "b": 0,
+                     "g": 1,
+                     "r": 0
+                  },
+                  "name": "UpgradeareaBig - Value"
+               },
+               "power": 8
+            }
+         }
+      },
+      {
          "box" : {
             "x" : 6,
             "y" : 1,

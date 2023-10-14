@@ -46,6 +46,9 @@
     "bd7a7443-8c8f-4ce7-b0ff-7e65831ae655": {
         "title": "Popcorn Droper"
     },
+    "7fe4777e-751f-425e-9e3d-58e1308dcf2f": {
+        "title": "Egg Dropper"
+    },
     //Upgraders
     "69b869f1-03dc-4ea2-9391-fd24903945d1": {
         "title": "Basic Upgrader",
@@ -70,6 +73,10 @@
     //Belts
     "69b857f1-07dc-4ea2-9391-fd24903945d1": {
         "title": "Basic Belt",
+        "description": "Moves drops and other things around...\n\n#929292Power: #dddd00-1.00W"
+    },
+    "6e4d00c3-8310-439c-ad08-77c11e66b519": {
+        "title": "Small Belt",
         "description": "Moves drops and other things around...\n\n#929292Power: #dddd00-1.00W"
     },
     //Generators
@@ -102,6 +109,10 @@
     "4d14e5c2-9f59-4a14-9d47-2a4a1cc0c9fe": {
         "title": "Chest",
         "description": "A chest to store extra items. When your inventory gets too full. Don't worry, everything inside the chest won't get lost. And if it does, it's definitely not my fault..."
+    },
+    "3da3d636-d263-4443-bdc5-37a8facd73c5": {
+        "title": "Value Detector",
+        "description": "Compare the value of a passing drop to a value.\n\n#929292Power: #dddd00-8.00W"
     },
     "cd6de292-8f63-4c34-985e-096af4376482": {
         "title": "Jump Pad"

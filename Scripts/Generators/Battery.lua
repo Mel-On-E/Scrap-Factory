@@ -1,15 +1,15 @@
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Managers/LanguageManager.lua")
 
----Storage is a type of `Generator` that produces no power but can store it.
----@class Storage : Generator
-Storage = class(Generator)
+---Battery stores excess power but doesn't consume it.
+---@class Battery : Generator
+Battery = class(Generator)
 
 --------------------
 -- #region Server
 --------------------
 
-function Storage:server_onCreate()
+function Battery:server_onCreate()
     Generator.server_onCreate(self)
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "PowerStorageTutorial")
 end
@@ -20,7 +20,7 @@ end
 -- #region Server
 --------------------
 
-function Storage:client_canInteract()
+function Battery:client_canInteract()
     local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
     local o2 = "</p>"
     sm.gui.setInteractionText(language_tag("PowerCapacity"),
