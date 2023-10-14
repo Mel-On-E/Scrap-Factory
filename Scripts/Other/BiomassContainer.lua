@@ -17,6 +17,11 @@ local biomassDrops = {
     [tostring(obj_drop_scrap_wood)] = true,
     [tostring(obj_drop_wood)] = true,
     [tostring(obj_drop_popcorn)] = true,
+    [tostring(obj_drop_baguette)] = true,
+    [tostring(obj_drop_sunshake)] = true,
+    [tostring(obj_drop_milk)] = true,
+    [tostring(obj_drop_wood)] = true,
+    [tostring(obj_drop_popcorn_popped)] = true
 }
 
 local minGasTime = 12 *40
