@@ -175,5 +175,12 @@
 	"FusionReactorReactionSpeedControl": "Drag to adjust reaction speed",
 	"DysonSphereLaunch": "Launch:",
 	"DysonSphereLaunching": "Launching...",
-	"DysonSphereInOrbit": "In Orbit"
+	"DysonSphereInOrbit": "In Orbit",
+	//desc tool,
+	"cap": "Cap",
+	"limit": "Limit",
+	"capacity": "Capacity",
+	"dropValue": "Drop Value",
+	"speed": "Speed",
+	"power": "Power"
 }
