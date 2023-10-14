@@ -332,6 +332,44 @@
          "stackSize" : 65535.0,
          "sticky" : "-X+X-Y-Z+Z",
          "uuid" : "cd6de292-8f63-4c34-985e-096af4376482"
+      },
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 8,
+            "z" : 6
+         },
+         "color" : "58c23a",
+         "flammable" : true,
+         "name" : "obj_biomasscontainer",
+         "physicsMaterial" : "Mechanical",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 5,
+            "durability" : 5,
+            "friction" : 6
+         },
+         "renderable" : "$SURVIVAL_DATA/Objects/Renderable/interactive/obj_interactive_resourcecontainer.rend",
+         "rotationSet" : "PropYX",
+         "scripted" : {
+            "classname" : "BiomassContainer",
+            "data" : {
+               "offset" : {
+                  "x" : -0.1250,
+                  "y" : 0.50,
+                  "z" : 1.0
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Other/BiomassContainer.lua"
+         },
+         "shop" : {
+            "category" : "Utilities",
+            "price" : "10",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y+Y-X+X",
+         "uuid" : "dc68719b-eeb0-45ad-a946-c74059854bb2"
       }
    ]
 }
