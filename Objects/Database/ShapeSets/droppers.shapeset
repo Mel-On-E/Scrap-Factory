@@ -834,11 +834,11 @@
       },
       {
          "box": {
-            "x": 5,
-            "y": 11,
-            "z": 7
+            "x": 4,
+            "y": 6,
+            "z": 4
          },
-         "color": "cd9d71",
+         "color": "df7f01",
          "flammable": false,
          "name": "obj_dropper_scrap_wood",
          "physicsMaterial": "Wood",
@@ -848,7 +848,7 @@
             "durability": 10,
             "friction": 5
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_scrap_wood.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "ClickDropper",
@@ -858,9 +858,9 @@
                   "value": "1"
                },
                "offset": {
-                  "x": -1.250,
-                  "y": -0.20,
-                  "z": -0.10
+                  "x": -0.0575,
+                  "y": 0.425,
+                  "z": 0.7825
                },
                "power": 1
             },
