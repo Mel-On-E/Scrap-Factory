@@ -2,9 +2,9 @@
    "partList": [
       {
          "box": {
-            "x": 7,
+            "x": 5,
             "y": 11,
-            "z": 8
+            "z": 7
          },
          "color": "00ff00",
          "flammable": false,
@@ -45,9 +45,9 @@
       },
       {
          "box": {
-            "x": 7,
+            "x": 5,
             "y": 11,
-            "z": 8
+            "z": 7
          },
          "color": "00ffff",
          "flammable": false,
@@ -1667,10 +1667,10 @@
          "uuid" : "62956d42-ef2c-4b97-bbe4-2fc35efdb973"
       },
       {
-         "box" : {
-            "x" : 7,
-            "y" : 11,
-            "z" : 8
+         "box": {
+            "x": 5,
+            "y": 11,
+            "z": 7
          },
          "color" : "3e9ffe",
          "flammable" : false,
@@ -1977,9 +1977,9 @@
       },
       {
          "box": {
-            "x": 7,
+            "x": 5,
             "y": 11,
-            "z": 8
+            "z": 7
          },
          "color": "eeeeee",
          "flammable": false,
@@ -2020,9 +2020,9 @@
       },
       {
          "box": {
-            "x": 7,
+            "x": 5,
             "y": 11,
-            "z": 8
+            "z": 7
          },
          "color": "eeeeee",
          "flammable": false,
@@ -2058,9 +2058,9 @@
       },
       {
          "box": {
-            "x": 7,
+            "x": 5,
             "y": 11,
-            "z": 8
+            "z": 7
          },
          "color": "880808",
          "flammable": false,
