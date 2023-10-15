@@ -89,8 +89,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "696969",
          "flammable": false,
@@ -132,8 +132,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "2341fe",
          "flammable": false,
@@ -175,8 +175,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "4f69c6",
          "flammable": false,
@@ -226,8 +226,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "5f5e6e",
          "flammable": false,
@@ -269,8 +269,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "e4a347",
          "flammable": false,
@@ -313,8 +313,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "fe878c",
          "flammable": true,
@@ -358,8 +358,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ffd504",
          "flammable": true,
@@ -402,8 +402,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ffffff",
          "flammable": true,
@@ -446,8 +446,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "cb0a00",
          "flammable": false,
@@ -489,8 +489,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "c61111",
          "flammable": false,
@@ -532,8 +532,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ce9e0c",
          "flammable": true,
@@ -575,8 +575,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "8bc34a",
          "flammable": false,
@@ -618,8 +618,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ff5722",
          "flammable": false,
@@ -661,8 +661,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "b3e5fc",
          "flammable": false,
@@ -704,8 +704,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "32cd32",
          "flammable": false,
@@ -748,8 +748,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ffffff",
          "flammable": false,
@@ -791,8 +791,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "02468a",
          "flammable": false,
@@ -835,8 +835,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "cd9d71",
          "flammable": false,
@@ -877,8 +877,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "9b683a",
          "flammable": true,
@@ -920,8 +920,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "848484",
          "flammable": false,
@@ -1540,8 +1540,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "8f7e7e",
          "flammable": false,
@@ -1583,8 +1583,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "4d4d4d",
          "flammable": false,
@@ -1626,8 +1626,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "b87333",
          "flammable": false,
@@ -1669,8 +1669,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "0047ab",
          "flammable": false,
@@ -1755,8 +1755,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "2e5c06",
          "flammable": false,
@@ -1806,8 +1806,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "aab3bd",
          "flammable": false,
@@ -1849,8 +1849,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "0f52ba",
          "flammable": false,
@@ -1892,8 +1892,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "ff0000",
          "flammable": false,
@@ -1935,8 +1935,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "a8c3ed",
          "flammable": false,
@@ -1978,8 +1978,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "d4af37",
          "flammable": false,
@@ -2021,8 +2021,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "696969",
          "flammable": false,
@@ -2117,8 +2117,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "9b1c31",
          "flammable": false,
@@ -2160,8 +2160,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "bf8fc4",
          "flammable": false,
@@ -2203,8 +2203,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "444444",
          "flammable": false,
@@ -2246,8 +2246,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "bfd4d9",
          "flammable": false,
@@ -2289,8 +2289,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "8c8c8c",
          "flammable": false,
@@ -2332,8 +2332,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "a8edc3",
          "flammable": false,
@@ -2375,8 +2375,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "8b7d6b",
          "flammable": false,
@@ -2418,8 +2418,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "a6a6a6",
          "flammable": false,
@@ -2461,8 +2461,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "c2c0c0",
          "flammable": false,
@@ -2504,8 +2504,8 @@
       {
          "box": {
             "x": 5,
-            "y": 8,
-            "z": 6
+            "y": 11,
+            "z": 7
          },
          "color": "000000",
          "flammable": false,
