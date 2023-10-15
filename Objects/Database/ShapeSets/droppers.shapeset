@@ -877,8 +877,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "9b683a",
          "flammable": true,
@@ -890,7 +890,7 @@
             "durability": 10,
             "friction": 5
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -933,7 +933,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -976,7 +976,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1019,7 +1019,7 @@
 				"friction": 2,
 				"buoyancy": 9
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1062,7 +1062,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1105,7 +1105,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1201,7 +1201,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1244,7 +1244,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1287,7 +1287,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1330,7 +1330,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1373,7 +1373,7 @@
 				"friction": 4,
 				"buoyancy": 2
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1416,7 +1416,7 @@
 				"friction": 2,
 				"buoyancy": 9
 			},
-         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet" : "PropY",
          "scripted" : {
             "classname" : "AutoDropper",
@@ -1454,8 +1454,8 @@
       {
          "box" : {
             "x" : 5,
-            "y" : 8,
-            "z" : 6
+            "y": 8,
+            "z": 6
          },
          "color" : "8b7d6b",
          "flammable" : false,
@@ -1467,7 +1467,7 @@
             "friction": 6,
             "buoyancy": 5
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1497,8 +1497,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "8f7e7e",
          "flammable": false,
@@ -1510,7 +1510,7 @@
             "friction": 5,
             "buoyancy": 1
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1540,8 +1540,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "4d4d4d",
          "flammable": false,
@@ -1553,7 +1553,7 @@
             "friction": 5,
             "buoyancy": 1
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1583,8 +1583,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "b87333",
          "flammable": false,
@@ -1596,7 +1596,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1626,8 +1626,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "0047ab",
          "flammable": false,
@@ -1639,7 +1639,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1712,8 +1712,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "2e5c06",
          "flammable": false,
@@ -1725,7 +1725,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1763,8 +1763,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "aab3bd",
          "flammable": false,
@@ -1776,7 +1776,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1806,8 +1806,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "8b7d6b",
          "flammable": false,
@@ -1819,7 +1819,7 @@
             "friction": 6,
             "buoyancy": 5
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "LunarDropper",
@@ -1849,8 +1849,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "a6a6a6",
          "flammable": false,
@@ -1862,7 +1862,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
@@ -1892,8 +1892,8 @@
       {
          "box": {
             "x": 5,
-            "y": 11,
-            "z": 7
+            "y": 8,
+            "z": 6
          },
          "color": "c2c0c0",
          "flammable": false,
@@ -1905,7 +1905,7 @@
             "friction": 4,
             "buoyancy": 2
          },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_basic_dropper_01.rend",
+         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_dropper_old.rend",
          "rotationSet": "PropY",
          "scripted": {
             "classname": "AutoDropper",
