@@ -10,7 +10,6 @@ LessDropUpgrader = class(Upgrader)
 --------------------
 
 function LessDropUpgrader:sv_onUpgrade(shape, data)
-    print(data.value+1000/g_oreCount)
     data.value = data.value + 1000/g_oreCount
 
     Upgrader.sv_onUpgrade(self, shape, data)
