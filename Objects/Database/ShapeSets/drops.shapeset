@@ -2435,6 +2435,233 @@
       "uuid": "b1b00f76-b8eb-4d64-93cc-a6e5bfd6fe40"
     },
     {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "color": "3e9ffe",
+      "flammable": false,
+      "name": "obj_drop_water",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+				"density": 2,
+				"durability": 2,
+				"friction": 4,
+				"buoyancy": 7
+			},
+      "renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/consumable/obj_consumable_water_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_water.fbx"
+					}
+				]
+			},
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "Drop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/Drop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "fe0e948c-a660-446a-bf34-a48e2d0ba551"
+    },
+    {
+			"uuid": "f5f7970c-8048-4fae-8276-9958a3b7130e",
+			"name": "obj_uranium_waste",
+			"renderable": {
+				"lodList": [
+					{
+						"maxViewDistance": 1500,
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/consumable/obj_consumable_chemical.fbx",
+						"subMeshMap": {
+							"chemicalconsumable": {
+								"material": "DifAsgNor",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_dif.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_asg.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_nor.tga"
+								]
+							},
+							"glass": {
+								"material": "Glass",
+								"textureList": [
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_dif.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_asg.tga",
+									"$CONTENT_DATA/Objects/Textures/Drops/uranium_waste_nor.tga"
+								]
+							}
+						}
+					}
+				]
+			},
+			"color": "696969",
+			"box": {
+				"x": 2,
+				"y": 2,
+				"z": 2
+			},
+			"rotationSet": "PropY",
+      "scripted": {
+        "classname": "NuclearWaste",
+        "data": {
+          "effect": "Uranium Glow"
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/NuclearWaste.lua"
+      },
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Mechanical",
+			"ratings": {
+				"density": 2,
+				"durability": 10,
+				"friction": 4,
+				"buoyancy": 7
+			},
+			"flammable": false
+		},
+    {
+      "box": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "color": "ffffff",
+      "flammable": true,
+      "name": "obj_drop_biomass_gas",
+      "physicsMaterial": "Dirt",
+      "ratings": {
+        "buoyancy": 1,
+        "density": 4,
+        "durability": 4,
+        "friction": 3
+      },
+      "renderable": {
+        "lodList": [
+          {
+            "includes": [
+              "POSITION",
+              "UV0",
+              "UV1",
+              "NORMAL",
+              "TANGENTS"
+            ],
+            "mesh": "$GAME_DATA/Mesh/cube.mesh",
+            "subMeshList": [
+              {
+                "material": "Glass",
+                "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Drops/smoke_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/Blocks/blk_crackedconcrete01_nor.tga"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "GasDrop",
+        "data": {
+          "effect": "Paintcharacter - Small",
+          "autoPlay": true
+        },
+        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+      },
+      "showInInventory": false,
+      "stackSize": 65535.0,
+      "uuid": "e6ddd837-a5d3-468a-ae82-aebd7ad98fc1"
+    },
+    {
+      "box": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "color": "00ff00",
+      "flammable": false,
+      "name": "obj_drop_helium",
+      "physicsMaterial": "Plastic",
+      "ratings": {
+        "density": 1,
+        "durability": 1,
+        "friction": 2,
+        "buoyancy": 9
+      },
+      "renderable": {
+        "lodList" : [
+           {
+              "mesh" : "$CONTENT_DATA/Objects/Mesh/Drops/helium_balloon.fbx",
+              "minViewSize" : 15,
+              "subMeshMap" : {
+                 "t_hotspot_inflatable01" : {
+                    "custom" : {
+                       "color" : "Color01"
+                    },
+                    "material" : "DifAsgNor",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_nor.tga"
+                    ]
+                 },
+                 "t_hotspot_inflatable06" : {
+                    "custom" : {
+                       "color" : "Color06"
+                    },
+                    "material" : "DifAsg",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon01_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       ""
+                    ]
+                 },
+                 "t_hotspot_inflatable07" : {
+                    "custom" : {
+                       "color" : "Color07"
+                    },
+                    "material" : "DifAsgNor",
+                    "textureList" : [
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon02_dif.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_asg.tga",
+                       "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_nor.tga"
+                    ]
+                 },
+                 "totebottether" : {
+                  "custom" : {
+                     "color" : "Color01"
+                  },
+                  "material" : "DifAsgNor",
+                  "textureList" : [
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_dif.tga",
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_asg.tga",
+                    "$CONTENT_DATA/Objects/Textures/Drops/helium_balloon_tether_nor.tga"
+                  ]
+               }
+              }
+           }
+        ]
+     },
+      "rotationSet": "StaticYmZmXm",
+      "scripted": {
+        "classname": "GasDrop",
+        "filename": "$CONTENT_DATA/Scripts/Drops/GasDrop.lua"
+      },
+      "showInInventory": true,
+      "stackSize": 65535.0,
+      "uuid": "4ca69a07-d032-4066-a775-29b25a587da7"
+    },
+    {
       "name": "obj_drop_vampire",
       "ratings": {
         "buoyancy": 1,

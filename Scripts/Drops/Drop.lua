@@ -43,7 +43,7 @@ function Drop:server_onCreate()
 end
 
 function Drop:sv_init()
-	self.sv = {
+	self.sv = self.sv or {
 		timeout = 0,
 	}
 end

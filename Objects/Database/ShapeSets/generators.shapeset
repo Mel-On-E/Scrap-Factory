@@ -70,6 +70,41 @@
       },
       {
          "box" : {
+            "x" : 3,
+            "y" : 4,
+            "z" : 3
+         },
+         "color" : "000000",
+         "flammable" : false,
+         "name" : "obj_generator_lunar",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/obj_factory_solarpanel_01.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Lunar",
+            "data" : {
+               "power" : 50
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Lunar.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "200",
+            "special" : true,
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "cc5d9979-630d-4f8c-b454-b73c57d438fe"
+      },
+      {
+         "box" : {
             "x" : 6,
             "y" : 1,
             "z" : 6
@@ -94,16 +129,11 @@
                   "y" : 0.250,
                   "z" : 1.50
                },
-               "drops" : {
-                  "87873e83-8270-4796-9401-6baba45ccef2" : true,
-                  "2c4842af-2e79-433a-aa49-603cc7cab78f": true
-               },
                "offset" : {
                   "x" : -0.1250,
                   "y" : 0.1250,
                   "z" : -0.1250
-               },
-               "powerFunction" : "root"
+               }
             },
             "filename" : "$CONTENT_DATA/Scripts/Generators/Burner.lua"
          },
@@ -169,6 +199,357 @@
          },
 			"flammable": true,
 			"stackSize" : 65535.0
-		}
+		},
+      {
+			"uuid": "0a099d28-1e39-41c2-9bad-58d30202ff3d",
+			"name": "obj_solar_mirror",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/decor/obj_decor_mirror_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/decor/obj_decor_mirror.fbx"
+					}
+				]
+			},
+			"color": "3495e8",
+			"hull": {
+				"x": 3,
+				"y": 4,
+				"z": 1,
+				"col": "$SURVIVAL_DATA/Objects/Collision/obj_decor_mirror.obj"
+			},
+			"rotationSet": "PropYZmX",
+			"sticky": "-Z+Y-Y+X-X",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 4,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 2
+			},
+         "scripted" : {
+            "classname" : "SolarMirror",
+            "data" : {
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/SolarMirror.lua"
+         },
+			"flammable": false
+		},
+      {
+         "box": {
+				"x": 1,
+				"y": 8,
+				"z": 1
+			},
+         "color" : "df7f01",
+         "flammable" : false,
+         "name" : "obj_generator_lightning",
+         "physicsMaterial" : "Mechanical",
+         "ratings": {
+				"density": 2,
+				"durability": 2,
+				"friction": 3,
+				"buoyancy": 3
+			},
+         "renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_dif.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_asg.tga",
+									"$GAME_DATA/Objects/Textures/industrial/obj_industrial_satellite_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$GAME_DATA/Objects/Mesh/industrial/obj_industrial_antenna01.fbx"
+					}
+				]
+			},
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "LightningRod",
+            "data" : {
+               "power" : 1000
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/LightningRod.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "1e6",
+            "tier" : 3
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-Y",
+         "uuid" : "ffe3338e-db44-49b9-a3d3-6e764d0b7e3e"
+      },
+      {
+         "color" : "00ff00",
+         "name" : "obj_generator_nuclear",
+         "renderable" : {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_pipesbig2_nor.tga"
+								],
+								"material": "DifAsgNor"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/fittings/obj_fittings_pipebigtank.mesh"
+					}
+				]
+			},
+         "uuid" : "00edb7f6-946c-40c3-a6e9-2db51c157347",
+         "hull": {
+				"x": 5,
+				"y": 5,
+				"z": 8,
+				"col": "$SURVIVAL_DATA/Objects/Collision/obj_fittings_pipebigtank.obj"
+			},
+         "scripted" : {
+            "classname" : "NuclearReactor",
+            "data" : {
+               "water" : {
+                  "box" : {
+                     "x" : 1.25,
+                     "y" : 0.20833,
+                     "z" : 2.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.0,
+                     "z" : 1.0
+                  }
+               },
+               "uranium" : {
+                  "box" : {
+                     "x" : 1.25,
+                     "y" : 0.20833,
+                     "z" : 2.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.0,
+                     "z" : -1.0
+                  }
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/NuclearReactor.lua"
+         },
+			"rotationSet": "PropY",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 7,
+				"durability": 6,
+				"friction": 7,
+				"buoyancy": 2
+			},
+			"flammable": false
+      },
+      {
+			"uuid": "7fc98eb0-0b4d-4386-b542-c85cfcfc9c03",
+			"name": "obj_generator_fusion",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshList": [
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "DifAsgNor"
+							},
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "Glass"
+							},
+							{
+								"textureList": [
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_dif.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_asg.tga",
+									"$SURVIVAL_DATA/Objects/Textures/fittings/obj_fittings_7x8_nor.tga"
+								],
+								"material": "DifAsgNorAlpha"
+							}
+						],
+						"mesh": "$SURVIVAL_DATA/Objects/Mesh/fittings/obj_fittings_7x8_glass.fbx"
+					}
+				]
+			},
+			"color": "d07500",
+         "scripted" : {
+            "classname" : "FusionReactor",
+            "data" : {
+               "box" : {
+                  "x" : 1.25,
+                  "y" : 0.20833,
+                  "z" : 2.50
+               },
+               "offset" : {
+                  "x" : 0,
+                  "y" : 0.0,
+                  "z" : -1.0
+               }
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/FusionReactor.lua"
+         },
+			"cylinder": {
+				"diameter": 7,
+				"depth": 8,
+				"margin": 0.04,
+				"axis": "Y"
+			},
+			"rotationSet": "PropY",
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 5,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 6
+			},
+			"flammable": false
+		},
+      {
+			"uuid": "25364f15-c7d3-408a-a513-2f270eb15e40",
+			"name": "obj_generator_dyson_sphere",
+			"renderable": {
+				"lodList": [
+					{
+						"subMeshMap" : {
+                     "landingplatform2" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatform_nor.tga"
+                        ]
+                     },
+                     "landingplatform" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Generators/dyson_sphere_logo_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_nor.tga"
+                        ]
+                     },
+                     "antenna" : {
+                        "material" : "DifAsgNor",
+                        "textureList" : [
+                           "$CONTENT_DATA/Objects/Textures/Generators/dyson_sphere_logo_dif.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_asg.tga",
+                           "$GAME_DATA/Terrain/Textures/Manmade/env_manmade_spawnplatformlogo_nor.tga"
+                        ]
+                     },
+                     "poop": {
+                        "textureList": [
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_dif.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_asg.tga",
+                           "$SURVIVAL_DATA/Objects/Textures/resource/obj_resource_glowpoop_nor.tga"
+                        ],
+                        "material": "DifAsgNor"
+                     }
+                  },
+						"mesh": "$CONTENT_DATA/Objects/Mesh/dyson_launch_platform.fbx"
+					}
+				]
+			},
+			"color": "d07500",
+         "scripted" : {
+            "classname" : "DysonSphere",
+            "data" : {
+               "power" : 1e18,
+               "launchPower" : 1e19
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/DysonSphere.lua"
+         },
+			"box": {
+				"x": 16,
+				"y": 1,
+				"z": 16
+			},
+			"rotationSet": "PropY",
+			"sticky": "-Y+Y",
+			"physicsMaterial": "Metal",
+			"ratings": {
+				"density": 5,
+				"durability": 3,
+				"friction": 4,
+				"buoyancy": 6
+			},
+			"flammable": false
+		},
+      {
+         "box" : {
+            "x" : 6,
+            "y" : 1,
+            "z" : 6
+         },
+         "color" : "AFE943",
+         "flammable" : false,
+         "name" : "obj_generator_treadmill",
+         "physicsMaterial" : "Metal",
+         "ratings" : {
+            "buoyancy" : 3,
+            "density" : 4,
+            "durability" : 4,
+            "friction" : 5
+         },
+         "renderable" : "$CONTENT_DATA/Objects/Renderables/treadmill.rend",
+         "rotationSet" : "PropY",
+         "scripted" : {
+            "classname" : "Treadmill",
+            "data" : {
+               "trigger" : {
+                  "box" : {
+                     "x" : 1.50,
+                     "y" : 0.250,
+                     "z" : 1.50
+                  },
+                  "offset" : {
+                     "x" : 0,
+                     "y" : 0.1250,
+                     "z" : 0
+                  },
+                  "direction" : {
+                     "at" : -0.250,
+                     "right" : -1,
+                     "up" : 0
+                  }
+               },
+               "power" : 40
+            },
+            "filename" : "$CONTENT_DATA/Scripts/Generators/Treadmill.lua"
+         },
+         "shop" : {
+            "category" : "Generators",
+            "price" : "1",
+            "tier" : 1
+         },
+         "stackSize" : 65535.0,
+         "sticky" : "-X+X-Y-Z+Z",
+         "uuid" : "dc0e057f-372f-4aa4-b169-ac1ac6e3a3d3"
+      }
    ]
 }

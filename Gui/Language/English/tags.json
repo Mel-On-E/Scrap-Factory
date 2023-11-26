@@ -3,19 +3,16 @@
 	"DailyRewardTitle": "Daily Rewards",
 	"ClaimDailyReward": "Claim Reward",
 	"DailyRewardDay": "Day %s",
-
 	//Energy System
 	"PowerCapacity": "Capacity: ",
 	"PowerOutput": "Producing: ",
 	"GeneratorUsage": "Generators: %s/%s",
-
 	//Factory Import/Export
 	"ExportInteraction": "Export creation",
 	"ExportTitle": "Enter creation name",
 	"ExportedCreation": "Exported creation!",
 	"InvalidName": "Please enter a name!",
 	"ExportBlueprintExists": "Blueprint by the name of '%s' already exists, do you want to overwrite it?",
-	
 	"ImportInteraction": "Import creation",
 	"ImportTitle": "Select a creation to import!",
 	"ImportedCreation": "Imported Creation!",
@@ -24,7 +21,6 @@
 	"ImportCantBuyItems": "Unaffordable",
 	"ImportDeleteCreation": "Delete",
 	"ImportDeleteCreationConfirmation": "Are you sure you want to DELETE '%s'?",
-
 	//Money & Shop
 	"Sell": "Sell",
 	"Buy": "Buy",
@@ -44,7 +40,6 @@
 	"Tier": "Tier",
 	"FilterBy": "Filter by (no tier)",
 	"Description": "Description",
-
 	//Research
 	"SetResearchFurnace": "Set Research Furnace",
 	"ResearchFurnaceSet": "Research Furnace Set",
@@ -54,7 +49,6 @@
 	"ResearchFinished": "Tier %s Reseached!",
 	"RsearchUnlockItem": "Unlocked: ",
 	"Research": "Research",
-
 	//Tiers
 	"DescTier1": "Through the power of deep-learning crypto quantum gene editing nanotechnology we can create drops out of thin air! Studying those drops should help us improve the process (and profits)!",
 	"DescTier2": "The humble and reliable Wood, perfect for research purposes! Its versatility allows us to build factories, chairs, and even toothpicks. Just remember, with every tree felled, profits grow while forests...well, they'll always be there, right?",
@@ -67,7 +61,6 @@
 	"DescTier9": "Ah, the enchanting Moon Stone! Rumor has it, it grants incredible powers and brings prosperity to those who possess it. Forget about the fact that it's just a shiny rock. With clever marketing and a sprinkle of imagination, our profits will soar to lunar heights!",
 	"DescTier10": "Prepare for explosive profits with Antimatter! Sure, it's highly unstable and difficult to handle, but who can resist the allure of harnessing the most powerful substance in the universe? Just make sure to keep those containment fields intact, and everything will be fine.",
 	"DescTier11": "Introducing Bouncium, the bouncy material that defies gravity and logic! With its absurd physics, we'll invent never-before-seen contraptions and create a spectacle that attracts customers like moths to a flame. Just try not to bounce too high and lose sight of your profits!",
-
 	//Prestige
 	"Prestige": "Prestige",
 	"PrestigeDescription": "Doing a prestige will DELETE all creations and let you start from scratch on a new planet! You will only keep special items, perks and #dd6e00◊#ffffff. If you do a prestige now, you wil gain:",
@@ -79,7 +72,6 @@
 	"PerksLocked": "Locked",
 	"PerkRequirements": "Requires",
 	"PerksBalance": "Balance: ",
-
 	//Perks
 	"ResearchLv1Name": "Research Lvl.1",
 	"ResearchLv1Desc": "It's time to make science go brr!\nLet's boost our research by 6.9%",
@@ -87,35 +79,27 @@
 	"ResearchLv2Desc": "Let's boost our research by anotther 6.9%! Science is nice!",
 	"ResearchLv3Name": "Research Lvl.3",
 	"ResearchLv3Desc": "Time to reach the fullest potential of research and the power of 6.9%!",
-
 	"PollutionLv1Name": "Pollution Lvl.1",
 	"PollutionLv1Desc": "Let's do some lobbying work and get those pesky pollution values down by 2%!",
 	"PollutionLv2Name": "Pollution Lvl.2",
 	"PollutionLv2Desc": "People are still mad about the pollution. Some propaganda should help decrease it by another 2%.",
 	"PollutionLv3Name": "Pollution Lvl.3",
 	"PollutionLv3Desc": "The only solution is pollution! Let's pump some chemtrails into the air to make the public even more dumb. This should shae off another 2%!",
-
 	"JetpackLv1Name": "Jetpack!",
 	"JetpackLv1Desc": "Unlock a cool and epic jetpack that allows you to fly too the moon! Well at least if you would not have to keep an eye on fuel. Good thing you can recharge it with earthly magic when touching the ground.",
-	
 	"LiftLv1Name": "Lift++",
 	"LiftLv1Desc": "Upgrade your lift! This will allow you to export and import entire factories! It will even automatically buy the parts you need!",
-
 	"PaintToolLv1Name": "Paint Tool",
 	"PaintToolLv1Desc": "The paint tool allows you to color your creations! Customize your factories and have show them monochromes who's boss! (paint not included)",
-
 	"WeldToolLv1Name": "Weld Tool",
 	"WeldToolLv1Desc": "The weld tool allows you to make one out of two! It is quite incredible indeed.",
-
 	//Clear Ores
 	"ClearOresTitle": "Clear All Ores?",
 	"ClearOresMessageMale": "You sure, bro?",
 	"ClearOresMessageFemale": "You sure, sis?",
-
 	//Other
 	"DismissTutorial": "Press \"%s\" to dismiss",
 	"TutorialLockedFeature": "Follow the tutorial to unlock this feature",
-
 	//Tutorials
 	"TutorialQuestName": "The Factory MUST Grow!",
 	"DailyRewardClaimedEvent": "Claim the daily reward",
@@ -149,7 +133,6 @@
 	"1BMoneyEvent": "Earn $1.00B",
 	"PrestigeTutorialTitle": "Prestige",
 	"PrestigeTutorialMessage": "Look how far you've come! Surely, you wanna go even further? How does space sound? You can prestige at any time to leave to a new planet! Just leave all that nasty pollution behind and start over! You will lose your money, creations, items and current research progress. You will keep special items and ◊. You gain ◊ after a prestige and can spend it on powerful perks.",
-
 	"ClearOresTutorialTitle": "How to Clear Drops",
 	"ClearOresTutorialMessage": "Press \"%s\" to delete all drops",
 	"PollutionTutorialTitle": "Pollution",
@@ -164,14 +147,33 @@
 	"PowerStorageTutorialMessage": "As your factory grows, your power needs will change. It's always a good idea to have excess capaciy in case of a power surge. Batteries can store excess power, and provide power when you need it. The HUD will show you how much all of your batteries are charged.",
 	"FireUpgraderTutorialTitle": "Fire Upgrader",
 	"FireUpgraderTutorialMessage": "This will light flamable drops on fire!\na burning drop will be burnt after a small time.",
-
 	//Tools
 	"ON": "On",
 	"OFF": "Off",
 	"JetpackAlwaysOn": "Always active: ",
-
 	//Interactive
-	"ValueDetectorOutputMode_switch": "Switch",
-	"ValueDetectorOutputMode_button": "Button",
-	"TeleporterMoreThan2": "You can only have 2 teleporters!"
+	"TeleporterMoreThan2": "You can only have 2 teleporters!",
+	"TreadmillMessage1": "You got this!",
+	"TreadmillMessage2": "Keep going!",
+	"TreadmillMessage3": "Support the Factory!",
+	"TreadmillMessageFaster": "Run faster!",
+	"NuclearReactorCritical": "TEMPERATURE CRITICAL",
+	"NuclearReactorEfficiency": "Efficiency",
+	"NuclearReactorLowTemperature": "Temparature too low",
+	"NuclearReactorNeedUranium235": "You need Uranium 235 to start the reactor",
+	"NuclearReactorMaximumPurity": "Maximum processed purity: ",
+	"NuclearReactorHeat": "Heat: ",
+	"NuclearReactorFuel": "Fuel: ",
+	"NuclearReactorPurity": "Purity: ",
+	"FusionReactorPowerUpDescription": "Power up the plasma to start the fusion reaction. You need to supply %s power for %s seconds. Supply deuterium and tritium evenly to keep the reaction going.",
+	"FusionReactorPowerUpButton": "Power Up!",
+	"FusionReactorFuel": "Fuel: ",
+	"FusionReactorRatio": "D-T Ratio: ",
+	"FusionReactorPoweringUp": "Charging: ",
+	"FusionReactorPoweredUp": "Active",
+	"FusionReactorNotPoweredUp": "Inactive",
+	"FusionReactorReactionSpeedControl": "Drag to adjust reaction speed",
+	"DysonSphereLaunch": "Launch:",
+	"DysonSphereLaunching": "Launching...",
+	"DysonSphereInOrbit": "In Orbit"
 }

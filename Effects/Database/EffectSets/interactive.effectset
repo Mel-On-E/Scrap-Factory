@@ -255,5 +255,23 @@
 				"parameters" : [ "minColor", "maxColor" ]
 			}
 		]
+	},
+	"Reactor - GetWater":
+	{
+		"effectList":
+		[
+			{
+				"type": "particle",
+				"name": "p_water_bucket_getwater",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"attached": true,
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/tools/waterbucket_fill",
+				"delay": 0.0
+			}
+		]
 	}
 }
