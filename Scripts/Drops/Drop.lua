@@ -7,7 +7,7 @@
 Drop = class(nil)
 
 ---number of ores that exist at any given time
-local oreCount = 0
+g_oreCount = 0
 ---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
 local storedDrops = {}
 ---time after which not moving drops will be deleted
@@ -25,7 +25,7 @@ end
 
 function Drop:server_onCreate()
 	self:sv_init()
-	self:sv_changeOreCount(1)
+	self:sv_change_oreCount(1)
 
 	--delete drop if it has been created before
 	if not self.storage:load() then
@@ -105,7 +105,7 @@ function Drop:sv_e_addEffect(params)
 end
 
 function Drop:server_onDestroy()
-	self:sv_changeOreCount(-1)
+	self:sv_change_oreCount(-1)
 
 	if self:getPollution() then
 		--prevent creating pollution from storing drops via DropContainer's
@@ -125,11 +125,11 @@ function Drop:server_onDestroy()
 	end
 end
 
----update oreCount
+---update g_oreCount
 ---@param change number +1 or -1
-function Drop:sv_changeOreCount(change)
-	oreCount = oreCount + change
-	if oreCount == 100 then
+function Drop:sv_change_oreCount(change)
+	g_oreCount = g_oreCount + change
+	if g_oreCount == 100 then
 		sm.event.sendToScriptableObject(
 			g_tutorialManager.scriptableObject,
 			"sv_e_tryStartTutorial",
