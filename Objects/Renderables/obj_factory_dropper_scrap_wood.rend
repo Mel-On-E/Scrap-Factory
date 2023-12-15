@@ -1,0 +1,27 @@
+{
+   "lodList": [
+      {
+         "mesh": "$CONTENT_DATA/Objects/Mesh/dropper_wood_off.fbx",
+         "pose0": "$CONTENT_DATA/Objects/Mesh/dropper_wood_on.fbx",
+         "subMeshMap": {
+            "pumpbutton": {
+               "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/survivalobject/obj_survivalobjects_pumpbutton_nor.tga"
+               ],
+               "material": "PoseAnimDifAsgNor"
+            },
+            "vacuum_pump": {
+               "color": "df7f01",
+               "textureList": [
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_pump_dif.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_pump_asg.tga",
+                  "$SURVIVAL_DATA/Objects/Textures/interactive/obj_interactive_pump_nor.tga"
+               ],
+               "material": "PoseAnimDifAsgNor"
+            }
+         }
+      }
+   ]
+}

@@ -406,7 +406,9 @@ end
 ---@param params NumberEffectParams
 function FactoryPlayer:sv_e_numberEffect(params)
 	---@diagnostic disable-next-line: assign-type-mismatch
-	params.value = format_number({ format = params.format, value = tonumber(params.value), color = params.color })
+	if params.format then
+		params.value = format_number({ format = params.format, value = tonumber(params.value), color = params.color })
+	end
 
 	self.network:sendToClients("cl_numberEffect", params)
 end

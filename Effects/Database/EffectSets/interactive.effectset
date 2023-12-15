@@ -3,11 +3,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -29,11 +29,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -55,11 +55,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -81,11 +81,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -107,11 +107,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -129,15 +129,90 @@
 			}
 		]
 	},
+	"UpgradeareaBig - File":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0],
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_big_04.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim_big.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"UpgradeareaBig - Plus":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0],
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_big_plus.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim_big.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"UpgradeareaBig - Value":
+	{
+		"parameterList":
+		{
+			"minColor":[0.0, 0.0, 1.0, 0.0],
+			"maxColor":[0.4, 0.4, 1.0, 0.7],
+
+			"tag" : "ExpandPicture"
+		},
+		"effectList":
+		[
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefield_big_value.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			},
+			{
+				"type": "renderable",
+				"name": "$CONTENT_DATA/Effects/Renderables/hologram_upgradefieldrim_big.rend",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
 	"Furnacearea - Basic":
 	{
 		"parameterList":
 		{
-			"minColor":[0.0, 0.0, 1.0, 0.0], 
+			"minColor":[0.0, 0.0, 1.0, 0.0],
 			"maxColor":[0.4, 0.4, 1.0, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -159,11 +234,11 @@
 	{
 		"parameterList":
 		{
-			"minColor":[1.0, 0.4, 0.0, 0.0], 
+			"minColor":[1.0, 0.4, 0.0, 0.0],
 			"maxColor":[1.0, 0.5, 0.4, 0.7],
 
 			"tag" : "ExpandPicture"
-			
+
 		},
 		"effectList":
 		[
@@ -178,6 +253,24 @@
 				"name": "$CONTENT_DATA/Effects/Renderables/hologram_furnacefieldrim.rend",
 				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
 				"parameters" : [ "minColor", "maxColor" ]
+			}
+		]
+	},
+	"Reactor - GetWater":
+	{
+		"effectList":
+		[
+			{
+				"type": "particle",
+				"name": "p_water_bucket_getwater",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+				"attached": true,
+				"delay": 0.0
+			},
+			{
+				"type": "audio",
+				"name": "event:/tools/waterbucket_fill",
+				"delay": 0.0
 			}
 		]
 	}

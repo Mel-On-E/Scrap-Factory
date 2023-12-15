@@ -18,7 +18,7 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 
 ---@class UpgraderParams
 ---@field filters number|nil filters of the areaTrigger
----@param params UpgraderParams
+---@param params UpgraderParams?
 function Upgrader:server_onCreate(params)
     ---@diagnostic disable-next-line: param-type-mismatch
     PowerUtility.sv_init(self)

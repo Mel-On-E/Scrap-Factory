@@ -1,6 +1,6 @@
 dofile("$SURVIVAL_DATA/Scripts/game/survival_loot.lua")
 
----A Generator produces power. Additionally it can also provide power storage capacity.
+---A Generator produces power. Additionally it can also store power.
 ---@class Generator : ShapeClass
 ---@field data GeneratorData script data from the json file
 ---@field sv GeneratorSv
@@ -78,8 +78,10 @@ function Generator:client_onCreate()
 end
 
 function Generator:client_onClientDataUpdate(data)
-    ---@diagnostic disable-next-line: assign-type-mismatch
-    self.cl.power = tonumber(data.power)
+    if data.power then
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        self.cl.power = tonumber(data.power)
+    end
 end
 
 function Generator:client_canInteract()
@@ -113,7 +115,7 @@ end
 
 ---@class GeneratorData
 ---@field power number how much power is produced by default
----@field powerStorage number the power storage capacity of the Generator
+---@field powerStorage number if it is a Battery class, the max capacity
 
 ---@class GeneratorSv
 ---@field overLimit boolean wether this Generator is over the allowed Generator limit

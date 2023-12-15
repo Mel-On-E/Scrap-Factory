@@ -8,5 +8,16 @@
             "type" : "particle"
          }
       ]
+   },
+   "Egg - Break": {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_destruct_fruit" ],
+            "type" : "particle"
+            // "color": "f0ead6" ??
+         }
+      ]
    }
 }
