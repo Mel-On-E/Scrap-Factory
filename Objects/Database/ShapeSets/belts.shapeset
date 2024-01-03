@@ -574,53 +574,6 @@
          },
          "stackSize" : 65535.0,
          "uuid" : "d6d8ad1d-559e-4e18-a3b9-d1a9bba06a0c"
-      },
-      {
-         "box": {
-            "x": 3,
-            "y": 1,
-            "z": 6
-         },
-         "color": "df7f00",
-         "flammable": false,
-         "name": "obj_belt_straight_small",
-         "physicsMaterial": "Metal",
-         "ratings": {
-            "buoyancy": 4,
-            "density": 2,
-            "durability": 6,
-            "friction": 3
-         },
-         "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_belt_small.rend",
-         "restitution": 0.0,
-         "rotationSet": "PropY",
-         "scripted": {
-            "classname": "Belt",
-            "data": {
-               "belt": {
-                  "box": {
-                     "x": 0.75,
-                     "y": 0.250,
-                     "z": 1.50
-                  },
-                  "direction": {
-                     "at": -0.250,
-                     "right": -1,
-                     "up": 0
-                  },
-                  "offset": {
-                     "x": 0,
-                     "y": 0.1250,
-                     "z": 0
-                  },
-                  "speed": 1
-               },
-               "power": 1
-            },
-            "filename": "$CONTENT_DATA/Scripts/Other/Belt.lua"
-         },
-         "stackSize": 65535.0,
-         "uuid": "6e4d00c3-8310-439c-ad08-77c11e66b519"
       }
    ]
 }

@@ -1,0 +1,22 @@
+{
+   "AreaTrigger - Border" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_areaTrigger_visualiser" ],
+            "type" : "particle"
+         }
+      ]
+   },
+   "Laser - Test" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_laser_test" ],
+            "type" : "particle"
+         }
+      ]
+   }
+}

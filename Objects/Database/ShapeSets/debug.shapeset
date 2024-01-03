@@ -16,6 +16,27 @@
          },
          "sticky" : "-Z",
          "uuid" : "16690034-de3f-4580-922a-1b2fd5543711"
+      },
+      {
+         "box" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "color" : "FFFFFF",
+         "name" : "obj_devtool_splinetest_out",
+         "physicsMaterial" : "Mechanical",
+         "renderable" : "$CONTENT_DATA/Effects/Renderables/effect_block.rend",
+         "restrictions" : {
+            "paintable" : false
+         },
+         "rotationSet" : "Default",
+         "scripted" : {
+            "classname" : "Spline",
+            "filename" : "$CONTENT_DATA/Scripts/Debug/Splinetest.lua"
+         },
+         "showInInventory" : false,
+         "uuid" : "aa9938fa-c0d1-4eab-9153-8c52c86cd541"
       }
    ]
 }

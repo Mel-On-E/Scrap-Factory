@@ -11,22 +11,9 @@ Solar = class(Generator)
 function Solar:server_onCreate()
     Generator.server_onCreate(self)
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "SolarTutorial")
-
-    self.interactable.publicData = {
-        boost = 0
-    }
 end
 
 function Solar:sv_getPower()
-    local boostMutltiplier = 1
-    if self.interactable.publicData then
-        boost = self.interactable.publicData.boost
-        if boost >= 40 then
-            boostMutltiplier = math.sqrt(boost / 40 + 1)
-            self.interactable.publicData.boost = 0
-        end
-    end
-
     local time = sm.game.getTimeOfDay()
     local timeMultiplier = 0
 
@@ -38,7 +25,7 @@ function Solar:sv_getPower()
         timeMultiplier = (SUNSET_END - time) / (SUNSET_END - SUNSET_START)
     end
 
-    return math.floor(boostMutltiplier * timeMultiplier * self.data.power)
+    return math.floor(timeMultiplier * self.data.power)
 end
 
 -- #endregion

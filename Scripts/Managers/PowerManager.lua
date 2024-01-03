@@ -89,9 +89,8 @@ function PowerManager:client_onFixedUpdate()
         local power = self.cl.data.power or 0
         local percentage = self.cl.data.powerStored > 0 and
             math.ceil((self.cl.data.powerStored / self.cl.data.powerStorage) * 100) or 0
-        local percentageString = (percentage == 100 and " |" or " | ") .. tostring(percentage)
         g_factoryHud:setText("Power",
-            "#dddd00" .. format_number({ format = "power", value = power }) .. percentageString .. "%")
+            "#dddd00" .. format_number({ format = "power", value = power }) .. " (" .. tostring(percentage) .. "%)")
 
         if power < 0 and self.cl.data.powerStored <= 0 then
             if sm.game.getCurrentTick() - self.cl.lastWarningPlayed >= 40

@@ -1,8 +1,7 @@
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
----A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
+---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will create a polluted `Drop`.
 ---@class Burner: ShapeClass
 ---@field cl BurnerCl
 ---@field powerUtil PowerUtility
@@ -13,70 +12,60 @@ Burner = class(nil)
 --------------------
 
 ---chance a special effect plays when a drop is sold
-local secretEffectChance = 0.15
+local secretEffectChance = 0.05
 
 function Burner:server_onCreate()
-    Furnace.server_onCreate(self)
-    Generator.server_onCreate(self)
+	Furnace.server_onCreate(self)
+	Generator.server_onCreate(self)
 
-    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
+	sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
 end
 
 function Burner:server_onDestroy()
-    Generator.server_onDestroy(self)
+	Generator.server_onDestroy(self)
 end
 
 function Burner:sv_onEnter(trigger, results)
-    self.powerUtil.active = true
-    Furnace.sv_onEnter(self, trigger, results)
+	self.powerUtil.active = true
+	Furnace.sv_onEnter(self, trigger, results)
 end
 
----@param shape Shape
 function Burner:sv_onEnterDrop(shape)
-    local publicData = shape.interactable.publicData
-    local powerFunc = function () end
+	--exclude non-burnable drops
+	if not self.data.drops[tostring(shape.uuid)] then return end
 
-    if shape.uuid == obj_drop_biomass_gas then
-        powerFunc = function (x)
-            return x ^ (1/2)
-        end
+	--exclude polluted drops
+	local publicData = shape.interactable.publicData
+	if publicData.pollution then return end
 
-        Drop:Sv_dropStored(shape.id)
+	--create power
+	local power = publicData.value
+	if self.data.powerFunction == "root" then
+		power = (power ^ (1 / (4 / 3)))
+	end
+	power = power + 1
 
-    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_scrap_wood then
-        if publicData.pollution then return end
+	sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+		pos = ( self.shape.worldPosition + sm.vec3.new( 0, 0, 1 ) ), --jank manual offset
+		value = tostring(power),
+		effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
+			"Sellpoints - CampfireOnsell",
+		format = "power"
+	})
+	PowerManager.sv_changePower(power)
 
-        powerFunc = function (x)
-            return x ^ (1/3)
-        end
-    else
-        return
-    end
+	--create pollution drop
+	local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
+	local newPublicData = {
+		value = 1,
+		pollution = power,
+		upgrades = {}
+	}
+	smoke.interactable:setPublicData(newPublicData)
 
-    local power = powerFunc(publicData.value)
-    local pollution = math.sqrt(power)
-
-    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
-        pos = shape.worldPosition,
-        value = tostring(power),
-        effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
-            "Sellpoints - CampfireOnsell",
-        format = "power"
-    })
-    PowerManager.sv_changePower(power)
-
-    --create pollution drop
-    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
-    smoke.interactable:setPublicData({
-        value = 0,
-        pollution = pollution,
-        upgrades = {},
-        impostor = false
-    })
-
-    --destory drop
-    shape.interactable.publicData.value = nil
-    shape:destroyPart(0)
+	--destory drop
+	shape.interactable.publicData.value = nil
+	shape:destroyPart(0)
 end
 
 -- #endregion
@@ -86,9 +75,9 @@ end
 --------------------
 
 function Burner:client_onCreate()
-    Furnace.client_onCreate(self)
+	Furnace.client_onCreate(self)
 
-    self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
+	self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
 
 -- #endregion

@@ -479,7 +479,7 @@ function FactoryGame.client_onCreate(self)
 end
 
 function FactoryGame.cl_bindChatCommands(self)
-	if true then -- BETA: Chat commands for everyone
+	if g_survivalDev then
 		-- custom
 		sm.game.bindChatCommand("/addmoney", { { "string", "money", false } }, "cl_onChatCommand", "Gives moni")
 		sm.game.bindChatCommand("/setmoney", { { "string", "money", false } }, "cl_onChatCommand", "Sets moni")

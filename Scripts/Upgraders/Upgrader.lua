@@ -18,78 +18,88 @@ Upgrader.colorHighlight = sm.color.new(0x00ff00ff)
 
 ---@class UpgraderParams
 ---@field filters number|nil filters of the areaTrigger
----@param params UpgraderParams?
+---@param params UpgraderParams
 function Upgrader:server_onCreate(params)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    PowerUtility.sv_init(self)
+	---@diagnostic disable-next-line: param-type-mismatch
+	PowerUtility.sv_init(self)
 
-    if self.data.belt then
-        ---@diagnostic disable-next-line: param-type-mismatch
-        Belt.server_onCreate(self)
-        self.sv_onStay = Belt.sv_onStay
-    end
+	if self.data.belt then
+		---@diagnostic disable-next-line: param-type-mismatch
+		Belt.server_onCreate(self)
+		self.sv_onStay = Belt.sv_onStay
+	end
 
-    self.data.upgrade = unpackNetworkData(self.data.upgrade)
+	self.data.upgrade = unpackNetworkData(self.data.upgrade)
 
-    --create areaTrigger
-    params = params or {}
-    local size, offset = self:get_size_and_offset()
+	--create areaTrigger
+	params = params or {}
+	local size, offset = self:get_size_and_offset()
 
-    self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
-        params.filters or sm.areaTrigger.filter.dynamicBody)
-    self.upgradeTrigger:bindOnEnter("sv_onEnter")
+	self.upgradeTrigger = sm.areaTrigger.createAttachedBox(self.interactable, size / 2, offset, sm.quat.identity(),
+		params.filters or sm.areaTrigger.filter.dynamicBody)
+	self.upgradeTrigger:bindOnEnter("sv_onEnter")
 end
 
 function Upgrader:server_onFixedUpdate()
-    if self.data.belt then
-        ---@diagnostic disable-next-line: param-type-mismatch
-        Belt.server_onFixedUpdate(self)
-    else
-        ---@diagnostic disable-next-line: param-type-mismatch
-        PowerUtility.sv_fixedUpdate(self, "cl_toggleEffects")
-    end
+	if self.data.belt then
+		---@diagnostic disable-next-line: param-type-mismatch
+		Belt.server_onFixedUpdate(self)
+	else
+		---@diagnostic disable-next-line: param-type-mismatch
+		PowerUtility.sv_fixedUpdate(self, "cl_toggleEffects")
+	end
 end
 
 function Upgrader:sv_onEnter(trigger, results)
-    if not self.powerUtil.active then return end
+	if not self.powerUtil.active then return end
 
-    for _, result in ipairs(results) do
-        if not sm.exists(result) then goto continue end
-        if type(result) ~= "Body" then goto continue end
+	for _, result in ipairs(results) do
+		if not sm.exists(result) then goto continue end
+		if type(result) ~= "Body" then goto continue end
 
-        for k, shape in ipairs(result:getShapes()) do
-            local interactable = shape:getInteractable()
-            if not interactable then goto continue end
-            if interactable.type ~= "scripted" then goto continue end
+		for k, shape in ipairs(result:getShapes()) do
+			local interactable = shape:getInteractable()
+			if not interactable then goto continue end
+			if interactable.type ~= "scripted" then goto continue end
 
-            local data = interactable:getPublicData()
-            if not data or not data.value then goto continue end
+			local data = interactable:getPublicData()
+			if not data or not data.value then goto continue end
 
-            local uuid = tostring(self.shape.uuid)
-            if self.data.upgrade.cap and data.value > self.data.upgrade.cap then goto continue end
-            if self.data.upgrade.limit and data.upgrades[uuid] and data.upgrades[uuid] >= self.data.upgrade.limit then goto continue end
+			local uuid = tostring(self.shape.uuid)
+			if self.data.upgrade.cap and data.value > self.data.upgrade.cap then goto continue end
+			if self.data.upgrade.limit and data.upgrades[uuid] and data.upgrades[uuid] >= self.data.upgrade.limit then goto continue end
 
-            --valid drop
-            self:sv_onUpgrade(shape, data)
-        end
-        ::continue::
-    end
+			--valid drop
+			self:sv_onUpgrade(shape, data)
+		end
+		::continue::
+	end
 end
 
 ---Upgrade a drop shape
 ---@param shape Shape the shape to be upgraded
 ---@param data table the public data of the shape to be upgraded
 function Upgrader:sv_onUpgrade(shape, data)
-    local uuid = tostring(self.shape.uuid)
+	local uuid = tostring(self.shape.uuid)
 
-    data.upgrades[uuid] = data.upgrades[uuid] and data.upgrades[uuid] + 1 or 1
-    shape.interactable:setPublicData(data)
+	data.upgrades[uuid] = data.upgrades[uuid] and data.upgrades[uuid] + 1 or 1
+	shape.interactable:setPublicData(data)
 
-    local effectParams = {
-        effect = "Upgrade Drop",
-        pos = shape.worldPosition - self.shape.at / 3
-    }
-    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", effectParams)
+	local effectParams = {}
+	if uuid == "17de8088-d5a8-45b1-80eb-1d0688a8c39a" then
+		effectParams = {
+			effect = "Upgraders - Random",
+			pos = shape.worldPosition,
+			host = shape
+		}
+	else
+		effectParams = {
+			effect = "Upgraders - Basic",
+			pos = shape.worldPosition,
+			host = shape
+		}
+	end
+	sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_playEffect", effectParams)
 end
 
 -- #endregion
@@ -99,62 +109,62 @@ end
 --------------------
 
 function Upgrader:client_onCreate()
-    self.cl = {}
+	self.cl = {}
 
-    if self.data.belt then
-        ---@diagnostic disable-next-line: param-type-mismatch
-        Belt.client_onCreate(self)
-    end
+	if self.data.belt then
+		---@diagnostic disable-next-line: param-type-mismatch
+		Belt.client_onCreate(self)
+	end
 
-    self:cl_createUpgradeEffect()
+	self:cl_createUpgradeEffect()
 end
 
 function Upgrader:client_onUpdate(dt)
-    if self.data.belt then
-        ---@diagnostic disable-next-line: param-type-mismatch
-        Belt.client_onUpdate(self, dt)
-    end
+	if self.data.belt then
+		---@diagnostic disable-next-line: param-type-mismatch
+		Belt.client_onUpdate(self, dt)
+	end
 end
 
 ---create effect to visualize the upgrade areaTrigger
 function Upgrader:cl_createUpgradeEffect()
-    local size, offset = self:get_size_and_offset()
-    local uuid, color
+	local size, offset = self:get_size_and_offset()
+	local uuid, color
 
-    local effect = self.data.effect
-    if effect then
-        local uid = effect.uuid
-        if uid then uuid = sm.uuid.new(uid) end
+	local effect = self.data.effect
+	if effect then
+		local uid = effect.uuid
+		if uid then uuid = sm.uuid.new(uid) end
 
-        local clr = effect.color
-        if clr then color = sm.color.new(clr.r, clr.g, clr.b) end
-    else
-        uuid = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
-        color = sm.color.new(1, 1, 1)
-    end
+		local clr = effect.color
+		if clr then color = sm.color.new(clr.r, clr.g, clr.b) end
+	else
+		uuid = sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f")
+		color = sm.color.new(1, 1, 1)
+	end
 
-    if uuid then
-        self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-        self.cl.effect:setParameter("uuid", uuid)
-        self.cl.effect:setScale(size)
-        self.cl.effect:setOffsetPosition(offset)
-    else
-        self.cl.effect = sm.effect.createEffect(effect.name, self.interactable)
-    end
+	if uuid then
+		self.cl.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
+		self.cl.effect:setParameter("uuid", uuid)
+		self.cl.effect:setScale(size)
+		self.cl.effect:setOffsetPosition(offset)
+	else
+		self.cl.effect = sm.effect.createEffect(effect.name, self.interactable)
+	end
 
-    self.cl.effect:setParameter("color", color)
-    self.cl.effect:start()
+	self.cl.effect:setParameter("color", color)
+	self.cl.effect:start()
 end
 
 ---toggle the effects depending on the current power state
 function Upgrader:cl_toggleEffects(active)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    Belt.cl_toggleEffects(self, active)
-    if active and not self.cl.effect:isPlaying() then
-        self.cl.effect:start()
-    else
-        self.cl.effect:stop()
-    end
+	---@diagnostic disable-next-line: param-type-mismatch
+	Belt.cl_toggleEffects(self, active)
+	if active and not self.cl.effect:isPlaying() then
+		self.cl.effect:start()
+	else
+		self.cl.effect:stop()
+	end
 end
 
 -- #endregion
@@ -163,9 +173,9 @@ end
 ---@return Vec3 size
 ---@return Vec3 offset
 function Upgrader:get_size_and_offset()
-    local size = sm.vec3.new(self.data.upgrade.box.x, self.data.upgrade.box.y, self.data.upgrade.box.z)
-    local offset = sm.vec3.new(self.data.upgrade.offset.x, self.data.upgrade.offset.y, self.data.upgrade.offset.z)
-    return size, offset
+	local size = sm.vec3.new(self.data.upgrade.box.x, self.data.upgrade.box.y, self.data.upgrade.box.z)
+	local offset = sm.vec3.new(self.data.upgrade.offset.x, self.data.upgrade.offset.y, self.data.upgrade.offset.z)
+	return size, offset
 end
 
 --------------------

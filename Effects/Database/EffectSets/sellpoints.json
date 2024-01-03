@@ -18,5 +18,19 @@
             "type" : "particle"
          }
       ]
+   },
+   "Sellpoints - ScienceIdleLoop" : {
+      "effectList" : [
+         {
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_sellpoints_furnace_science_idle_loop" ],
+            "type" : "particle"
+         },
+         {
+				"type": "audio",
+				"name": "event:/tools/builderguide/loop",
+				"offset": { "x": 0.0, "y": 0.0, "z": 0.0 }
+			}
+      ]
    }
 }

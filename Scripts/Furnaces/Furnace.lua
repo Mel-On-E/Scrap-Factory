@@ -249,7 +249,7 @@ function Furnace:cl_toggle_research_effect(active)
 		cl_research_Effect:destroy()
 	end
 
-	cl_research_Effect = sm.effect.createEffect("Builderguide - Background", self.interactable)
+	cl_research_Effect = sm.effect.createEffect("Sellpoints - ScienceIdleLoop", self.interactable)
 
 	local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
 	cl_research_Effect:setScale(size)

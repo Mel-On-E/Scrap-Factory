@@ -1,0 +1,34 @@
+{
+   "Upgraders - Basic" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_upgrade_drop" ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/vehicle/triggers/trigger_sensor_on",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   },
+   "Upgraders - Random" : {
+      "effectList" : [
+         {
+            "attached" : true,
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "particles" : [ "p_upgrade_random" ],
+            "type" : "particle"
+         },
+         {
+            "delay" : 0.0,
+            "name" : "event:/vehicle/triggers/trigger_sensor_on",
+            "offset" : [ 0.0, 0.0, 0.0 ],
+            "type" : "audio"
+         }
+      ]
+   }
+}

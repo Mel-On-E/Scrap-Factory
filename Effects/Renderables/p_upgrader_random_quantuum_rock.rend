@@ -1,0 +1,17 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Effects/Meshes/upgraders/random/quantuum_shard.obj",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Effects/Textures/upgraders/random/Rock_QM_Shard_dif.png",
+                  "$SURVIVAL_DATA/Objects/Textures/blocks/blk_metalbricks_asg.tga",
+                  "$CONTENT_DATA/Effects/Textures/upgraders/random/Rock_QM_Shard_Detail_nor.png"
+               ]
+            }
+         ]
+      }
+   ]
+}
