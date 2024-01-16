@@ -11,9 +11,9 @@ A custom game letting people build Tycoon-like factories.
 - Factory building
 
 ## Team:
-- DPP: girlboss
+- Mel: owner
 - Illumina: artist girl
-- Sheggy: code, code review
+- June: code, code review
 - Tofix: code, gui, and internal tools maintainer
 - Vajdani: code
 
