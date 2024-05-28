@@ -36,11 +36,11 @@
             ]
          },
          "scripted": {
-            "classname": "Battery",
+            "classname": "Storage",
             "data": {
                "powerStorage": 100
             },
-            "filename": "$CONTENT_DATA/Scripts/Generators/Battery.lua"
+            "filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua"
          },
          "shop": {
             "category": "Generators",
@@ -69,11 +69,11 @@
          "renderable": "$CONTENT_DATA/Objects/Renderables/obj_factory_storage_battery_01.rend",
          "rotationSet": "PropY",
          "scripted": {
-            "classname": "Battery",
+            "classname": "Storage",
             "data": {
                "powerStorage": 1000
             },
-            "filename": "$CONTENT_DATA/Scripts/Generators/Battery.lua"
+            "filename": "$CONTENT_DATA/Scripts/Generators/Storage.lua"
          },
          "shop": {
             "category": "Generators",

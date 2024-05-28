@@ -1,0 +1,1 @@
+{"system":{"emitters":[{"color":[0.0,0.717630,1.0,1.0],"default_particle":[0.10,0.10],"direction_type":"shape","duration":0.10,"emission_rate":10,"glow":true,"glow_exposure":100000.0,"glow_strength":1.0,"guid":2,"keep_local":true,"max_particles":1,"name":"Light","scene_blend":"alpha_blend","time_to_live":0.1000000014901161,"velocity":0.0}],"min_quality":"low"}}

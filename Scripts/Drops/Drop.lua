@@ -7,7 +7,7 @@
 Drop = class(nil)
 
 ---number of ores that exist at any given time
-g_oreCount = 0
+local oreCount = 0
 ---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
 local storedDrops = {}
 ---time after which not moving drops will be deleted
@@ -25,7 +25,7 @@ end
 
 function Drop:server_onCreate()
 	self:sv_init()
-	self:sv_change_oreCount(1)
+	self:sv_changeOreCount(1)
 
 	--delete drop if it has been created before
 	if not self.storage:load() then
@@ -43,7 +43,7 @@ function Drop:server_onCreate()
 end
 
 function Drop:sv_init()
-	self.sv = self.sv or {
+	self.sv = {
 		timeout = 0,
 	}
 end
@@ -69,7 +69,9 @@ function Drop:server_onFixedUpdate()
 	if publicData then
 		--burning
 		if publicData.burnTime then
-			if sm.game.getCurrentTick() >= publicData.burnTime then --NOTE this might be an issue when saving the game and loading in
+			publicData.burnTime = publicData.burnTime - 1
+
+			if publicData.burnTime <= 0 then
 				PollutionManager.sv_addPollution(publicData.value)
 				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
 					pos = self.shape.worldPosition,
@@ -105,7 +107,7 @@ function Drop:sv_e_addEffect(params)
 end
 
 function Drop:server_onDestroy()
-	self:sv_change_oreCount(-1)
+	self:sv_changeOreCount(-1)
 
 	if self:getPollution() then
 		--prevent creating pollution from storing drops via DropContainer's
@@ -125,11 +127,11 @@ function Drop:server_onDestroy()
 	end
 end
 
----update g_oreCount
+---update oreCount
 ---@param change number +1 or -1
-function Drop:sv_change_oreCount(change)
-	g_oreCount = g_oreCount + change
-	if g_oreCount == 100 then
+function Drop:sv_changeOreCount(change)
+	oreCount = oreCount + change
+	if oreCount == 100 then
 		sm.event.sendToScriptableObject(
 			g_tutorialManager.scriptableObject,
 			"sv_e_tryStartTutorial",
@@ -282,7 +284,6 @@ end
 ---@class clientData
 ---@field pollution number
 ---@field value number
----@field burnTime number the tick where it will burn
 
 ---@class DropInteractable : Interactable
 ---@field publicData DropInteractablePublicData
@@ -295,9 +296,7 @@ end
 ---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
 ---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
 ---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
----@field burnTime number the tick where it will burn
 
 ---@class DropShape: Shape
 ---@field interactable DropInteractable
-
 -- #endregion

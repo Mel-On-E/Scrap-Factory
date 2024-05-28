@@ -1,0 +1,1 @@
+{"system":{"emitters":[{"direction_type":"shape","duration":1.0,"emission_rate":10,"guid":0,"keep_local":true,"max_particles":1,"mesh_size":[1.0,1.0,1.0],"name":"cube","params":4,"particle":"mesh","shapeUuid":"5f41af56-df4c-4837-9b3c-10781335757f","time_to_live":1.0,"velocity":0.0}],"min_quality":"low"}}

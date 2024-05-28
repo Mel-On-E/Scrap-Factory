@@ -97,7 +97,7 @@ function Chest.client_onInteract(self, character, state)
 			self.cl.containerGui:setOnCloseCallback("cl_guiClosed")
 			self.cl.containerGui:open()
 
-			sm.effect.playEffect("Chest Open", self.shape.worldPosition)
+			sm.effect.playEffect("Action - Chest Open", self.shape.worldPosition)
 			self.network:sendToServer("sv_openChestAnim")
 		end
 	end
@@ -105,7 +105,7 @@ end
 
 function Chest.cl_guiClosed(self)
 	self.network:sendToServer("sv_closeChestAnim")
-	sm.effect.playEffect("Chest Close", self.shape.worldPosition)
+	sm.effect.playEffect("Action - Chest Close", self.shape.worldPosition)
 end
 
 function Chest.client_onDestroy(self)

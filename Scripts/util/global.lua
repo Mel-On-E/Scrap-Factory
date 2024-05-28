@@ -71,6 +71,3 @@ g_prestigeManager = {}
 
 ---@type SaveDataManager
 g_saveDataManager = {}
-
----@type number the number of drops in the world
-g_oreCount = 0

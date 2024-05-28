@@ -9,14 +9,18 @@
          }
       ]
    },
-   "Egg - Break": {
+   "Drops - PollutionCloud" : {
       "effectList" : [
          {
             "attached" : true,
             "offset" : [ 0.0, 0.0, 0.0 ],
-            "particles" : [ "p_destruct_fruit" ],
+            "particles" : [ "p_drops_pollution_cloud" ],
             "type" : "particle"
-            // "color": "f0ead6" ??
+         },
+         {
+            "attached" : true,
+            "name" : "event:/weapons/chemcannon/chem_cloud",
+            "type" : "audio"
          }
       ]
    }

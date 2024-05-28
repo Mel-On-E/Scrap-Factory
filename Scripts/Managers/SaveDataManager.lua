@@ -14,8 +14,7 @@ function SaveDataManager:server_onCreate()
 
     self.sv = {}
     self.sv.saved = self.storage:load() or {
-        dropPlusPlus = 1,
-        upgraderPlusPlus = 1
+        dropPlusPlus = 1
     }
     self:sv_saveDataAndSync()
 end
@@ -65,7 +64,6 @@ end
 
 ---@class SaveDataManagerSaved
 ---@field dropPlusPlus integer the value of a drop++. Increases by 1 for every drop++ dropped
----@field upgraderPlusPlus integer how much an upgrader++ upgrades. Increases by 1 for every upgrade an upgrader++ makes.
 
 ---@class SaveDataManagerCl
 ---@field saved SaveDataManagerSaved
