@@ -46,14 +46,12 @@ function Burner:sv_onEnterDrop(shape)
         end
 
         Drop:Sv_dropStored(shape.id)
-    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_wood then
+    else
         if publicData.pollution then return end
 
         powerFunc = function(x)
             return x ^ (1 / 3)
         end
-    else
-        return
     end
 
     local power = powerFunc(publicData.value)
