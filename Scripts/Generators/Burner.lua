@@ -16,38 +16,41 @@ Burner = class(nil)
 local secretEffectChance = 0.15
 
 function Burner:server_onCreate()
+    ---@diagnostic disable-next-line: param-type-mismatch
     Furnace.server_onCreate(self)
+    ---@diagnostic disable-next-line: param-type-mismatch
     Generator.server_onCreate(self)
 
     sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
 end
 
 function Burner:server_onDestroy()
+    ---@diagnostic disable-next-line: param-type-mismatch
     Generator.server_onDestroy(self)
 end
 
 function Burner:sv_onEnter(trigger, results)
     self.powerUtil.active = true
+    ---@diagnostic disable-next-line: param-type-mismatch
     Furnace.sv_onEnter(self, trigger, results)
 end
 
 ---@param shape Shape
 function Burner:sv_onEnterDrop(shape)
     local publicData = shape.interactable.publicData
-    local powerFunc = function () end
+    local powerFunc = function() end
 
     if shape.uuid == obj_drop_biomass_gas then
-        powerFunc = function (x)
-            return x ^ (1/2)
+        powerFunc = function(x)
+            return x ^ (1 / 2)
         end
 
         Drop:Sv_dropStored(shape.id)
-
-    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_scrap_wood then
+    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_wood then
         if publicData.pollution then return end
 
-        powerFunc = function (x)
-            return x ^ (1/3)
+        powerFunc = function(x)
+            return x ^ (1 / 3)
         end
     else
         return
