@@ -1,58 +1,70 @@
+---Interface for every screen that can be opened via the `Hub` tool
 ---@class Interface : ScriptableObjectClass
+---@field cl {gui : GuiInterface}
 Interface = class()
 
-function Interface:cient_onCreate(params)
-	self.cl = {}
-	self.cl.gui = sm.gui.createGuiFromLayout(params.layout)
+---Create new interface. Automatically creates functions for each button named after another interface to open it.
+---@param layout string path to the layout file of the gui used by the interface
+function Interface:client_onCreate(layout)
+	self.cl = self.cl or {}
+	self.cl.gui = sm.gui.createGuiFromLayout(layout)
 
-	self.cl.gui:setButtonCallback("shop", "cl_openShop")
-	self.cl.gui:setButtonCallback("research", "cl_openResearch")
-	self.cl.gui:setButtonCallback("prestige", "cl_openPrestige")
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		self.cl.gui:setButtonCallback(string.lower(sob.classname), "cl_open" .. sob.classname)
+
+		---@diagnostic disable-next-line: redefined-local
+		self["cl_open" .. sob.classname] = function(self)
+			self.cl.gui:close()
+			self[sob.classname] = true
+		end
+	end
 
 	self.cl.gui:setOnCloseCallback("cl_onGuiClosed")
 end
 
+---opens the gui of this interface. Sets text for all widgets named after Interfaces.
 function Interface:cl_e_open_gui()
-	self.cl.gui:setText("shop", language_tag("Shop"))
-	self.cl.gui:setText("research", language_tag("Research"))
-	self.cl.gui:setText("prestige", language_tag("Prestige"))
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		self.cl.gui:setText(string.lower(sob.classname), language_tag(sob.classname))
+	end
 
 	self.cl.gui:open()
 end
 
+---@return boolean open whether this interface is open
 function Interface:cl_e_isGuiOpen()
-	return self and self.cl.gui:isActive() or false
+	return self and self.cl.gui and self.cl.gui:isActive() or false
 end
 
-function Interface:cl_openResearch()
-	self.cl.gui:close()
-	self.research = true
-end
-
-function Interface:cl_openShop()
-	self.cl.gui:close()
-	self.shop = true
-end
-
-function Interface:cl_openPrestige()
-	self.cl.gui:close()
-	self.prestige = true
-end
-
+---closes the gui of the interface
 function Interface:cl_close()
-	self.cl.gui:close()
+	if self ~= nil then
+		self.cl.gui:close()
+	end
 end
 
+---opens another interface if the interface had a variable set to true with its name
 function Interface:cl_onGuiClosed()
-	if self.shop then
-		Shop.cl_e_open_gui()
-	elseif self.research then
-		Research.cl_e_open_gui()
-	elseif self.prestige then
-		Prestige.cl_e_open_gui()
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		if self[sob.classname] then
+			_G[sob.classname].cl_e_open_gui()
+		end
+		self[sob.classname] = false
 	end
+end
 
-	self.shop = false
-	self.research = false
-	self.prestige = false
+---close all open interfaces
+function Interface.cl_closeAllInterfaces()
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		_G[sob.classname].cl_close()
+	end
+end
+
+---setup button callbacks
+---@param buttonList table<integer, string> list of widgetNames
+---@param func string name of callback function
+function Interface.setupButtons(gui, buttonList, func)
+	for _, name in ipairs(buttonList) do
+		gui:setButtonCallback(name, func)
+	end
 end

@@ -1,0 +1,17 @@
+{
+    "lodList": [
+        {
+            "subMeshList": [
+                {
+                    "textureList": [
+                        "$CONTENT_DATA/Effects/Skirt/skirt.png",
+                        "$GAME_DATA/Textures/Default/default_asg.tga",
+                        "$GAME_DATA/Textures/Default/default_nor.tga"
+                    ],
+                    "material": "DifAsgNor"
+                }
+            ],
+            "mesh": "$CONTENT_DATA/Effects/Skirt/skirt.obj"
+        }
+    ]
+}

@@ -37,6 +37,12 @@
 			"uuid": "2474d490-4530-4ff8-9436-ba716a0c665e"
 		},
 		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/PerkManager.lua",
+			"classname": "PerkManager",
+			"name": "mgr_perk",
+			"uuid": "35492036-d286-4b0f-a17c-efa228875c0d"
+		},
+		{
 			"filename": "$CONTENT_DATA/Scripts/Managers/DailyRewardManager.lua",
 			"classname": "DailyRewardManager",
 			"name": "mgr_daily",
@@ -47,6 +53,18 @@
 			"classname": "LootCrateManager",
 			"name": "mgr_lootcrate",
 			"uuid": "963f193f-cce8-4ed0-a04d-530fd70b230f"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/TutorialManager.lua",
+			"classname": "TutorialManager",
+			"name": "mgr_tutorial",
+			"uuid": "60702ca7-2d19-4d08-81e6-7a3ded53e338"
+		},
+		{
+			"filename": "$CONTENT_DATA/Scripts/Managers/SaveDataManager.lua",
+			"classname": "SaveDataManager",
+			"name": "mgr_saveData",
+			"uuid": "e4bc2df0-a163-4de5-87e4-119abd5409a4"
 		}
 	]
 }

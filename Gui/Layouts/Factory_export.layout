@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MyGUI type="Layout" version="3.2.0">
+    <Widget type="Widget" skin="PanelEmpty" name="BackPanel" position_real="0 0 0.3125 0.2777777777777778">
+        <Widget type="Canvas" skin="BackgroundLiftExport" position_real="0.016666666666666666 0.03333333333333333 0.9666666666666667 0.9333333333333333">
+            <Widget type="TextBox" skin="TextBox" name="title" position_real="0.017241379310344827 0.03571428571428571 0.9655172413793104 0.26785714285714285">
+                <Property key="TextAlign" value="Center"/>
+                <Property key="FontName" value="SM_HeaderLarge_Medium"/>
+                <Property key="Caption" value="name creation"/>
+            </Widget>
+            <Widget type="Button" skin="SecondaryButton" name="cancel" position_real="0.1724137931034483 0.75 0.25862068965517243 0.17857142857142858">
+                <Property key="Caption" value="#{MENU_YN_CANCEL}"/>
+                <Property key="FontName" value="SM_Button"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Button" skin="PrimaryButton" name="ok" position_real="0.5689655172413793 0.75 0.25862068965517243 0.17857142857142858">
+                <Property key="Caption" value="#{MENU_YN_OK}"/>
+                <Property key="FontName" value="SM_Button"/>
+                <Property key="TextAlign" value="Center"/>
+            </Widget>
+            <Widget type="Canvas" skin="GenderButton" position_real="0.11206896551724138 0.39285714285714285 0.7758620689655172 0.26785714285714285">
+                <Widget type="EditBox" skin="EditBoxEmpty" name="name" position_real="0.011111111111111112 0.06666666666666667 0.9777777777777777 0.8666666666666667">
+                    <Property key="FontName" value="SM_Header"/>
+                    <Property key="TextAlign" value="Center"/>
+                </Widget>
+            </Widget>
+        </Widget>
+    </Widget>
+    <CodeGeneratorSettings/>
+</MyGUI>

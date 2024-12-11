@@ -1,0 +1,38 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_upgrader_01.fbx",
+         "subMeshList" : [
+            {
+               "custom" : {
+                  "uv0" : {
+                     "u" : 0.009999999776482582,
+                     "v" : 0.0
+                  }
+               },
+               "material" : "UVAnimDifAsg",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_beltdetails_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_beltdetails_01_asg.tga"
+               ]
+            },
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Belts/obj_factory_belt_01_nor.tga"
+               ]
+            },
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_upgrader_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_upgrader_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Upgraders/obj_factory_upgrader_01_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}

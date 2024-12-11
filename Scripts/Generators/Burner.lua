@@ -1,13 +1,25 @@
-dofile("$CONTENT_DATA/Scripts/util/power.lua")
+dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
+---A tpye of `Generator` that acts like a `Furnace`. It can sell a `Drop` for power, but will created a polluted `Drop`.
 ---@class Burner: ShapeClass
+---@field cl BurnerCl
+---@field powerUtil PowerUtility
 Burner = class(nil)
+
+--------------------
+-- #region Server
+--------------------
+
+---chance a special effect plays when a drop is sold
+local secretEffectChance = 0.15
 
 function Burner:server_onCreate()
     Furnace.server_onCreate(self)
     Generator.server_onCreate(self)
+
+    sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_tryStartTutorial", "BurnerTutorial")
 end
 
 function Burner:server_onDestroy()
@@ -15,56 +27,76 @@ function Burner:server_onDestroy()
 end
 
 function Burner:sv_onEnter(trigger, results)
-    local shapeRepo = sm.uuidRepos.shapes
-    for _, result in ipairs(results) do
-        if not sm.exists(result) then goto continue end
-        for k, shape in pairs(result:getShapes()) do
-            if not self.data.drops[tostring(shape.uuid)] then goto continue end
-
-            local interactable = shape:getInteractable()
-            if not interactable then goto continue end
-
-            local data = interactable:getPublicData()
-            if not data or not data.value then goto continue end
-
-
-            --create power
-            local power = data.value
-            if self.data.powerFunction == "root" then
-                power = (power ^ (1 / (4 / 3)))
-            end
-            power = power + 1
-
-            sm.event.sendToGame("sv_e_stonks",
-                { pos = shape:getWorldPosition(), value = power, effect = "Fire -medium01_putout", format = "energy" })
-            PowerManager.sv_changePower(power)
-
-
-            --create pollution drop
-            local smoke = sm.shape.createPart(shapeRepo:requestUuid("obj_drop_smoke"), shape.worldPosition, shape:getWorldRotation())
-
-            local publicData = {}
-            publicData.value = 1
-            publicData.pollution = power
-            publicData.upgrades = {}
-
-            smoke.interactable:setPublicData(publicData)
-
-
-            shape:destroyPart(0)
-        end
-        ::continue::
-    end
+    self.powerUtil.active = true
+    Furnace.sv_onEnter(self, trigger, results)
 end
+
+---@param shape Shape
+function Burner:sv_onEnterDrop(shape)
+    local publicData = shape.interactable.publicData
+    local powerFunc = function () end
+
+    if shape.uuid == obj_drop_biomass_gas then
+        powerFunc = function (x)
+            return x ^ (1/2)
+        end
+
+        Drop:Sv_dropStored(shape.id)
+
+    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_scrap_wood then
+        if publicData.pollution then return end
+
+        powerFunc = function (x)
+            return x ^ (1/3)
+        end
+    else
+        return
+    end
+
+    local power = powerFunc(publicData.value)
+    local pollution = math.sqrt(power)
+
+    sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+        pos = shape.worldPosition,
+        value = tostring(power),
+        effect = math.random() < secretEffectChance and "Sellpoints - CampfireSecret" or
+            "Sellpoints - CampfireOnsell",
+        format = "power"
+    })
+    PowerManager.sv_changePower(power)
+
+    --create pollution drop
+    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
+    smoke.interactable:setPublicData({
+        value = 0,
+        pollution = pollution,
+        upgrades = {},
+        impostor = false
+    })
+
+    --destory drop
+    shape.interactable.publicData.value = nil
+    shape:destroyPart(0)
+end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
 
 function Burner:client_onCreate()
-    --[[local size = sm.vec3.new(self.data.box.x, self.data.box.y, self.data.box.z)
-    local offset = sm.vec3.new(self.data.offset.x, self.data.offset.y, self.data.offset.z)
+    Furnace.client_onCreate(self)
 
-    self.effect = sm.effect.createEffect("ShapeRenderable", self.interactable)
-	self.effect:setParameter("uuid", sm.uuid.new("5f41af56-df4c-4837-9b3c-10781335757f"))
-	self.effect:setParameter("color", sm.color.new(1,1,1))
-    self.effect:setScale(size)
-    self.effect:setOffsetPosition(offset)
-	self.effect:start()]]
+    self.cl.effect:setParameter("color", sm.color.new(1, 0, 0))
 end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+---@class BurnerCl : FurnaceCl
+
+-- #endregion

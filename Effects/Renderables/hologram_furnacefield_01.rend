@@ -1,0 +1,16 @@
+{
+    "lodList": [
+        {
+            "includes" : [ "POSITION", "UV0", "NORMAL" ],
+            "subMeshList": [
+                {
+                    "textureList": [
+                        "$CONTENT_DATA/Effects/Textures/t_hologram_hexpattern.tga"
+                    ],
+                    "material": "Hologram"
+                }
+            ],
+            "mesh": "$CONTENT_DATA/Effects/Meshes/hologram_furnacefield_01_geo.fbx"
+        }
+    ]
+}

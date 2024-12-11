@@ -1,0 +1,25 @@
+{
+   "lodList" : [
+      {
+         "mesh" : "$CONTENT_DATA/Objects/Mesh/obj_factory_storagebattery_01.fbx",
+         "subMeshList" : [
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_dif.TGA",
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_asg.TGA",
+                  "$SURVIVAL_DATA/Objects/Textures/containers/obj_interactive_container_connectorpoint_nor.TGA"
+               ]
+            },
+            {
+               "material" : "DifAsgNor",
+               "textureList" : [
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_dif.tga",
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_asg.tga",
+                  "$CONTENT_DATA/Objects/Textures/Storage/obj_factory_storagebattery_01_nor.tga"
+               ]
+            }
+         ]
+      }
+   ]
+}

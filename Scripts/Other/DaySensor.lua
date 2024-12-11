@@ -1,31 +1,37 @@
-dofile("$CONTENT_DATA/Scripts/util/day.lua")
-
----@class DayDetector : ShapeClass
----@field night boolean
+---A DaySensor is a sensor that will emit a logic signal during daytime
+---@class DaySensor : ShapeClass
 ---@diagnostic disable-next-line: assign-type-mismatch
 DaySensor = class()
-DaySensor.connectionOutput = 1
-DaySensor.maxChildCount = 10
+
+DaySensor.connectionOutput = sm.interactable.connectionType.logic
+DaySensor.maxChildCount = 255
 DaySensor.poseWeightCount = 1
+DaySensor.colorNormal = sm.color.new(0x9a0d44ff)
+DaySensor.colorHighlight = sm.color.new(0xc01559ff)
 
+--------------------
+-- #region Server
+--------------------
 
-
-function DaySensor:client_onCreate()
-    self.night = false
+function DaySensor:server_onCreate()
+    self.network:sendToClients("cl_changeModel")
 end
 
 function DaySensor:server_onFixedUpdate()
-    local time = sm.game.getTimeOfDay()
-    local night = time < SunRiseEnd or time > SunSetStart
-
-    if night == self.night then return end
-
-    self.interactable:setActive(night)
-    self.network:sendToClients("cl_changeModel", night)
-    self.night = night
+    if self.interactable.active ~= isDay() then
+        self.interactable:setActive(isDay())
+        self.network:sendToClients("cl_changeModel")
+    end
 end
 
----@param enable boolean If true makes the model "enabled" if false "disabled"
-function DaySensor:cl_changeModel(enable)
-    self.interactable:setUvFrameIndex(enable and 10 or 0)
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
+function DaySensor:cl_changeModel()
+    self.interactable:setPoseWeight(0, self.interactable.active and 0 or 1)
 end
+
+-- #endregion

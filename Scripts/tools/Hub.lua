@@ -1,104 +1,96 @@
-dofile "$GAME_DATA/Scripts/game/AnimationUtil.lua"
+dofile("$GAME_DATA/Scripts/game/AnimationUtil.lua")
 local renderables = { "$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook.rend" }
 local renderablesTp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_tp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_tp_animlist.rend" }
 local renderablesFp = { "$SURVIVAL_DATA/Character/Char_Male/Animations/char_male_fp_logbook.rend",
 	"$SURVIVAL_DATA/Character/Char_Tools/Char_logbook/char_logbook_fp_animlist.rend" }
-dofile("$CONTENT_DATA/Scripts/util/util.lua")
 
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Shop.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Research.lua")
-dofile("$CONTENT_DATA/Scripts/Managers/Interfaces/Prestige.lua")
+---interfaces.sobSet
+g_Interfaces = sm.json.open("$CONTENT_DATA/ScriptableObjects/ScriptableObjectSets/interfaces.sobSet")
+for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+	dofile(sob.filename)
+end
 
 sm.tool.preloadRenderables(renderables)
 sm.tool.preloadRenderables(renderablesTp)
 sm.tool.preloadRenderables(renderablesFp)
 
----@class page
----@field uuid string
----@field price number
----@field category string
-
----@class client;
----@field gui GuiInterface
----@field filteredPages page[][]
----@field itemPages page[][]
----amount of pages
----@field pageNum number
----current page
----@field curPage number
----current item
----@field curItem number
----current quantity
----@field quantity number
-
-
+---The HubTool replaces the logbook. When opened it can show various interfaces such as the shop, research, prestige or perk menu.
 ---@class Hub : ToolClass
----@field cl client
+---@field cl HubCl
+---@field tpAnimations any?
+---@field fpAnimations any?
 Hub = class()
 
-local first = true
+--------------------
+-- #region Server
+--------------------
+
+local interfacesInitialized = false
 
 function Hub:server_onCreate()
-	if not first then return end
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("aa53c54c-0760-4270-bd77-f54d0c271d19"), self.tool)
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("e9461cff-2b3e-4351-b5f6-ff67778a4c88"), self.tool)
-	sm.scriptableObject.createScriptableObject(sm.uuid.new("b0972d5e-f131-4aac-94d8-39ce331fe225"), self.tool)
-	first = false
+	if interfacesInitialized then return end
+
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		sm.scriptableObject.createScriptableObject(sm.uuid.new(sob.uuid), self.tool)
+	end
+	interfacesInitialized = true
 end
 
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function Hub:client_onCreate()
-	self.cl = {}
-	self.cl.currentInterface = "shop"
+	self.cl = {
+		currentInterface = "Shop",
+		unequipTicks = 0
+	}
 
 	self:client_onRefresh()
-
-	self.unequipTicks = 0
 end
 
 function Hub:client_onFixedUpdate()
-	if self.cl.currentInterface then
-		local active = true
-		if Shop.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "shop"
-		elseif Research.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "research"
-		elseif Prestige.cl_e_isGuiOpen() then
-			self.cl.currentInterface = "prestige"
-		else
-			active = false
+	if self.tool:isLocal() and self.cl.currentInterface then
+		local guiActive = false
+
+		for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+			if _G[sob.classname].cl_e_isGuiOpen() then
+				self.cl.currentInterface = sob.classname
+				guiActive = true
+				self.cl.unequipTicks = 0
+			end
 		end
 
-		if active then
-			self.unequipTicks = 0
-		end
-
-		if not active and self.tool:isEquipped() then
-			if self.unequipTicks > 1 then
+		if not guiActive and self.tool:isEquipped() then
+			if self.cl.unequipTicks > 1 then
 				self:cl_onGuiClosed()
 			else
-				self.unequipTicks = self.unequipTicks + 1
+				self.cl.unequipTicks = self.cl.unequipTicks + 1
 			end
-		elseif active and not self.tool:isEquipped() then
+		elseif guiActive and not self.tool:isEquipped() then
 			sm.tool.forceTool(self.tool)
 		end
 	end
 end
 
 function Hub:cl_openGui()
-	local interface = self.cl.currentInterface
-	if interface == "shop" then
-		Shop:cl_e_open_gui()
-	elseif interface == "research" then
-		Research:cl_e_open_gui()
-	elseif interface == "prestige" then
-		Prestige:cl_e_open_gui()
+	for _, sob in ipairs(g_Interfaces.scriptableObjectList) do
+		if sob.classname == self.cl.currentInterface then
+			_G[sob.classname]:cl_e_open_gui()
+		end
 	end
 end
 
 function Hub.client_onEquip(self)
 	if self.tool:isLocal() then
-		self:cl_openGui()
+		if TutorialManager.cl_isTutorialEventCompleteOrActive("UpgraderBought") then
+			self:cl_openGui()
+		else
+			sm.gui.displayAlertText(language_tag("TutorialLockedFeature"))
+		end
 	end
 
 	self:client_onEquipAnimations()
@@ -117,7 +109,12 @@ function Hub.cl_onGuiClosed(self)
 	self.cl.seatedEquiped = false
 end
 
---ANIMATION STUFF BELOW
+-- #endregion
+
+--------------------
+-- #region Animations
+--------------------
+
 function Hub:client_onEquipAnimations()
 	self.cl.wantsEquip = true
 	self.cl.seatedEquiped = false
@@ -136,7 +133,6 @@ function Hub:client_onEquipAnimations()
 		self.tool:setFpRenderables(currentRenderablesFp)
 	end
 
-	--TODO disable animations bc they are funny when broken haha lol xd OMG ROFL LMAO
 	self:cl_loadAnimations()
 	setTpAnimation(self.tpAnimations, "pickup", 0.0001)
 
@@ -196,7 +192,6 @@ function Hub.client_onUpdate(self, dt)
 
 	totalWeight = totalWeight == 0 and 1.0 or totalWeight
 	for name, animation in pairs(self.tpAnimations.animations) do
-
 		local weight = animation.weight / totalWeight
 		if name == "idle" then
 			self.tool:updateMovementAnimation(animation.time, weight)
@@ -238,19 +233,15 @@ function Hub.cl_loadAnimations(self)
 	local movementAnimations = {
 		idle = "logbook_use_idle",
 		idleRelaxed = "logbook_idle_relaxed",
-
 		runFwd = "logbook_run_fwd",
 		runBwd = "logbook_run_bwd",
 		sprint = "logbook_sprint",
-
 		jump = "logbook_jump",
 		jumpUp = "logbook_jump_up",
 		jumpDown = "logbook_jump_down",
-
 		land = "logbook_jump_land",
 		landFwd = "logbook_jump_land_fwd",
 		landBwd = "logbook_jump_land_bwd",
-
 		crouchIdle = "logbook_crouch_idle",
 		crouchFwd = "logbook_crouch_fwd",
 		crouchBwd = "logbook_crouch_bwd"
@@ -277,3 +268,16 @@ function Hub.cl_loadAnimations(self)
 	setTpAnimation(self.tpAnimations, "idle", 5.0)
 	self.cl.blendTime = 0.2
 end
+
+-- #endregion
+
+--------------------
+-- #region Types
+--------------------
+
+---@class HubCl
+---@field currentInterface string name of the current interface that is open
+---@field unequipTicks integer number of ticks since the tool has been unequiped
+---@field blendTime number some animation stuff idk
+
+-- #endregion

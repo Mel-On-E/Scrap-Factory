@@ -8,6 +8,9 @@
 	"PowerCapacity": "Pojemność: ",
 	"PowerOutput": "Produkcja: ",
 
+	//Factory Import/Export
+	"ImportNone": "Brak",
+
 	//Money & Shop
 	"Sell": "Sprzedaj",
 	"Buy": "Kup",

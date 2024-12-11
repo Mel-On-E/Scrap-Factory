@@ -1,113 +1,303 @@
+---A Drop is a shape dropped by droppers. It has a value that can be modified by upgraders and other things. It can be sold in a furnace to generate money. It disappears when touching the ground or reloading into a world.
 ---@class Drop : ShapeClass
+---@field cl DropCl
+---@field sv DropSv
+---@field interactable DropInteractable
+---@diagnostic disable-next-line: assign-type-mismatch
 Drop = class(nil)
 
-local oreCount = 0
-local lifeTime = 40 * 5 --ticks
+---number of ores that exist at any given time
+g_oreCount = 0
+---@type table<number, boolean> list of all drops that have been removed by a DropContainer during the tick
+local storedDrops = {}
+---time after which not moving drops will be deleted
+local despawnTimeout = 40 * 5 --5 seconds
+
+--------------------
+-- #region Server
+--------------------
+
+---mark a drop as stored by drop container to avoid pollution from being released
+---@param id number the shape id of the drop that was collected
+function Drop:Sv_dropStored(id)
+	storedDrops[id] = true
+end
 
 function Drop:server_onCreate()
-    local body = self.shape:getBody()
-    body:setErasable(false)
-    body:setPaintable(false)
-    body:setBuildable(false)
-    body:setLiftable(false)
-    self.timeout = 0
+	self:sv_init()
+	self:sv_change_oreCount(1)
 
-    local saved = self.storage:load()
-    if not saved then
-        self.storage:save(true)
-    else
-        self.shape:destroyShape(0)
-    end
+	--delete drop if it has been created before
+	if not self.storage:load() then
+		self.storage:save(true)
+	else
+		self.shape:destroyShape(0)
+		return
+	end
+
+	local body = self.shape.body
+	body:setLiftable(false)
+	body:setErasable(false)
+	body:setBuildable(false)
+	body:setPaintable(false)
+end
+
+function Drop:sv_init()
+	self.sv = self.sv or {
+		timeout = 0,
+	}
 end
 
 function Drop:server_onFixedUpdate()
-    if self.shape:getVelocity():length() < 0.01 then
-        self.timeout = self.timeout + 1
-    else
-        self.timeout = 0
-    end
+	if sm.game.getCurrentTick() % 40 == 0 then
+		self:sv_setClientData()
+	end
 
-    if self.timeout > lifeTime then
-        self.shape:destroyShape(0)
-    end
-    if sm.game.getCurrentTick() % 40 == 0 then
-        local publicData = self.interactable.publicData
-        if publicData then
-            local params = {}
-            params.value = tostring(publicData.value)
-            if publicData.pollution then
-                params.pollution = tostring(publicData.pollution)
-            end
-            self.network:setClientData(params)
-        end
-    end
+	--handle timeout
+	self.sv.timeout = self.shape:getVelocity():length() < 0.01 and self.sv.timeout + 1 or 0
+	if self.sv.timeout > despawnTimeout then
+		self.shape:destroyShape(0)
+	end
 
-    if self.interactable.publicData then
-        self.money = self.interactable.publicData.value
-        self.pollution = self:getPollution()
-    end
-    self.pos = self.shape.worldPosition
+	--cache server variables
+	self.sv.cachedPos = self.shape.worldPosition
+	self.sv.cachedPollution = self:getPollution()
+	self.sv.cachedValue = self:getValue()
+
+	--update publicData
+	local publicData = self.interactable.publicData
+	if publicData then
+		--burning
+		if publicData.burnTime then
+			if sm.game.getCurrentTick() >= publicData.burnTime then --NOTE this might be an issue when saving the game and loading in
+				PollutionManager.sv_addPollution(publicData.value)
+				sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+					pos = self.shape.worldPosition,
+					value = tostring(publicData.value),
+					format = "pollution",
+					effect = "Pollution"
+				})
+				self.shape:destroyShape(0)
+			end
+		end
+
+		--remove tractorBeamTag
+		if self.interactable.publicData and self.interactable.publicData.tractorBeam then
+			self.sv.timeout = 0
+			if self.interactable.publicData.tractorBeam < sm.game.getCurrentTick() then
+				self.interactable.publicData.tractorBeam = nil
+			end
+		end
+	end
+end
+
+function Drop:server_onCollision(other, position, selfPointVelocity, otherPointVelocity, normal)
+	--destroy drop when it hits terrain
+	if not other then
+		self.shape:destroyShape(0)
+	end
+end
+
+---add an effect to a drop
+---@param params effectParam
+function Drop:sv_e_addEffect(params)
+	Effects.sv_createEffect(self, params)
 end
 
 function Drop:server_onDestroy()
-    if self.pollution then
-        sm.event.sendToGame("sv_e_stonks",
-            { pos = self.pos, value = tostring(self.pollution), format = "pollution", effect = "Pollution" })
-        PollutionManager.sv_addPollution(self.pollution)
-    end
+	self:sv_change_oreCount(-1)
+
+	if self:getPollution() then
+		--prevent creating pollution from storing drops via DropContainer's
+		if storedDrops[self.shape.id] then
+			storedDrops[self.shape.id] = nil
+			return
+		end
+
+		PollutionManager.sv_addPollution(self:getPollution())
+
+		sm.event.sendToPlayer(sm.player.getAllPlayers()[1], "sv_e_numberEffect", {
+			pos = self.sv.cachedPos,
+			value = tostring(self:getPollution()),
+			format = "pollution",
+			effect = "Pollution",
+		})
+	end
 end
 
+---update g_oreCount
+---@param change number +1 or -1
+function Drop:sv_change_oreCount(change)
+	g_oreCount = g_oreCount + change
+	if g_oreCount == 100 then
+		sm.event.sendToScriptableObject(
+			g_tutorialManager.scriptableObject,
+			"sv_e_tryStartTutorial",
+			"ClearOresTutorial"
+		)
+	end
+end
+
+---sets the clientData
+function Drop:sv_setClientData()
+	local publicData = unpackNetworkData(self.interactable.publicData)
+	if publicData then
+		self.network:setClientData({
+			value = publicData.value,
+			pollution = publicData.pollution,
+			burnTime = publicData.burnTime
+		})
+	end
+end
+
+-- #endregion
+
+--------------------
+-- #region Client
+--------------------
+
 function Drop:client_onCreate()
-    oreCount = oreCount + 1
-    if oreCount >= 100 then
-        sm.event.sendToPlayer(sm.localPlayer.getPlayer(), "cl_e_drop_dropped")
-    end
-    self.cl = {}
-    self.cl.value = 0
+	self:cl_init()
+
+	--create default effect
+	if self.data and self.data.effect then
+		Effects.cl_createEffect(self,
+			{ key = "default", effect = self.data.effect, host = self.interactable, autoPlay = self.data.autoPlay })
+	end
+end
+
+function Drop:cl_init()
+	self.cl = {
+		data = {
+			value = 0
+		}
+	}
+
+	Effects.cl_init(self)
 end
 
 function Drop:client_onClientDataUpdate(data)
-    self.cl.value = tonumber(data.value)
+	self.cl.data = unpackNetworkData(data)
 
-    if data.pollution then
-        self.cl.pollution = tonumber(data.pollution)
+	if data.burnTime and not Effects.cl_getEffect(self, "burning") then
+		Effects.cl_createEffect(self, { key = "burning", effect = "Fire - gradual", host = self.interactable })
+		local effect = Effects.cl_getEffect(self, 'burning')
+		effect:setParameter('intensity', 1.5)
+	end
 
-        if not self.cl.pollutionEffect then
-            self.cl.pollutionEffect = sm.effect.createEffect("Ore Pollution", self.interactable)
-            self.cl.pollutionEffect:start()
-        end
-    end
+	--create default effect for pulluted ores
+	if data.pollution and not Effects.cl_getEffect(self, "pollution") then
+		Effects.cl_createEffect(self, { key = "pollution", effect = "Drops - Pollution", host = self.interactable })
+	end
 end
 
 function Drop:client_onDestroy()
-    oreCount = oreCount - 1
-
-    if self.cl.pollutionEffect then
-        self.cl.pollutionEffect:destroy()
-    end
+	Effects.cl_destroyAllEffects(self)
 end
 
 function Drop:client_canInteract()
-    local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
-    local o2 = "</p>"
-    local money = format_number({ format = "money", value = self.money or self.cl.value, color = "#4f9f4f" })
-    if self.cl.pollution or self.pollution then
-        local pollution = format_number({ format = "pollution", value = self.pollution or self:getPollution(),
-            color = "#9f4f9f" })
-        sm.gui.setInteractionText("", o1 .. pollution .. o2)
-        sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
-    else
-        sm.gui.setInteractionText("", o1 .. money .. o2)
-    end
-    return true
+	--set interaction text
+	local o1 = "<p textShadow='false' bg='gui_keybinds_bg_orange' color='#4f4f4f' spacing='9'>"
+	local o2 = "</p>"
+	local money = format_number({ format = "money", value = self:getValue(), color = "#4f9f4f" })
+
+	if self:getPollution() then
+		local pollution = format_number({
+			format = "pollution",
+			value = self:getPollution(),
+			color = "#9f4f9f",
+		})
+
+		sm.gui.setInteractionText("", o1 .. pollution .. o2)
+		sm.gui.setInteractionText("#4f4f4f(" .. money .. "#4f4f4f)")
+	else
+		sm.gui.setInteractionText("", o1 .. money .. o2)
+	end
+
+	return true
 end
 
-function Drop:getPollution()
-    local value = self.cl.value
-    local pollution = self.cl.pollution
-    if sm.isServerMode() then
-        value = self.interactable.publicData.value
-        pollution = self.interactable.publicData.pollution
-    end
-    return pollution and math.max(pollution - value, 0) or nil
+function Drop:cl_createEffect(params)
+	Effects.cl_createEffect(self, params)
 end
+
+-- #endregion
+
+---Returns the current value of a drop
+---@return number
+function Drop:getValue()
+	local value = self.cl.data.value
+	if sm.isServerMode() then
+		value = (sm.exists(self.interactable) and self.interactable.publicData and self.interactable.publicData.value)
+			or self.sv.cachedValue
+	elseif self.sv then
+		value = self.sv.cachedValue or value
+	end
+	return value
+end
+
+---Returns the current pollution value of a drop
+---@return unknown pollution 0 or positive. nil if the drop has no pullution
+function Drop:getPollution()
+	local pollution = self.cl.data.pollution
+
+	if sm.isServerMode() then
+		---@diagnostic disable-next-line:cast-local-type
+		pollution = sm.exists(self.interactable)
+			and self.interactable.publicData
+			and self.interactable.publicData.pollution
+		if not pollution then
+			return self.sv.cachedPollution
+		end
+
+		sm.event.sendToScriptableObject(
+			g_tutorialManager.scriptableObject,
+			"sv_e_tryStartTutorial",
+			"PollutionTutorial"
+		)
+	end
+	return (pollution and math.max(pollution - self:getValue(), 0)) or nil
+end
+
+--------------------
+-- #region Types
+--------------------
+
+---@class DropSv
+---@field cachedPos Vec3
+---@field cachedPollution number
+---@field cachedValue number
+---@field pollution number
+---@field value number
+---@field timeout number number of ticks for how long the drop has not moved
+---@field data DropData
+
+---@class DropData
+---@field effect string the name of the default drop effect
+---@field autoPlay boolean whether the effect should auto play
+
+---@class DropCl
+---@field data clientData
+
+---@class clientData
+---@field pollution number
+---@field value number
+---@field burnTime number the tick where it will burn
+
+---@class DropInteractable : Interactable
+---@field publicData DropInteractablePublicData
+
+---@class DropInteractablePublicData
+---@field value number the value of the drop. i.e. how much it is worth
+---@field upgrades table<Uuid, integer> how often the drop was upgraded by an upgrader
+---@field creationTime integer the tick at which the drop was created
+---@field impostor boolean|nil Controlles if the value sells for negative or not
+---@field pollution number|nil if the drop is polluted and by how much. Effective pollution is `pollution - value`
+---@field tractorBeam integer|nil if the drop is currently inside a tractorBeam
+---@field magnetic "north"|"south"|"sticky"|"repell"|nil if the drop is magnetic and which polarisation it has
+---@field burnTime number the tick where it will burn
+
+---@class DropShape: Shape
+---@field interactable DropInteractable
+
+-- #endregion

@@ -1,37 +1,37 @@
 dofile("$CONTENT_DATA/Scripts/Other/Crates/LootCrate.lua")
 
+---A RareLootCrate can contain special and more valueable items than a `LootCrate`.
 ---@class RareLootCrate : LootCrate
 RareLootCrate = class(LootCrate)
+
+--------------------
+-- #region LootTable
+--------------------
 
 function RareLootCrate:get_loot_table()
     local tier = ResearchManager.cl_getCurrentTier()
     local itemPool = {}
     for uuid, item in pairs(g_shop) do
-        if (item.tier < tier) or
-            (item.tier == tier and math.random()) > 0.75 then
-            if item.price <= MoneyManager.cl_moneyEarned() * 2 + 5000 then
-                itemPool[#itemPool + 1] = { price = item.price, uuid = uuid }
-            end
-        end
-    end
+        --exclude prestige items
+        if item.prestige then goto nextItem end
 
-    local sortedPool = {}
-    while #itemPool > 1 and #sortedPool < 5 do
-        local mostExpensiveItem
-        local highestPrice = 0
-
-        for k, item in ipairs(itemPool) do
-            if item.price > highestPrice then
-                highestPrice = item.price
-                mostExpensiveItem = k
-            end
+        --25% chance to include items of a higher research tier
+        if item.tier > tier or (item.tier == tier and math.random() <= 0.75) then
+            goto nextItem
         end
 
-        sortedPool[#sortedPool + 1] = sm.uuid.new(itemPool[mostExpensiveItem].uuid)
-        table.remove(itemPool, mostExpensiveItem)
+        --items that are cheaper than 2*money earned + 5000
+        if item.price > MoneyManager.cl_moneyEarned() * 2 + 5000 then goto nextItem end
+
+        --50% chance to include non special items
+        if not item.special and math.random() > 0.50 then goto nextItem end
+
+
+        itemPool[#itemPool + 1] = sm.uuid.new(uuid)
+        ::nextItem::
     end
 
-    sortedPool[#sortedPool + 1] = sm.uuid.new("f08d772f-9851-400f-a014-d847900458a7")
-
-    return sortedPool
+    return itemPool
 end
+
+-- #endregion
