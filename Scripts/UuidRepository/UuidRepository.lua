@@ -18,7 +18,7 @@ end
 ---@return Uuid|nil @`Uuid` if the key exists otherwise `nil`
 function UuidRepository:requestUuid(key)
     self.registry[key] = type(self.registry[key]) == "string"
-        and sm.uuid.new(self.registry[key]) 
+        and sm.uuid.new(self.registry[key])
         or nil
     return self.registry[key]
 end
