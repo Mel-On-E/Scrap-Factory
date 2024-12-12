@@ -34,7 +34,7 @@ function VampireDrop:server_onFixedUpdate()
         sm.effect.playEffect("Fire -medium01_putout", self.shape.worldPosition)
 
         --create pollution drop
-        local smoke = sm.shape.createPart(obj_drop_smoke, self.shape.worldPosition, self.shape.worldRotation)
+        local smoke = sm.shape.createPart(sm.uuidRepos.shapes:requestUuid("obj_drop_smoke"), self.shape.worldPosition, self.shape.worldRotation)
         local newPublicData = {
             value = 0,
             pollution = self.interactable.publicData.value,

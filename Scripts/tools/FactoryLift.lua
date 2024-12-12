@@ -136,7 +136,7 @@ function FactoryLift:client_onUpdate()
 
     local hit, result = sm.localPlayer.getRaycast(7.5)
     if hit and result.type == "lift" then
-        local import = sm.localPlayer.getActiveItem() == tool_lift and
+        local import = sm.localPlayer.getActiveItem() == sm.uuidRepos.tools:requestUuid("tool_lift") and
             "\t" .. sm.gui.getKeyBinding("ForceBuild", true) .. language_tag("ImportInteraction") or ""
         import = PerkManager.isPerkOwned("LiftLv1") and import or ""
         sm.gui.setInteractionText(sm.gui.getKeyBinding("Use", true) .. "#{INTERACTION_USE}", import, "")

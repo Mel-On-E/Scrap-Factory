@@ -36,7 +36,7 @@ function SpinnyUpgrader:sv_onUpgrade(shape, data)
     sm.event.sendToInteractable(shape.interactable, "sv_e_addEffect", {
         effect = "ShapeRenderable",
         key = "skirt",
-        uuid = obj_skirt_effect,
+        uuid = sm.uuidRepos.shapes:requestUuid("obj_skirt_effect"),
         scale = sm.vec3.new(1, 0.75, 1),
         host = shape.interactable,
         color = self.shape.color
@@ -60,7 +60,7 @@ function SpinnyUpgrader:sv_onEnter(trigger, results)
                 effect = "ShapeRenderable",
                 host = player.character,
                 boneName = "jnt_hips",
-                uuid = obj_skirt_effect,
+                uuid = sm.uuidRepos.shapes:requestUuid("obj_skirt_effect"),
                 color = self.shape.color
             })
         end

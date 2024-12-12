@@ -115,7 +115,7 @@ function FusionReactor:server_onFixedUpdate()
                     if self.sv.saved.heliumWaste >= 1 then
                         self.sv.saved.heliumWaste = self.sv.saved.heliumWaste - 1
                         ---@diagnostic disable-next-line: param-type-mismatch
-                        local shape = sm.shape.createPart(obj_drop_helium,
+                        local shape = sm.shape.createPart(sm.uuidRepos.shapes:requestUuid("obj_drop_helium"),
                             self.shape.worldPosition + self.shape.at * 1.25,
                             self.shape:getWorldRotation())
 
@@ -159,9 +159,11 @@ function FusionReactor:server_onFixedUpdate()
 end
 
 function FusionReactor:sv_onEnter(trigger, results)
+    local shapes = sm.uuidRepos.shapes
+
     for _, drop in ipairs(getDrops(results)) do
-        local d = drop.uuid == obj_drop_deuterium
-        local t = drop.uuid == obj_drop_tritium
+        local d = drop.uuid == shapes:requestUuid("obj_drop_deuterium")
+        local t = drop.uuid == shapes:requestUuid("obj_drop_tritium")
         if not (d or t) then goto continue end
 
         self.sv.saved.fuel.deuterium = self.sv.saved.fuel.deuterium + (d and 1 or 0)

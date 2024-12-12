@@ -63,10 +63,11 @@ end
 
 function NuclearReactor:sv_onEnter(trigger, results)
 	local filter = (trigger == self.sv.waterTrigger) and "water" or "uranium"
+	local shapes = sm.uuidRepos.shapes
 
 	for _, drop in ipairs(getDrops(results)) do
 		if filter == "water" then
-			if drop.uuid ~= obj_drop_water then goto continue end
+			if drop.uuid ~= shapes:requestUuid("obj_drop_water") then goto continue end
 
 			local heatReduction = self:sv_coolWater()
 
@@ -80,8 +81,8 @@ function NuclearReactor:sv_onEnter(trigger, results)
 
 			drop:destroyShape(0)
 		elseif filter == "uranium" then
-			local u235 = drop.uuid == obj_drop_uranium235
-			local u238 = drop.uuid == obj_drop_uranium238
+			local u235 = drop.uuid == shapes:requestUuid("obj_drop_uranium235")
+			local u238 = drop.uuid == shapes:requestUuid("obj_drop_uranium238")
 			if not (u235 or u238) then goto continue end
 
 			self.sv.saved.uranium.u235 = self.sv.saved.uranium.u235 + (u235 and 1 or 0)
@@ -155,7 +156,7 @@ function NuclearReactor:sv_updateHeat()
 				self.sv.saved.waste = self.sv.saved.waste - fuelPerWaste
 
 				---@diagnostic disable-next-line: param-type-mismatch
-				local shape = sm.shape.createPart(obj_uranium_waste, self.shape.worldPosition - self.shape.right * 1,
+				local shape = sm.shape.createPart(sm.uuidRepos.shapes:requestUuid("obj_uranium_waste"), self.shape.worldPosition - self.shape.right * 1,
 					self.shape:getWorldRotation())
 
 				local publicData = {

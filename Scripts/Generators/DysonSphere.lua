@@ -90,7 +90,7 @@ function DysonSphere:client_onCreate()
     self.cl.orbitAngle = math.random() * 360
 
     local effect = sm.effect.createEffect("ShapeRenderable")
-    effect:setParameter("uuid", obj_duckson_sphere_effect)
+    effect:setParameter("uuid", sm.uuidRepos.shapes:requestUuid("obj_duckson_sphere_effect"))
     effect:setScale(sm.vec3.one() * 4)
     self.cl.dysonSphereEffect = effect
     self.cl.dysonSphereEffect:start()

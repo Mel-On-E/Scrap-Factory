@@ -2,10 +2,12 @@
 ---@class LootCrateManager : ScriptableObjectClass
 LootCrateManager = class()
 
+local shapes = sm.uuidRepos.shapes
+
 local dropInterval = 40 * 30 --ticks
 local lootTable = {
-    { chance = 95, uuid = obj_lootcrate },
-    { chance = 5,  uuid = obj_lootcrate_rare }
+    { chance = 95, uuid = shapes:requestUuid("obj_lootcrate") },
+    { chance = 5,  uuid = shapes:requestUuid("obj_lootcrate_rare") }
 }
 
 function LootCrateManager:server_onFixedUpdate()

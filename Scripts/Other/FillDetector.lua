@@ -1,4 +1,4 @@
-dofile "$CONTENT_DATA/Scripts/util/uuids.lua"
+-- dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 
 ---@class FillDetector : ShapeClass
 ---@field container Container
@@ -29,7 +29,7 @@ end
 function FillDetector:server_onFixedUpdate(dt)
     local parent = self.interactable:getSingleParent()
     if parent then
-        if parent.shape.uuid == obj_dropcontainer then
+        if parent.shape.uuid == sm.uuidRepos.shapes:requestUuid("obj_dropcontainer") then
             self.container = parent:getContainer(0)
         else
             parent:disconnect(self.interactable)

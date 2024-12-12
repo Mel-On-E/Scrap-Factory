@@ -1,3 +1,4 @@
+dofile("$CONTENT_DATA/Scripts/UuidRepository/Init.lua")
 dofile("$GAME_DATA/Scripts/game/BasePlayer.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_camera.lua")
 dofile("$SURVIVAL_DATA/Scripts/game/survival_constants.lua")

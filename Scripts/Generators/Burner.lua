@@ -1,4 +1,4 @@
-dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
+-- dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
 dofile("$CONTENT_DATA/Scripts/Generators/Generator.lua")
 dofile("$CONTENT_DATA/Scripts/Furnaces/Furnace.lua")
 
@@ -35,15 +35,16 @@ end
 function Burner:sv_onEnterDrop(shape)
     local publicData = shape.interactable.publicData
     local powerFunc = function () end
+    local shapes = sm.uuidRepos.shapes
 
-    if shape.uuid == obj_drop_biomass_gas then
+    if shape.uuid == shapes:requestUuid("obj_drop_biomass_gas") then
         powerFunc = function (x)
             return x ^ (1/2)
         end
 
         Drop:Sv_dropStored(shape.id)
 
-    elseif shape.uuid == obj_drop_scrap_wood or shape.uuid == obj_drop_scrap_wood then
+    elseif shape.uuid == shapes:requestUuid("obj_drop_scrap_wood") then
         if publicData.pollution then return end
 
         powerFunc = function (x)
@@ -66,7 +67,7 @@ function Burner:sv_onEnterDrop(shape)
     PowerManager.sv_changePower(power)
 
     --create pollution drop
-    local smoke = sm.shape.createPart(obj_drop_smoke, shape.worldPosition, shape.worldRotation)
+    local smoke = sm.shape.createPart(shapes:requestUuid("obj_drop_smoke"), shape.worldPosition, shape.worldRotation)
     smoke.interactable:setPublicData({
         value = 0,
         pollution = pollution,

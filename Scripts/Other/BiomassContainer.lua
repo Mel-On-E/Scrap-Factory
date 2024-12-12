@@ -1,5 +1,5 @@
-dofile('$CONTENT_DATA/Scripts/util/uuids.lua')
-dofile('$CONTENT_DATA/Scripts/Other/DropContainer.lua')
+-- dofile("$CONTENT_DATA/Scripts/util/uuids.lua")
+dofile("$CONTENT_DATA/Scripts/Other/DropContainer.lua")
 
 ---A biomass container can pickup "biomass" drops. after some time the drop will turn into a gas that can be burned.
 ---@class BiomassContainer : DropContainer
@@ -9,19 +9,21 @@ dofile('$CONTENT_DATA/Scripts/Other/DropContainer.lua')
 BiomassContainer = class(DropContainer)
 BiomassContainer.ContainerSize = 125
 
+local shapes = sm.uuidRepos.shapes
+
 ---@type table<number, boolean> list of all drops that have been removed by a BiomassContainer during the tick
 local removedDrops = {}
 
 ---drop uuids that are valid for biomass
 local biomassDrops = {
-    [tostring(obj_drop_scrap_wood)] = true,
-    [tostring(obj_drop_wood)] = true,
-    [tostring(obj_drop_popcorn)] = true,
-    [tostring(obj_drop_baguette)] = true,
-    [tostring(obj_drop_sunshake)] = true,
-    [tostring(obj_drop_milk)] = true,
-    [tostring(obj_drop_wood)] = true,
-    [tostring(obj_drop_popcorn_popped)] = true
+    [tostring(shapes:requestUuid("obj_drop_scrap_wood"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_wood"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_popcorn"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_baguette"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_sunshake"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_milk"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_wood"))] = true,
+    [tostring(shapes:requestUuid("obj_drop_popcorn_popped"))] = true
 }
 
 local gasChance = 1 / (40 * 60)
@@ -72,7 +74,7 @@ function BiomassContainer:server_onFixedUpdate()
                 local offset = self.shape.right * self.sv.droppingOffset.x + self.shape.at * self.sv.droppingOffset.y +
                     self.shape.up * self.sv.droppingOffset.z
 
-                local shape = sm.shape.createPart(obj_drop_biomass_gas, (self.sv.cachedPos or self.shape.worldPosition) + offset,
+                local shape = sm.shape.createPart(shapes:requestUuid("obj_drop_biomass_gas"), (self.sv.cachedPos or self.shape.worldPosition) + offset,
                     self.sv.cachedRot)
 
                 local publicData = unpackNetworkData(self.sv.saved.drops[slot])

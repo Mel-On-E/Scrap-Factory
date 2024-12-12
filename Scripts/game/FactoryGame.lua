@@ -88,12 +88,19 @@ end
 ---reset a player's inventory and character
 function FactoryGame:sv_resetPlayer(player)
 	local inventory = player:getInventory()
+	local shapes = sm.uuidRepos.shapes
+	local tools = sm.uuidRepos.tools
 
 	local tool_connect = sm.uuid.new("8c7efc37-cd7c-4262-976e-39585f8527bf")
 
 	local startingItems = {
-		tool_hammer, tool_lift, tool_connect, tool_sell, obj_dropper_scrap_wood, obj_furnace_scrap,
-		obj_generator_windmill
+		tools:requestUuid("tool_hammer"),
+		tools:requestUuid("tool_lift"),
+		tools:requestUuid("tool_connect"),
+		tools:requestUuid("tool_sell"),
+		shapes:requestUuid("obj_dropper_scrap_wood"),
+		shapes:requestUuid("obj_furnace_scrap"),
+		shapes:requestUuid("obj_generator_windmill")
 	}
 
 	sm.container.beginTransaction()

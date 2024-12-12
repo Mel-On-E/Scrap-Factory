@@ -20,7 +20,7 @@ function Shop:sv_buy(params, player)
 
 	sm.event.sendToGame("sv_giveItem", { player = player, item = params.item.uuid, quantity = params.quantity })
 
-	if params.item.uuid == obj_upgrader_basic then
+	if params.item.uuid == sm.uuidRepos.shapes:requestUuid("obj_upgrader_basic") then
 		sm.event.sendToScriptableObject(g_tutorialManager.scriptableObject, "sv_e_questEvent", "UpgraderBought")
 	end
 end
