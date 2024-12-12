@@ -2022,7 +2022,7 @@
       },
       "color": "8c8c8c",
       "flammable": false,
-      "name": "obj_drop_plutonium",
+      "name": "obj_drop_plutonium1",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 8,
@@ -2182,7 +2182,7 @@
       },
       "color": "a6a6a6",
       "flammable": false,
-      "name": "obj_drop_plutonium",
+      "name": "obj_drop_plutonium2",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 6,

@@ -137,7 +137,7 @@
       },
       "color": "444444",
       "flammable": false,
-      "name": "obj_drop_neptunium",
+      "name": "obj_drop_neptunium_effect",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 8,
@@ -182,7 +182,7 @@
       },
       "color": "8c8c8c",
       "flammable": false,
-      "name": "obj_drop_plutonium",
+      "name": "obj_drop_plutonium_effect",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 8,
@@ -227,7 +227,7 @@
       },
       "color": "c4c4c4",
       "flammable": false,
-      "name": "obj_drop_technetium99",
+      "name": "obj_drop_technetium99_effect",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 6,
@@ -272,7 +272,7 @@
       },
       "color": "c2c0c0",
       "flammable": false,
-      "name": "obj_drop_californium",
+      "name": "obj_drop_californium_effect",
       "physicsMaterial": "Metal",
       "ratings": {
         "density": 6,
